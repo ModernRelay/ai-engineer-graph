@@ -1,0 +1,230 @@
+// ── Exploration queries added 2026-07-22 (corpus: 136 talks seeded) ──
+// Company / expert / artifact drill-downs, leaderboards, counter-evidence,
+// domain & time filters. Companion to the per-entity files.
+
+// ── Companies ──
+
+query company_profile($slug: String)
+@description("Company card: name, type, brief")
+{
+    match { $c: Company { slug: $slug } }
+    return { $c.slug, $c.name, $c.type, $c.brief }
+}
+
+query company_signals($slug: String)
+@description("Signals citing a company (RelevantCompany), newest first")
+{
+    match {
+        $c: Company { slug: $slug }
+        $s: Signal
+        $s relevantCompany $c
+    }
+    return { $s.slug, $s.name, $s.brief, $s.stagingTimestamp }
+    order { $s.stagingTimestamp desc }
+    limit 100
+}
+
+query company_elements($slug: String)
+@description("Elements a company develops (DevelopedByCompany)")
+{
+    match {
+        $c: Company { slug: $slug }
+        $e: Element
+        $e developedByCompany $c
+    }
+    return { $e.slug, $e.name, $e.kind, $e.brief }
+    limit 100
+}
+
+query company_experts($slug: String)
+@description("Experts affiliated with a company")
+{
+    match {
+        $c: Company { slug: $slug }
+        $x: Expert
+        $x affiliatedWithCompany $c
+    }
+    return { $x.slug, $x.name }
+    limit 100
+}
+
+query top_companies_by_signals()
+@description("Leaderboard: companies ranked by signal mentions")
+{
+    match {
+        $s: Signal
+        $s relevantCompany $c
+    }
+    return { $c.slug, $c.name, count($s) as signals }
+    order { signals desc }
+    limit 30
+}
+
+query search_companies($q: String)
+@description("Text search over company names")
+{
+    match { $c: Company }
+    return { $c.slug, $c.name, $c.brief }
+    order { bm25($c.name, $q) }
+    limit 15
+}
+
+// ── Patterns: evidence weighting ──
+
+query top_patterns_by_signals()
+@description("Leaderboard: patterns ranked by supporting-signal count")
+{
+    match {
+        $s: Signal
+        $s formsPattern $p
+    }
+    return { $p.slug, $p.name, count($s) as signals }
+    order { signals desc }
+    limit 30
+}
+
+query pattern_counter_signals($slug: String)
+@description("Signals that CONTRADICT a pattern — the counter-evidence view")
+{
+    match {
+        $p: Pattern { slug: $slug }
+        $s: Signal
+        $s contradictsPattern $p
+    }
+    return { $s.slug, $s.name, $s.brief, $s.stagingTimestamp }
+    order { $s.stagingTimestamp desc }
+    limit 50
+}
+
+// ── Experts ──
+
+query expert_companies($slug: String)
+@description("An expert's company affiliations")
+{
+    match {
+        $x: Expert { slug: $slug }
+        $x affiliatedWithCompany $c
+    }
+    return { $x.name, $c.slug, $c.name as company }
+    limit 10
+}
+
+query expert_artifacts($slug: String)
+@description("Talks/artifacts an expert contributed, newest first")
+{
+    match {
+        $x: Expert { slug: $slug }
+        $a: InformationArtifact
+        $a contributedByExpert $x
+    }
+    return { $a.slug, $a.name, $a.link, $a.stagingTimestamp }
+    order { $a.stagingTimestamp desc }
+    limit 50
+}
+
+query search_experts($q: String)
+@description("Text search over expert names")
+{
+    match { $x: Expert }
+    return { $x.slug, $x.name }
+    order { bm25($x.name, $q) }
+    limit 15
+}
+
+// ── Artifacts: everything extracted from one talk ──
+
+query artifact_signals($slug: String)
+@description("Signals spotted in an artifact")
+{
+    match {
+        $a: InformationArtifact { slug: $slug }
+        $s: Signal
+        $s spottedInArtifact $a
+    }
+    return { $s.slug, $s.name, $s.brief }
+    limit 50
+}
+
+query artifact_elements($slug: String)
+@description("Elements identified in an artifact")
+{
+    match {
+        $a: InformationArtifact { slug: $slug }
+        $e: Element
+        $e identifiedInArtifact $a
+    }
+    return { $e.slug, $e.name, $e.kind }
+    limit 50
+}
+
+query artifact_knowhow($slug: String)
+@description("KnowHow sourced from an artifact")
+{
+    match {
+        $a: InformationArtifact { slug: $slug }
+        $k: KnowHow
+        $k sourcedFromArtifact $a
+    }
+    return { $k.slug, $k.name }
+    limit 50
+}
+
+query artifact_experts($slug: String)
+@description("Speakers of an artifact")
+{
+    match {
+        $a: InformationArtifact { slug: $slug }
+        $a contributedByExpert $x
+    }
+    return { $x.slug, $x.name }
+    limit 20
+}
+
+query source_artifacts($slug: String)
+@description("Artifacts published by a source, newest first")
+{
+    match {
+        $src: SourceEntity { slug: $slug }
+        $a: InformationArtifact
+        $a publishedBySource $src
+    }
+    return { $a.slug, $a.name, $a.stagingTimestamp }
+    order { $a.stagingTimestamp desc }
+    limit 200
+}
+
+query artifact_chunks($slug: String)
+@description("Transcript chunks of an artifact, in order")
+{
+    match {
+        $a: InformationArtifact { slug: $slug }
+        $ch: Chunk
+        $ch partOfArtifact $a
+    }
+    return { $ch.chunk_index, $ch.text }
+    order { $ch.chunk_index asc }
+    limit 500
+}
+
+// ── Signals: slices ──
+
+query signals_by_domain($domain: String)
+@description("Signals in one domain enum (training|inference|infra|harness|robotics|security|data-eng|context)")
+{
+    match { $s: Signal { domain: $domain } }
+    return { $s.slug, $s.name, $s.stagingTimestamp }
+    order { $s.stagingTimestamp desc }
+    limit 100
+}
+
+query signals_since($since: DateTime)
+@description("Signals staged on/after a moment, newest first")
+{
+    match {
+        $s: Signal
+        $s.stagingTimestamp >= $since
+    }
+    return { $s.slug, $s.name, $s.brief, $s.stagingTimestamp }
+    order { $s.stagingTimestamp desc }
+    limit 200
+}

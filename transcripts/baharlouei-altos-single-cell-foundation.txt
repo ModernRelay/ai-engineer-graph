@@ -1,0 +1,417 @@
+Okay, let's get it started. Uh
+My name is Akram. I'm a machine learning
+engineer at Altos Labs. Altos Labs is a
+biotech startup and the goal is to
+restore cell health and resilience
+through cellular rejuvenation to inverse
+disease and disabilities that can happen
+throughout the life.
+And the title of my talk is uh from
+tokens to cells.
+And this is uh my kind of view as
+someone
+without bio background to kind of
+looking into the engineering challenges
+of foundation models for single-cell
+biology.
+And what I want to talk about first,
+what is single-cell? Why do we care
+about single-cell? How do How do we
+measure it? What are the problems with
+the data, getting the data? And then
+looking at current state of the art
+foundation models and then some
+takeaways in the end.
+Uh so, what is single-cell and why do we
+care about it? I would like to start
+with my favorite example, Yamanaka
+factor.
+In 2006, Shinya Yamanaka discovered four
+transcription factors. There are four
+specific type of a proteins that when
+they were overexpressed in a cell,
+uh they did it for in a cell which was
+age old skin cell, it could reprogram
+the skin cell old skin cell to embryonic
+stem cell like state. So, basically from
+cell type skin cell old, it could
+reprogram it back to a young embryonic
+stem cell type.
+Uh type and this was a breakthrough for
+biology and then got him Nobel Prize
+later in 2012
+uh because of the application and the
+new chapters possibilities
+for medicine. From regenerative medicine
+for like to be able to kind of
+regenerate tissues or organs.
+Uh
+when we can like reprogram specific cell
+to any cell that we want to partially
+programming and aging application. For
+partial programming specifically is that
+we can also turn out that we can also
+only change the age of the cell. We
+don't have to change the type. So, by
+changing the age of the cell the goal is
+the hope is we can restore some of
+youthful function that we lose toward
+life as we age and then kind of like
+having this as a medicine maybe like an
+mRNA medicine
+uh for curing the disease that the we
+encounter as we age. And
+that's a one example. And then I think
+this year 2026 we got the first type of
+reprogramming medicine. I think it's OSK
+and uh it's going to be tested in a
+human.
+>> [clears throat]
+>> So, it took kind of like 20 20 years.
+And uh and the reason the other reason
+is that why we want to study a single
+cell is that we would like to model to
+have this unified holistic view of
+single cell to be able to model cell and
+from there hopefully we can model tissue
+and organ and then the entire human. And
+there are like projects like human cell
+atlas that actually started this effort
+this initiative and then they like you
+know they have they have mapped every
+single cell inside human.
+And the goal ultimately is something
+like maybe for a
+ultimately some after some long time we
+can actually actually model like model
+human body or there are terminologies
+like virtual cell, virtual tissue,
+virtual human, digital twins. They all
+saying the same thing that the more we
+can model this
+living organisms.
+The better we are in understanding our
+body and the how
+we can treat medicine, we can develop
+drugs.
+And
+the other
+the other problem is that so we you
+know, I think for this audience we know
+about Moore's law, the computer is
+getting like double every year. And then
+we have exact opposite on drug
+development. Basically, the number of
+drugs that developed each year is kind
+of declining, which is surprising with
+all the advances in technology, in AI.
+This is surprising to see. And then drug
+development is a field that failure is
+you know, very normal. Maybe the
+acceptance rate is kind of like you
+know, 5% or even less.
+And
+when we're looking at drug development
+pipeline from the early like research
+and development all the way to
+preclinical, clinical trial and then the
+final stage.
+The whole pipeline it could take up to
+10 years easily and then it cost it can
+cost billions. And the goal here is that
+with the advances of AI and also like
+with this
+virtual cell, virtual organ, virtual
+human, the goal is that we can kind of
+like reduce this time, improve reduce
+this timeline. And
+and also we're looking at the entire
+timeline. Let's say if we only look at
+like research and development, the
+models like you know, protein design and
+the stuff, we might like save like you
+know, few years here, but at the end
+maybe it's not going to help for the
+entire pipeline. So, it's important to
+have innovation and breakthrough
+across all pipeline.
+Now that we know single cell is
+important, how can we measure single
+cell?
+So, looking at single, yeah, it's
+amazing. This is just one single cell.
+There is a lot going on inside that one
+little tiny organism.
+Uh
+there are different modalities and each
+modality is measure different things.
+Uh from
+genome, which is like, you know, DNA
+sequencing is almost, you know, same for
+all cells, to RNA sequence. RNA sequence
+or transcriptomic is like the
+profile of the genes that they are
+expressed
+at each time. And then that it's like a
+matrix and then basically cell it says
+for each cell uh what are the genes what
+are the genes how many genes are
+expressed and then in which quantity.
+And is like 20,000 K.
+It's it's 20,000
+scale.
+And the other maybe modality is
+proteomics. Proteomics maybe is like
+what maybe we care about more like
+because the proteins are the one that
+they're doing most of the functions in
+our body. But the problem is that
+proteomics is a very hard to measure and
+you know, there are ways to measure it
+but it's a very low throughput. And
+morphology is about like the
+cell shape and structure. And there are
+like really good imaging technologies to
+kind of also measure to have like
+microscopic imaging from single cell.
+And um
+it's very I've also useful for a special
+special
+dimension kind of like, you know,
+knowing the
+place of like, you know, how
+the single cell is located within
+tissue.
+Um so, from all these modalities maybe
+the one that has been used mostly for
+foundation model training, I would say
+is RNA-seq. And there is an issue that
+the technology is
+is it's easier to measure and the
+technology is like because of like PC
+PCR technologies and the stuff, it's
+easier to a scale. So we have like
+usually data set for single cell RNA in
+the scale of like tens of tens of uh
+millions of cells to even like you know,
+I've heard 500 million cells and then
+kind of like even like there's a project
+1 billion cells. But usually what they
+talk about is RNA-seq. And then also
+this is also a problem that if you
+really want to understand biology and
+then starting from single cell, we
+really need to kind of have
+technological advances in other
+dimensions as well.
+And now having said that, let's say we
+got like you know, gathered 1 billion
+RNA-seq, 1 billion cells, 1 billion
+samples of RNA-seq data. Is this good
+for foundation models that we can you
+know, train on? And then the the problem
+is uh
+it's it's very hard. The nature of the
+data is if you measure two identical
+cell at the
+they don't read the same. And then the
+problem is
+the problem is this is very
+very heterogeneous.
+I'll give you give an example here that
+usually cells they're living organism,
+they go through a lot of changes and
+cycles like from like you know, growing
+to
+uh kind of copying RNA to cell division.
+And usually some of these changes
+happens like in a burst, not like it's
+not something you know, continuous.
+And what
+we are measuring with current
+uh
+single cell sequencing is like a
+snapshot. We're taking a snapshots
+from from a whole movie.
+Uh now with that and then also there's
+their biological reason that the data is
+very noisy, it's very heterogeneous.
+Also, there is like technical reasons
+that usually if you measure in different
+labs, different machines, also the data
+would be the data wouldn't be the same.
+Now, let's see how what are look at some
+of the foundation models that we have
+and then see what they're doing with
+this
+uh, data. Um, and then also like maybe a
+small note here that given the nature
+that is very high dimensional is like
+multi-state.
+I think maybe, you know, some might
+argue that uh,
+a quantum computing would be there like
+kind of like natural fit for this
+application. And then, yeah, we don't
+know, it might be true. Uh, but you
+know, until we have quantum compute, for
+now we want to see what we can get with
+current state of the art AI.
+And now, uh, I want to start with like
+transformer-based models. And there have
+been really good like, you know, papers
+and models out there from the
+communities starting from like SCGPT and
+Informer.
+Uh, and what they want, they kind of
+like treat each uh, cell like a sentence
+and then genes like tokens. So,
+basically cell cell are built from
+genes. And
+what they do is like uh,
+uh, they um,
+like you know, BERT BERT style model
+like from language that kind of uh,
+masking
+some of the genes and they're trying
+having the model to predict that them
+predict that genes uh,
+that gene counts. So, looking at the
+data is like a matrix.
+Uh, and then for each cell we have like,
+you know, we have the count of uh, each
+genes. How many genes are, you know, how
+many genes are active, uh, per cell.
+And then it's trying to mask this to
+like, uh,
+attention, bidirectional attention
+across, and then kind of understand the
+relationship between, you know, between
+these genes.
+And, uh, this is how it's trained. And
+then like there are some,
+uh, uh, some some some downstream tasks
+that this model is used to. Uh,
+one is for, uh, so like, you know,
+predicting cell type, kind of
+predicting, uh,
+also, um, perturbation response
+modeling. Uh, but overall, when we look
+into these models, what they try to do,
+they try to kind of get the single cell
+data and then compress it in a kind of a
+latent vector and then do either
+decoding for like generative task or
+like classification for, uh, classic for
+other task. And then what happens is
+when you, uh, compress this data, we're
+losing a lot of information. It doesn't
+preserve the,
+it doesn't preserve the information.
+And then that's why when we're looking
+into this model, like,
+um, these models, we see that sometimes,
+sometimes like, uh, maybe, uh,
+simple linear models are on par or like
+sometimes even outperforming this, uh,
+these, uh, models that, you know, it's
+like, you know, complex models with a
+lot of compute is being used to train
+those. Um, then also we had like two
+papers last year at NeurIPS, we did like
+comprehensive benchmarking on uh, on
+these models. One is,
+uh,
+multimodal data for like imaging and
+RNA-seq, and the other one is for
+perturbation response modeling. So I
+have the links at the end of my talk,
+uh, go ahead and check them out, but
+like the final, the results, uh, the
+uh, what we found out was the
+Uh, that also is known in the community
+that even though these models are very
+expensive to train,
+uh,
+at the end they're not performing as
+well comparing to, you know, other
+domain language,
+uh, and and imaging.
+And this is our newer and then so
+transformer-based also we have like flow
+matching-based models
+that you you started to try to uh,
+predict the distribution of the data and
+uh,
+starting from like, you know, Gaussian
+noise and then trying to to match the
+distribution. And we have uh, this
+paper, uh, we have this model PrimeFlow
+uh,
+that is available on archive and it
+seems that these models
+they seem to do better. There is a
+better comparing to trans
+autoregressive-based models, um,
+because it's tries to kind of match the
+distribution predict the distribution
+rather than kind of, you know,
+understanding the
+understanding the data and compressing
+it into into uh, uh, into into a
+a latent vector.
+Um, and this is like some of the results
+that uh, we have. So, on the left we see
+like PrimeFlow it's the green the green
+dots are
+uh, ground truth label and then we see
+that PrimeFlow is kind of trying to
+match the distribution. Whereas other
+models like CPADR autoencoder-based is
+kind of like just mapping to the it's
+trying to predict the mean rather than
+understanding understanding the
+distribution. And then we have like MMD
+score at the bottom.
+Uh, so yeah, that was uh,
+my top three things to take away from
+this talk is that single cell is
+important and it's important to
+understand this.
+It has application for cellular
+rejuvenation. It's a path to like
+digital human and they're helping with
+drug development cycle.
+Then also we looked at
+at the different modalities to measure
+from single cell. RNA sequence data is
+the one that maybe it's we have it more
+available in a scale and also it's
+measuring something important in
+expression profile. But at the same
+at the same time that we would like to
+kind of get more data, work on the
+scale, but it's important that to work
+on quality of the data of the way that
+we are measuring this data to be a bit
+more realistic of the real organism than
+than just like you know scale the data
+the way it is. And then my final
+conclusion is that for now it seems flow
+matching models they're doing better
+for single cell data trying to match to
+the distribution.
+And
+also it to be able to
+scale these models
+that you know they can also do well on
+the data they haven't seen, they haven't
+trained on. We would need you know
+massive scaling scaling of the data I
+would say and then also the quality and
+the way that we measure data.
+And then with that yeah we have like
+three papers SCGENE scope, perturbation
+last year in NeurIPS and then PrimeFlow.
+You check them out and yeah, let me know
+if you have any questions. Thank you.

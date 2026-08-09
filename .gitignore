@@ -1,0 +1,10 @@
+# secrets — never commit (API keys, bearer tokens)
+.env*
+
+# seed data — generated from extraction/ via conversion agents + merge_validate.py;
+# embedded/final chunk JSONLs (~440MB) additionally need one `omnigraph embed` pass
+seed.jsonl
+seed-work/*.jsonl
+seed-work/validation-report.txt
+
+__pycache__/

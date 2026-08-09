@@ -1,0 +1,93 @@
+# SPIKE extraction — "Gadgets: Personal app vibe coding that is actually safe" (Kenton Varda, Cloudflare) — FOR REVIEW
+
+Source transcript: `transcripts/varda-cloudflare-gadgets.txt` (auto-captions — quotes are paraphrases, not verbatim; "Kenton Varta", "captain web", "Dne" garbles resolved, see review note 2).
+Video: https://youtu.be/RmS5s6Wbin4 — AI Engineer World's Fair, published 2026-08-05.
+`stagingTimestamp` for the artifact and all dated nodes (signals, knowhows): 2026-08-05 (publish date).
+Entities marked **[registry]** are already in the registry — edges link to them, no new node.
+Shape of the talk: the creator of Cloudflare Workers presents a side-project-turned-serious-product for **personal, per-user, agent-written apps** ("gadgets" — an office-suite model where apps are as numerous and personal as documents), whose one declared takeaway is *"personal AI codegen breaks traditional cloud infrastructure."* The security answer is architectural: confine every vibe-coded app so that its bugs cannot matter, and move sharing/ACL into the platform.
+
+---
+
+## InformationArtifact (1 new)
+
+| slug | name | artifactType | link |
+|---|---|---|---|
+| `ia-aie-varda-gadgets` | Gadgets: Personal app vibe coding that is actually safe (Kenton Varda, Cloudflare — AI Engineer World's Fair) | youtube | https://youtu.be/RmS5s6Wbin4 |
+
+Edges: `PublishedBySource → source-aie-yt` **[registry]**; `ContributedByExpert → exp-kenton-varda`.
+
+## Experts (1 new)
+
+| slug | name | edges |
+|---|---|---|
+| `exp-kenton-varda` | Kenton Varda (created Cloudflare Workers in 2017 and is still its lead engineer — millions of developers, trillions of requests/day; author of the Cap'n Proto/Cap'n Web RPC lineage; building Gadgets as his answer to personal AI-generated software) | `AffiliatedWithCompany → co-cloudflare` |
+
+Kept in prose (no nodes): "Philip," a Cloudflare product manager who vibe-coded the slide-builder blueprint in an afternoon; "Dane, our CTO" (⚠ captioned "Dne" — Dane Knecht per public record) who froze the planned open-sourcing.
+
+## Companies (1 new)
+
+| slug | name | type | note |
+|---|---|---|---|
+| `co-cloudflare` | Cloudflare | developer | Edge/cloud developer-infrastructure company (Workers, Durable Objects, workerd). ⚠ Nearest-fit enum coercion flagged: at Cloudflare's scale `bigtech` is arguable; typed `developer` because it appears here purely as a developer-platform vendor (same tilt as co-vercel) |
+
+## Elements (7 new)
+
+| slug | name | kind | domain | brief |
+|---|---|---|---|---|
+| `el-gadgets` | Gadgets (Cloudflare personal-app platform) | product | infra | Vibe-coding platform with an **office-suite model**: like Google Docs, but the unit is a *gadget* — an app with its own code — and a user accumulates hundreds of them, instantiating one per shareable thing (one slide deck = one instance of the slides gadget). Shown from Varda's own use: a one-shot collaborative whiteboard, a Spanish-email filter, a GitHub PR-sorter, a slide builder. Sharing is a platform feature (a Docs-style share dialog), **not** app code — "the platform can implement the sharing model and the access control such that the gadget itself can't possibly get that wrong." Every gadget automatically integrates with agents, which can both use it and rewrite it. Entire stack (minus the LLM) runs on Cloudflare Workers: no containers (dynamic workers), no database (Durable Objects) |
+| `el-gadget-blueprints` | Blueprints (code-without-data sharing) | concept | infra | Gadgets' distribution mechanism: export a useful gadget's **code without its data** as a blueprint; others instantiate fresh gadgets from it (document editor, kanban board, slide builder). Distribution becomes template-instantiation of per-user code rather than deployment of one multi-tenant service — and the blueprint author's "roadmap" ends at v1, because each user's agent forks features locally |
+| `el-vibe-code-confinement` | Double-ended vibe-code confinement | concept | security | The safety architecture that gives the talk its title: assume the AI-written code is buggy and make the bugs non-events. Client UI runs in a **null-origin iframe sandbox with CSP** — no network, no cookies, nothing but postMessage to the parent; over that channel a Cap'n Web RPC session forwards to the gadget's server code, a Durable Object running in a **dynamic-worker sandbox equally cut off from the world**. A vibe-coded client and vibe-coded server can talk only to each other, so "there is no security bug you can have in this code that matters" — demonstrated with an agent-added paste-SVG feature where potential XSS simply has nowhere to go. External-service access exists but only through a platform-mediated system |
+| `el-cloudflare-workers` | Cloudflare Workers | product | infra | Serverless application-hosting platform (2017–), millions of developers, trillions of requests/day; Gadgets is built entirely on it — the talk's aside is that "you can actually build complex apps on Workers," containerless and databaseless, with dynamic workers as the sandbox substrate |
+| `el-durable-objects` | Durable Objects | technology | infra | Cloudflare's stateful serverless primitive; in Gadgets each gadget's server code **is** a Durable Object, serving as both compute and the only persistence layer ("there's no database involved") — one addressable, stateful object per gadget instance, which is what makes the per-instance app model cheap |
+| `el-workerd` | workerd | technology | infra | The open-source, self-hostable Cloudflare Workers runtime. The entire demo ran **locally on Varda's laptop** on workerd (which is why the venue's dead internet didn't matter), and his stated intent is basement self-hosting for home automation via Home Assistant and Spotify connectors |
+| `el-capn-web` | Cap'n Web RPC | technology | infra | JavaScript RPC system (Cap'n Proto lineage, ⚠ captioned "captain web") used as the single communication channel of the confinement architecture: a session over postMessage from the sandboxed iframe, forwarded to the gadget's Durable Object server code |
+
+Element edges: all seven `IdentifiedInArtifact → ia-aie-varda-gadgets`; `el-gadgets` `UsesElement → el-cloudflare-workers`, `UsesElement → el-durable-objects`, `UsesElement → el-vibe-code-confinement`, `UsesElement → el-gadget-blueprints`, `ExemplifiesPattern → pat-saaspocalypse` **[registry]**; `el-gadget-blueprints` `UsesElement → el-durable-objects`; `el-vibe-code-confinement` `UsesElement → el-capn-web`, `UsesElement → el-constrain-effects-not-expression` **[registry, b7]** (philosophical kin: constrain what the code can do, not what the model writes), `EnablesPattern → pat-verification-gap` **[registry]**; `el-cloudflare-workers` `DevelopedByCompany → co-cloudflare`; `el-durable-objects` `DevelopedByCompany → co-cloudflare`; `el-workerd` `DevelopedByCompany → co-cloudflare`, `EnablesElement → el-gadgets`; `el-capn-web` `DevelopedByCompany → co-cloudflare`.
+
+Reused elements (no new nodes): `el-constrain-effects-not-expression` **[registry, b7]**. Adjacent-but-not-edged: the b5 sandbox family (`el-microvm`, `el-gvisor`) — different isolation lineage (see review note 5).
+
+## Signals (4 new)
+
+All: `SpottedInArtifact → ia-aie-varda-gadgets`, `SourcedFromSource → source-aie-yt` **[registry]**; all `RelevantCompany → co-cloudflare`.
+
+| slug | domain | name / brief | FormsPattern | other edges |
+|---|---|---|---|---|
+| `sig-personal-codegen-breaks-cloud-infra` | infra | The declared one-point takeaway from the creator of a major serverless platform: **personal AI codegen breaks traditional cloud infrastructure.** 25 years of cloud architecture "ran in the wrong direction" — one blessed version of an app on the developer's server for every user, which is convenient for developers and structurally forbids per-user customization — while mobile's alternative spent 15 years gatekept ("there's like five companies that can build mobile apps now"; easier to buy a gun than install unsigned software). His verdict on the current wave: vibe-coding platforms are targeting exactly this wrong substrate. The personal-software future needs per-user code instances — apps as numerous and disposable as documents | `FormsPattern → pat-saaspocalypse` **[registry]** | `OnElement → el-gadgets`, `el-cloudflare-workers` |
+| `sig-confinement-neutralizes-vibe-code-bugs` | security | The safety claim is architectural, not procedural: nobody reviews the AI's code — instead, client and server are both sandboxed (null-origin iframe + CSP; dynamic-worker Durable Object), can talk **only to each other** over one Cap'n Web/postMessage channel, and sharing/ACL are implemented by the platform so the app "can't possibly get that wrong." Consequence, stated flatly: "there is basically no security bug you can have in this code that matters" — an agent-added paste-arbitrary-SVG feature (a textbook XSS surface) is shrugged off live because leaked script has no origin, no cookies and no egress. This is the strongest corpus statement yet of securing generation by **making verification unnecessary** | `FormsPattern → pat-verification-gap` **[registry]**; `FormsPattern → pat-new-cyber-threats` **[registry]** | `OnElement → el-vibe-code-confinement`, `el-capn-web`, `el-durable-objects` |
+| `sig-user-agents-fork-features-in-place` | harness | The feature-request pipeline (user → PM → Jira → roadmap → plugin-system rewrite that never ships) is replaced by the user's own agent editing the app: every gadget is agent-integrated, and when Varda's slide spec needed strikethrough, centered text and freehand diagrams, Claude **read the app's code and added the features** — including a paste-SVG box "not very useful for any human, but perfectly useful for Claude, who then generated the SVG." Features useful to one user, or even only to the agent itself, become rational to build; the developer's core stays clean; a Cloudflare PM one-shot the slides app in an afternoon ("these days all product managers are also prolific engineers") | `FormsPattern → pat-saaspocalypse` **[registry]** | `OnElement → el-gadgets`, `el-gadget-blueprints` |
+| `sig-gadgets-self-hosted-and-productizing` | infra | Two trajectory facts: (1) the whole platform runs on the **open-source, self-hostable workerd runtime** — the demo ran offline on a laptop, and Varda's stated goal is basement self-hosting with Home Assistant/Spotify connectors; (2) the promised talk-closing "yeet onto GitHub" was **cancelled by Cloudflare's CTO days before** — "a lot of excitement inside Cloudflare and this has become a more serious project," release "in a few weeks" under deliberate discipline. A personal-software experiment crossing from side project to company-strategic product in real time | `FormsPattern → pat-sovereign-ai` **[registry]** (weak — see review note 4) | `OnElement → el-workerd`, `el-gadgets`, `el-durable-objects` |
+
+## Insights (2 new)
+
+| slug | name / brief | HighlightsPattern | ReliesOnElement |
+|---|---|---|---|
+| `ins-confine-dont-verify-personal-codegen` | When authorship industrializes to every user (and to agents adding features only agents will use), per-artifact verification cannot scale — no one will review a million personal apps, and the XSS question stops being answerable app by app. Gadgets' move is to relocate trust from the code to the **environment**: confine both halves of every app so bugs are non-events, and pull the properties that must actually hold — sharing, access control, external-service mediation — up into the platform where they are implemented once, correctly. It is the verification-gap thesis executed in infrastructure: generation gets free rein precisely because trust was re-architected outside it | `HighlightsPattern → pat-verification-gap` **[registry]** | `ReliesOnElement → el-vibe-code-confinement`, `el-gadgets` |
+| `ins-personal-software-inverts-distribution` | The unit of software inverts: from one blessed multi-tenant deployment serving all users to per-user instantiated code — gadget as document, blueprint as code-minus-data template, one Durable Object per instance. That single inversion dissolves both incumbent distribution regimes at once: the app-store gatekeeping model (nothing to review or sign when every instance is confined by construction) and the SaaS roadmap model (no feature backlog when each user's agent forks the app locally). The infrastructure precondition is the part incumbents lack: isolation cheap enough to give every user, per app, their own sandboxed client and server | `HighlightsPattern → pat-saaspocalypse` **[registry]** | `ReliesOnElement → el-gadgets`, `el-gadget-blueprints`, `el-durable-objects` |
+
+## KnowHow (1 new)
+
+All: `SourcedFromArtifact → ia-aie-varda-gadgets`.
+
+| slug | name | guidelines (condensed) | ReferencesElement |
+|---|---|---|---|
+| `how-host-untrusted-personal-apps` | Host AI-written personal apps so their bugs can't matter | Run the app's UI in a null-origin sandboxed iframe with CSP — no cookies, no network, no DOM escape; give it exactly one channel: postMessage to the parent, carrying an RPC session (Cap'n Web) to the app's server half; run that server half per-instance in its own sandbox (a Durable Object / dynamic worker) with **no egress either** — client and server may talk only to each other; never let app code implement sharing or access control — make instances small enough (one gadget per shareable thing) that the platform owns the share model outright; mediate any external-service access through a platform-level system rather than granting the app network; make every app agent-readable and agent-writable so features are added in place instead of through a roadmap; and prefer a self-hostable runtime (workerd) so the personal-software stack can itself be personal | `ReferencesElement → el-vibe-code-confinement`, `el-gadgets`, `el-capn-web`, `el-durable-objects`, `el-workerd` |
+
+## Dropped
+
+- **The ivory-tower / Jira / plugin-rewrite parable** — framing narrative; its payoff is inside `sig-user-agents-fork-features-in-place`.
+- **The wiggling-word anecdote** ("that's an AI original… this is ASI, folks") — color; no claim.
+- **The failed live "silly counter" prompt** (venue internet down) — demo hiccup; ironically also evidence for the local-runtime point, which is captured in `sig-gadgets-self-hosted-and-productizing`.
+- **The external-services safety system** — "I could give two more talks about that"; asserted to exist but undescribed, so kept as one clause in `el-vibe-code-confinement`/KnowHow rather than an element.
+- **Richard Stallman self-comparison, gun-purchase quip, Google 24-hour unsigned-software flow** — rhetoric; the substantive gatekeeping claim survives in `sig-personal-codegen-breaks-cloud-infra`.
+- **Home Assistant / Spotify connectors** — named integrations of a pre-release product; prose in `el-workerd`'s brief.
+
+## Review notes
+
+1. **Prompt question answered — Gadgets *supports* `pat-saaspocalypse`, with a sharpening.** Not the "agents use SaaS so seats die" flavour: Varda's claim is that personal codegen dissolves the *packaged-app model itself* (per-user forks, blueprint distribution, roadmapless development), and — the sharpening — that this future is **infrastructure-gated**: it cannot be built on one-blessed-version cloud or gatekept app stores, which is why a platform vendor is repositioning for it. Two support edges + `ins-personal-software-inverts-distribution` carry this. It also pairs with the same-batch MCP Apps file: two independent mechanisms (host-composed UI atoms; per-user gadget forks) both demote the traditional app.
+2. **Garbles.** "Kenton Varta" → **Kenton Varda**; "captain web RPC" → **Cap'n Web** (his published JS RPC system, Cap'n Proto lineage); "Dne our CTO" → **Dane** (Knecht — surname from public record, not transcript); "combon board" → kanban board; "diamond dozen" → dime a dozen; "yee/yeet onto GitHub" is genuine speaker idiom, not garble. High confidence on all.
+3. **`pat-new-cyber-threats` homing — support, not contradiction.** The talk *jokes* that the open web "turned out fine" against Apple/Google fearmongering, but its entire architecture presumes AI-authored code is an unreviewable threat surface (XSS-by-default, agent-added features nobody audits). That is anticipatory defense against the new threat class, so the edge is FormsPattern; read his web quip as narrowing (platform gatekeeping was never the right control), not as denying the threat. Downgrade the second edge on `sig-confinement-neutralizes-vibe-code-bugs` to prose if you weigh the quip more heavily.
+4. **`pat-sovereign-ai` edge is the weakest in the file — deliberate and downgradeable.** Self-hostable open runtime + offline demo + basement intent is real but one beat of the talk; homed weakly per the corpus's sovereign-evidence bar (the pattern already carries counter-edges). Drop to prose if the bar is higher at review.
+5. **Not counted toward `pat-durable-execution` (ledger discipline).** Durable Objects appear here as a stock platform primitive that happens to make per-instance apps cheap — the talk makes no durable-*execution* claim (no workflow replay, no crash-resume of agent loops). No ledger movement recorded; noting only that a second corpus talk (after Sehgal b9's critical mention) treats DOs as ambient infrastructure.
+6. **`pat-ai-native-org` — weak single-line data point, review-note only.** "These days all product managers are also prolific engineers," plus a PM shipping an office app in an afternoon, echoes the pattern's non-devs-ship evidence (Yaron survey, Automattic). One anecdote = no edge; add it to the pattern's evidence pile at review if you want breadth.
+7. **Uncoined-candidate flag: the *adaptive-software* reading.** Gadgets is arguably the cleanest infrastructure instance of batch-7's `pat-adaptive-software` candidate (ten Teije's "stem and divergences": one stem, per-user live divergences — here literally blueprint + per-user agent-forked gadgets). `pat-adaptive-harness` [registry] was NOT edged because Gadgets adapts the product artifact, not the agent scaffolding. If review merged the two candidates into `pat-adaptive-harness`, `sig-user-agents-fork-features-in-place` is the signal to cross-home.
+8. **Signal-bar caveat.** Pre-release product, single-speaker testimony, no external users yet (blueprints shown are colleagues'); the hard externally-verifiable facts are Workers' 2017 origin/scale, workerd being open source, and the release freeze. The "no security bug matters" claim is an architecture argument, not an audit result — flag it as vendor-stated if cited externally.

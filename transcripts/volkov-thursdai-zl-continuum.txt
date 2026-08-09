@@ -1,0 +1,216 @@
+>> Two talks at the AI Engineer Europe. One guy is saying, "Code is free." and deleted his ID. And
+the other one is saying, "Read every effing line of code." So, should AI engineers still read code
+their agents output I named this the Desolation of Apollo Continuum. And you guys probably have
+argued about this in Slack. You probably talked about this in the hallway track. So, let's talk
+about this here. Because code got cheap, attention didn't. As you may know, back in December 2025,
+something big changed. AI engineering has changed forever, and it broke its own trendline. Actually,
+Swyx, the organizer of AI Engineer, is collecting evidence to that single moment in time at the
+website called wtfhappened2025.com. I recommend you go and check it out. It's really, really funny.
+Uh this is just one example from METR, the machine evaluation center. And it shows that models, for
+the first time, started completing tasks that would take engineers over 16 hours to do. And in fact,
+we've gone way up the curve, way up the trendline after that. This is the backdrop to everything
+that AI engineering is experiencing. Because we don't write code anymore. Most of us, at least. I
+want to see one Can you guys give me a raise of hands if you still handcraft and write code, most of
+your code? Anybody here? Most of your code is written by hand? Amazing. This is the Token Maxing
+track, after all. I I think the one person here who still writes code is maybe a little shy of
+raising their hand. That's okay. Cuz we don't type code anymore. We're not handcrafters. We
+supervise. I like to say we babysit agents. And the greatest example for this obviously is Boris's
+journey. You guys know Boris, the creator of Cloud Code, uh Anthropic. 100% of his code is written
+and authored by Cloud Code at this point. And he didn't stop being engineer, he moved up the layer.
+He still ships 20 to 30 PRs, maybe more. And recently he talked about he deleted his ID. I found it
+really funny. Just just no reason to just hand type code anymore. In fact, 80% of Anthropic's code
+is now AI written and this is this stat is at least a few months old. It's likely more right now.
+And he's not the only one. Some of you have seen this chart from GitHub. Some of you have maybe
+remembered this chart while GitHub was down for you. Uh the reason is GitHub is on track to to to
+get 14 billion commits this year. All of 2025 all of yes we yet last year was 1 billion. They're 14x
+the number of commits. They're seeing 14x the number of commits, which is insane and most of this is
+AI assisted. And it's a lot of code. And so the AI engineering has changed forever and I want to
+tell you about AI Engineer World's Fair. I been to every single one and I'll tell you about this
+later. And AI Engineer is a great place to get the zeitgeist of where our career is going and how is
+it changing, okay? This one obviously is 3x bigger than last year. This is just one of the rooms.
+There's like a bunch of rooms. 7,000 people I think we clocked in. 36 tracks. And if you want to
+know what happens in AI engineering, you kind of have to be here. So this would be a little bit of
+meta talk. So one of the guys at AI Engineer EU talked about code as ship. The other one talked
+about uh we should read every line of code. Let's listen to them for just a second, okay? This is
+Ryan LePopulaire from OpenAI. I I think he's he made it here, but uh this is Ryan LeFebvre from Open
+AI. >> The models at this point are good enough where they're isomorphic they can write code. >> Can
+you guys >> Do you mind? >> These tools are high quality that solve real user problems in real code
+bases. Code is free. It's free for you to produce, free to refactor, and it is not a thing to get
+hung up on anymore. Humans no longer need to concern themselves with implementation. The important
+thing is not the code, but the prompt and the guardrails that got you there. You can just simply
+say, "Do not produce slop." Don't accept slop. You won't get slop in your code base. But, to do that
+requires taking short-term velocity hits in order to back up or double-click into a task to figure
+out what it is the agents are struggling with. >> So, this is Ryan LeFebvre, okay? He came up on
+stage at the engineer, and he opened with like, "Hey, I'm a talking billionaire, and I want you to
+be as well." In fact, the talking billionaire lounge that's in front of the leadership track that
+you guys see, that's because of him. He came up with this concept. And he got the golden card and
+everything. On the other side, the same conference, the other side, Mario Zechner, creator of Pi. >>
+Slow the down. Everything's broken. And then there's people that say, "Our product's been 100% built
+by agents." Yes, we know it sucks now. Congratulations. >> >> Agents are actually compounding
+booboos, which is my word for errors, with zero learning and no bottlenecks and delayed pain. The
+delayed pain is for you. Those are my most beloved people. I don't even read the code anymore.
+Congratulations. Something is broken, and your users are screaming, so who you going to call? Not
+yourself, because you haven't read the code. Non-critical code, sure, write slop ahead. Critical
+code, read every line. >> So, two folks, same conference, day after day, talking about the one
+anxiety that we all feel. Should we all still be reading code in 2026? By the way, these two folks
+are the number six and number seven most watched YouTube videos from AI engineer from all time. So,
+they're obviously representing something that we're feeling we're talking about. And this is being
+the leadership track, something that you folks that report to you are talking about, okay? Should
+they still be reading code? And what's the what's the level quality? So, they name the same anxiety
+from both ends. Uh at this point, I probably should introduce Uh hey, I'm Alex Volkov. I'm the host
+of Thursday AI podcast. It's a podcast and a newsletter. We go live every week to talk about AI. For
+the past 3 and 1/2 years, we've been tracking every change in the AI engineering, every release from
+every lab, every model. And I'm also an AI evangelist with Weights & Biases and Core Weave. Um what
+also should I tell you about myself? That I've been covering AI engineers specifically since the
+first one in 2023. And oh boy, has it changed. And so, you can treat this as a dispatch from the
+front line because all of these people now are my friends. And we constantly talk about this in the
+speakers' room in the hallway track. I couldn't stop thinking about that tension. I couldn't stop
+thinking about that kind of disparity between the two folks, okay? And I put them both on a line,
+Zeshner from one end, Lapopolo on the other end. I called it a continuum. And I basically started
+asking people, "Hey, where are you on this line? Where are you a Zeshner? Do you still read every
+line of code? Are you a Lapopolo? Do you just YOLO and don't even look at code and think agents are
+good enough, etc.?" And I I got the framing wrong. But, I'll tell you about this in just a second,
+okay? So, before this, I want you to be kind of honest with yourself. And again, if you don't write
+code, or let me say this, if you don't babysit your own agents, but you you have reports that
+babysit agents for you, uh think about them when you answer this, okay? And be honest. On the ZL
+continuum, where are you? And let's take um let's take by vote of hands, who here has committed code
+that they've never looked at before? Amazing, love that. Who here still reads every line of code or
+at least critical code? I see one cowboy over there. I love that, man. I'm going to talk to you
+afterwards, okay? I want to understand exactly why you do this. Um, and so who's right? Let's talk
+about who's right. Let's talk about where we are right now, and we start with Ryan Lepopolo. If you
+get to meet Ryan over here, he's very AGI built. I think even within OpenAI, the AGI organization,
+Ryan is kind of like the more AGI built person. If you have a chance to go downstairs and grab the
+AGI pills that 2X prescribed, I think Ryan had all of them. He works at OpenAI, where he sits code
+is literally free. So are tokens. It's really We renamed Ryan, do you guys know the dash dash YOLO
+in Codex? It's kind of like the skip dangerous permissions in cloud code. So we renamed the Ryan
+Lepopolo YOLO Popolo. He's okay with it, by the way, I asked him. So if we check his kind of side,
+the the folks like him against the data, they're actually right. The optimists are right, at least
+about output. This is from Faros AI, I think I'm not the only speaker at this conference who sites
+this essay. It's sorry, this survey. It's new from April 2026. I think it's one of the best kind of
+evidence of where we're going that we can now site, okay? 22,000 engineers were surveyed about code.
+They call this the acceleration whiplash. And they're talking about my favorite stat on here, and
+you can read this yourself, 861% increase in code deletion per PR. So us together with AI agents, we
+love deleting code. Anthropic also said that they're shipping eight times more code per quarter than
+in 2025. But is it all good code? Okay, let's play a game. If you know the answer, you let me have
+my moment on here on stage, okay? But if you don't know the answer, let's guess. Whose status page
+is this? I think I I hear a few answers. I think most of us guessed it. This is Claude. Uh in fact,
+as you can see on the on the right, it was down when I took the screenshot. It was really funny. Uh
+this Anthropic is the company that probably uses the most AI-generated code, and their status page
+looks like a Christmas tree. Now, I'm not here to dunk on Anthropic. Uh they did an incredible job
+back on stage uh talking about Claude and etc. Um this may be due to scale, this may be due to other
+factors. Uh I'm not here to dunk on them, but [snorts] it just goes to show that they're not the
+only ones like this. Obviously, GitHub is famously also suffers from a little bit of golf. Output
+does not mean stability, okay? So, maybe this is a good example of what? Same essay, 31% increase in
+PRs merged with no review at all, human or agentic. Don't do this. I beg of you. Don't It's it's
+We'll talk about how to fix this in a second. So, when you ship this fast and this much, something
+gives, and usually it's quality. So, maybe Mario's right, yeah? Maybe the bill does come due in
+production. Same study, 242% increase in incident per PR. This kind of scary. The second study is
+also scary. Bugs per developer is up six times than 2025. So, even Anthropic can see this. I don't
+know if you guys read the RSI essay they posted, the recursive self-improvement, where they talk
+about, "Hey, what does the future hold?" They outline two scenarios. One of them says, "Maybe the
+acceleration will stop, and we're going to get used to this." They all They say, "That's actually
+not likely to happen. We just added this uh eventuality for clarity. We don't think that's likely to
+happen. What we think is going to happen is uh engineers and companies 10Xing to 100x-ing to
+1,000x-ing their output and productivity, and then they say this, "We, as we began to push more code
+around the organization, human code review has become a new bottleneck." They're citing Amdahl's law
+that shows that if you have an explosion of productivity in one area, another area going to going to
+get blocked. And nobody removes the human in these organizations. In fact, careers in Anthropic and
+careers in OpenAI, they're still hiring humans. So, nobody's removing the human, and they're both
+saying that human code review is still a concern. And here's my mea culpa. I promise you I'll tell
+you where I got it wrong the framing. My mea culpa is the continuum is real. The Zeal continuum is
+real, but it's not about the people. It's about the tasks. The continuum is real. It's not about the
+people. It's about the task. Same engineer could be a Ryan LeCompte on Apollo on one piece of code,
+and has to be Mario Zechner and read every line of other pieces of code. Different task just need
+different proof. If we look at them closely, I obviously character- characterized them. I practiced
+this word multiple times and I still got it wrong. Characterized them. Their character on both ends
+for the Zeal continuum. But, if you look at them closely and what they're saying closely, they're
+actually not that different. Ryan's mechanism is moving attention up the layer. He's saying humans
+are unreliable at catching repeated mistakes of the same type. Repeatedly catching the mistakes of
+the same type. So, when they you do catch a mistake during the PR review, write the documentation,
+the linter, and the reviewer needs to remember this once, so the system will catch this type of
+bugs. He's not saying don't inspect your code. He's saying inspect the system, not every line. Mario
+from the other end is saying route by task. If it's not critical, let it rip. He said it. And if
+it's critical, you read every line. How do you know what's critical? Well, his answer is easy. You
+read the effing code. Uh my answer to add to this is also you ask your clankers. They're great at
+looking at a large repository and saying you and telling you, "Hey, this line is actually critical.
+You should look at this area. This primitives over here are critical." So, you ask your clanker. So,
+they agree more than I can have given credit for. And so, I think at the beginning of this, the
+wrong question is should I still be reading code in 2026? I think the better question right now for
+all of us is what proof does this specific change need? What proof does this specific change need?
+And so, I took Mario on the left, obviously. I took Ryan on the right. And then I took a bunch of
+other uh great AI engineers, friends, some friends, uh many of them speakers at this conference. I
+kind of distilled their advice down to a routing table. And uh they told me, I think Swyx told me on
+Twitter, "Just give me one slide that I will that people need to take a screenshot of. It's going to
+be this slide. You don't have to read it with me, but in the end, you're welcome to take a picture
+of this." This is the your Monday artifact. Routing the change where the proof needs it. Routing the
+change to the proof that it needs. You read every line of authentication, money movement,
+permissions, and irreversible data. You inspect the critical path yourself, and then obviously, you
+keep going. Uh decomposing, I think is very important. The more code is getting written, the more
+it's hard. Your eyes are starting to glaze over a a very long pull request. So, split it into atomic
+reviewable PRs. You know who's good at it? Agents. They're great at decomposing code. Ask them to do
+it. You verify that doesn't go away. This has been with us in the in engineering software
+engineering and the AI engineering doesn't go away. Traces, evals, shadow mode. Come talk to me
+after after this talk. I don't have enough time, but shadow mode is a really cool one that I learned
+about preparing this talk. And then, I think the most important one is separating. Many people have
+the same agent that writes the code, also inspects the outputs and writes the tests. Separating is
+very important. If you don't separate, it's kind of like if I came up with an exam and then I took
+an exam and I scored myself on the exam. It's not not really productive, right? And then last one is
+engineer. Rails observability rollback. This is what Ryan Le Popo talks about. Build the system that
+builds the system because read spends your attention once, engineer makes the system remember.
+Right? And you might sit in might be sitting there and saying, "Hey, did you hear the news, Alex?
+Fable is back. What about Fable? What about Mythos? Is this still relevant at this next scale of
+capability?" Because when I coined the Zeal Continuum, it was only 82 days ago. Mythos has just been
+announced. We weren't sure like what was going on. Only the people in Anthropic got access to it.
+And Jared S. Chipar, that was on stage from Anthropic, he said about Mythos and and Fable, "We used
+to check if Claude is doing the work right? And with Fable 5, I instead check if Claude is doing the
+right work." Let it land for a second. I don't know if you read the statement. When I read the
+statement, I felt like little chills at the back of my neck about the next like level of capability,
+okay? We used to check if Claude is doing the work right. With Fable, we check if Claude is doing
+the right work. And our favorite senpai who recently joined Anthropic and is getting unnecessary
+heat on Twitter said this. Andrej Karpathy has said, "It's never felt so tempting to stop looking at
+code at all. But don't do this in production." Senpai is great for the sole reason. Do you guys know
+the sentence, "This meeting could have been an email?" So, this presentation could have been Andrej
+Karpathy's one sentence, okay? He's naming the anxiety from both ends. It's never been so tempting
+to stop looking at code. Don't do this in production, even with Fable. And so, if you guys noticed,
+I have a little thing here. This. Uh it's so wide you can see my little laser pointer. Do you guys
+see the arrow, the capability drift arrow? This thing? When I wrote the continuum, I realized that
+it it's only a temporary place in time. Capability increases move us towards the popular. So, we're
+going to talk about capability increases as well because the review layer moves. If yesterday we
+inspected the outputs and we read the code, and today we inspect the task direction and kind of like
+directed to the right proof, maybe tomorrow we're inspecting the loops. Capability drift changes
+where proof belongs. It doesn't remove the requirement of proof. Talking about loops. Is that the
+next primitive? I think most of this conference, I think the zeitgeist for this one is going to be
+is talking factories and co-factories are real, and is loops is a real thing that I need to be doing
+at this point. By raising of hands, who here heard of loops? Keep your hands up, please, and take
+them down if you are not running loops right now and you haven't anything about they are. There's a
+good perception There's good number of people here who heard about loops, and they started with both
+these folks, Peter Steinberger, creator of Open Cloud Open Claw, and now is Open AI, and Boris
+Cherny. And pretty much within the span of 2 days, both of them start talking about loops that
+became kind of the zeitgeist. And loops are moving us from prompting each turn to designing the
+system that writes the actual prompts. By the way, do you guys know what's common between these guys
+and what's different between me and these guys? Their tokens are free. So, when they talk about
+loops and their tokens are free, they're not telling you, "Hey, you should be doing this right now
+specifically." But because they work at bigger labs, you can treat them as kind of a lighthouse
+that's pointing where we're all going. Kind of like Gretzky skate where the puck is going to to
+They're going to tell us what all of our enterprises are going to get get up on. And if it's if it's
+loops, then let me at least give you a TLDR, okay? Loops are basically fancy cron jobs that run on a
+schedule. But what they do is they discover a task and kind of start writing a prompt for this task
+from the plan. They write the plan, they execute, and most importantly for my talk here, they verify
+themselves, and if it doesn't work, they try again. So, an agent that loops grades its own work
+against the goal with less human intervention. But if the builder grades itself, you didn't remove
+the review, you hid it. Okay, this this connects to my routing table. This comes from Adi Olsmanyu
+recently at Google. He's also at this conference, a great engineer. Uh he said if I if I if I wasn't
+reviewing the code myself, or relied entirely on automated loops to fix my code, let's say a bug
+comes up in Jira and my loop picks it up and starts fixing this, my product quality would suffer.
+I'd likely end up in a downward spiral, digging myself into a deeper hole. So again, loops don't
+remove judgment, but they do raise the stakes on where you put it. So what about the future, folks?
+Nobody knows. Anthropic did not know that Claude code is going to explode on them and this is going
+to be a billion-dollar product. Uh nobody knew that coding agents and Harness are going to be the
+generalized agent, and now everybody's pursuing them. Folks at OpenAI with Codex, Elon with with
+Grok code, uh Google with with anti-gravity. Model capability is jumping at an insane pace, and what
+I implore and to tell you here is that flexibility is required. You need to keep being able to keep
+up with with the trends. This is why you stay engineer. And by the way, I told some folks here about
+my podcast Thursday and news. If you want to keep tracking where that line moves, feel free to scan
+this QR code, join our uh our, you know, newsletter, etc. Um and I'll leave you with this. Because
+it's my time, I'll leave you with this. Not every line in 2026 needs your eyes. Every system still
+needs your judgment. Thank you. >>

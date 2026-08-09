@@ -1,0 +1,178 @@
+>> Awesome. So, yes, as great introduction took us to we are going to be talking about local agentic
+theory for accessible mobile games. And we realize this is the graph track, but there are graphs
+here in this presentation. So, fret not if you're missing them. So, yeah. So, a few disclaimers
+before we continue. Since we we do work at The New York Times and there's a few things we have to
+say about our puzzles AI etc. Our puzzles are made by people. They're not made by AI. So, that's
+just a thing we this true and it'll always be true. There's no AI in the games themselves. So,
+there's no AI features. You might have seen Wordle Bot, that's not an AI feature. There's so all our
+games are are pretty much AI free. And the work that we're going to be talking about now is
+experimental work. So, it's stuff that we look at in terms of solvability and other capabilities of
+agents in the space that we can potentially take advantage of on a local device to to do other
+things than actually generate games more so things about playability and other kinds of features we
+can utilize agents for in an intelligent way. So, introduce a little bit of an introduction. So, I
+also if anyone has seen the last year's World Fair talk that I did on connections, there's a similar
+vibe to this. I did a deeper dive into how a solver can be built for that game. And if you're
+interested, you can take a look. It's on YouTube and it has a lot of interesting deeper dive
+specifics for RL solvers, which I'll go into in a bit as well. So, little bit of a history.
+Everybody here and just in case you aren't familiar with AI in gaming, which for you know, it's not
+the most common topic here at at the World's Fair right now, but if you are familiar with the
+history of it, AI has been in games for a long time. And since this is since the '80s, it's been
+established as a core pattern in games like Pac-Man. This is a simple version of an AI called a
+finite state machine. And if anybody everyone's familiar with a finite state machine here, probably.
+I would imagine enough people are. It's a basic AI system which tells the ghosts in the game what to
+do when Pac-Man gets a dot or not. But basically it is a conditional kind of symbolic AI. And then
+moving forward we'll talk more about RL and the advancements of where that went to. But firstly, the
+core thesis of what we're going to really focus on is the model of running the devices running AI on
+our local devices. So most AI infrastructure today runs really on the cloud and if you're running
+mobile application, most practical scenarios involve cloud architecture. And that that essentially
+is expensive because you have AI calls and inference calls that you have to make upstream and then
+they have to come to your device. So there's things like latency, etc. So in an ideal world when we
+evolve to that place, we can offload a lot of the intelligence onto a device. What that does is make
+a lot of the make a lot of the calls faster when we get to that world because you're not doing a
+round trip to the cloud to get that information. So you can actually compress that time to the time
+within the device frame computation. That it's private, too. So your AI computation is with on it's
+within the device itself. And if it's set up properly, it won't leave the device because there's
+some things that for the gameplay experience that you don't actually need it to leave the device.
+Local computation is the way to go and it stays within your confined security zone uh locally. And
+uh it's not needed upstream for telemetry or anything like that. Um and then it should work
+anywhere. So, one thing is that games uh you know, some a lot of games rely on the internet and and
+many they they will for a live con- connection point, but at least in in the in many cases where you
+need advanced AI compute, you can develop games that can work locally on your uh machine, on your
+mobile device, rather. And uh that's great because if you're in a subway tunnel or something like
+that, you can still have a a game with a very smart AI that is um building uh doing something uh
+without being disrupted due to um uh HTTP calls that are not getting through. Um And then it's uh
+again, the personalization is a big thing in general with on-device models because personalization
+is important. Uh and a lot of people want their game experience to be tailored to them. And in the
+world where we can do things um on device, we have that capability more so because the the features
+are local. So, now we're going to talk about agentic AI for games. And um as I'm sure everybody's
+familiar with AlphaGo, AlphaZero, etc. here. Um the Alpha series models. So, basically um a
+reinforcement learning was the way that uh games were in the past um trained in order to uh do
+intelligence, right? So, basically what you would do is that you would take a you take a model, uh
+have many iterations, and then that uh that model would then um be really tuned to a particular
+game. Um and that's still happening, but uh what I'm doing is setting up the kind of history in the
+school of thought of that uh all the way up to 2024. Um has anybody heard of EfficientZero before
+here? Uh if not, it's fine. EfficientZero and EfficientZero V2 are the reinforcement models uh
+reinforcement learning models that are state-of-the-art um and they're called sample efficient
+reinforcement learning models because they learn uh very fast with a lot of a lot less data than
+traditional reinforcement learning models do on games. Um and there's just uh so that was up to 2024
+and that that uh mechanic is continuing, but it lives alongside uh our reinforcement learning and
+agentic game uh development. So, uh reinforcement learning, again, is on the left is a bunch of
+cycles that are used to train a model in order to change its weight so it becomes more intelligent
+and able to play a particular game. An agentic system is one where you actually have a game that is
+a negotiated by agents, which are essentially language models, which are using in-context learning
+to figure out the state of the world in the game. So, RL changes the model itself and changes the
+weights in the model. Um the agentic system reasons over a space in the game, um and there's no
+reward system to grind out. Uh the loop There's an agentic loop that's at play, which then learns
+the system through tool calls and other things that are local to the device and using local device
+functionality and adapts to a new situation. So, it's much more dynamic. So, um So, this is uh
+basically one example of an agentic-based game using Have everybody seen Space Invaders before? I I
+presume. Okay. Well, if not, you will There it is. So, this is a agentic version of Space Invaders,
+which um is designed to use a local agentic framework which we worked on to um do basically the
+basic things like kill the spaceships as they get close and avoid the bullets as the spaceships
+attack. And you've probably seen simulations where our models have been trained to do the same
+thing, but this is specifically an agentic system that we built to actually play this game. Um and
+then you You see the agentic states on the right. And so, this is the inside the agent itself and
+how the loop works. So, basically, you have a very few basic states where you're trying to perceive
+what's happening in this where the agent is trying to perceive what's happening in the scene, where
+it's trying to predict the next move of the spaceships attacking it, where it's deciding what to do
+next because if the bullet is too close or if the spaceship is too close, it will take a it will
+make some sort of action and then it will act in that way in the appropriate way and then loop again
+and then see the state. So, that's a very simple system, but it's it's basically a simple agent
+that's using an on-device model to actually execute its steps. So, some challenges in this space are
+space [snorts] is health is a challenge because on the device you have a limited amount of
+resources. You have a device budget where you have to fit the weights, you have to compress the
+state history of the agent, you have to compress the working set or the planning artifacts of the
+agent if you even think of the way that an agent will create the way that it navigates a system, and
+you have to have enough render headroom in order to actually render the game and play the game
+itself. So, this is basically that. And then, you also have a time constraint because time itself is
+budgeted in a particular way so that you are essentially using like a refresh rate of 60 Hz. So, in
+each frame that passes, you have to which you get a new frame every 16 ms a pound if your refresh
+rate is 60 Hz. You need to actually fit the agent planning within that, and if you go outside of
+that budget, what will happen in the agent execution, you're going to see jank and other things on
+mobile devices that that are very hard to pull out. And then, you have energy constraints, and
+energy constraints are basically battery life. So, battery life you know, the basic devi- devices
+these days are not optimized to um really handle agentic workloads. Uh yet, they're getting to that
+point where you have NPUs, neural processing units, and AI chips that are specifically designed to
+handle that inference, but at this point in time, um the agentic design of the loop on the device
+has to be very curated to do as minimum energy processing as possible, otherwise your phones die
+fast as it is and they'll die even faster. So essentially there's a constraint function in of this
+for example constraint graph that takes into account all three of these areas and so there's
+different ways of managing the constraints in this constraint graph so you can actually make sure
+that your agent is performing well. So you can handle space constraints, time constraints, energy
+constraints and there's some techniques that we use to optimize those constraints so that we're not
+we're we're penalizing over focus on one area and then we're using like soft constraining on another
+area so that we're not penalizing too much if we need a little extra space but if we use too much
+time, we want to penalize that because we don't want the agent to disrupt the user experience. So we
+we look at things like gaze estimation models as well because gaze is another new factor. It's been
+around for a while but it's evolving to the point where it can actually um be useful and an agent
+has to take into account gaze model data which is basically convolutional neural net which takes
+gaze data and then can translate it to agentic behavior. And so it just begs to mention that we need
+to consider things like the Arc AGI score because we also have the base intelligence of the model
+and the base intelligence of a lot of these models aren't capable yet of being fully cognizant of
+all the complex decisions that an agent can make in the most intelligent and possibly interesting
+games in the future but we have to essentially surmount this to get to that point. And the last
+thing I'll show you before I hand it over to Joanne is this is another agent that we built to solve
+the mini crosswords. So if you play the mini crosswords, this is called a constraint satisfaction
+agent which uses a satisfaction graph to figure out how to put the words in the crossword puzzle at
+the right place so that um that it fills the puzzle properly. And it backtracks in the puzzle and
+finds the right word, sometimes finds the wrong word, but the constraint graph here is optimized so
+that if the constraints are getting too um uh too crowded or too incorrect, then it will backtrack
+efficiently and the agent can use natural language from the graph to backtrack and find the correct
+crossword uh crossword layout. Um so basically where we now, we have a lot of different models that
+we are considering. So we have generalist models um like for example Google Seema, which will be the
+agentic framework uh agentic framework that can do a lot of different things in this space. Um we
+have agents that do visual estimation on the phone. Uh and then we have ins- entire generative
+worlds that are being built using AI. Um and that will be a whole different interesting agentic
+space to consider. Now I'll hand it over to Joanne to talk about accessibility. >> Oh, is this thing
+on? Yes. Um let's talk about accessibility. How can we build a system that truly serves everyone? Um
+like Shafiq mentioned, traditionally games live in a world of fixed state models, rigid, hand-
+authored. A player's choice is often limited to a toggle or a static menu. The flaw here, as you
+could have guessed, is that it's entirely deterministic, predictable, and completely blind to the
+real-time needs. But we don't need to reinvent the wheel here to battle to build the battle-tested
+accessible game. We ground our design in an existing international standard, WCAG 2.2. This
+framework evaluates interactions across four human-centric pillars. Is this experience perceivable,
+operable, understandable, and robust? Giving us a proven global foundation to build our dynamic
+player states. But you can't have rules without breaking them. Some common pitfalls where our break
+these standards. A mobile game like crosswords, as an example. There are motor challenges we come
+across where tiny grid cells can lead to mistaps, active cell highlights are invisible to low vision
+players, uh cognitive barriers can be forcing manual logins or timers that are unforgiving and
+alienating to process speed uh to processing speed needs. A static easy mode can't fix a crossword
+grid that remains fundamentally blind to our players. Although it's still in draft, WCAG 3.0,
+spoiler alert, is following the trends of dropping the binary pass/fail to a graded bronze, silver,
+and gold scoring. Accessibility is developing into a more diverse scale and moving away from our
+standard checkbox. The same shift should apply for gameplay. This scale visualizes the values that
+can change depending on the needs of the player. Here we have the core dials that scale depending on
+the player's real-time needs. If we tune for a player needing more assistance, we have input
+tolerance that controls the flexibility around physical constraints, making interactions more
+forgiving. The step granularity adjusts for the number of operations in a sequence, helping users
+break complex tasks and tuning to players who needs more nuance. The agent's time The agent's entire
+job is to dynamically calculate these dials as they rise and fall together, balancing the scale
+against the player's live context. With on-device models, the agent can get a real-time feel for how
+the player is doing. For example, we can use vision models to track eye gaze and figure out when the
+user might be facing search friction, analyze shaky taps for someone having a hard time with
+controls, meet players where they're at by allow by allowing handwriting recognition. Um focus
+traps. But we don't want the agent to just watch, we want it to act. We simulate on the right um
+well, the simulation on the right is a broken dialogue forcing a user into a keyboard trap. For a
+user using a switch or a keyboard instead of touch, focus order is very important. If we have a
+broken dialogue, tab and focus can be an endless loop with no way to navigate back. Here the agent
+can monitor that focus path, flag the loop, and inject an exit route live on the device. When you're
+navigating with limited dexterity or just fat fingers, tiny targets can mean a miss. Instead of
+using players instead of making players play operation, our agent is a live layout auditor. It
+measures the interface on the fly, catches violations, and dynamically resizes the controls. The
+agent rewrites the layout live adapting to the human and not the other way around. Think of it like
+a real-time tug-of-war where the system is no longer fixed but tunes the game to the player.
+Accessibility and challenge stop being treated separately and become two ends of one dial constantly
+tuning for the moment. Ultimately, this is uh there this is where on-device AI is heading. By
+building systems that can actively sense human frustrations, we can move past fixed menus and turn
+our devices into responsive empathetic partners. But there's still groundwork to be laid. Looking
+ahead for local agents to truly understand games, there's still a lot we need to build. First, they
+have to be faster. We need a plan we need plans and decisions within a 16-ms frame to prevent
+stuttering for games. We need models to predict the game so that we can see exactly what a layout
+change will do before they actually make it. And the real magic though will be the long-term memory
+learning one specific person's unique habits and needs over time. We need a shared game state
+language so one agent can work across multiple games instead of being rebuilt from scratch for
+different releases releases. And then finally, we need better chips and honest testing. Faster chips
+paired with real benchmarks to prove that the agent makes things better. And the future of AI
+doesn't have to be one giant centralized brain. It can be billions of small local brains, each
+running on a personal device, each shaped entirely by the individual it serves. Thank you. >>
+[cheering] >> Woo! >>

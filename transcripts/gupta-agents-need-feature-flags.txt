@@ -1,0 +1,164 @@
+Hello everyone, I'm Sachin Gupta and I'm a backend engineer and today we are going to talk about
+agent need feature flags. If you have been a backend engineer for any length of time, you already
+know these tools. Things like canaries, segment targeting, kill switches, your craft has had them
+for over a decade and none of them is new. The boring infrastructure that keep deploy safe is
+already a solved problem. What is new is that we are shipping the most behavior changing systems we
+have ever built agents that send money, agent that send mail, agent that modify databases, agent
+that spawn child processes and we are shipping them with none of that infrastructure. We are
+shipping them the way web team used to ship in 2008. Over the next few minutes, here is the plan. I
+will walk you through with the six flag types that agents specifically need. I will show you two
+live demo storyboards. The first is flipping a tool midcon conversation. The second is stopping a
+runaway agent mids sentence. Then I will cover a rollout playbook with the numbers your team should
+track from day one. Let's go. Here is a situation today. The moment your prompt change merges, 100%
+of your users see the new behavior. There is no canary, no segment, and no roll back button. Look at
+what goes out under those small all or nothing rules. We get prompt rewrite, new tool addition,
+model swapping, memory policy changes, autonomy upgrades, system instruction edits, and we get all
+of it globally and instantly. Web teams stopped doing this back in 2012 and they stopped doing it
+for changes that were less risky than this. The story that you actually hear from teams almost word
+for word is that it's just a small prompt peak maybe broke a couple of a chunk of users and then
+finally people are finding it out on discord links or Tik Toks or maybe another social media
+platform. So that is the failure mode this entire talk is built around and let me show you that it
+is not hypothetical. These are the four named incident in the last 14 months. The first one we have
+is cursor sam that happened in April of 2025 where the support bot confidently told users about a
+policy that never existed. The second one we have is replet. This was day nine of a 12-day wipe
+coding experiment. The agent did not follow the instructions and ended up deleting the production
+database and then fabricated over 4,000 fake users to conceal what it had done. The third one is
+LANC chain. It had a four agent pipeline researcher, analyzer, verifier, and synthesizer where two
+of them ran in continuous loop and costed $47,000. The fourth one is pocket OS where a developer was
+using cursor and claude. The AI coding agent grabbed an unrelated API token from another file,
+treated it as authoritative, and ran a railway graphql drop on the production database. On the
+bottom left, you will see the sources that I used to site it. Web engineers learned this lesson a
+decade ago. Canary releases. You ship to a few percentage of users. You watch the matrix. If it
+works, you expand. If it doesn't, then you roll back. Segment targeting. Different behavior for
+different type of users. Kill switches. Pre-wired off toggles that take effect in seconds, not in
+deploy cycles. Rollout monitoring. Every change has its own error rate dashboard. None of this is
+new. The tooling already exists like launch darkly, unleash lift or maybe your homegrown flag
+service. This is already a solved problem. The discipline is already there. We just have to apply
+it. But now the problem is that web feature flags covers one thing whether a feature is on or off.
+But agent has six behavior surfaces that a cred app does not have and each one needs its own kind of
+flag. And in the next slide we are going to see that these are the six behavior surfaces that a cred
+app does not have. First one is prompts. The system prompt is your most behavioral altering code. It
+changes weekly sometimes daily often outside your normal deploy processes. Tools. Every tool the
+agent can call is the new authorized action. Tools comes and go faster than features ever did.
+Models. Model of the week swap change personality, refusal patterns, latency, and cost. Sometimes in
+subtle way you won't even notice for days. Memory. What the agent remember across session silently
+changes behavior over time. The same prompt reduces different output for the same user as memory
+accumulates. Autonomy, suggest versus auto approve versus autoexecute. The single largest blast
+radius tile you own. Sub aents. These are the spawn children inherited from the parent flags or they
+should most system don't enforce it. A boolean feature enabled flag doesn't cover any of these. You
+need a taxonomy. So here it is six type one for each surface prompt variant tool access model
+routing memory policy autonomy level and the kill switch. Each one maps to a behavior surface. None
+of them require building a new flag back end. Let me walk through them fast. Prompt variant flags
+route different users to a different system prompt version on the fly without a deploy. Look at the
+example. The beta cohort get experimental V3 which is concise and action first. Paid tier gets V2
+which is warm and expensive. Everyone else gets V1 which is stable and well tested. Cursor SAM is
+what happens without this. There was no controlled variant just one model doing its best. It got
+things wrong differently for each user. With a prompt variant flag you roll the new prompt to 5% of
+beta traffic. You watch the hallucination rate. You watch the escalation rate. And then you promote
+when it holds. Tool access flags authorize or revoke specified tools per user segment, per user
+type, per risk class. The tool exists in your codebase whether the agent can call it. It is the
+flag. This is mandatory when your agent has money moving tools, data deleting tools or compliance
+sensitive tools. you scope per customer tier or you pay the AML or socks bill along the way. It
+prevents the usual broken tool ship. The prompt plus send email massmail incident and the beta tool
+that leaks to prod users through coding d uh through config drift model routing flag decide which
+model handles which traffic. They let you migrate fallback or canary without code changes. The high
+cost segment gets the frontier model. The free trial gets the cheap first model and on an incident,
+one flip puts you to a stable fallback. The lesson is extremely simple. On the day a provider
+deprecates a model or pulls one for safety or has a multi-hour outage, a model routing flag is the
+difference between flipping a switch and shipping a hot fix in the middle of an incident. If your
+production system has a hard dependency on one model from one provider and it does not have any
+routing flag, no fallback, you are one provider outage away from a complete agent outage or maybe
+one deprecation notice and everything is gone. Route your traffic have a fall back. Make it a flag.
+Memory policy flag controls what the agent remember across sessions. These are four dimensions and
+each of them are independent. The first one is retention. It could be session only. It could be 30
+days or forever. Scope. It could be per user, per tenant or maybe global. Write enabled. Whether the
+agent can persist memory for this segment at all or not. User visible. Whether the user can inspect
+and delete their own. They all look small but they are not. The privacy posture of your product
+lives here. The consistency of your agent behavior lives here. Your compliance story with GDPR and
+EU AI act lives here. Autonomy level flags. This is the single biggest blast radius dial you own.
+There are three settings. Suggest where the agent recommend and a human acts. Auto approve where the
+agent prepares and a human one click confirms. And autoexecute where the agent just does it. The
+kill switch pre-wired off agentwide and poor surface. It does not require any deployment, does not
+require any start, does not require any code changes. Three properties that make a kill switch a
+real kill switch. First, you flip it and the change takes effect in seconds, not in a deployment
+pipeline. Second, inflight request respect the flag at the next decision point. Third, the wiring
+exist from the agent design phase, not at 3:00 a.m. hot patch when something is on fire. Without
+one, here is what you're going to get. First, Lchain, second pocket OS, third replet, and fourth is
+open clock. Now, think if you had a kill switch, if you could just have terminated the operation in
+between, it would have changed the game altogether. Okay, now is the time for the demo. The setup is
+basically assume you are in the April 2025 where the cursor sort bot is confidently citing a policy
+that is not present. So the way we think we can fix it is with the tool access flag. On the left you
+see we are having a conversation on the right the fix. So the moment we switch off this flag it will
+say it's disabled it at this time. by this person. This is the scope. This is what it applies and
+these are the active sessions. The moment the flag is flipped, you will see that instead of citing a
+wrong policy, it is saying I can draft this for you, but I'm not able to send emails right now. Want
+me to copy the draft into your clipboard instead? Now, this is a graceful error. Instead of giving
+me the wrong details, it is telling me that it cannot perform the operation. Now the money shot. The
+setup here is it's November 2025. A four agent Langchain pipeline loop for 11 days and burned
+$47,000. The agent system never noticed. The billing dashboard tripped the threshold. The chart on
+the left is tool calls per minute. This is an illustrative simulation. Baseline is 4 to8. The agent
+enters a runway loop. The line climbs rapidly. At t + 15 seconds, the raid guard fires a slack
+alert. At t + 2022, I flip the agent to kill it. At t + 2026, every inflight agent process sees the
+flag at its next decision point. Each one emit a graceful shutdown. At t + 30, the cost graph
+flattens. 30 seconds from problem to mitigation without any deployment, without any restart, without
+any code changes, no incident channel paging. And this is what you get with the kill switch. Now the
+question is where the flag layer is actually living. If you see this architecture is extremely
+simple. There are three boxes. user on the left, a middleware layer in the middle which resolve the
+flag, gets the tools, route the models, applies autonomy and honor the kill switch and the agent
+loop on the right with model tool memory and sub agents. The agent loop is unchanged from whatever
+you have today. Below the middleware is your flag back end which is unleash flip launch darkly or
+maybe homegrown. You are not building a new one. The critical architecture rule is on the call out
+at the bottom of the slide. Sub agents must go through the same middleware. The biggest failure mode
+I see is a parent agent with flags properly applied that spawns a child agent. The child call the
+model and the tools directly but bypass the middleware entirely. The kill switch you just flipped
+never reaches it. So wire the middleware into every agent that is being spawned not just at the
+entry point. So this is the rollout playbook. Five steps in exact order. Step one, kill switch
+first. Wire a single agentwide kill switch and one per tool kill switch. Ship those before anything
+else. The step two is wrap the tools. Every tool call resolve a flag before execution. Step three
+stage autonomy. Default everything to suggest. Auto approve per surface as you build trust. Auto
+execute is optin per tool. Step four is variant prompts. Move the system prompt out of the code and
+into a flag resolve config. Step five, watch the slope. What does watch actually mean? Four numbers
+you should track from day one. These are on the right side of the slide. The thresholds I'm about to
+give you are suggested defaults. Tune them as per your requirement, your surface, your severity,
+your traffic class. First one, kill switch fires per week. The target is zero. If you have more than
+two a week, then investigate roll back time to mitigation. Target is under 5 minutes for a kill
+switch and under 30 minutes for a prompt roll back. If you're slower, your mitigation doesn't fit
+inside a real incident window. Canary error rate delta. If a new prompt variant error rate climbs
+more than 2% over baseline at 5% rollout, block the promotion flag audit trail completeness. 100%
+required. If you cannot audit, who flipped, what is flipped, when it was flipped, then you cannot
+debug an incident in retrospective. Five failure modes that I have watched play out at multiple
+teams. Flag resolved at session start, not per turn. Your kill switch actually fired, but inflight
+conversation don't see it until the next session. Sub agents bypass the middleware. This one we have
+already covered. We need to make sure that we wire the middle middleware into every spawn. Context
+drift flags. The user segment at turn one is stale by turn 20. Log the segmentation context at the
+conversation level. Caching defeating the flip. Aggressive caching at your LLM gateway returns the
+old prompt response even after the flag is flipped. No alert on kill switch fires. The switch goes
+off silently. The product owner finds out next week. Every kill switch fire is a page on its own. In
+this slide, what you are seeing is the two parts to the business case. On the top half, the five
+questions every enterprise buyer will ask you in the next 12 months. Can you show me the kill
+switch? What's your rollout policy for prompt changes? How do you isolate beta features from
+production users? When a model behaves badly for one cohort, how fast can you mitigate? Who can flip
+these flags and is it audited? If you cannot demo all five, you are going to lose the deal. Flags
+are the demo. And on the bottom half, this is no longer just a sales question. It's a regulation. EU
+AI act, Mopar versus Air Canada, Garcia versus Corrector AI. These are the four habits that actually
+defeat the whole point. Kill switches rot. They get wired on day one and then never trade. 6 months
+later, a config migration broke the flag and the time you need it, it does not fire at all. Flag
+scrolling. You have 600 flags, no documentation. Every flag is a hidden coupling between the
+unrelated systems. Every flag needs an owner and a removal date. The temporary flag, it is shipped
+for a roll out. It was never removed. 5 years later, it's somehow loadbearing. Kill it immediately
+after the roll out is done. Flagdriven prompt. It fs that nobody test the street. Six prompt variant
+live in a production. Each individually works. Together they are amaze. Test the cartician product.
+Now these are the three things that you should remember. First one and the most important one in my
+opinion. Ship the kill switch first. If you do nothing else, give your agent one agentwide kill
+switch and one per tool kill switch. They take effect in seconds. No deployment is needed. That
+single capability changes your operational posture more than any engineering team investment in this
+particular quarter. Second one is treat the six surfaces independently and measure the slope prompts
+tools models memory autonomy sub aents. Each one needs its own flag type. On top of the taxonomy,
+track the four numbers, kill switch fires per week, time to mitigation, canary deltas, and audit
+completeness. Remember, 2026 was all about adoption. 2027 is all about control. The number three,
+match the discipline to the blast radius. Your boring web app sits behind canaries and segments.
+Your agent can send email, move money, modify database, and spawn children. It deserves at least the
+same discipline or probably more. Thank you very much. Build the kill switch this week. Everything
+else is the iteration on the same idea. Every incident on this deck is sourced. The curated case
+studies are linked on the screen at github.com/vectra/ awesome agent failures. Thank you very much.
+I'm Sachin Gupta. Thank you for watching.

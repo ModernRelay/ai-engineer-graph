@@ -1,0 +1,189 @@
+>> Hi everyone. My name is Prakalpa. I'm the founder of Atlan. And today I'm going to talk about
+this thing where context is having its moment. And so my goal today is to talk about like WTF is the
+context layer? Just before I start and I promise this is the last time. Um I don't know if the
+clicker is working. Atlan, we it's it's working. Thank you. Um the problem we solve is we say AI
+doesn't know your business, we fix that. We work with an incredible group of companies around the
+world ranging from GitLab and Zoom and Discord and Affirm to large enterprises like MasterCard and
+General Motors. Um And about a year ago my co-founder and I went on stage and we said uh at the dawn
+of the internet era Bill Gates had written this very famous blog post and it said content is king.
+Um and as we are the dawn of the agentic era, context will be king. Since then, it feels like 2026
+is the year of context. Context graphs, anyone? Uh you know, every every two days you see some
+version of context popping up. And so what is going on? Um I believe the answer to this kind of is
+in this reality distortion field that we live in. I live here in the Bay Area. Every day or two I
+have conversations with people which kind of go like, "How far are we from AGI?" and we have a
+debate and we're like, "Well, 1 year, 3 years, so on." There is no doubt that the models are getting
+exponentially smarter by the day. 2 years ago they couldn't pass the bar. Today, if they were to
+take the bar, it was they're the top 1% of test scorers. On the other hand, they're not
+exponentially more useful by any benchmark. 1 out of 5, you know, AI use cases actually make it to
+production. You know, 56% of CEOs say that there's zero financial benefit from AI today. So, what's
+going on? I believe hidden in plain sight is actually how performance is measured in the human
+world. Cognitive intelligence doesn't really determine real-world effectiveness. In fact, only 10%
+of job performance variance is explained by IQ. Like, just think about it. Would you say your
+smartest, you know, teammate who scored the highest on the SATs is also your best teammate? Or would
+you say, "No, it's the person who works the most and takes the most feedback and learns the
+fastest?" In the real world, we care about performance and performance is outcomes that you deliver
+in the real world. And performance is a function of two things. It's a function of intelligence,
+which is cognitive horsepower. That's what the model benchmarks measure every day. But, it's also a
+function of context. This is what they say in the human world as learning on the job, right?
+Knowledge and skills and expertise that you learn over time. And in the last decade, we have
+compounded on one of those parameters. Intelligence has 1,000x'd in the last decade. Just in the
+last 6 months, we have 2x'd on that axis. On the other hand, context, the situated knowledge of your
+business, that's barely moved. We've moved some data to the cloud, uh but that's about it. It's
+otherwise logged in dashboards and Slack threads and uh the head of that analyst who might be
+leaving next week. Um And so, the question ahead of us then, I really believe this is the next
+frontier, is how do we help AI build context about our business? Um And every time I'm faced with a
+question about how do we help AI do this, I always like to go back and understand how did we help
+humans do this? Uh I'm going to take you into the life of, you know, uh uh exemplar employee, Maya.
+Uh let's say she's a data analyst at Mac Context Burgers, cuz I thought I was going to be creative
+and I'm not very creative. Um And, you know, let's say she's that analyst that everybody, you know,
+pings in your company. Uh right? She's the person that everybody sends a message to every morning
+when they're trying to solve a problem. So, let's say this morning, uh there's a franchisee owner
+who sends her a message and says, "Why is my drive-thru time up this week? Why is this metric up
+this week?" Sounds like a really simple question. Um But, it's actually a really complicated
+question to ask. Just to answer this one very simple question, Maya first needs to know, uh what is
+drive-thru time? Uh and who's asking? Is it finance or is it, you know, my ops team? And it might
+mean different things. Uh But, not just that. What does this week mean? Is the cut-off period Monday
+to Sunday? Is it Pacific time? Is it Eastern time? Uh That's knowledge. Like, that's facts. That's
+the map of the business. Um But, not just that. Uh there's expertise. Uh right? There's um you know,
+a diagnostic playbook. What What does a great analyst do? They know that, you know, quarter three is
+a season seasonal quarter because of weather patterns and they know to go check if the reason
+there's a spike is because of seasonality. They also know that the company launched a product just
+that previous quarter and so they know to check if that's why the root cause analysis failed. This
+is expertise and skills that people pick up over time as they learn on the job. And then there's
+norms, right? There's, you know, persona scoping, who's asking the question, how do I answer this
+question? And Maya, she's one of those like cool people, she nails it, she sends an answer not just
+with the answer but with the why and the root cause and she finds the reason for it. How did Maya
+learn to do this? Um she just joined the company a year ago. First, Maya, you know, has for like she
+joined and she got some training like all of us do, but that's not where any of us learn, right? In
+our companies. How do we learn? We learn because you shadow like the best teammate and then you see
+why they're doing something and then you learn from that and then you make a mistake. Who here has
+learned more from a mistake than anything else? Right? You make a mistake and then you learn. You
+your manager gives you feedback and you learn not to do that again. You deal with an edge case and
+then you learn from that. That's how all of us humans learn at work. And so then the question is how
+do you help build the agentic Maya? And now I want to walk you through our experiments and learnings
+as we've built this at Atlan. Era one and this was roughly about 18 months ago now. We started on
+the the track of bootstrapping agents. And the way we went about it was and we started this with our
+customer experience team and we did this jobs to be done analysis map, right? And so we said, "Hey,
+if you are someone on our customer experience team, what are all the things that you do on a day-to-
+day basis?" And then we made some hypothesis. We We said, you know, for example, one part of the job
+is documentation and meeting prep. Uh we said, "Well, AI could probably do that job pretty well." Uh
+and so we built the scaling factor. So, on the other hand, relationship management is something that
+our customer experience team does. And we said, "Hmm, that doesn't sound like something AI is going
+to be able to do anytime soon." And so we built the scaling factor. >> [snorts] >> And then we
+basically started bootstrapping these individual agents that were like built for that specific
+topic. Uh our team got creative, so we had Hermione, who is our health intelligence lead, and then
+we had, you know, MoneyPenny, who was our financial risk analyst, and we just made that particular
+agent really good at doing that one thing. Um and that worked for some time. Um but then we realized
+there were some challenges with this approach. The first, context engineering. Uh we got to the
+point by middle of last year where building an agent was really easy. Took like 5 minutes. Uh but
+giving it the business context that it took to actually get it to be accurate took forever. Uh
+quality of the agent often dependent uh on the quality of context engineering, and that led to a lot
+of weird lost trust cases with our stakeholders. >> [snorts] >> Um then, as we started taking this
+into production, we started seeing that these agents basically were kind of like living on their own
+island. Uh now imagine, for example, if you're in a human team, and your marketing changes
+positioning on your, you know, and then they come to the town hall and they tell you that they
+changed positioning. And so then, you know, the SDR on your team or your sales development rep, they
+know that they should use is new positioning. This is like the infrastructure that we've built for
+humans inside our organizations. Agents didn't have them. So, our marketing team had these agents
+and they started making changes to that and then our SDR agent on our website was still pitching the
+old version. Uh we had no idea how any of these things were even connected. So, we didn't even know
+how to like run this as as a team of agents. Uh when an agent gets something wrong, this is hard. Uh
+it was really hard to like trace back what happened. Was it the model? The agent? Was it the
+context? Like where How do we even go back and fix this? Um and over time we started dealing with
+context sprawl. Uh we had the The hard part about this was agents all had their own memory systems
+to a certain extent. So, they were learning They were all learning separately and they were learning
+differently. Uh it became very, very difficult very quickly to say, "Okay, what does the single
+version of truth here look like?" Um and then over time we actually went through In the last 12
+months we've gone through cycles of at the agent tech layer. About 12 months ago we were using one
+of these no-code type builders uh called Relevance. We went from there into Google ADK, then we
+tried Glean. Uh start of this year we moved to Claude Code. Now we are kind of like 50/50 Claude and
+Codex. Um and every single time as these changes happened, uh our context got trapped in each of
+these individual systems. Um So, starting this year as general purpose agents started to become a
+thing, we said, "What if there was a different approach with general purpose agents?" Uh again,
+going back to the human world, well, Maya, she's not an individual star. She's part of a team,
+right? And you know, you talk about these dream teams like Maya and someone who runs customer
+support and someone who launches ads. These people work really well together. And often these dream
+teams are built on shared context, right? They have a shared language. They have a shared picture of
+what's true today. They have shared playbooks. They have shared norms, who's allowed to make what
+decision. And then they learn together. I think this is the most important part of it. They have
+compounding learning loops of what good looks like. And they have shared memory that, you know, oh,
+we launched this thing last quarter and it like was terrible and we're not going to make that
+mistake again, right? And so we said, is there a way to bring that into the way we think about AI in
+our companies? And so the mental model we started working on was we said, okay, we have these teams
+of humans and they're across the board and can these people essentially start building domain
+skills. So each of them is responsible for a certain set of skills. All of this goes into this
+common one place, which is this one company brain of sorts, right? I like to think of this as the
+context layer. And then this has a bunch of retrieval mechanisms, which then talks to the general
+purpose agent across the ecosystem. So then we started the experiment. This is some version of what
+our marketing team ended up building. So you'll see on the left, those are all the systems that our
+marketing team uses. So data systems, our social and community platforms, our ad platforms, our
+analytics platforms. And then you'll see this agent block. We built this very specifically for
+having openness. So [snorts] we had Cloud Code and Co-work. We also had our own claw that we
+deployed, which has, you know, essentially talks in our Slack channels. And then we used some
+external products like Qualified and Artisan. >> [snorts] >> In the middle is kind of this context
+layer that our team started building. So think of it as our best SEO person was building the SEO
+skill. Uh our best competitive intel person was building the best competitive intel skill. And that
+kind of became this common repo that we were building into and pulling out from. >> [snorts] >> This
+sort of became our living brain. Over time, we realized there were some things that we needed in
+this brain, right? Uh we realized we needed a data graph. Like if For example, our autonomous ads
+agent we realized it needs to do analysis on a daily basis. So, like which table should I go pull
+from? Uh we needed a library of skills. We also needed some other things, semantics, metrics, what
+is ARR, how do you measure that, uh what is a qualified lead in our company, uh and org structure,
+entities, things like that. Over the last 6 months, we ended up creating about 300 skills and 40
+agents in this team, uh which has been incredible. Uh but then, with this approach, too, we realized
+that there were some challenges. We realized that context kind of needs to be managed like code. Um
+so, some challenges. Let's pick skills. Uh dependency management became really complicated. So, for
+example, we have this competitive intelligence skill, and it learns from the market on what's
+changing in the market, and it improves. Um it feeds our category positioning skill, which then
+feeds our sales battle card skill. Uh now, each of these skills is learning and evolving, uh but
+every time they learn and evolve, it breaks something downstream. Uh and these skills very quickly
+start getting outdated and start drifting. Uh who owns skill quality became another thing. Like who
+eventually owns the quality of this? Security and governance was a nightmare. Uh we had secrets
+hardcoded in .env files. Uh it was People were downloading these public skill repos, this the whole
+thing was like a nightmare. And then I talked about context portability across all these multi-agent
+systems. I started this talk by saying WTF is a context layer. These are the problems that a context
+layer is meant to solve. The question I like to ask is what does the GitHub for context look like?
+Few thoughts. Company context needs life cycle management and collaboration and versioning just like
+code does. You know, there's questions like what's local context, what's global context, how do I
+keep this updated, so on. Some thoughts in this, can skills have a profile just like code does? Can
+that have a self-learning loop that's baked into it? What does quality management look like? Can you
+have security and postures posture management associated with that? That's really like the first
+step. I see this as like having something that has built-in versioning and quality and dependency
+management. So, you should be able to say, "Hey, this thing impacts all these other things. This is
+the approver, this is the maintainer, these are the contributors. How do you build that kind of
+human plus AI workspaces that these that these skills are managed via?" >> [snorts] >> Second thing,
+every AI interaction creates more context and harnessing this is gold. There's been I know a lot of
+talks about self-improving loops. We have found that with traces deploying a specific harness that
+actually is specialized in being able to go and reverse construct from that. So, think of it as AI
+that's reading through all your traces and almost brings it back to your maintainer loop and says,
+"Approve, reject. Approve, reject. Improve this over time." That's the compounding learning loop.
+And the third, often a lot of people ask me this question, which is like, how do I start? Because my
+business is like really disparate, and I have all these like 60 systems, and how do I even start?
+One of the biggest learnings we've had is context is hidden in these in business systems. Uh and
+across this context quality can really compound. So, for example, if you're able to connect your
+Salesforce and your HubSpot to your data warehouse, to your application layer, and then you're able
+to reverse construct how these things are actually connected one to another, context today gets lost
+in every one of those hops. But if you can reverse construct that, and then deploy AI on top of it,
+we've seen incredible accuracy in being able to reverse construct the first version of your company
+brain. >> [snorts] >> So, I'll end with this. Uh the way I think about a context layer is it's a
+system that turns knowledge and expertise and norms that we talked about, that Maya knows, into a
+machine usable context for AI systems. Uh At a very high level, the way I like to think of it is it
+looks like this. Uh It continually is mining context from your business systems. It's feeding this
+in to that one company brain. It's harnessing this in skills and context development life cycles as
+your teams go and deploy these agents. And then it has a bunch of ways you can retrieve it. So, MCP,
+SQL, vector retrieval, hybrid assembly, all these different ways that you retrieve it, and pull back
+from traces and build this compounding learning loop. >> [snorts] >> Today, we're largely building
+agents by hardcoding context. The scale of this problem I truly believe is underhyped, because with
+scale this can become really unsustainable. Uh And a little dangerous. Like all of us know this this
+old joke, which is if you ask sales and finance the revenue number, you're going to get two
+different numbers. We're fast approaching a moment of starting to deploy autonomous systems where
+the same thing is starting to happen. So, I'll end with one last thing. I started this presentation
+by saying context is king. I'd like to end it by saying context is also IP. Something I think a lot
+about is in a world where you and your competitor have access to the same models and the same
+intelligence, what differentiates a company? What differentiates a customer support agent at
+American Express versus Amazon? That's how you do business. That's what makes your company special.
+Context is how we take and encode our culture and our norms into something that we will be proud of
+as we build autonomous frontier firms. Um And that's all I had. Um you can find me at Prokalpa on
+Twitter um or write to me. We are actively working with folks on the frontier on going and shipping
+and building company brains. Um so, if you'd like to talk to us, feel free to reach out. Thank you.
+>>

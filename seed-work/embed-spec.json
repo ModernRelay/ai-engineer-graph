@@ -1,0 +1,7 @@
+{
+  "model": "gemini-embedding-2-preview",
+  "dimension": 3072,
+  "types": {
+    "Chunk": { "target": "embedding", "fields": ["text"] }
+  }
+}

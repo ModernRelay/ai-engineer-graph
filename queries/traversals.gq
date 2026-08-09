@@ -1,0 +1,297 @@
+// ── Complex traversals (added 2026-07-22) ──
+// Multi-hop, variable-hop, undirected, negation, aggregation-over-join,
+// and scope-then-rank queries. Counts over joins are edge-path counts
+// ("evidence items"), not distinct-node counts — named accordingly.
+
+// ── Expert authority: 3–4 hops ──
+
+query expert_patterns($slug: String)
+@description("What theses does this speaker's work evidence? expert ← talks ← signals → patterns, with evidence counts")
+{
+    match {
+        $x: Expert { slug: $slug }
+        $a: InformationArtifact
+        $a contributedByExpert $x
+        $s: Signal
+        $s spottedInArtifact $a
+        $s formsPattern $p
+    }
+    return { $p.slug, $p.name, count($s) as evidence }
+    order { evidence desc }
+    limit 20
+}
+
+query pattern_experts($slug: String)
+@description("Who are the authorities on a pattern? pattern ← signals ← talks ← experts, ranked by evidence contributed")
+{
+    match {
+        $p: Pattern { slug: $slug }
+        $s: Signal
+        $s formsPattern $p
+        $s spottedInArtifact $a
+        $a contributedByExpert $x
+    }
+    return { $x.slug, $x.name, count($s) as evidence }
+    order { evidence desc }
+    limit 25
+}
+
+query expert_collaborators($slug: String)
+@description("Co-presenters: experts who share an artifact with this expert")
+{
+    match {
+        $x: Expert { slug: $slug }
+        $a: InformationArtifact
+        $a contributedByExpert $x
+        $a contributedByExpert $y
+        $y.slug != $x.slug
+    }
+    return { $y.slug, $y.name, $a.name as talk }
+    limit 30
+}
+
+// ── Company intelligence: 3–4 hops ──
+
+query company_pattern_footprint($slug: String)
+@description("Which theses is this company evidence for? company ← signals → patterns, with counts")
+{
+    match {
+        $c: Company { slug: $slug }
+        $s: Signal
+        $s relevantCompany $c
+        $s formsPattern $p
+    }
+    return { $p.slug, $p.name, count($s) as evidence }
+    order { evidence desc }
+    limit 20
+}
+
+query company_tech_stack($slug: String)
+@description("Tech the company's own speakers presented: company ← experts ← talks → elements")
+{
+    match {
+        $c: Company { slug: $slug }
+        $x: Expert
+        $x affiliatedWithCompany $c
+        $a: InformationArtifact
+        $a contributedByExpert $x
+        $e: Element
+        $e identifiedInArtifact $a
+    }
+    return { $e.slug, $e.name, $e.kind, $a.name as talk }
+    limit 60
+}
+
+query company_counter_exposure($slug: String)
+@description("Risk view: signals about this company that CONTRADICT a pattern")
+{
+    match {
+        $c: Company { slug: $slug }
+        $s: Signal
+        $s relevantCompany $c
+        $s contradictsPattern $p
+    }
+    return { $s.slug, $s.name, $p.slug as contradicts }
+    limit 20
+}
+
+// ── Element graph: variable-hop + undirected ──
+
+query element_dependencies($slug: String)
+@description("Transitive dependencies: everything this element uses, up to 3 hops")
+{
+    match {
+        $e: Element { slug: $slug }
+        $e usesElement{1,3} $dep
+    }
+    return { $dep.slug, $dep.name, $dep.kind }
+    limit 50
+}
+
+query element_dependents($slug: String)
+@description("Reverse transitive: everything built on this element, up to 3 hops")
+{
+    match {
+        $e: Element { slug: $slug }
+        $other: Element
+        $other usesElement{1,3} $e
+    }
+    return { $other.slug, $other.name, $other.kind }
+    limit 50
+}
+
+query element_neighbors($slug: String)
+@description("Undirected UsesElement neighborhood — related tech in either direction")
+{
+    match {
+        $e: Element { slug: $slug }
+        $e <usesElement> $n
+    }
+    return { $n.slug, $n.name, $n.kind }
+    limit 50
+}
+
+// ── Pattern topology ──
+
+query pattern_bridges()
+@description("Connective tissue: elements that EXEMPLIFY one thesis and ENABLE another")
+{
+    match {
+        $e: Element
+        $e exemplifiesPattern $p1
+        $e enablesPattern $p2
+        $p1.slug != $p2.slug
+    }
+    return { $e.slug, $e.name, $p1.slug as exemplifies, $p2.slug as enables }
+    limit 50
+}
+
+query pattern_cooccurrence()
+@description("Which theses travel together? signals forming 2+ patterns, pair counts")
+{
+    match {
+        $s: Signal
+        $s formsPattern $p1
+        $s formsPattern $p2
+        $p1.slug != $p2.slug
+    }
+    return { $p1.slug as a, $p2.slug as b, count($s) as shared_signals }
+    order { shared_signals desc }
+    limit 30
+}
+
+query pattern_knowhow($slug: String)
+@description("Actionable guidance for a thesis: pattern ← elements ← knowhow (3-hop bridge — KnowHow has no direct pattern edge)")
+{
+    match {
+        $p: Pattern { slug: $slug }
+        $e: Element
+        $e exemplifiesPattern $p
+        $k: KnowHow
+        $k referencesElement $e
+    }
+    return { $k.slug, $k.name, $e.slug as via_element }
+    limit 40
+}
+
+query pattern_evidence_timeline($slug: String)
+@description("Evidence accumulation over time: a pattern's signals, oldest first")
+{
+    match {
+        $p: Pattern { slug: $slug }
+        $s: Signal
+        $s formsPattern $p
+    }
+    return { $s.stagingTimestamp, $s.slug, $s.name }
+    order { $s.stagingTimestamp asc }
+    limit 200
+}
+
+// ── Insight lineage ──
+
+query insight_company_reliance($slug: String)
+@description("Whose tech does an insight depend on? insight → elements → developing companies")
+{
+    match {
+        $i: Insight { slug: $slug }
+        $i reliesOnElement $e
+        $e developedByCompany $c
+    }
+    return { $e.slug as element, $c.slug, $c.name }
+    limit 20
+}
+
+// ── Data-quality negations ──
+
+query products_without_developer()
+@description("Product-kind elements with no DevelopedByCompany edge — attribution gaps")
+{
+    match {
+        $e: Element { kind: "product" }
+        not { $e developedByCompany $_ }
+    }
+    return { $e.slug, $e.name }
+    limit 100
+}
+
+query patternless_elements()
+@description("Elements linked to no pattern at all — candidates for review or pruning")
+{
+    match {
+        $e: Element
+        not { $e exemplifiesPattern $_ }
+        not { $e enablesPattern $_ }
+    }
+    return { $e.slug, $e.name, $e.kind }
+    limit 200
+}
+
+// ── Scope-then-rank: semantic search with graph scoping ──
+
+// NOTE: scoping a vector search by a full-text FILTER is an engine limit
+// (Lance: "Cannot have both nearest and full text search") — but scoping by
+// GRAPH TRAVERSAL works: join chunks to their artifact via PartOfArtifact,
+// then rank. This is the scope-then-rank pattern done graph-natively.
+
+query talk_semantic($talk: String, $q: String)
+@description("Semantic search INSIDE one talk: scope chunks via PartOfArtifact edge, rank by nearest")
+{
+    match {
+        $a: InformationArtifact { slug: $talk }
+        $c: Chunk
+        $c partOfArtifact $a
+    }
+    return { $c.chunk_index, $c.text }
+    order { nearest($c.embedding, $q) }
+    limit 5
+}
+
+query signal_hybrid($q: String)
+@description("Hybrid signal search: RRF of BM25 over name and brief fields")
+{
+    match { $s: Signal }
+    return { $s.slug, $s.name, $s.brief }
+    order { rrf(bm25($s.name, $q), bm25($s.brief, $q)) }
+    limit 20
+}
+
+query domain_signal_search($domain: String, $q: String)
+@description("Text-ranked signal search scoped to one domain enum")
+{
+    match {
+        $s: Signal { domain: $domain }
+    }
+    return { $s.slug, $s.name, $s.brief }
+    order { bm25($s.brief, $q) }
+    limit 15
+}
+
+// ── Semantic entry points: rank by embedding, then walk the graph ──
+
+query semantic_context($q: String)
+@description("Semantic hit with provenance: chunk → talk → speaker in one ranked query")
+{
+    match {
+        $c: Chunk
+        $c partOfArtifact $a
+        $a contributedByExpert $x
+    }
+    return { $c.text, $a.slug as talk, $a.name as talk_title, $x.name as speaker }
+    order { nearest($c.embedding, $q) }
+    limit 5
+}
+
+query semantic_patterns($q: String)
+@description("From a question to the thesis layer: semantically-relevant chunks → their talks → extracted signals → patterns")
+{
+    match {
+        $c: Chunk
+        $c partOfArtifact $a
+        $s: Signal
+        $s spottedInArtifact $a
+        $s formsPattern $p
+    }
+    return { $a.slug as talk, $s.slug as signal, $s.name as finding, $p.slug as pattern }
+    order { nearest($c.embedding, $q) }
+    limit 10
+}
