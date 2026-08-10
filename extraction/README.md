@@ -254,6 +254,14 @@ in `domain:` enums. Every Signal/KnowHow carries artifact provenance edges.
 | [panel-state-of-model-routing.md](panel-state-of-model-routing.md) | Panel (NVIDIA/Cognition/OpenRouter) — The State of Model Routing | for review |
 | [eskildsen-turbopuffer-building.md](eskildsen-turbopuffer-building.md) | Orosz × Eskildsen — Building Turbopuffer | for review |
 | [rizwan-cline-open-source-dead.md](rizwan-cline-open-source-dead.md) | Rizwan, Cline — Open Source Is Dead. Long Live Open Source. | for review |
+| **Batch 17 — verification/ops + engineering practice** | | |
+| [chatterjee-sonar-guide-verify-solve.md](chatterjee-sonar-guide-verify-solve.md) | Chatterjee, Sonar — Guide, Verify, Solve | for review |
+| [smith-resolve-always-on-agents.md](smith-resolve-always-on-agents.md) | Smith, Resolve AI — Always-on agents run production without the on-call tax | for review |
+| [linkov-wisedocs-coding-agent-benchmarks.md](linkov-wisedocs-coding-agent-benchmarks.md) | Linkov, Wisedocs — Benchmarking Coding Agents on New vs Legacy Codebases | for review |
+| [singh-superconductor-multiplayer-agents.md](singh-superconductor-multiplayer-agents.md) | Singh, Superconductor — Multiplayer agentic engineering | for review |
+| [gazit-github-realtime-multiplayer.md](gazit-github-realtime-multiplayer.md) | Gazit, GitHub — Realtime multiplayer, automation, and you! | for review |
+| [dailey-ref-velocity-sickness.md](dailey-ref-velocity-sickness.md) | Dailey, Ref — Velocity Sickness | for review |
+| [coyle-berkeley-cca-field-guide.md](coyle-berkeley-cca-field-guide.md) | Coyle, UC Berkeley — Anthropic's CCA Exam as a Field-Guide (2nd Coyle talk) | for review |
 | [kumar-flyerssoft-event-sourced-agents.md](kumar-flyerssoft-event-sourced-agents.md) | Kumar, FlyersSoft — AI Agents in Event-Sourced Systems | for review |
 | [rallabandi-wearing-the-agent.md](rallabandi-wearing-the-agent.md) | Rallabandi — Wearing the Agent: From Group Chats to Glasses | for review |
 | [emani-auditoria-finance-agent-bottleneck.md](emani-auditoria-finance-agent-bottleneck.md) | Emani, Auditoria — Your Finance Agent's Bottleneck Is You | for review |

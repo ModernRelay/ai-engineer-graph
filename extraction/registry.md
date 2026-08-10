@@ -722,3 +722,48 @@ is a distinct thesis.
 - 7 substantive panel speakers NOT coined under the first-name rule (Vincent/Prime Intellect, Merve/HF, Parth/Ollama, Walden/Cognition, Alex/OpenRouter, Tuhin/NVIDIA, unnamed ModelOpt eng) — add-options documented in-file.
 - el-lmarena (coined b15 heiner) corroborated by compression panel (Cohere reference) — optional IdentifiedInArtifact edge left to review.
 - Recommend widening el-model-routing's b8 brief (naive per-request routing → session-level controller with probes/sidekick/cache economics).
+
+## Batch-17 additions (reconciled) — post-event wave 3: verification/ops + engineering practice
+
+_7 talks (published 2026-08-08 → 08-09). Still premiere-locked: OpenAI "Codex,
+Behind the Harness" (shRR1e2HXMk, ~2026-08-11)._
+
+### ⚑ pat-durable-execution + pat-agent-memory-layer — BOTH ledgers now complete
+The missing dedicated-layer vendor arrived: **Resolve AI** sells always-on
+cloud/sandbox ops agents as a product (confidence-gated DM-confirm, four proven
+workloads), bundled with the clearest vendor-moat memory claim yet ("models are
+capable; the moat is the learning system that knows YOUR environment" — ~12th
+memory point, direct disagreement with Netflix's markdown-in-git). Against it,
+the convention side gained its 4th practitioner (**Dailey: doc-as-state,
+stateless agents, durable decision log**) and its heaviest instance: **GitHub
+itself ships Agentic Workflows as markdown compiled onto stock Actions** —
+the platform owner institutionalizing b13's el-ci-as-loop-runtime. Read either
+as the strongest convention counter yet, or as convention-becomes-product.
+Decision-ready.
+
+### ⚑ pat-benchmark-trust-crisis — two legs thickened
+- **Practitioner-behavioral now 3 points**: Cline real-repo test (b16), Linkov's maintained private re-run suite (O3 3h+10 mistakes → Opus 4.8 one-shot on the same task), Singh's own-PR bench that flipped Superconductor's default to Codex (with 1.5B tok/mo behind the decision).
+- **Construction-methodology, reporting-threshold flavour, now a 3-SPEAKER cluster**: Shaukat (b2), Garg (b15), Linkov (b17) independently argue METR-style curves must be read at 90–99% accuracy — the 50% headline inflates capability ~5×. Rehome-ready on coin.
+- Vendor-owned-benchmark structural note: Sonar's LLM leaderboard is scored with Sonar's own metrics; its CMU productivity study measured with SonarQube (Heiner-structure incentive flag, not a signal).
+
+### ⚑ pat-ai-native-org — biggest single-batch ledger haul (~7 held signals)
+First full **pathology taxonomy** (Dailey's velocity sickness: PR floods, agent
+bankruptcy, decision ceding) + hard numbers (Singh: 99.9% of PRs
+agent-generated, 100% human-reviewed, 1.5B tokens/mo ≈ $10K/day; support/growth
+staff shipping merged fixes) + GitHub PMs authoring background automations +
+Ace's branches-in-microVMs multiplayer surface. The Wharton rubber-stamp stat
+(92.7% follow right AI review, ~80% follow wrong) lands on
+pat-verification-gap but belongs in this candidate's brief too.
+
+### Other movement
+- **pat-value-of-judgement** (new name's first live batch): Anthropic's proctored CCA cert as credentialing of judgment ("CS no longer the magic pathway"); the **inversion signal** — agents now invoke humans as clarifiers/pairs-of-hands (Gazit, OpenClaw convergence); decision-ceding as pathology (Dailey); "vendor exams reveal production truth" insight.
+- **pat-harness-over-model** +5 supports, all claim-1/reliability-scoped (monorepo-as-agent-infrastructure, deterministic guardrails "prompting the guardrails = fox loose in the henhouse", exam-canon-is-harness-discipline, Böhm–Jacopini loop insight). Zero counters this batch.
+- **Fable-withdrawal shock: 3rd independent corroboration** (Singh) — homed to pat-sovereign-ai; provider-commoditization ledger +2 faces (token-seller incentives; Smith's token clampdown).
+- **70%-ops quantification** ("coding was never the bottleneck") + typing-is-5% (100-dev longitudinal, cites Litt b6) → pat-model-not-bottleneck.
+- AI-native-software-category +1 (GitHub: background automations "a bigger category than interactive AI").
+
+### Garbles / identity / merge-checks
+- exp-frank-coyle REUSED (2nd talk). exp-arjun-singh NEW — ⚠ surname collision with exp-varun-singh (Arcee b15), different people. "Eitan"→Idan Gazit. "Fiable"→Fable. "Metis' preview"→el-claude-mythos-preview (may also resolve b13 Cai's "Metis").
+- ⚠ VERIFY before seeding: Superconductor domain (captions "superagent.com"), CCA exam official name/date, Gazit's 5%-study provenance, "Any Gravity"→Antigravity.
+- Merge-checks queued: el-verification-debt vs el-reviewdebt/el-cognitive-debt; el-codebase-benchmarking vs el-private-benchmark (b12); el-ai-psychosis vs el-automation-bias; el-stop-reason-loop-control vs el-loop-flow-control (b13); el-agent-anti-patterns vs el-pattern-anti-pattern-catalog (b14); sig-cmu-ai-productivity-spike-reverts ≈ b2 sig-cmu-velocity-fade (same study — merge option).
+- el-sonarqube promoted (reverses b2 restraint; drop-option in file). el-doc-as-shared-state defined in dailey, reused by gazit (b12 precedent). "idea velocity" ≡ Lee-Chan b6 title (re-home option).

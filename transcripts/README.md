@@ -331,3 +331,15 @@ Pending premieres from this wave: Temporal "MCP Tasks (async)"
 
 Premieres pending 2026-08-08: Z-c11pV_uvU (UC Berkeley CCA), iQ5xldZ9StU
 (GitHub realtime), vSx5IULvBns (Resolve AI), shRR1e2HXMk (OpenAI Codex harness).
+
+## Batch 17 — Post-event wave 3 (published 2026-08-08 → 08-09)
+
+| chatterjee-sonar-guide-verify-solve.txt | Guide, Verify, Solve — Chatterjee, Sonar | https://youtu.be/03l29gJXpCE |
+| smith-resolve-always-on-agents.txt | Always-on agents — Smith, Resolve AI | https://youtu.be/vSx5IULvBns |
+| linkov-wisedocs-coding-agent-benchmarks.txt | Coding Agent Benchmarks — Linkov, Wisedocs | https://youtu.be/7vn4WpqNpck |
+| singh-superconductor-multiplayer-agents.txt | Multiplayer agentic engineering — Singh, Superconductor | https://youtu.be/OL7kfezynJM |
+| gazit-github-realtime-multiplayer.txt | Realtime multiplayer — Gazit, GitHub | https://youtu.be/iQ5xldZ9StU |
+| dailey-ref-velocity-sickness.txt | Velocity Sickness — Dailey, Ref | https://youtu.be/Kz4QJmNrVXU |
+| coyle-berkeley-cca-field-guide.txt | CCA Exam Field-Guide — Coyle, UC Berkeley | https://youtu.be/Z-c11pV_uvU |
+
+Premiere pending: shRR1e2HXMk (OpenAI "Codex, Behind the Harness", ~2026-08-11).
