@@ -767,3 +767,78 @@ pat-verification-gap but belongs in this candidate's brief too.
 - ⚠ VERIFY before seeding: Superconductor domain (captions "superagent.com"), CCA exam official name/date, Gazit's 5%-study provenance, "Any Gravity"→Antigravity.
 - Merge-checks queued: el-verification-debt vs el-reviewdebt/el-cognitive-debt; el-codebase-benchmarking vs el-private-benchmark (b12); el-ai-psychosis vs el-automation-bias; el-stop-reason-loop-control vs el-loop-flow-control (b13); el-agent-anti-patterns vs el-pattern-anti-pattern-catalog (b14); sig-cmu-ai-productivity-spike-reverts ≈ b2 sig-cmu-velocity-fade (same study — merge option).
 - el-sonarqube promoted (reverses b2 restraint; drop-option in file). el-doc-as-shared-state defined in dailey, reused by gazit (b12 precedent). "idea velocity" ≡ Lee-Chan b6 title (re-home option).
+
+## Batch-18 additions (reconciled) — post-event wave 4: harness internals + RL infrastructure
+
+_2 talks (both published 2026-08-10). Small batch by design — this is the
+channel's live release edge, not a backlog sweep. Kundel resolves batch 17's
+pending premiere. Still premiere-locked: Anthropic "Evolution of agentic
+surfaces" (K0X9QDRkIdg, ~2026-08-12), plus 11 staged-but-private uploads
+queued in the World's Fair playlist._
+
+### ⚑ pat-harness-over-model — 9th counter-edge, and the best-sourced one yet
+`sig-models-trained-into-their-harness` (Kundel) is the first counter-evidence
+from **inside a frontier lab's own harness team**, and it is mechanical rather
+than predictive: models from GPT-5 on are trained on the apply-patch tool;
+they reach for Ripgrep because training taught them to, so Codex **bundles
+Ripgrep**; Windows models emit PowerShell natively; server-side compaction
+uses the format the model was trained against. Prior counters argued the model
+would *absorb* the scaffolding (Steinfurt b6, Shihipar/Chandegra b7, Horthy
+b11 ×3). This one says something sharper — the scaffolding is **downstream of
+the model's training**, so the model is the least swappable component, not the
+smallest. Read against the standing flag that this pattern "is OVERBROAD, not
+merely contested": that flag now has its cleanest supporting exhibit.
+⚠ Same talk carries the opposite claim (open Responses schema ⇒ any provider
+is pluggable). Both emitted as stated; the tension is the vendor's.
+
+### ⚑ NEW candidate — `pat-compute-liquidity` (proposed, NOT coined)
+_The compute eligible for frontier training is being unbundled from
+contiguous, tightly-coupled clusters, so scattered heterogeneous capacity
+becomes fungible with dedicated capacity._ Coined nothing; **two signals held
+pattern-less** in the Jiang file (`sig-rl-compute-shape-mismatch`,
+`sig-inference-capacity-becomes-rl-capacity`). One-talk candidate today —
+recorded so the ledger can accumulate. Prior corpus points to audit at review:
+OpenAI agent sandbox cloud (b5), Prime Intellect decentralized post-training
+(b5 + b15), Theta long-horizon environments (b15), MiniMax infrastructure
+(b15), and the b16 Local-AI panel's "agents provisioning their own GPUs"
+thread currently logged on `pat-agent-economy`. Distinct from
+`pat-environments-economy` (that one is about environments as a tradeable
+asset; this is about the *substrate* the training runs on).
+
+### Other movement
+- **pat-verification-gap** +1 strong: auto-review as a **read-only judge subagent that cannot spawn subagents**, given the risk taxonomy and live transcript, gating sandbox escalation — verification delegated to an agent made trustworthy by structural constraint rather than capability. Pairs with b17's Sonar/Resolve material as the "verifier is a boxed agent" thread.
+- **pat-model-not-bottleneck** +4, unusually literal: Kundel's network-is-the-bottleneck finding (at ~1,000 tok/s on Cerebras the constraint became transport, not inference) and Jiang's whole framing (RL discourse is algorithms; at scale the problem is physical plant). Also the harness-differentiation-migrates-to-the-protocol signal.
+- **Provider-commoditization ledger** (b17, homed on `pat-sovereign-ai`) gains a mirror-image data point: a frontier lab commoditizing **its own harness layer** — open-source Rust harness, open Responses schema under a governance body with Ollama, LM Studio and NVIDIA. No edge emitted; ledger note only.
+- **pat-harness-over-model** also +2 supports from the same file (explicit context budgeting; agents scripting their own computer use via code execution) — the batch is net-contested on this pattern, not net-negative.
+
+### Companies (4 new)
+- `co-modal` (serverless GPU compute; author of Stitch — ⚠ captioned "Moto"/"model" throughout)
+- `co-cerebras` (hardware; runs GPT-5.3 Codex Spark at ~1,000 tok/s)
+- `co-ollama`, `co-lm-studio` (coined on reference per the b2 `co-openai` precedent, as Responses-schema governance partners; gives the b16 compression-panel Ollama thread a node to attach to — its speaker "Parth" was not coined under the first-name rule)
+- Reused: `co-openai` (brief widens substantially — harness is open source, Rust, MIT/Apache-2), `co-nvidia`, `co-anthropic`, `co-cursor` (Composer 2 as an Adam post-training example), `co-moonshot-ai` (Kimi-scale checkpoint ≈500 GB; Muon adopter), `co-deepseek` (Muon adopter), `co-zhipu-ai` (GLM 4.7 Air, Modal's measurement run)
+
+### Experts (2 new)
+- `exp-dominik-kundel` (co-openai, Codex) — gave a second, separate World's Fair talk the prior day on the app server protocol; if that video publishes, `el-codex-app-server` is where it lands.
+- `exp-nan-jiang` (co-modal) — ⚠ given name from the video byline only; captions render the self-introduction as "I'm N from Moto".
+- NOT coined under the first-name rule: "David", author of OpenAI's Windows-sandbox write-up.
+
+### Elements (15 new)
+- Codex/harness internals: `el-responses-api`, `el-codex-app-server`, `el-deferred-tools`, `el-apply-patch`, `el-codex-sandbox`, `el-auto-review`, `el-websocket-mode`, `el-goal-continuation-prompt`
+- RL infrastructure: `el-cathedral-vs-bazaar-compute`, `el-rollout-serving-island`, `el-adam-absorption`, `el-sparse-weight-delta`, `el-rollout-weight-version`, `el-version-aware-sidecar`, `el-stitch`
+- **Element restraint on the Codex side:** five existing nodes reused rather than re-coined — `el-codex`, `el-context-compaction` (b6), `el-codex-computer-use`, `el-codex-goals`, `el-codex-skills-plugins` (b11). Each gains real new detail (the 2% skills cap; compaction trained-for-parity; computer use moving from an enumerated action API to code execution). **Recommend widening those briefs at seeding.** `el-goal-continuation-prompt` is coined separately because the continuation-prompt loop is the generalizable mechanism, distinct from the `/goal` feature.
+
+### Garbles / identity / merge-checks
+- ⚠ **The Jiang transcript is the worst in the corpus since b15 Chan/China Resources.** Normalization table in the file's review note 1: "IO"/"ADMIC"→RL, "Moto"→Modal, "addon"/"atom"→Adam, "BFC"/"BF6"→BF16, "oop"→ULP, "scikar"/"psychar"→sidecar, "muan"→Muon, "deepc4"→DeepSeek, "sjet"→SGLang, "bro"→bazaar, "way sync"→weight sync, "Kim scale"→Kimi-scale, "GM 4.7 air"→GLM 4.7 Air.
+- ⚠ **VERIFY before seeding (Jiang):** the **cited paper is never named** — the Adam-step bound is attributed to "the paper I cited" with the slide off-transcript. Every quantity in that file is single-source caption text (~99% bit-identical/step; 500 GB→500 MB; BF16 ULP ≈0.0078, boundary ≈0.0039; Adam step ≈3e-6; GLM 4.7 Air FP8 at 0.15%→0.05%). The fragment "cursor composer 2 mi they all using add in the post training" may name a second vendor (possibly MiniMax, b15) — tail unrecoverable, only the Cursor reference emitted.
+- ⚠ **VERIFY before seeding (Kundel):** model version strings are load-bearing and caption-sourced — **GPT-5.4** (added deferred-tool marking), **GPT-5.3 Codex Spark** (the Cerebras deployment), the 1,000 tok/s figure, and the 2% skills cap.
+- **Merge-check queued: `el-rollout` collision.** Coined b11 (Laude/Harbor) as the *unit of agent evaluation*; used here as the *serving job producing trajectories*. Reused as one node with `UsesElement → el-rollout-serving-island` on a same-concept-two-altitudes reading. If review disagrees, split into `el-rollout-eval` / `el-rollout-serving` and re-point the single edge in the Jiang file — nothing else depends on it.
+- Forward flag: the Jiang argument is **Adam-specific by construction**. If Muon breaks the bounded-step property, `sig-rollout-weights-99pct-bit-identical` narrows from a general result to an Adam-era one. Re-check when the next post-training wave lands.
+
+### Bookkeeping fix
+`extraction/README.md` — the seven enterprise-tail files (kumar-flyerssoft,
+rallabandi, emani, chan, ganesh-kepler-verifiable, menkes, rappazzo) are
+**batch-15** talks that had been dangling under whichever batch header was
+appended last (b16, then b17). Labelled with an explicit "Batch 15 (cont.)"
+marker row rather than moved, so file order and any in-flight review links are
+preserved. Batch 15's count of 29 talks reconciles only with these seven
+included.

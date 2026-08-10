@@ -342,4 +342,34 @@ Premieres pending 2026-08-08: Z-c11pV_uvU (UC Berkeley CCA), iQ5xldZ9StU
 | dailey-ref-velocity-sickness.txt | Velocity Sickness — Dailey, Ref | https://youtu.be/Kz4QJmNrVXU |
 | coyle-berkeley-cca-field-guide.txt | CCA Exam Field-Guide — Coyle, UC Berkeley | https://youtu.be/Z-c11pV_uvU |
 
-Premiere pending: shRR1e2HXMk (OpenAI "Codex, Behind the Harness", ~2026-08-11).
+## Batch 18 — Post-event wave 4 (published 2026-08-10)
+
+| File | Talk | Video |
+|---|---|---|
+| kundel-openai-codex-behind-harness.txt | Codex, Behind the Harness — Dominik Kundel, OpenAI (batch-17's pending premiere) | https://youtu.be/shRR1e2HXMk |
+| jiang-modal-rl-cross-datacenter.txt | Taking Reinforcement Learning Cross Datacenter — Nan Jiang, Modal | https://youtu.be/maRzp4kImJ4 |
+
+⚠ The Jiang/Modal captions are the worst in the corpus since batch 15's China
+Resources file — "RL" transcribes as "IO", "Modal" as "Moto", "Adam" as
+"addon", "sidecar" as "scikar". Full normalization table in the extraction
+file's review note 1; no figure in it should be quoted without checking.
+
+Premiere pending: K0X9QDRkIdg ("Evolution of agentic surfaces" — Gagan Bhat &
+Isabella Kai He, Anthropic, ~2026-08-12).
+
+Channel state as of 2026-08-11: the World's Fair 2026 playlist holds 118
+entries, of which 11 are staged-but-private uploads queued ahead of their
+premieres — more talks are coming. Nine videos in the playlists are
+permanently private or removed by the uploader (sJHg0mC5Png, Z3fP-eMEx-8,
+PXXNCtfKZs0, tB9RKTrU-Ig, EfcfUB2uprc, rX14bHH5wI0, rCVVsxHWai8, M7-KY0W-BPo,
+SDW7LJ07FZk), alongside the long-known Lance Martin/Anthropic talk. Two
+further playlist entries are deliberately skipped: htM02KMNZnk and
+4sX_He5c4sI are 8.5-hour full-day track livestreams whose individual talks are
+already extracted here.
+
+**Out of scope, recorded for the record:** the same channel carries **AIE
+Europe 2026** (243 videos, published ~2026-05-21 → 06-18, playlist
+PLcfpQ4tk2k0W4IhTx8dgBjTEYRmbEHcpP). The corpus contains only 8 of them, and
+those incidentally — they are talks cross-tagged into both events (Poolside,
+Checkout.com, Witan, TNG, Pomerium, Meta, Microsoft, remobi). Processing that
+event is an open scope decision, not an oversight.

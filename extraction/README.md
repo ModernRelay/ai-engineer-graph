@@ -262,6 +262,7 @@ in `domain:` enums. Every Signal/KnowHow carries artifact provenance edges.
 | [gazit-github-realtime-multiplayer.md](gazit-github-realtime-multiplayer.md) | Gazit, GitHub — Realtime multiplayer, automation, and you! | for review |
 | [dailey-ref-velocity-sickness.md](dailey-ref-velocity-sickness.md) | Dailey, Ref — Velocity Sickness | for review |
 | [coyle-berkeley-cca-field-guide.md](coyle-berkeley-cca-field-guide.md) | Coyle, UC Berkeley — Anthropic's CCA Exam as a Field-Guide (2nd Coyle talk) | for review |
+| **Batch 15 (cont.) — enterprise tail** (listed here for file order; these seven are batch-15 talks, see registry § "Batch-15 additions") | | |
 | [kumar-flyerssoft-event-sourced-agents.md](kumar-flyerssoft-event-sourced-agents.md) | Kumar, FlyersSoft — AI Agents in Event-Sourced Systems | for review |
 | [rallabandi-wearing-the-agent.md](rallabandi-wearing-the-agent.md) | Rallabandi — Wearing the Agent: From Group Chats to Glasses | for review |
 | [emani-auditoria-finance-agent-bottleneck.md](emani-auditoria-finance-agent-bottleneck.md) | Emani, Auditoria — Your Finance Agent's Bottleneck Is You | for review |
@@ -269,6 +270,9 @@ in `domain:` enums. Every Signal/KnowHow carries artifact provenance edges.
 | [ganesh-kepler-verifiable-finance.md](ganesh-kepler-verifiable-finance.md) | Ganesh, Kepler — How Kepler Built Verifiable AI for Financial Services | for review |
 | [menkes-intuit-understand-money.md](menkes-intuit-understand-money.md) | Menkes, Intuit — Why Off-the-Shelf AI Doesn't Understand Money | for review |
 | [rappazzo-morgan-stanley-alphalab.md](rappazzo-morgan-stanley-alphalab.md) | Rappazzo, Morgan Stanley — AlphaLab: Open Source Multi-Agent Quant Research | for review |
+| **Batch 18 — harness internals + RL infrastructure** | | |
+| [kundel-openai-codex-behind-harness.md](kundel-openai-codex-behind-harness.md) | Kundel, OpenAI — Codex, Behind the Harness | for review |
+| [jiang-modal-rl-cross-datacenter.md](jiang-modal-rl-cross-datacenter.md) | Jiang, Modal — Taking Reinforcement Learning Cross Datacenter (⚠ heavy caption garbling) | for review |
 
 Review starting points: the batch-2 merge flags in [registry.md](registry.md)
 § "Batch-2 additions" (`pat-model-not-bottleneck` vs `pat-harness-over-model`;
