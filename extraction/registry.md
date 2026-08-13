@@ -10,6 +10,9 @@ insights, knowhows, and elements/companies/experts unique to that talk).
 - **[seed]** `pat-sovereign-ai`, `pat-saaspocalypse`, `pat-context-graphs`, `pat-new-cyber-threats`, `pat-accelerated-research`
 - **[batch1]** `pat-verification-gap` — The Verification Gap (generation industrialized, verification didn't; trust re-architected outside the model)
 - **[batch1]** `pat-agent-supply-chain` — The Agent Supply Chain (skills/MCP/extensions/hallucinated packages as a worse package ecosystem; exploitation begun)
+- **[batch2]** `pat-model-not-bottleneck` — The Model Is Not the Bottleneck (dynamic); **[batch2]** `pat-harness-over-model` — The Harness Over the Model (dynamic); **[batch5]** `pat-value-of-judgement` — Value of Judgement (dynamic). _Full briefs in the batch-2 and batch-5 sections._
+- **[batch19]** `pat-agent-memory-layer` — The Agent Memory Layer (dynamic) — persistent memory as a first-class stack layer rather than a per-product feature: systems that accumulate, synthesize and re-inject what they learn about a user, team or environment, maintained on a compute budget and updated outside the weights. **Coined 2026-08-14**, defined in `khemani-every-memory-system.md`. Contested from birth — 4 counter-edges attached at coin.
+- **[batch19]** `pat-continual-learning-turn` — The Continual Learning Turn (dynamic) — the frontier of model improvement shifting from pre-training scale to post-deployment learning, making the accumulation loop rather than the base model the locus of compounding advantage. **Coined 2026-08-14**, defined in `su-neocognition-continual-learning-expertise.md`. Contested from birth — 1 counter-edge attached at coin.
 
 ## Companies
 - **[seed]** co-anthropic, co-google-deepmind, co-moonshot-ai, co-zylon, co-meta, co-edra, co-hornet, co-playerzero, co-sequoia, co-sap, co-nousresearch, co-klarna, co-salesforce, co-box, co-modern-relay, co-ucla
@@ -977,3 +980,89 @@ Malde's failure analysis, Anthropic's split evidence on the harness pattern,
 and Khemani's survey. The weakest evidence base despite the strongest
 credentials is Hooker's — every quantity in it is vendor-stated without a
 baseline.
+
+## Coinage record — 2026-08-14
+
+User approved both batch-19 recommendations at review. Two patterns coined,
+bringing the corpus to **12 coined patterns** (5 seed + 2 b1 + 2 b2 + 1 b5 +
+2 b19). This is the first coinage since batch 5 — the corpus ran 14 batches
+on ledger discipline before either candidate cleared.
+
+### `pat-agent-memory-layer` — The Agent Memory Layer (dynamic)
+Defined in `khemani-every-memory-system.md`. Recommended since b10, complete
+at b17, coined on b19's survey evidence.
+
+**Support edges attached (6):**
+| signal | file | note |
+|---|---|---|
+| `sig-memory-architectures-converged` | khemani (b19) | ChatGPT and Claude converged from opposite ends; neither uses RAG |
+| `sig-continual-learning-already-shipping` | khemani (b19) | dual edge with `pat-continual-learning-turn` — running profiles *are* a learning loop, outside the weights |
+| `sig-memory-budget-is-a-compute-decision` | khemani (b19) | **re-targeted** from `pat-model-not-bottleneck` |
+| `sig-session-log-powers-memory-and-dreaming` | bhat-he (b19) | frontier-lab roadmap: memory + dreaming as "cornerstones of a unified memory system" |
+| `sig-memory-is-what-the-agent-becomes` | rallabandi (b15) | **rehomed** from `pat-context-graphs` per that file's review note 4 |
+| `sig-ops-agent-value-is-learned-context` | smith-resolve (b17) | the clearest vendor-moat framing in the ledger |
+| `sig-observability-and-continual-learning-converge` | trivedy (b19) | dual edge with `pat-continual-learning-turn` |
+
+**Counter edges attached at coin (4)** — deliberate, and the reason the
+pattern is healthy:
+| signal | file | the counter |
+|---|---|---|
+| `sig-memory-adds-nothing-when-context-fits` | druga (b19) | controlled ablation: below the context window, memory costs tokens and buys **zero** capability |
+| `sig-memory-cannot-be-outsourced` | khemani (b19) | no serious consumer product outsources memory; converged part is cheap, divergent part is product-specific |
+| `sig-netflix-pattern-catalog-memory` | shah-netflix (b14) | convention counter — markdown in a git repo, not a memory product |
+| `sig-sla-budget-caps-agent-design` | kumar-flyerssoft (b15) | SLA counter — a sub-500 ms budget rules long-term agent memory out entirely |
+| `sig-docs-replace-chats-as-work-atom` | dailey (b17) | convention counter — the state layer is a shared document |
+
+_(5 rows; the Netflix and FlyersSoft signals keep their existing
+`pat-harness-over-model` edges and gain the counter as a second edge.)_
+
+**⚠ Follow-up pass still owed — b9/b10 graph-cluster files.** The b10 registry
+note counted ~9 data points toward this ledger from the graph/context/ontology
+cluster: Zep/Graphiti (`chalef-zep-kg-provenance`), BabyAGI 4's event log
+(`nakajima-babyagi4-active-graph-runtime`), TwelveLabs video memory
+(`le-twelvelabs-video-memory`), CrabRAG (`chin-neo4j-crabrag-graph-memory`),
+Eifrem's traces pillar (`eifrem-neo4j-ontology-semantic-layer`), monday.com's
+durable profile (`bruchim-ast-monday-systems-of-context`), plus batch 9's
+three. **Those signals were NOT auto-rehomed** — they are currently on
+`pat-context-graphs`, they were homed there deliberately, and several belong
+there on the merits (the talks argue graph organization, not memory-as-layer).
+Each needs a per-signal judgement: rehome, dual-edge, or leave. Recommend a
+dedicated pass rather than a sweep.
+
+**⚠ Also owed:** `smith-resolve-always-on-agents.md` withheld
+`ExemplifiesPattern` edges from `el-background-agents` and
+`el-production-learning-system` because no fitting pattern existed. The second
+now has one. Element-level edges were not swept in this pass.
+
+### `pat-continual-learning-turn` — The Continual Learning Turn (dynamic)
+Defined in `su-neocognition-continual-learning-expertise.md`. Proposed and
+coined in the same batch — justified by a ten-talk dedicated track in one day,
+the largest single-theme evidence base the corpus has seen.
+
+**Support edges attached (8):**
+| signal | file | leg |
+|---|---|---|
+| `sig-scaling-expertise-as-new-axis` | su | new axis of scale (anchor) |
+| `sig-reliability-plasticity-tension` | su | stability/plasticity |
+| `sig-scaling-only-ever-touched-public-data` | morris | supply economics |
+| `sig-fourth-scaling-axis-proposed` | morris | new axis of scale (second anchor) |
+| `sig-software-that-improves-every-use` | malde | algorithms |
+| `sig-cl-failures-split-stability-plasticity` | asawa | measurement / stability-plasticity |
+| `sig-enterprises-start-at-offline-traces` | denton | enterprise reality |
+| `sig-observability-and-continual-learning-converge` | trivedy | already shipping (dual edge) |
+| `sig-continual-learning-already-shipping` | khemani | already shipping (dual edge) |
+
+**Counter edge attached at coin (1):**
+| `sig-little-real-continual-learning` | hylak (b19) | an observability vendor with cross-customer production visibility reports seeing little real continual learning in the wild |
+
+**Two further dissents recorded but not edged**, because they target the
+methods rather than the thesis: Asawa's `sig-vanilla-icl-tops-the-leaderboard`
+(currently `ContradictsPattern → pat-harness-over-model`) and Malde's
+"pseudo continual learning" admission inside
+`sig-software-that-improves-every-use`. Both belong in the brief's contested
+clause, which they are in.
+
+### Consequences for the remaining ledgers
+- `pat-agent-economy`, `pat-environments-economy`, `pat-ai-native-org`, `pat-benchmark-trust-crisis`, `pat-durable-execution`, `pat-adaptive-software`/`pat-adaptive-harness`, `pat-fde-turn`, `pat-compute-liquidity` (b18) all remain **uncoined**. Nothing in this coinage changes their status.
+- `pat-durable-execution` is now the longest-standing recommendation (b5), and b17 recorded its ledger complete. It is the obvious next candidate.
+- b15's **FINDING 1** on `pat-harness-over-model` (re-scope to claim 1) is untouched by this coinage and still pending. The b19 Anthropic file remains the recommended test case.
