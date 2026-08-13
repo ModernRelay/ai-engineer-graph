@@ -9,8 +9,16 @@ Stood up 2026-07-22. Native RustFS (no Docker) + cluster-booted omnigraph-server
 - **Cluster root**: `s3://intel-graph/clusters/spike-intel` (schema, stored
   queries, policies, graph datasets — applied via `omnigraph cluster apply`).
 - **Graph**: `spike` → `s3://intel-graph/clusters/spike-intel/graphs/spike.omni`
-  — 1,901 entity nodes + 4,640 edges (136 talks, 538 signals) + 1,966
-  embedded transcript chunks (3072-dim, gemini-embedding-2-preview).
+  — **rebuilt clean 2026-08-14 on omnigraph 0.9.0 (internal schema v6)**.
+  6,590 nodes / 13,107 edges: 3,300 entity nodes (959 signals, 713 elements,
+  451 insights, 428 knowhows, 254 experts, 238 artifacts, 230 companies,
+  17 sources, 10 patterns) + 3,290 embedded transcript chunks (3072-dim,
+  gemini-embedding-2-preview).
+  ⚠ **Data currency**: the graph holds the corpus **through batch 16**
+  (218 talks). Batches 17–19 (22 talks) and the two patterns coined
+  2026-08-14 (`pat-agent-memory-layer`, `pat-continual-learning-turn`) are
+  **not loaded** — their extractions exist but were never converted to
+  fragments. See "Bringing the graph current" below.
 - **Server**: `http://127.0.0.1:8081` (cluster-booted, bearer-token auth).
   Port 8080 is occupied by an unrelated stale 0.6.2 dev server (June,
   serving ~/exp/intel) — left untouched. Port 9000 is held by an unrelated
@@ -69,7 +77,7 @@ omnigraph alias contested
 omnigraph alias triage                                    # orphan signals
 omnigraph alias signals-since 2026-07-20T00:00:00Z
 
-# semantic / hybrid search over 1,966 transcript chunks
+# semantic / hybrid search over 3,290 transcript chunks
 omnigraph alias related "keeping voice conversation latency low enough to feel natural"
 omnigraph alias hybrid-search "models cheating their reward function during RL training"
 
@@ -120,3 +128,71 @@ data-plane writes; admin = + `GET /graphs`. Anonymous → 401.
 - Full-seed rebuild: `python3 seed-work/merge_validate.py` regenerates
   `seed-work/seed-full.jsonl` from `seed.jsonl` + `seed-work/frag-*.jsonl`,
   then `load --mode overwrite` + re-load chunks.
+
+## The 0.9 upgrade and clean rebuild (2026-08-14)
+
+The graph was rebuilt from scratch because **omnigraph binaries read exactly
+one on-disk format version** — `MIN_SUPPORTED_INTERNAL_SCHEMA_VERSION ==
+INTERNAL_MANIFEST_SCHEMA_VERSION`, with no in-place migration. The old graph
+was stamped internal **v4** (written by the 0.8.x-era binary that created the
+cluster on 2026-07-22); 0.9.0 reads only **v6** and refuses v4 outright —
+including refusing to *export* it.
+
+**⚠ Binary version strings do not track the on-disk format.** Measured on this
+machine:
+
+| binary | `--version` | reads internal |
+|---|---|---|
+| `/opt/homebrew/bin/omnigraph` | 0.9.0 | v6 |
+| `~/code/omnigraph/target/debug/omnigraph` (Aug 12) | 0.10.0 | v6 |
+| `~/code/omnigraph/target/release/omnigraph` (Jul 19) | 0.8.1 | **v8** |
+
+Never assume a lower version string means it can open an older graph. Check by
+running any command against the graph and reading the refusal message.
+
+### What the rebuild actually required
+
+1. **Policy schema change** — `policies/server.policy.yaml` had `kind: server`, which 0.9 rejects (`unknown field 'kind'`, valid: `version`, `groups`, `protected_branches`, `rules`). Scope now comes solely from `applies_to` in `cluster.yaml`. Removed; `cluster plan` then passed.
+2. **Delete + refresh + apply** — deleting the graph prefix is *not* enough: `cluster plan` still reported "no changes" because the ledger records the graph. **`omnigraph cluster refresh` reconciles state from storage** (117 → 115 resources); only then does `plan` show `Create graph.spike` / `Create schema.spike`, with no approval gate. `cluster apply --as act-admin` recreates it at v6.
+3. **32 MiB per-node-type load limit** — `chunks-final.jsonl` (1,966 chunks × 3072-dim) failed with `resource limit exceeded for keyed parsed value bytes for node:Chunk: actual 33554556, limit 33554432` — over by 124 bytes. Split into 3 slug-partitioned parts (keeping each chunk with its `PartOfArtifact` edge) and loaded fine.
+4. **Edges have no `@key`, so overlapping loads duplicate them** — `chunks14-final.jsonl` overlaps `chunks1112-final.jsonl` on 11 `shaw-marten-everything-is-a-rollout` chunks (that talk was re-extracted at batch 11). Second load hit `@unique violation on PartOfArtifact.src`. Fix: drop already-present slugs before loading, don't rely on `merge` to dedupe edges.
+
+### Rebuild recipe (if this is ever needed again)
+
+```bash
+set -a && source .env.omni && source .env.embedding && set +a
+G=s3://intel-graph/clusters/spike-intel/graphs/spike.omni
+
+aws --endpoint-url "$AWS_ENDPOINT_URL" s3 sync \
+  s3://intel-graph/clusters/spike-intel/ ~/backup/ --only-show-errors  # byte backup FIRST
+aws --endpoint-url "$AWS_ENDPOINT_URL" s3 rm --recursive "$G"/
+omnigraph cluster refresh --config .          # REQUIRED — else plan sees no change
+omnigraph cluster plan    --config .          # expect: Create graph.spike, Create schema.spike
+omnigraph cluster apply   --config . --as act-admin
+omnigraph load --data seed-work/seed-full.jsonl --mode overwrite --as act-analyst --yes "$G"
+# then each chunks*-final.jsonl with --mode merge, splitting any file >32 MiB of parsed Chunk bytes
+```
+
+A byte-level `s3 sync` of the cluster prefix is a **better** fallback than a
+logical export: it restores the exact prior graph, readable by the old binary.
+A logical export drops commit history and branches anyway. Current backup:
+`~/.local/share/intel-graph-backups/spike-omni-raw-2026-08-14` (111 MB, 5,506
+objects, verified exact).
+
+### ⚠ Two RustFS processes contend for :9100
+
+`~/.local/share/rustfs-intel-data` (creds `intelgraph`) is the intel-graph
+store and currently owns the port. A second, unrelated RustFS on
+`~/exp/rustfs-data` (creds `rustfsadmin`) is also running and will seize
+:9100 if the first dies — the cluster would then silently resolve to an empty
+object store. Same hazard this runbook already documents for :9000. Kill the
+stale one before any load.
+
+## Bringing the graph current
+
+The graph trails the corpus by 22 talks and 2 patterns. To close the gap:
+
+1. Convert `extraction/` batches 17, 18, 19 to `seed-work/frag-17.jsonl` … `frag-19.jsonl` per `seed-work/CONVERSION-SPEC.md` (the two coined patterns are defined in `khemani-every-memory-system.md` and `su-neocognition-continual-learning-expertise.md`, so a conversion pass picks them up).
+2. `python3 seed-work/merge_validate.py` → regenerate `seed-work/seed-full.jsonl`.
+3. `omnigraph load --data seed-work/seed-full.jsonl --mode overwrite …`, then re-load every `chunks*-final.jsonl` (overwrite is whole-graph clean-slate — chunks must follow it, not precede it).
+4. Chunks are missing for **15 talks** (all of batches 18–19): raw JSONL → `omnigraph embed --spec seed-work/embed-spec.json` → finalize with `slug = "<talk-slug>#<idx>"` + `PartOfArtifact` edges → load. `seed-work/chunks19-embedded.jsonl` (117 chunks) is also still keyless and needs the same finalize step before it can load.

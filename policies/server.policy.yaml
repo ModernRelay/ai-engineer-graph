@@ -1,7 +1,8 @@
 # Cluster-bound policy (applies_to: [cluster]) — the server-level gate.
 # Only admins may enumerate the deployment's graphs (GET /graphs).
+# NOTE: `kind:` was removed at the 0.9 upgrade — the field is no longer part of
+# the policy schema; scope comes solely from cluster.yaml's `applies_to`.
 version: 1
-kind: server
 groups:
   admins: ["act-admin"]
 rules:
