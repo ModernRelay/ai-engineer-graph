@@ -776,7 +776,12 @@ pending premiere. Still premiere-locked: Anthropic "Evolution of agentic
 surfaces" (K0X9QDRkIdg, ~2026-08-12), plus 11 staged-but-private uploads
 queued in the World's Fair playlist._
 
-### ⚑ pat-harness-over-model — 9th counter-edge, and the best-sourced one yet
+### ⚑ pat-harness-over-model — a new counter-edge, and the best-sourced one yet
+> **CORRECTION (made at batch 19):** this section originally said "9th
+> counter-edge," counting from the b11 note's total of 8. That was stale —
+> b15's FINDING 1 supersedes it with **~11**. The Kundel edge is therefore
+> roughly the **12th**, not the 9th. The claim about its *quality* stands.
+> See the batch-19 section for how it interacts with FINDING 1's re-scoping.
 `sig-models-trained-into-their-harness` (Kundel) is the first counter-evidence
 from **inside a frontier lab's own harness team**, and it is mechanical rather
 than predictive: models from GPT-5 on are trained on the apply-patch tool;
@@ -842,3 +847,133 @@ appended last (b16, then b17). Labelled with an explicit "Batch 15 (cont.)"
 marker row rather than moved, so file order and any in-flight review links are
 preserved. Batch 15's count of 29 talks reconciles only with these seven
 included.
+
+## Batch-19 additions (reconciled) — the Continual Learning track + agent design
+
+_13 talks (10 published 2026-08-12 as a **dedicated Continual Learning
+track**, 3 agent-design talks published 2026-08-11 → 08-12, including
+batch-18's twice-slipped Anthropic premiere). The largest single-theme batch
+in the corpus. The staged-private queue has fully drained; no premieres
+pending for the first time since batch 16._
+
+### ⚑⚑ COIN RECOMMENDATION 1 — `pat-agent-memory-layer` — the ledger is now closed
+Recommended for coining since **batch 10** ("decisively past threshold"), and
+recorded complete at b17. This batch supplies the two things it still lacked:
+
+- **An independent survey.** Khemani spent a year reverse-engineering ChatGPT, Claude, Gemini and Poke. Findings: three years of *independent* evolution converged on the same architecture from opposite ends — ChatGPT from a user-curated fact list toward background profile synthesis, Claude from retrieval-only tools toward a profile — and **neither uses RAG**, the approach the industry assumed. Published cost trade-offs for both (ChatGPT ~4,000 tokens every few days; Claude ~1,000 tokens every 24 hours — opposite corners of the same maintenance-versus-serving constraint). Plus a market scan: every top consumer AI product has memory, **none outsource it**.
+- **A frontier-lab roadmap.** Anthropic ships memory + **dreaming** (periodic batch over session transcripts + memory state, editing memory so the next day's sessions are smarter), calls them "two cornerstones of a new frontier unified memory system," and flags **organizational-scale memory** (team runbooks) as an emerging third form.
+
+**Held pattern-less awaiting the coin:** `sig-memory-architectures-converged`,
+`sig-memory-cannot-be-outsourced`, `sig-continual-learning-already-shipping`
+(all Khemani), `sig-session-log-powers-memory-and-dreaming` (Anthropic).
+**Would re-target on coin:** `sig-memory-budget-is-a-compute-decision`
+(currently on `pat-model-not-bottleneck`).
+**⚑ Attach as a COUNTER-edge on day one:** `sig-memory-adds-nothing-when-context-fits`
+(Druga) — a controlled ablation finding that when the task fits in context,
+memory adds cost and **zero** capability. A pattern that arrives with its own
+counter-evidence is healthier than one that does not.
+**Scope note for the brief:** Khemani's no-outsourcing finding is explicitly
+about *consumer personalization*; most vendors in this track sell into
+enterprise. Say so in the brief rather than letting the two collide.
+
+### ⚑ COIN RECOMMENDATION 2 — `pat-continual-learning-turn` (proposed at b19, NOT coined)
+_Thesis: the frontier of model improvement is shifting from pre-training scale
+to post-deployment learning, making the accumulation loop — not the base model
+— the locus of compounding advantage._ A ten-talk dedicated track in one day
+is the strongest single-batch evidence the corpus has ever seen for any
+candidate. **Six distinguishable legs:**
+
+1. **New axis of scale** — Su ("intelligence is abundant, expertise is scarce"; orthogonality; *escape intelligence*), Morris (a named fourth axis, since data and model size are fixed for a private corpus).
+2. **Algorithms** — Malde's OPSD (satisfies all four post-training criteria at once by making the teacher the same model with a hint), Denton's four-quadrant offline/online × trace/hint taxonomy with two measured results.
+3. **Measurement** — Asawa's CL-Bench and the **gain** metric (stateful minus stateless), plus the finding that benchmark instances are *designed* independent and therefore cannot be chained.
+4. **Supply/economics** — Morris (all scaling has only ever touched public data, and the data-vendor layer structurally reproduces that boundary), Su (private microworlds as the next internet-scale data opportunity), Hooker (pre-training saturated; returns moved to distributable post-training compute).
+5. **Already shipping** — Khemani (running profiles *are* a learning loop, outside the weights), Anthropic (dreaming), Holmes (nightly cloud enrichment of a personal corpus), Trivedy (observability and continual learning are the same problem from two ends).
+6. **Enterprise reality** — Denton ("this is where a lot of enterprises are today": a pile of traces and "make our agent better").
+
+**⚑ Arrives with three independent dissents — preserve them:** Hylak
+(cross-customer production visibility: "in the real world there's really not
+that much continual learning"), Asawa (**vanilla in-context learning tops the
+CL-Bench leaderboard** on reward *and* both cost-adjusted Pareto frontiers,
+beating engineered context management), Druga (memory adds nothing below the
+context-window threshold). Malde adds a self-dissent: the field is in
+"pseudo continual learning" — batch updates offline, then re-upload.
+
+**Naming convergence is unusually strong.** "Dreaming" is used independently
+by Khemani (community name for background synthesis), Morris (in an
+eight-synonym list — sleep-time compute, neural memory, write-time compute,
+note taking, dreaming, studying, machine studying, amortized inference),
+Trivedy (sleep-time compute over the agent lifecycle), and Anthropic (a
+shipped feature). Four uses, one batch, no coordination.
+
+### ⚑ FINDING — `pat-harness-over-model`: b19 is the decisive test case for FINDING 1
+b15's FINDING 1 recommends scoping the brief to **claim 1 (reliability/
+latency/control)** and dropping claim 2 (improvement/capability). This batch
+supplies the cleanest test yet, from one talk:
+- **Anthropic carries both edges, minutes apart.** `sig-harness-is-now-the-limiting-factor` (a frontier lab stating "harnesses have become the limiting factor to what models can achieve") **supports**; `sig-harness-fixes-become-dead-weight` — Sonnet 4.5's *context anxiety* prompted harness context-resets, Opus 4.5 didn't exhibit it, and the fix became "pure overhead, adding latency and causing issues with the cache being discarded incorrectly" — **contradicts**.
+- Under the recommended re-scoping the support survives cleanly and the counter resolves into a **maintenance** claim (harness workarounds for model deficiencies expire), not a capability claim. **Read the Bhat/He file first at the pattern review.**
+- Same resolution applies to b18's Kundel counter (harness ships what the model was trained on) — it targets claim 2 and would resolve.
+- **Does NOT resolve:** Asawa's `sig-vanilla-icl-tops-the-leaderboard`. That is an independent academic result, cost-adjusted, on real tasks, against engineered machinery — a genuine claim-1 survivor. Treat it as the counter-edge that matters.
+- Clean claim-1 exemplars this batch: Khandelwal (team harness engineering, progressive disclosure with a measurable threshold), Trivedy (harness-first-then-finetune, argued from feedback latency), Hylak (deterministic detection, agentic investigation).
+
+### Other movement
+- **pat-verification-gap** — remains the corpus's dominant thesis; +9 this batch. Most significant: **both leading labs shipped verification-by-constrained-second-agent as a platform primitive within 48 hours** — Anthropic's **outcomes** (rubric-defined success, separate grader agent, loop until met) and OpenAI's **auto-review** (b18: read-only judge subagent, cannot spawn subagents, gates sandbox escalation). Neither references the other. Also: Asawa's gain metric, Druga's oracle-doesn't-saturate finding, Hylak's four eval/triage signals, Malde's hint-leakage.
+- **pat-model-not-bottleneck** +8. Strongest: Morris's structural argument that the commercial data layer *cannot* cross the public/private boundary because vendors can only sell what a model may say back.
+- **pat-sovereign-ai** +4, from an unusual direction: Druga (local-model evaluation as sovereignty, corroborated by **Coinbase** cutting AI spend while raising usage), Hooker ×2 (pre-training compute must be co-located; post-training compute distributes, so "the person with the best idea has a higher chance of winning"), Su (private microworlds; enterprises "in charge of their means of production").
+- **`pat-compute-liquidity` (b18 candidate)** — Hooker is its second data point and its mirror image: b18's Modal talk argues scattered compute becomes *usable* for post-training; Hooker argues post-training is where returns now *live*. Read together at review.
+- **pat-ai-native-org** — Khandelwal adds a second high-quality dysfunction data point after b17's Dailey: the full arc (leverage → mandates → token-maxxing → slop and sev-2s → retraction → budgets bolted on), from a frontier-lab engineering org rather than a vendor.
+- **pat-benchmark-trust-crisis** — two more legs, both held pattern-less: Malde's **task-distribution mismatch** (benchmarks decoupled from where tokens are actually spent — a 10th distinguishable leg) and Asawa's construction-methodology point. Trivedy adds an unemitted gaming-leg restatement from the builder's side ("the purpose of evals is roughly to make them pass").
+- **pat-durable-execution** — Holmes's nightly cloud enrichment (sync down, run skills, sync back; explicitly contrasted with laptop-bound local automation) is a clean addition; held pattern-less.
+- **pat-context-graphs** — Khemani's context-acquisition gap and Holmes's generated wikis both land here; the seed thesis keeps absorbing this cluster.
+
+### Companies (9 new)
+- Continual-learning startups: `co-neocognition` (Su), `co-engram` (⚠ captioned "Ngram"/"N gram"; normalized from `ngr.am`), `co-trajectory` (Malde), `co-adaption-labs` (Hooker)
+- Research/labs: `co-sakana-ai` (Tokyo; sovereign-AI position stated institutionally), `co-ohio-state` (Su's dual affiliation, per the b8 `co-university-of-maryland` precedent)
+- Tooling/observability: `co-warp` (terminal + oz.dev automation cloud), `co-raindrop` (agent observability; "Sentry, but for agents")
+- Coined on reference: `co-windsurf` (Malde's prior employer, ⚠ see garbles), `co-coinbase` (spend-down/usage-up with local models — the only third-party quantitative support in the Druga talk)
+- Reused with substantial new facts, **recommend widening briefs**: `co-anthropic` (Applied AI team; three-generation surface lineage; dreaming/outcomes), `co-applied-compute` (2nd appearance — platform research team, distillation taxonomy), `co-langchain` (applied research function, trace mining, open-model fine-tuning service), `co-amazon` (3rd AGI Lab appearance, 1st on internal engineering practice), `co-uc-berkeley` (3rd, 1st from research rather than curriculum), `co-snorkel-ai` and `co-laude-institute` (both now recorded as **funders** of neutral benchmark infrastructure — a repeat role, b12 and b11 respectively), `co-decagon` (2nd, now as an AI-infrastructure *buyer*)
+- **Add-option at review:** `co-harvey` — two independent b19 mentions (Trivedy's legal-benchmark collaborator; Malde's early-access customer). Not coined in either file since neither attaches company facts.
+
+### Experts (14 new)
+`exp-yu-su` (co-neocognition + co-ohio-state), `exp-jack-morris` (co-engram),
+`exp-ronak-malde` (co-trajectory), `exp-parth-asawa` (co-uc-berkeley),
+`exp-samuel-denton` (co-applied-compute), `exp-sara-hooker` (co-adaption-labs +
+co-google-deepmind), `exp-shlok-khemani` (independent — **no company edge**),
+`exp-stefania-druga` (co-sakana-ai), `exp-ben-holmes` (co-warp),
+`exp-vivek-trivedy` (co-langchain), `exp-gagan-bhat` + `exp-isabella-kai-he`
+(both co-anthropic), `exp-aditya-khandelwal` (co-amazon), `exp-ben-hylak`
+(co-raindrop).
+- ⚠ **`exp-ben-hylak` vs `exp-veronica-hylak` (b8, Hey AI) — different people.** Keep given names in both labels. Same class as b17's `exp-arjun-singh`/`exp-varun-singh`.
+- NOT coined under the first-name / passing-reference rules: Rosanne Liu, Merve (HF — declined again, consistent with b16), Andrew Ng, Satya Nadella, Ilya Sutskever, Karpathy, Schulman, Demis Hassabis, Dwarkesh Patel, Gwern, "David" (b18).
+- ⚠ **Corpus-correction lead:** Khemani cites "Lance Martin's talk yesterday" on dreaming. The corpus has listed Martin's Anthropic talk as *permanently unavailable* since b3 and `transcripts/README.md` still says so. He evidently spoke at this event — worth a re-check.
+
+### Elements (~64 new)
+- Conceptual frame: `el-intelligence-vs-expertise`, `el-microworlds-thesis` (⚠ collision with `el-microworlds` b6), `el-modern-moravec-paradox`, `el-continual-learning-definition`, `el-escape-intelligence`
+- Scaling/method: `el-scaling-compute-on-context`, `el-breadth-vs-depth`, `el-private-corpus-training`, `el-synthetic-data-wall`, `el-recursive-self-improvement-loop`, `el-death-of-scaling`, `el-distributed-compute-returns`, `el-auto-scientist`, `el-unreasonably-narrow-path`
+- Distillation: `el-post-training-four-criteria`, `el-on-policy-self-distillation`, `el-hint-leakage`, `el-step-level-divergence-weighting`, `el-residual-guidance`, `el-distillation-spectrum`, `el-hint-provenance-axis`, `el-distillation-quadrants`, `el-per-step-hinting`, `el-relevance-masked-distillation`
+- Measurement: `el-continual-learning-bench`, `el-gain-metric`, `el-cl-benchmark-criteria`, `el-stability-plasticity-failures`, `el-cl-first-order-design`
+- Memory: `el-running-profile`, `el-memory-fact-list`, `el-conversation-search-tools`, `el-memory-convergence`, `el-memory-compute-tradeoff`, `el-context-acquisition-gap`, `el-memory-write-manage-read`, `el-recall-policy-ladder`, `el-decisions-ledger`, `el-recall-policy-as-metric`, `el-dreaming`
+- Knowledge bases: `el-llm-knowledge-base`, `el-voice-capture-pipeline`, `el-enrich-note-skill`, `el-generated-wiki`, `el-nightly-agent-schedule`
+- Traces/observability: `el-agent-trace-mining`, `el-trace-scale-problem`, `el-model-harness-task-fit`, `el-harness-then-finetune-sandwich`, `el-dense-feedback-signal`, `el-issue-not-cluster`, `el-issue-onset-and-blast-radius`, `el-code-mode-over-traces`, `el-evals-as-code`, `el-floor-vs-ceiling`
+- Agent architecture: `el-agentic-surface-generations`, `el-harness-assumption-staleness`, `el-brain-hands-decoupling`, `el-managed-agent-primitives`, `el-durable-session-log`, `el-outcomes-grader`
+- Team practice: `el-fear-utilization-map`, `el-bad-setup-symptoms`, `el-team-harness-engineering`, `el-progressive-disclosure-codebase`, `el-ship-it-skill`
+- **Reuse discipline — recommend widening these briefs at seeding** rather than re-coining: `el-anthropic-managed-agents` **[seed]** (the Bhat/He file is by far its richest source; the seed node predates every engineering detail — highest-value cleanup in this batch), `el-continual-learning` **[b8]** (Su supplies the definitional scaffolding it lacked), `el-on-policy-distillation` **[b5]** (Malde is its deepest treatment), `el-autoresearch` **[seed]** (Hooker's data-co-optimization contrast is its sharpest differentiation), `el-agents-md` **[b6]** and `el-agent-skills` **[batch1]** (concrete authoring constraints: thin-index discipline, ~100-line skill cap, fixed tag vocabularies, enrichment timestamps), `el-code-mode` **[b6]** (extended from MCP to trace analysis), `el-context-compaction` **[b6]** (measuring behaviour *across* compaction boundaries is a new use).
+
+### Cross-file edges emitted within this batch (unusual — flagged)
+- `el-hint-provenance-axis` (Denton) `UsesElement → el-on-policy-self-distillation` (Malde). The two talks are the same technique from two vantage points — Malde derives it and names its failure mode, Denton industrializes it and adds provenance, per-step injection and relevance masking. Neither cites the other. **Drop if review prefers strictly within-file edges**; the relationship is also recorded in prose in both files.
+- Proposed but NOT emitted, left to review: `el-on-policy-self-distillation` → `el-scaling-compute-on-context` (Morris cites Malde by name from the stage); `el-llm-knowledge-base` → `el-html-native-medium` (b9); `el-team-harness-engineering` → `el-reviewdebt` (b5).
+
+### Garbles / identity / merge-checks
+- ⚠ **Title/content mismatch — Hooker.** Billed "Adaption Labs: Gradient-Free Continual Learning"; the delivered talk never uses the phrase and presents no gradient-free method. No element coined for it; the `ia-` node keeps the billed title for link fidelity. If the lab's gradient-free work matters, it needs a different source.
+- ⚠ **`el-microworlds-thesis` vs `el-microworlds` (b6)** — coined separately on the view that Su's "millions of microworlds" (idiosyncratic per-organization environments requiring per-instance learning) is a distinct claim. Grep both before seeding; merge if review disagrees.
+- ⚠ **VERIFY before seeding (highest-risk):** Malde's Windsurf story ("SWE-1… the two billion acquisition at DeepMind" — model name, amount and acquirer all need checking); Anthropic model version strings (**Sonnet 4.5**, **Opus 4.5** in the context-anxiety story, **Opus 4.8** in the demo) and whether "context anxiety" appears in Anthropic's public writing; Khemani's memory dates and token sizes (reverse-engineered observations, not vendor documentation); Denton's "Qwen 3.5 thinking"; Druga's "Qwen 27B" (likely **Qwen3 27B**) and the unattributed 30-cookbook repo (captioned "Diamond"); Trivedy's product name (captioned "LangSplat engine" — almost certainly wrong, so no product node coined); Hooker's "fewer than 5,000 people" and the death-of-scaling paper title; Khandelwal's context thresholds (20–25K baseline / 40–50K as failure) and the ~100-line skill cap.
+- Systematic garbles resolved per file: "hardness"→harness (Khandelwal, throughout), "Cloud"→Claude (Bhat/He, throughout), "Chad GPT"→ChatGPT (Khemani), "gpo"→GRPO and "opsd/ops"→OPSD (Malde), "N gram"→Engram (Morris), "Isu"→Yu Su, "Partasawa"→Parth Asawa, "Schllo"→Shlok, "Century"→Sentry (Hylak), "Parto Frontiers"→Pareto frontiers (Asawa).
+
+### Note on scale
+This batch adds ~64 elements and ~66 signals across 13 files — roughly triple
+a normal batch. If review wants to prune, the highest-confidence keeps are:
+Druga's controlled ablation (the only properly-designed memory experiment),
+Asawa's gain metric and ICL result, Denton's two measured before/afters,
+Malde's failure analysis, Anthropic's split evidence on the harness pattern,
+and Khemani's survey. The weakest evidence base despite the strongest
+credentials is Hooker's — every quantity in it is vendor-stated without a
+baseline.

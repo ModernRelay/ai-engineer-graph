@@ -273,6 +273,21 @@ in `domain:` enums. Every Signal/KnowHow carries artifact provenance edges.
 | **Batch 18 — harness internals + RL infrastructure** | | |
 | [kundel-openai-codex-behind-harness.md](kundel-openai-codex-behind-harness.md) | Kundel, OpenAI — Codex, Behind the Harness | for review |
 | [jiang-modal-rl-cross-datacenter.md](jiang-modal-rl-cross-datacenter.md) | Jiang, Modal — Taking Reinforcement Learning Cross Datacenter (⚠ heavy caption garbling) | for review |
+| **Batch 19 — Continual Learning track** (10 talks, one day) | | |
+| [su-neocognition-continual-learning-expertise.md](su-neocognition-continual-learning-expertise.md) | Su, NeoCognition — Intelligence + Continual Learning = Expertise (track keynote) | for review |
+| [morris-engram-scaling-compute-on-context.md](morris-engram-scaling-compute-on-context.md) | Morris, Engram — Scaling Compute on Context | for review |
+| [malde-trajectory-scaling-continual-learning.md](malde-trajectory-scaling-continual-learning.md) | Malde, Trajectory — Scaling up Continual Learning (OPSD) | for review |
+| [asawa-berkeley-evaluating-continual-learning.md](asawa-berkeley-evaluating-continual-learning.md) | Asawa, UC Berkeley — Evaluating Continual Learning (CL-Bench) | for review |
+| [denton-applied-compute-continual-learning-enterprise.md](denton-applied-compute-continual-learning-enterprise.md) | Denton, Applied Compute — Bringing Continual Learning into Enterprises | for review |
+| [hooker-adaption-gradient-free-learning.md](hooker-adaption-gradient-free-learning.md) | Hooker, Adaption Labs — Auto Scientist / death of scaling (⚠ title/content mismatch) | for review |
+| [khemani-every-memory-system.md](khemani-every-memory-system.md) | Khemani — Lessons from Studying Every Memory System (the memory survey) | for review |
+| [druga-sakana-memory-harnesses.md](druga-sakana-memory-harnesses.md) | Druga, Sakana AI — Memory Harnesses (the batch's controlled ablation) | for review |
+| [holmes-warp-llm-knowledge-bases.md](holmes-warp-llm-knowledge-bases.md) | Holmes, Warp — LLM Knowledge Bases: a practical guide | for review |
+| [trivedy-langchain-agents-data-mining.md](trivedy-langchain-agents-data-mining.md) | Trivedy, LangChain — Improving Agents is a Data Mining Problem | for review |
+| **Batch 19 — agent design** | | |
+| [bhat-he-anthropic-agentic-surfaces.md](bhat-he-anthropic-agentic-surfaces.md) | Bhat & He, Anthropic — Evolution of Agentic Surfaces (managed agents, dreaming, outcomes) | for review |
+| [khandelwal-amazon-agents-codebases-teams.md](khandelwal-amazon-agents-codebases-teams.md) | Khandelwal, Amazon AGI Lab — Agents, codebases, and teams | for review |
+| [hylak-raindrop-designing-agents.md](hylak-raindrop-designing-agents.md) | Hylak, Raindrop — Designing Agents: The Floor Is the Frontier (⚠ Ben, not Veronica Hylak) | for review |
 
 Review starting points: the batch-2 merge flags in [registry.md](registry.md)
 § "Batch-2 additions" (`pat-model-not-bottleneck` vs `pat-harness-over-model`;
