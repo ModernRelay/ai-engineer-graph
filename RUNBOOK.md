@@ -10,15 +10,16 @@ Stood up 2026-07-22. Native RustFS (no Docker) + cluster-booted omnigraph-server
   queries, policies, graph datasets — applied via `omnigraph cluster apply`).
 - **Graph**: `spike` → `s3://intel-graph/clusters/spike-intel/graphs/spike.omni`
   — **rebuilt clean 2026-08-14 on omnigraph 0.9.0 (internal schema v6)**.
-  6,590 nodes / 13,107 edges: 3,300 entity nodes (959 signals, 713 elements,
-  451 insights, 428 knowhows, 254 experts, 238 artifacts, 230 companies,
-  17 sources, 10 patterns) + 3,290 embedded transcript chunks (3072-dim,
+  6,951 nodes / 14,265 edges: 3,661 entity nodes (1,072 signals, 826 elements,
+  495 insights, 455 knowhows, 276 experts, 260 artifacts, 248 companies,
+  17 sources, **12 patterns**) + 3,290 embedded transcript chunks (3072-dim,
   gemini-embedding-2-preview).
-  ⚠ **Data currency**: the graph holds the corpus **through batch 16**
-  (218 talks). Batches 17–19 (22 talks) and the two patterns coined
-  2026-08-14 (`pat-agent-memory-layer`, `pat-continual-learning-turn`) are
-  **not loaded** — their extractions exist but were never converted to
-  fragments. See "Bringing the graph current" below.
+  **Current through batch 19** — all 240 talks loaded, both patterns coined
+  2026-08-14 (`pat-agent-memory-layer`, `pat-continual-learning-turn`) present
+  with their day-one counter-edges.
+  ⚠ Remaining gap: **15 talks have no transcript chunks** (all of batches
+  18–19), so semantic search does not reach them. See "Bringing the graph
+  current" below.
 - **Server**: `http://127.0.0.1:8081` (cluster-booted, bearer-token auth).
   Port 8080 is occupied by an unrelated stale 0.6.2 dev server (June,
   serving ~/exp/intel) — left untouched. Port 9000 is held by an unrelated
@@ -194,5 +195,32 @@ The graph trails the corpus by 22 talks and 2 patterns. To close the gap:
 
 1. Convert `extraction/` batches 17, 18, 19 to `seed-work/frag-17.jsonl` … `frag-19.jsonl` per `seed-work/CONVERSION-SPEC.md` (the two coined patterns are defined in `khemani-every-memory-system.md` and `su-neocognition-continual-learning-expertise.md`, so a conversion pass picks them up).
 2. `python3 seed-work/merge_validate.py` → regenerate `seed-work/seed-full.jsonl`.
-3. `omnigraph load --data seed-work/seed-full.jsonl --mode overwrite …`, then re-load every `chunks*-final.jsonl` (overwrite is whole-graph clean-slate — chunks must follow it, not precede it).
+3. `omnigraph load --data seed-work/seed-full.jsonl --mode overwrite …`. **`--mode overwrite` is per-table, not whole-graph** — it replaces only the node/edge types present in the file, so `Chunk` and `PartOfArtifact` survive an entity-only overwrite untouched and must **not** be re-loaded afterwards (doing so trips `@unique` on `PartOfArtifact.src`, since edges have no `@key`). Verified 2026-08-14.
 4. Chunks are missing for **15 talks** (all of batches 18–19): raw JSONL → `omnigraph embed --spec seed-work/embed-spec.json` → finalize with `slug = "<talk-slug>#<idx>"` + `PartOfArtifact` edges → load. `seed-work/chunks19-embedded.jsonl` (117 chunks) is also still keyless and needs the same finalize step before it can load.
+
+## Conversion coverage — a gap worth knowing about (found 2026-08-14)
+
+`seed-work/frag-*.jsonl` filenames do **not** map to corpus batch numbers.
+`frag-16a` and `frag-16b` are batch **15**'s conversion (29 talks); batch 16's
+own 9 talks (Temporal, MCP Apps, Cloudflare, Daily, NVIDIA, both panels,
+Turbopuffer, Cline) had **never been converted at all** despite the corpus
+commit reading "full corpus through batch 16". They are now in `frag-16c`.
+
+Fragments as of 2026-08-14, with what they actually contain:
+
+| fragment | corpus batches |
+|---|---|
+| `frag-1` … `frag-15` | batches 1–14 (agent-generated, various splits) |
+| `frag-16a`, `frag-16b` | batch **15** |
+| `frag-16c` | batch **16** (added 2026-08-14) |
+| `frag-17`, `frag-18`, `frag-19` | batches 17, 18, 19 |
+| `frag-20-coinage` | 3 edges from the 2026-08-14 pattern coinage whose source files sit in batches whose fragments predate it |
+
+`seed-work/convert_1719.py` converts batches 16–19 deterministically from the
+extraction markdown. If you re-run it, re-run `merge_validate.py` after.
+
+⚠ **When you edit an already-converted extraction file, its fragment goes
+stale.** The coinage pass edited files across batches 14, 15, 17 and 19; only
+the 17/19 fragments were regenerated, so batch 14/15 edits needed a
+supplementary fragment (`frag-20-coinage`) plus one hand-removed stale edge in
+`frag-16b`. Check which fragment owns a file before assuming an edit landed.
