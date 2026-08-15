@@ -1066,3 +1066,120 @@ clause, which they are in.
 - `pat-agent-economy`, `pat-environments-economy`, `pat-ai-native-org`, `pat-benchmark-trust-crisis`, `pat-durable-execution`, `pat-adaptive-software`/`pat-adaptive-harness`, `pat-fde-turn`, `pat-compute-liquidity` (b18) all remain **uncoined**. Nothing in this coinage changes their status.
 - `pat-durable-execution` is now the longest-standing recommendation (b5), and b17 recorded its ledger complete. It is the obvious next candidate.
 - b15's **FINDING 1** on `pat-harness-over-model` (re-scope to claim 1) is untouched by this coinage and still pending. The b19 Anthropic file remains the recommended test case.
+
+## Batch-20 additions (reconciled) — the Computer Use (CUA) track
+
+_7 talks, all published 2026-08-14, released as a dedicated **Computer Use
+(CUA)** channel playlist (`PLEz0frWjePik`) OUTSIDE the World's Fair 2026
+playlist — the first track the channel has published as its own collection
+rather than folding into the main playlist. Coherent theme: agents using the
+web the way humans do (pixels, clicks, browsers), the infrastructure and
+training behind it, and the data/context supply layer._
+
+### ⚑ The track is one sustained argument, split across two coined-pattern axes
+Four talks converge on **"the web gets agentified by computer-use, not
+protocols"** but split exactly along b15's FINDING 1 claim-1/claim-2 line:
+- **Batra (Yutori) — thesis talk.** The long tail of the web will never publish APIs/MCP; the browser is a rendering engine so pixels are the source of truth; general pixels-in models generalize where per-site scaffolds don't. `sig-scaffolds-dont-generalize-pixels-do` **contradicts** `pat-harness-over-model` (capability/claim-2 side — the model generalizes, the scaffold doesn't).
+- **Klein (Browserbase) — opposite emphasis, same track.** Models are already good enough; the gap is a *capabilities overhang* closed by harness + infrastructure. `sig-domain-harness-beats-raw-model` **supports** `pat-harness-over-model` (reliability/claim-1 side).
+- **Mishra (Amazon AGI) — from inside the training loop, holds BOTH.** Perception is a missing *model* capability coding can't supply (`sig-coding-skill-insufficient-for-cua` **contradicts** `pat-model-not-bottleneck`), AND the harness is temporary scaffolding that "thins as the model improves" (`sig-harness-thins-as-model-improves` **contradicts** `pat-harness-over-model`, claim-2).
+- **Gallon — the how-to.** CLI-driving-CDP beats MCP on reuse/speed/cost; `sig-cli-beats-mcp-for-browser-control` **supports** `pat-harness-over-model` (claim-1).
+
+**This track is the single best exhibit yet for the FINDING 1 re-scoping**
+(scope `pat-harness-over-model` to claim 1). Under it: Klein and Gallon's
+supports survive; Batra's and Mishra's counters resolve as claim-2 (capability
+migrates to the model). Read Mishra first at the pattern review — one speaker
+holding perception-needs-more *and* harness-needs-less coherently is the
+cleanest statement of the split the corpus has produced. Net counter-edges on
+`pat-harness-over-model` from this batch: +2 (Batra, Mishra), both claim-2.
+
+### ⚑ `pat-new-cyber-threats` — biggest single exhibit since batch 1
+**Gallon defeats four production CAPTCHAs live, no human in the loop**
+(Cloudflare Turnstile, MTCaptcha, GeeTest-style jigsaw, reCAPTCHA v2) on
+commodity primitives: CDP's **trusted-event path** (a real input-domain click
+is stamped "trusted," indistinguishable from a human mouse) plus a vision
+model. Two signals home directly on the pattern; `ins-captcha-is-over-as-a-boundary`
+ties it to Klein's "Verisign moment" gap in the same track — bot defense must
+move from challenge to **attestation/identity**, which nobody has built.
+`el-cdp-cli-driving` carries a rare `EnablesPattern → pat-new-cyber-threats`
+(element enabling a threat pattern — appropriate; the capability *is* the
+threat surface). Klein's `ins-trust-not-capability-gates-the-agent-web` adds a
+second `pat-new-cyber-threats` insight from the defense side.
+
+### ⚑ `pat-agent-economy` — the biggest single-batch haul (machine-web leg)
+The candidate the corpus has circled since b2/b5 (Povilionis receipts, Raskar
+bazaar, Vending-Bench, Local-AI panel, b16 MCP-apps). This batch adds the
+**machine-web leg**: agents becoming the web's primary actors, routing around
+API governance by using the human interface. Signals held pattern-less awaiting
+the coin: `sig-long-tail-will-never-publish-apis` (Batra — counter-flavoured
+vs the protocol-optimist side), `sig-web-agentified-by-browser-layer` (Batra),
+`sig-web-must-become-agent-legible` (Klein), `sig-web-ui-as-permissionless-api`
+(Gallon). **Recommend adding `pat-agent-economy` to the next coin review** — it
+now spans commerce (b2/b5/b11), protocols (b8/b16), and the machine-web (b20),
+which is either strong convergence or a sign the candidate is too broad and
+should split (machine-web vs agent-commerce). Flag the split question.
+
+### ⚑ `pat-benchmark-trust-crisis` — two rigorous new legs, with a proof
+D'Oro's **replay agent** (a <1MB blind script of recorded trajectories matches/
+beats the frontier model on deterministic CUA benchmarks) and the **pass@k =
+replay** proof are gaming/construction-methodology legs with a *formal proof*,
+not an anecdote — a CUA-specific determinism/replay leg distinct from the nine
+in b15 FINDING 2. Both held pattern-less (`sig-replay-agent-beats-frontier-models`,
+`sig-passk-is-a-gameable-metric`). This candidate (~13 registry mentions) is the
+best-evidenced uncoined pattern after `pat-agent-economy`. `sig-frontier-models-not-robust-to-variation`
+(DG-World shows models lose performance under theme/screen variation) homes on
+`pat-model-not-bottleneck`.
+
+### ⚑ `pat-agent-memory-layer` (COINED b19) — first supply-side evidence, already contested
+Primor (Bright Data) coins the term **CaaS (context-as-a-service)** — vendors
+structuring the web into agent-consumable knowledge graphs. This is the
+**acquisition** side of the memory layer (b19 coined it from the *retention*
+side). Arrives contested from the same talk: `sig-caas-category-emerging` and
+`sig-owned-context-compounds` **support**; `sig-caas-limited-to-what-it-holds`
+**contradicts** (pre-indexed context answers within its index, goes silent
+outside it). Žemaitytė (Oxylabs) adds `sig-web-infra-is-adapt-forever`
+(maintenance-as-moat) from the raw-data layer beneath CaaS.
+**Recommend the brief note both sides:** retention (memory products) +
+acquisition (CaaS), with data-decay as why acquisition is a subscription.
+
+### `pat-environments-economy` (uncoined) — two more data points
+Mishra's "flight school, not exams" (deliberately messy/adversarial training
+sandboxes; fidelity as moat) and D'Oro's PRISM/DG-World (verified-valid
+environments; verification strategy as the moat, not generation volume). Both
+held pattern-less. This candidate keeps accumulating without a coin — worth
+pairing with `pat-benchmark-trust-crisis` at review since D'Oro's work straddles
+both.
+
+### Companies (7 new)
+- CUA model/agent vendors: `co-yutori` (Batra — Navigator model), `co-browserbase` (Klein — browser infra + Browse.sh/AutoBrowse/Browserbase agents), `co-programma-labs` (D'Oro — CUA verification infra)
+- Web-data / context vendors: `co-bright-data` (Primor — CaaS, Scraper Studio), `co-oxylabs` (Žemaitytė — proxy/web-data infra)
+- Reused with new facts: `co-amazon` (**5th** AGI Lab appearance — Mishra, 1st on CUA *training*; also the AgentCore web index in Primor's talk — recommend widening brief), `co-cloudflare` (Turnstile, in Gallon), `co-microsoft` (web-BYOQ, in Primor), `co-openai` (Gallon's ban story + Codex), `co-meta` (D'Oro's work done there), `co-anthropic` (Opus 4.8 as harness), `co-google` (WebMCP, grounding docs, reCAPTCHA)
+- **Add-option:** the AI-search cohort Exa/you.com/Tavily named in Primor (Parallel already coined) — not coined, passing references.
+
+### Experts (7 new)
+`exp-dhruv-batra` (co-yutori), `exp-paul-klein` (co-browserbase), `exp-corey-gallon`
+(**no company edge** — Chrome Agent is his, no employer stated), `exp-gaurav-mishra`
+(co-amazon; ex-Google Brain/DeepMind), `exp-pierluca-doro` (co-programma-labs +
+co-meta, dual affiliation), `exp-omer-primor` (co-bright-data), `exp-patricija-zemaityte`
+(co-oxylabs).
+- NOT coined (passing references): Karpathy, Brockman, Will/Exa, "Docus" (unresolved).
+
+### Elements (~34 new)
+- CUA thesis/model: `el-long-tail-web`, `el-pixels-are-source-of-truth`, `el-yutori-navigator`, `el-agentification-by-accretion`, `el-cua-progress-rate`
+- Browser harness/infra: `el-cua-capability-overhang`, `el-browser-agent-triad`, `el-agent-legible-web`, `el-browserbase-agents`, `el-agent-identity-broker`
+- Web-automation how-to: `el-cdp-cli-driving`, `el-digital-senses`, `el-sense-act-verify-loop`, `el-meatbag-ladder`, `el-solver-operator-split`
+- CUA training: `el-rl-to-irl-gap`, `el-flight-school-not-exams`, `el-high-fidelity-sandbox`, `el-cua-perception-primitives`, `el-thinning-harness`
+- CUA evals: `el-replay-agent`, `el-passk-is-replay`, `el-prism-principles`, `el-dg-world`, `el-honest-confidence-intervals`
+- Context/data supply: `el-context-as-a-service`, `el-web-as-context-not-data`, `el-data-decay`, `el-rented-vs-owned-context`, `el-web-context-engineering`, `el-web-data-pipeline`, `el-speed-becomes-product`, `el-scale-is-not-a-finish-line`, `el-adapt-forever-infrastructure`
+- Reuse: `el-mcp`, `el-agents-md`, `el-code-mode`, `el-agent-skills`, `el-computer-use-verifier`, `el-openclaw`, `el-company-brain` — several with new deployment surfaces (Browse.sh = per-website skills; CLI-over-MCP = code-mode instance). Recommend widening `el-company-brain` if the Primor cross-file edge is accepted.
+
+### Cross-file edges (within batch, proposed but NOT emitted — left to review)
+- `el-context-as-a-service` (Primor) `UsesElement → el-web-data-pipeline` (Žemaitytė) — CaaS built on raw web-data infra. Same-batch siblings.
+- `el-rented-vs-owned-context` (Primor) → `el-company-brain` (b3, Tan) — the data-supply mechanics under Tan's company-brain thesis.
+- `el-dg-world` / `el-private-benchmark` (b12) — contamination-resistant construction neighbors.
+
+### Garbles / identity / merge-checks
+- ⚠ **Batra caption garble is load-bearing:** "agentify / API-fy the web" → "identify" throughout, INCLUDING the title's verb. Normalized on the video title's authority.
+- ⚠ **VERIFY before seeding (all vendor-stated, caption-sourced):** Yutori's 97%/Online-Mind2Web + $0.80-vs-$2.30; Arize CLI-vs-MCP study (83% parity, 7-vs-71 turns, 75× cheaper); D'Oro's OSWorld/MobileWorld names + DG-World 15apps/387/3.2M + 20%-vs-95% coverage + $12/1M-task cost; Bright Data scale (50B pages/day, "70% of AI labs"); Oxylabs 550ms + 400M→6B req; Amazon AgentCore index + Microsoft web-BYOQ launch dates.
+- ⚠ "by Lemon" (Gallon) → almost certainly **GeeTest** (jigsaw-slider CAPTCHA), medium confidence. "OffMD" (Klein) → **auth.md** (WorkOS), medium confidence. "MobileWorld" (D'Oro) → possibly **AndroidWorld**.
+- `exp-corey-gallon` and `exp-shlok-khemani` (b19) are the corpus's two experts with NO company edge (both genuinely independent).
+- `el-yutori-navigator` naming: "Navigator N1.5" per captions — verify the model name/version.

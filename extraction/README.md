@@ -288,6 +288,14 @@ in `domain:` enums. Every Signal/KnowHow carries artifact provenance edges.
 | [bhat-he-anthropic-agentic-surfaces.md](bhat-he-anthropic-agentic-surfaces.md) | Bhat & He, Anthropic — Evolution of Agentic Surfaces (managed agents, dreaming, outcomes) | for review |
 | [khandelwal-amazon-agents-codebases-teams.md](khandelwal-amazon-agents-codebases-teams.md) | Khandelwal, Amazon AGI Lab — Agents, codebases, and teams | for review |
 | [hylak-raindrop-designing-agents.md](hylak-raindrop-designing-agents.md) | Hylak, Raindrop — Designing Agents: The Floor Is the Frontier (⚠ Ben, not Veronica Hylak) | for review |
+| **Batch 20 — Computer Use (CUA) track** (7 talks, own playlist) | | |
+| [batra-yutori-agentify-web-not-apis.md](batra-yutori-agentify-web-not-apis.md) | Batra, Yutori — Computer-use models will agentify the web, not APIs (track thesis) | for review |
+| [klein-browserbase-agents-www.md](klein-browserbase-agents-www.md) | Klein, Browserbase — Bringing agents onto the world wide web | for review |
+| [gallon-dark-arts-web-automation.md](gallon-dark-arts-web-automation.md) | Gallon — The Dark Arts of Web Automation (4 CAPTCHAs defeated live) | for review |
+| [mishra-amazon-rl-to-irl.md](mishra-amazon-rl-to-irl.md) | Mishra, Amazon AGI Lab — From RL to IRL (CUA training) | for review |
+| [doro-programma-statistical-precipice.md](doro-programma-statistical-precipice.md) | D'Oro, Programma Labs — Computer Use at the Edge of the Statistical Precipice (replay agent, DG-World) | for review |
+| [primor-brightdata-context-as-a-service.md](primor-brightdata-context-as-a-service.md) | Primor, Bright Data — The Rise of CaaS: Context-as-a-Service | for review |
+| [zemaityte-oxylabs-web-data-infrastructure.md](zemaityte-oxylabs-web-data-infrastructure.md) | Žemaitytė, Oxylabs — How Web Data Infrastructure Powers the Next Generation of AI | for review |
 
 Review starting points: the batch-2 merge flags in [registry.md](registry.md)
 § "Batch-2 additions" (`pat-model-not-bottleneck` vs `pat-harness-over-model`;
