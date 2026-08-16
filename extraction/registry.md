@@ -13,6 +13,11 @@ insights, knowhows, and elements/companies/experts unique to that talk).
 - **[batch2]** `pat-model-not-bottleneck` — The Model Is Not the Bottleneck (dynamic); **[batch2]** `pat-harness-over-model` — The Harness Over the Model (dynamic); **[batch5]** `pat-value-of-judgement` — Value of Judgement (dynamic). _Full briefs in the batch-2 and batch-5 sections._
 - **[batch19]** `pat-agent-memory-layer` — The Agent Memory Layer (dynamic) — persistent memory as a first-class stack layer rather than a per-product feature: systems that accumulate, synthesize and re-inject what they learn about a user, team or environment, maintained on a compute budget and updated outside the weights. **Coined 2026-08-14**, defined in `khemani-every-memory-system.md`. Contested from birth — 4 counter-edges attached at coin.
 - **[batch19]** `pat-continual-learning-turn` — The Continual Learning Turn (dynamic) — the frontier of model improvement shifting from pre-training scale to post-deployment learning, making the accumulation loop rather than the base model the locus of compounding advantage. **Coined 2026-08-14**, defined in `su-neocognition-continual-learning-expertise.md`. Contested from birth — 1 counter-edge attached at coin.
+- **[coined 2026-08-16]** `pat-durable-execution` — The Durable Execution Layer (dynamic) — durable runtime (state, workflows, retries, scheduling, crash-recovery) as a productized stack category below the harness; product-as-layer vs the convention counter. **6 support / 1 counter** at coin. Recommended since batch 5; ledger complete at b17.
+- **[coined 2026-08-16]** `pat-benchmark-trust-crisis` — The Benchmark Trust Crisis (challenge) — benchmarks decoupling from real capability across many independent failure modes (replay/determinism with a formal proof, contamination, construction methodology, reporting threshold, simulation-awareness, task-distribution mismatch). **9 support / 2 counter** at coin.
+- **[coined 2026-08-16]** `pat-ai-native-org` — The AI-Native Organization (dynamic) — companies restructuring around agent delegation (org-as-markdown, thin teams, review relocated/abolished, multiplayer-by-default), with a quantified adoption side and a dysfunction side. **11 support / 0 counter** at coin. Widest-evidenced candidate; proposed since batch 4.
+- **[coined 2026-08-16]** `pat-agent-economy` — The Agent Economy (dynamic) — agents as primary economic actors (hiring humans, cartels, supply chains, receipts, agent-to-agent protocols) and the web being agentified via computer-use/browser layers and agent-legible standards. **8 support / 1 counter** at coin. ⚠ Registry flags a possible split (agent-commerce vs machine-web) — coined whole per user direction; revisit if the two legs diverge.
+- **[⚑ REFRAME 2026-08-16, still uncoined]** `pat-fde-turn` → **rename to `pat-fde-rise` / "The Rise of Forward-Deployed Engineering"**. The old "turn/collapse toward product" framing was backwards (user, 2026-08-16): the thesis is the **rise** of FDE as an ascendant function — the forward-deployed engineer becoming a first-class role as vendors embed engineers in customer orgs (Anthropic, Factory, Cognition, Ramp, Sierra, Decagon, Kepler; the whole b14 FDE track). Contested from birth (Ganesh/Kepler: "this is a product strategy, not a role"). **Not coined** — no "add" given; reframed candidate awaiting a coin decision.
 
 ## Companies
 - **[seed]** co-anthropic, co-google-deepmind, co-moonshot-ai, co-zylon, co-meta, co-edra, co-hornet, co-playerzero, co-sequoia, co-sap, co-nousresearch, co-klarna, co-salesforce, co-box, co-modern-relay, co-ucla
@@ -1183,3 +1188,66 @@ co-meta, dual affiliation), `exp-omer-primor` (co-bright-data), `exp-patricija-z
 - ⚠ "by Lemon" (Gallon) → almost certainly **GeeTest** (jigsaw-slider CAPTCHA), medium confidence. "OffMD" (Klein) → **auth.md** (WorkOS), medium confidence. "MobileWorld" (D'Oro) → possibly **AndroidWorld**.
 - `exp-corey-gallon` and `exp-shlok-khemani` (b19) are the corpus's two experts with NO company edge (both genuinely independent).
 - `el-yutori-navigator` naming: "Navigator N1.5" per captions — verify the model name/version.
+
+## Coinage record — 2026-08-16 (four patterns + FDE reframe)
+
+User directive: "add" pat-agent-economy, pat-ai-native-org,
+pat-durable-execution, pat-benchmark-trust-crisis; reframe pat-fde-turn as
+the *rise* of FDE. Corpus now at **16 coined patterns**. Edges loaded via
+`seed-work/frag-21-coinage.jsonl` (4 Pattern nodes + 38 FormsPattern/
+ContradictsPattern edges); b16-20 element/signal edges that previously
+dangled against these candidates now also resolve.
+
+### `pat-durable-execution` (dynamic) — 6 support / 1 counter
+Support: `sig-mcp-spec-mandates-task-durability` (davis-temporal),
+`sig-knowledge-work-moves-to-nightly-cloud` (holmes-warp),
+`sig-background-agents-absorb-ops-long-tail` (smith-resolve),
+`sig-inngest-durable-execution-vendor` (farrelly-inngest),
+`sig-durable-runtime-category-emerging` (tahir-zenml),
+`sig-reset-over-compact` (lee-krafton — rehomed from `pat-harness-over-model`).
+Counter: `sig-mcp-tasks-zero-client-adoption` (davis-temporal — the
+convention/adoption-gap counter).
+
+### `pat-benchmark-trust-crisis` (challenge) — 9 support / 2 counter
+Support: `sig-benchmarks-saturate-while-deployment-stalls` (almeida),
+`sig-benchmarks-cannot-be-chained` (asawa), `sig-replay-agent-beats-frontier-models`
++ `sig-passk-is-a-gameable-metric` (doro — the formal proof), `sig-long-horizon-is-a-scalar`
+(garg), `sig-metr-50pct-headline-inflates-capability` (linkov), `sig-rl-environments-decoupled-from-reality`
+(malde), `sig-reward-hacking-arms-race` (desai — rehomed from `pat-verification-gap`),
+`sig-simulation-awareness-breaks-evals` (petersson — rehomed from `pat-verification-gap`).
+Counter: `sig-private-task-reruns-over-leaderboards` (linkov), `sig-benchmark-on-your-own-codebase`
+(singh) — private/real-codebase re-run suites as the trustworthy antidote.
+
+### `pat-ai-native-org` (dynamic) — 11 support / 0 counter
+Support: `sig-velocity-sickness-pathologies` (dailey), `sig-adoption-arc-fear-then-slop`
+(khandelwal), `sig-background-automation-is-the-ballgame` + `sig-multiplayer-surface-for-realtime-dev`
+(gazit), `sig-notion-software-factory` (sachs), `sig-agent-sessions-as-team-surface` (singh-superconductor),
+`sig-block-autonomy-then-layoffs` (jones — the layoffs/dark-side data point),
+`sig-boundary-ships-without-code-review` + `sig-writing-is-the-review-surface`
+(gupta-boundary — rehomed from `pat-value-of-judgement`), `sig-automattic-radical-speed-month`
++ `sig-designers-ship-ios-chat-6-days` (grbic).
+
+### `pat-agent-economy` (dynamic) — 8 support / 1 counter
+Support: `sig-web-agentified-by-browser-layer` (batra), `sig-web-ui-as-permissionless-api`
+(gallon), `sig-web-must-become-agent-legible` (klein), `sig-agent-walled-gardens-aol-era`
+(raskar), `sig-agent-mediated-consumers-break-human-ground-truth` (anand),
+`sig-andon-real-world-deployments` + `sig-vending-arena-emergent-misconduct` +
+`sig-agents-no-longterm-investment` (petersson — the Vending-Bench cluster, the
+ledger's strongest data).
+Counter: `sig-long-tail-will-never-publish-apis` (batra — the protocol-optimist
+counter to the machine-web leg).
+
+### ⚑ Completeness tail still owed (per-pattern sweeps)
+Coined with the clearly-held and explicitly-named-rehome signals above; the
+registry ledgers reference further scattered older-batch evidence NOT yet
+attached (same deferral shape as `pat-agent-memory-layer`'s b9/b10 tail):
+- **pat-ai-native-org:** the batch-4/5/6 echoes still on `pat-saaspocalypse`/`pat-harness-over-model` — Tan (3 saaspocalypse links, tan-yc file review note 1), Doshi, Lee-Chan, An/Hoe, Noring, Browne, Yaron survey. Each needs a rehome/dual-edge judgement.
+- **pat-durable-execution:** the b3/b4/b5 vendor cluster (ZenML/Kitaru original, KRAFTON `sig-multi-machine-five-failures`, Shrabony, OpenAI keynote, Paperclip, Resonate/Synadia, Chronicle, Bhargava Agency, FlyersSoft) — several still parked on `pat-harness-over-model`.
+- **pat-benchmark-trust-crisis:** the b3/b5/b6/b9/b12/b13 legs (Han reward-hacking, Vidal, Robinson, Kumar, Campos, Datacurve contamination, Cai economic motive, `sig-weak-verifier-attack-surface`) — many still on `pat-verification-gap`.
+- **pat-agent-economy:** Povilionis receipts (b2), Local-AI panel (b6), `sig-real-economy-runs-on-php-and-clicks` (klein, drop-option from `pat-saaspocalypse`).
+Recommend a dedicated per-signal rehome pass rather than a blind sweep, since
+each is a form/contradict + rehome-from-which-pattern judgement.
+
+### Consequences for remaining ledgers
+- Still uncoined: `pat-environments-economy`, `pat-adaptive-software`/`pat-adaptive-harness` (rename pending — see below), `pat-compute-liquidity`, `pat-fde-rise` (reframed, uncoined), `pat-provider-blind-ai`/`pat-html-native-medium` (retired).
+- `pat-agent-economy` breadth: watch whether the machine-web signals (Batra/Klein/Gallon) and the agent-commerce signals (Petersson/Povilionis/Raskar) stay coherent under one pattern or want splitting.
