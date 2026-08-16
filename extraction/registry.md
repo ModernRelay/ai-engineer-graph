@@ -1249,5 +1249,24 @@ Recommend a dedicated per-signal rehome pass rather than a blind sweep, since
 each is a form/contradict + rehome-from-which-pattern judgement.
 
 ### Consequences for remaining ledgers
-- Still uncoined: `pat-environments-economy`, `pat-adaptive-software`/`pat-adaptive-harness` (rename pending — see below), `pat-compute-liquidity`, `pat-fde-rise` (reframed, uncoined), `pat-provider-blind-ai`/`pat-html-native-medium` (retired).
+- Still uncoined: `pat-environments-economy`, `pat-liquid-software`/`pat-liquid-harness` (reframed below), `pat-compute-liquidity`, `pat-fde-rise` (reframed, uncoined), `pat-provider-blind-ai`/`pat-html-native-medium` (retired).
+
+### ⚑ REFRAME 2026-08-16 — `pat-adaptive-*` → `pat-liquid-*`
+User rejected "adaptive" as too weak (it implies a fixed system adjusting
+within bounds). Chosen framing: **Dissolving / Liquid**. Rename the pair:
+- `pat-adaptive-software` → **`pat-liquid-software`** — "Liquid Software"
+- `pat-adaptive-harness` → **`pat-liquid-harness`** — "The Liquid Harness"
+
+Thesis (sharpened): **the frozen build artifact dissolves** — software and
+harness are materialized per-use/per-context at runtime instead of being
+shipped as a fixed thing. One stem + per-user live divergences (ten Teije
+"the pipeline is dead"); harness as runtime output not input (Chandegra);
+spec-is-the-product / bespoke-on-demand (Tornow); optimizer rewrites the
+harness from production signals (RELAI); agents mutating agents (Mutagent).
+
+**Still uncoined** (no "add" given) and the **pair-vs-merge question stays
+open**: coin as two facets (`pat-liquid-software` product artifact +
+`pat-liquid-harness` agent scaffolding) or one merged `pat-dissolving-artifact`.
+Decide at coin. ~5 data points across b7 (ten Teije, Chandegra) + b8 (Tornow,
+RELAI, Mutagent).
 - `pat-agent-economy` breadth: watch whether the machine-web signals (Batra/Klein/Gallon) and the agent-commerce signals (Petersson/Povilionis/Raskar) stay coherent under one pattern or want splitting.
