@@ -10,6 +10,14 @@ insights, knowhows, and elements/companies/experts unique to that talk).
 - **[seed]** `pat-sovereign-ai`, `pat-saaspocalypse`, `pat-context-graphs`, `pat-new-cyber-threats`, `pat-accelerated-research`
 - **[batch1]** `pat-verification-gap` — The Verification Gap (generation industrialized, verification didn't; trust re-architected outside the model)
 - **[batch1]** `pat-agent-supply-chain` — The Agent Supply Chain (skills/MCP/extensions/hallucinated packages as a worse package ecosystem; exploitation begun)
+- **[batch2]** `pat-model-not-bottleneck` — The Model Is Not the Bottleneck (dynamic); **[batch2]** `pat-harness-over-model` — The Harness Over the Model (dynamic); **[batch5]** `pat-value-of-judgement` — Value of Judgement (dynamic). _Full briefs in the batch-2 and batch-5 sections._
+- **[batch19]** `pat-agent-memory-layer` — The Agent Memory Layer (dynamic) — persistent memory as a first-class stack layer rather than a per-product feature: systems that accumulate, synthesize and re-inject what they learn about a user, team or environment, maintained on a compute budget and updated outside the weights. **Coined 2026-08-14**, defined in `khemani-every-memory-system.md`. Contested from birth — 4 counter-edges attached at coin.
+- **[batch19]** `pat-continual-learning-turn` — The Continual Learning Turn (dynamic) — the frontier of model improvement shifting from pre-training scale to post-deployment learning, making the accumulation loop rather than the base model the locus of compounding advantage. **Coined 2026-08-14**, defined in `su-neocognition-continual-learning-expertise.md`. Contested from birth — 1 counter-edge attached at coin.
+- **[coined 2026-08-16]** `pat-durable-execution` — The Durable Execution Layer (dynamic) — durable runtime (state, workflows, retries, scheduling, crash-recovery) as a productized stack category below the harness; product-as-layer vs the convention counter. **6 support / 1 counter** at coin. Recommended since batch 5; ledger complete at b17.
+- **[coined 2026-08-16]** `pat-benchmark-trust-crisis` — The Benchmark Trust Crisis (challenge) — benchmarks decoupling from real capability across many independent failure modes (replay/determinism with a formal proof, contamination, construction methodology, reporting threshold, simulation-awareness, task-distribution mismatch). **9 support / 2 counter** at coin.
+- **[coined 2026-08-16]** `pat-ai-native-org` — The AI-Native Organization (dynamic) — companies restructuring around agent delegation (org-as-markdown, thin teams, review relocated/abolished, multiplayer-by-default), with a quantified adoption side and a dysfunction side. **11 support / 0 counter** at coin. Widest-evidenced candidate; proposed since batch 4.
+- **[coined 2026-08-16]** `pat-agent-economy` — The Agent Economy (dynamic) — agents as primary economic actors (hiring humans, cartels, supply chains, receipts, agent-to-agent protocols) and the web being agentified via computer-use/browser layers and agent-legible standards. **8 support / 1 counter** at coin. ⚠ Registry flags a possible split (agent-commerce vs machine-web) — coined whole per user direction; revisit if the two legs diverge.
+- **[⚑ REFRAME 2026-08-16, still uncoined]** `pat-fde-turn` → **rename to `pat-fde-rise` / "The Rise of Forward-Deployed Engineering"**. The old "turn/collapse toward product" framing was backwards (user, 2026-08-16): the thesis is the **rise** of FDE as an ascendant function — the forward-deployed engineer becoming a first-class role as vendors embed engineers in customer orgs (Anthropic, Factory, Cognition, Ramp, Sierra, Decagon, Kepler; the whole b14 FDE track). Contested from birth (Ganesh/Kepler: "this is a product strategy, not a role"). **Not coined** — no "add" given; reframed candidate awaiting a coin decision.
 
 ## Companies
 - **[seed]** co-anthropic, co-google-deepmind, co-moonshot-ai, co-zylon, co-meta, co-edra, co-hornet, co-playerzero, co-sequoia, co-sap, co-nousresearch, co-klarna, co-salesforce, co-box, co-modern-relay, co-ucla
@@ -776,7 +784,12 @@ pending premiere. Still premiere-locked: Anthropic "Evolution of agentic
 surfaces" (K0X9QDRkIdg, ~2026-08-12), plus 11 staged-but-private uploads
 queued in the World's Fair playlist._
 
-### ⚑ pat-harness-over-model — 9th counter-edge, and the best-sourced one yet
+### ⚑ pat-harness-over-model — a new counter-edge, and the best-sourced one yet
+> **CORRECTION (made at batch 19):** this section originally said "9th
+> counter-edge," counting from the b11 note's total of 8. That was stale —
+> b15's FINDING 1 supersedes it with **~11**. The Kundel edge is therefore
+> roughly the **12th**, not the 9th. The claim about its *quality* stands.
+> See the batch-19 section for how it interacts with FINDING 1's re-scoping.
 `sig-models-trained-into-their-harness` (Kundel) is the first counter-evidence
 from **inside a frontier lab's own harness team**, and it is mechanical rather
 than predictive: models from GPT-5 on are trained on the apply-patch tool;
@@ -842,3 +855,421 @@ appended last (b16, then b17). Labelled with an explicit "Batch 15 (cont.)"
 marker row rather than moved, so file order and any in-flight review links are
 preserved. Batch 15's count of 29 talks reconciles only with these seven
 included.
+
+## Batch-19 additions (reconciled) — the Continual Learning track + agent design
+
+_13 talks (10 published 2026-08-12 as a **dedicated Continual Learning
+track**, 3 agent-design talks published 2026-08-11 → 08-12, including
+batch-18's twice-slipped Anthropic premiere). The largest single-theme batch
+in the corpus. The staged-private queue has fully drained; no premieres
+pending for the first time since batch 16._
+
+### ⚑⚑ COIN RECOMMENDATION 1 — `pat-agent-memory-layer` — the ledger is now closed
+Recommended for coining since **batch 10** ("decisively past threshold"), and
+recorded complete at b17. This batch supplies the two things it still lacked:
+
+- **An independent survey.** Khemani spent a year reverse-engineering ChatGPT, Claude, Gemini and Poke. Findings: three years of *independent* evolution converged on the same architecture from opposite ends — ChatGPT from a user-curated fact list toward background profile synthesis, Claude from retrieval-only tools toward a profile — and **neither uses RAG**, the approach the industry assumed. Published cost trade-offs for both (ChatGPT ~4,000 tokens every few days; Claude ~1,000 tokens every 24 hours — opposite corners of the same maintenance-versus-serving constraint). Plus a market scan: every top consumer AI product has memory, **none outsource it**.
+- **A frontier-lab roadmap.** Anthropic ships memory + **dreaming** (periodic batch over session transcripts + memory state, editing memory so the next day's sessions are smarter), calls them "two cornerstones of a new frontier unified memory system," and flags **organizational-scale memory** (team runbooks) as an emerging third form.
+
+**Held pattern-less awaiting the coin:** `sig-memory-architectures-converged`,
+`sig-memory-cannot-be-outsourced`, `sig-continual-learning-already-shipping`
+(all Khemani), `sig-session-log-powers-memory-and-dreaming` (Anthropic).
+**Would re-target on coin:** `sig-memory-budget-is-a-compute-decision`
+(currently on `pat-model-not-bottleneck`).
+**⚑ Attach as a COUNTER-edge on day one:** `sig-memory-adds-nothing-when-context-fits`
+(Druga) — a controlled ablation finding that when the task fits in context,
+memory adds cost and **zero** capability. A pattern that arrives with its own
+counter-evidence is healthier than one that does not.
+**Scope note for the brief:** Khemani's no-outsourcing finding is explicitly
+about *consumer personalization*; most vendors in this track sell into
+enterprise. Say so in the brief rather than letting the two collide.
+
+### ⚑ COIN RECOMMENDATION 2 — `pat-continual-learning-turn` (proposed at b19, NOT coined)
+_Thesis: the frontier of model improvement is shifting from pre-training scale
+to post-deployment learning, making the accumulation loop — not the base model
+— the locus of compounding advantage._ A ten-talk dedicated track in one day
+is the strongest single-batch evidence the corpus has ever seen for any
+candidate. **Six distinguishable legs:**
+
+1. **New axis of scale** — Su ("intelligence is abundant, expertise is scarce"; orthogonality; *escape intelligence*), Morris (a named fourth axis, since data and model size are fixed for a private corpus).
+2. **Algorithms** — Malde's OPSD (satisfies all four post-training criteria at once by making the teacher the same model with a hint), Denton's four-quadrant offline/online × trace/hint taxonomy with two measured results.
+3. **Measurement** — Asawa's CL-Bench and the **gain** metric (stateful minus stateless), plus the finding that benchmark instances are *designed* independent and therefore cannot be chained.
+4. **Supply/economics** — Morris (all scaling has only ever touched public data, and the data-vendor layer structurally reproduces that boundary), Su (private microworlds as the next internet-scale data opportunity), Hooker (pre-training saturated; returns moved to distributable post-training compute).
+5. **Already shipping** — Khemani (running profiles *are* a learning loop, outside the weights), Anthropic (dreaming), Holmes (nightly cloud enrichment of a personal corpus), Trivedy (observability and continual learning are the same problem from two ends).
+6. **Enterprise reality** — Denton ("this is where a lot of enterprises are today": a pile of traces and "make our agent better").
+
+**⚑ Arrives with three independent dissents — preserve them:** Hylak
+(cross-customer production visibility: "in the real world there's really not
+that much continual learning"), Asawa (**vanilla in-context learning tops the
+CL-Bench leaderboard** on reward *and* both cost-adjusted Pareto frontiers,
+beating engineered context management), Druga (memory adds nothing below the
+context-window threshold). Malde adds a self-dissent: the field is in
+"pseudo continual learning" — batch updates offline, then re-upload.
+
+**Naming convergence is unusually strong.** "Dreaming" is used independently
+by Khemani (community name for background synthesis), Morris (in an
+eight-synonym list — sleep-time compute, neural memory, write-time compute,
+note taking, dreaming, studying, machine studying, amortized inference),
+Trivedy (sleep-time compute over the agent lifecycle), and Anthropic (a
+shipped feature). Four uses, one batch, no coordination.
+
+### ⚑ FINDING — `pat-harness-over-model`: b19 is the decisive test case for FINDING 1
+b15's FINDING 1 recommends scoping the brief to **claim 1 (reliability/
+latency/control)** and dropping claim 2 (improvement/capability). This batch
+supplies the cleanest test yet, from one talk:
+- **Anthropic carries both edges, minutes apart.** `sig-harness-is-now-the-limiting-factor` (a frontier lab stating "harnesses have become the limiting factor to what models can achieve") **supports**; `sig-harness-fixes-become-dead-weight` — Sonnet 4.5's *context anxiety* prompted harness context-resets, Opus 4.5 didn't exhibit it, and the fix became "pure overhead, adding latency and causing issues with the cache being discarded incorrectly" — **contradicts**.
+- Under the recommended re-scoping the support survives cleanly and the counter resolves into a **maintenance** claim (harness workarounds for model deficiencies expire), not a capability claim. **Read the Bhat/He file first at the pattern review.**
+- Same resolution applies to b18's Kundel counter (harness ships what the model was trained on) — it targets claim 2 and would resolve.
+- **Does NOT resolve:** Asawa's `sig-vanilla-icl-tops-the-leaderboard`. That is an independent academic result, cost-adjusted, on real tasks, against engineered machinery — a genuine claim-1 survivor. Treat it as the counter-edge that matters.
+- Clean claim-1 exemplars this batch: Khandelwal (team harness engineering, progressive disclosure with a measurable threshold), Trivedy (harness-first-then-finetune, argued from feedback latency), Hylak (deterministic detection, agentic investigation).
+
+### Other movement
+- **pat-verification-gap** — remains the corpus's dominant thesis; +9 this batch. Most significant: **both leading labs shipped verification-by-constrained-second-agent as a platform primitive within 48 hours** — Anthropic's **outcomes** (rubric-defined success, separate grader agent, loop until met) and OpenAI's **auto-review** (b18: read-only judge subagent, cannot spawn subagents, gates sandbox escalation). Neither references the other. Also: Asawa's gain metric, Druga's oracle-doesn't-saturate finding, Hylak's four eval/triage signals, Malde's hint-leakage.
+- **pat-model-not-bottleneck** +8. Strongest: Morris's structural argument that the commercial data layer *cannot* cross the public/private boundary because vendors can only sell what a model may say back.
+- **pat-sovereign-ai** +4, from an unusual direction: Druga (local-model evaluation as sovereignty, corroborated by **Coinbase** cutting AI spend while raising usage), Hooker ×2 (pre-training compute must be co-located; post-training compute distributes, so "the person with the best idea has a higher chance of winning"), Su (private microworlds; enterprises "in charge of their means of production").
+- **`pat-compute-liquidity` (b18 candidate)** — Hooker is its second data point and its mirror image: b18's Modal talk argues scattered compute becomes *usable* for post-training; Hooker argues post-training is where returns now *live*. Read together at review.
+- **pat-ai-native-org** — Khandelwal adds a second high-quality dysfunction data point after b17's Dailey: the full arc (leverage → mandates → token-maxxing → slop and sev-2s → retraction → budgets bolted on), from a frontier-lab engineering org rather than a vendor.
+- **pat-benchmark-trust-crisis** — two more legs, both held pattern-less: Malde's **task-distribution mismatch** (benchmarks decoupled from where tokens are actually spent — a 10th distinguishable leg) and Asawa's construction-methodology point. Trivedy adds an unemitted gaming-leg restatement from the builder's side ("the purpose of evals is roughly to make them pass").
+- **pat-durable-execution** — Holmes's nightly cloud enrichment (sync down, run skills, sync back; explicitly contrasted with laptop-bound local automation) is a clean addition; held pattern-less.
+- **pat-context-graphs** — Khemani's context-acquisition gap and Holmes's generated wikis both land here; the seed thesis keeps absorbing this cluster.
+
+### Companies (9 new)
+- Continual-learning startups: `co-neocognition` (Su), `co-engram` (⚠ captioned "Ngram"/"N gram"; normalized from `ngr.am`), `co-trajectory` (Malde), `co-adaption-labs` (Hooker)
+- Research/labs: `co-sakana-ai` (Tokyo; sovereign-AI position stated institutionally), `co-ohio-state` (Su's dual affiliation, per the b8 `co-university-of-maryland` precedent)
+- Tooling/observability: `co-warp` (terminal + oz.dev automation cloud), `co-raindrop` (agent observability; "Sentry, but for agents")
+- Coined on reference: `co-windsurf` (Malde's prior employer, ⚠ see garbles), `co-coinbase` (spend-down/usage-up with local models — the only third-party quantitative support in the Druga talk)
+- Reused with substantial new facts, **recommend widening briefs**: `co-anthropic` (Applied AI team; three-generation surface lineage; dreaming/outcomes), `co-applied-compute` (2nd appearance — platform research team, distillation taxonomy), `co-langchain` (applied research function, trace mining, open-model fine-tuning service), `co-amazon` (3rd AGI Lab appearance, 1st on internal engineering practice), `co-uc-berkeley` (3rd, 1st from research rather than curriculum), `co-snorkel-ai` and `co-laude-institute` (both now recorded as **funders** of neutral benchmark infrastructure — a repeat role, b12 and b11 respectively), `co-decagon` (2nd, now as an AI-infrastructure *buyer*)
+- **Add-option at review:** `co-harvey` — two independent b19 mentions (Trivedy's legal-benchmark collaborator; Malde's early-access customer). Not coined in either file since neither attaches company facts.
+
+### Experts (14 new)
+`exp-yu-su` (co-neocognition + co-ohio-state), `exp-jack-morris` (co-engram),
+`exp-ronak-malde` (co-trajectory), `exp-parth-asawa` (co-uc-berkeley),
+`exp-samuel-denton` (co-applied-compute), `exp-sara-hooker` (co-adaption-labs +
+co-google-deepmind), `exp-shlok-khemani` (independent — **no company edge**),
+`exp-stefania-druga` (co-sakana-ai), `exp-ben-holmes` (co-warp),
+`exp-vivek-trivedy` (co-langchain), `exp-gagan-bhat` + `exp-isabella-kai-he`
+(both co-anthropic), `exp-aditya-khandelwal` (co-amazon), `exp-ben-hylak`
+(co-raindrop).
+- ⚠ **`exp-ben-hylak` vs `exp-veronica-hylak` (b8, Hey AI) — different people.** Keep given names in both labels. Same class as b17's `exp-arjun-singh`/`exp-varun-singh`.
+- NOT coined under the first-name / passing-reference rules: Rosanne Liu, Merve (HF — declined again, consistent with b16), Andrew Ng, Satya Nadella, Ilya Sutskever, Karpathy, Schulman, Demis Hassabis, Dwarkesh Patel, Gwern, "David" (b18).
+- ⚠ **Corpus-correction lead:** Khemani cites "Lance Martin's talk yesterday" on dreaming. The corpus has listed Martin's Anthropic talk as *permanently unavailable* since b3 and `transcripts/README.md` still says so. He evidently spoke at this event — worth a re-check.
+
+### Elements (~64 new)
+- Conceptual frame: `el-intelligence-vs-expertise`, `el-microworlds-thesis` (⚠ collision with `el-microworlds` b6), `el-modern-moravec-paradox`, `el-continual-learning-definition`, `el-escape-intelligence`
+- Scaling/method: `el-scaling-compute-on-context`, `el-breadth-vs-depth`, `el-private-corpus-training`, `el-synthetic-data-wall`, `el-recursive-self-improvement-loop`, `el-death-of-scaling`, `el-distributed-compute-returns`, `el-auto-scientist`, `el-unreasonably-narrow-path`
+- Distillation: `el-post-training-four-criteria`, `el-on-policy-self-distillation`, `el-hint-leakage`, `el-step-level-divergence-weighting`, `el-residual-guidance`, `el-distillation-spectrum`, `el-hint-provenance-axis`, `el-distillation-quadrants`, `el-per-step-hinting`, `el-relevance-masked-distillation`
+- Measurement: `el-continual-learning-bench`, `el-gain-metric`, `el-cl-benchmark-criteria`, `el-stability-plasticity-failures`, `el-cl-first-order-design`
+- Memory: `el-running-profile`, `el-memory-fact-list`, `el-conversation-search-tools`, `el-memory-convergence`, `el-memory-compute-tradeoff`, `el-context-acquisition-gap`, `el-memory-write-manage-read`, `el-recall-policy-ladder`, `el-decisions-ledger`, `el-recall-policy-as-metric`, `el-dreaming`
+- Knowledge bases: `el-llm-knowledge-base`, `el-voice-capture-pipeline`, `el-enrich-note-skill`, `el-generated-wiki`, `el-nightly-agent-schedule`
+- Traces/observability: `el-agent-trace-mining`, `el-trace-scale-problem`, `el-model-harness-task-fit`, `el-harness-then-finetune-sandwich`, `el-dense-feedback-signal`, `el-issue-not-cluster`, `el-issue-onset-and-blast-radius`, `el-code-mode-over-traces`, `el-evals-as-code`, `el-floor-vs-ceiling`
+- Agent architecture: `el-agentic-surface-generations`, `el-harness-assumption-staleness`, `el-brain-hands-decoupling`, `el-managed-agent-primitives`, `el-durable-session-log`, `el-outcomes-grader`
+- Team practice: `el-fear-utilization-map`, `el-bad-setup-symptoms`, `el-team-harness-engineering`, `el-progressive-disclosure-codebase`, `el-ship-it-skill`
+- **Reuse discipline — recommend widening these briefs at seeding** rather than re-coining: `el-anthropic-managed-agents` **[seed]** (the Bhat/He file is by far its richest source; the seed node predates every engineering detail — highest-value cleanup in this batch), `el-continual-learning` **[b8]** (Su supplies the definitional scaffolding it lacked), `el-on-policy-distillation` **[b5]** (Malde is its deepest treatment), `el-autoresearch` **[seed]** (Hooker's data-co-optimization contrast is its sharpest differentiation), `el-agents-md` **[b6]** and `el-agent-skills` **[batch1]** (concrete authoring constraints: thin-index discipline, ~100-line skill cap, fixed tag vocabularies, enrichment timestamps), `el-code-mode` **[b6]** (extended from MCP to trace analysis), `el-context-compaction` **[b6]** (measuring behaviour *across* compaction boundaries is a new use).
+
+### Cross-file edges emitted within this batch (unusual — flagged)
+- `el-hint-provenance-axis` (Denton) `UsesElement → el-on-policy-self-distillation` (Malde). The two talks are the same technique from two vantage points — Malde derives it and names its failure mode, Denton industrializes it and adds provenance, per-step injection and relevance masking. Neither cites the other. **Drop if review prefers strictly within-file edges**; the relationship is also recorded in prose in both files.
+- Proposed but NOT emitted, left to review: `el-on-policy-self-distillation` → `el-scaling-compute-on-context` (Morris cites Malde by name from the stage); `el-llm-knowledge-base` → `el-html-native-medium` (b9); `el-team-harness-engineering` → `el-reviewdebt` (b5).
+
+### Garbles / identity / merge-checks
+- ⚠ **Title/content mismatch — Hooker.** Billed "Adaption Labs: Gradient-Free Continual Learning"; the delivered talk never uses the phrase and presents no gradient-free method. No element coined for it; the `ia-` node keeps the billed title for link fidelity. If the lab's gradient-free work matters, it needs a different source.
+- ⚠ **`el-microworlds-thesis` vs `el-microworlds` (b6)** — coined separately on the view that Su's "millions of microworlds" (idiosyncratic per-organization environments requiring per-instance learning) is a distinct claim. Grep both before seeding; merge if review disagrees.
+- ⚠ **VERIFY before seeding (highest-risk):** Malde's Windsurf story ("SWE-1… the two billion acquisition at DeepMind" — model name, amount and acquirer all need checking); Anthropic model version strings (**Sonnet 4.5**, **Opus 4.5** in the context-anxiety story, **Opus 4.8** in the demo) and whether "context anxiety" appears in Anthropic's public writing; Khemani's memory dates and token sizes (reverse-engineered observations, not vendor documentation); Denton's "Qwen 3.5 thinking"; Druga's "Qwen 27B" (likely **Qwen3 27B**) and the unattributed 30-cookbook repo (captioned "Diamond"); Trivedy's product name (captioned "LangSplat engine" — almost certainly wrong, so no product node coined); Hooker's "fewer than 5,000 people" and the death-of-scaling paper title; Khandelwal's context thresholds (20–25K baseline / 40–50K as failure) and the ~100-line skill cap.
+- Systematic garbles resolved per file: "hardness"→harness (Khandelwal, throughout), "Cloud"→Claude (Bhat/He, throughout), "Chad GPT"→ChatGPT (Khemani), "gpo"→GRPO and "opsd/ops"→OPSD (Malde), "N gram"→Engram (Morris), "Isu"→Yu Su, "Partasawa"→Parth Asawa, "Schllo"→Shlok, "Century"→Sentry (Hylak), "Parto Frontiers"→Pareto frontiers (Asawa).
+
+### Note on scale
+This batch adds ~64 elements and ~66 signals across 13 files — roughly triple
+a normal batch. If review wants to prune, the highest-confidence keeps are:
+Druga's controlled ablation (the only properly-designed memory experiment),
+Asawa's gain metric and ICL result, Denton's two measured before/afters,
+Malde's failure analysis, Anthropic's split evidence on the harness pattern,
+and Khemani's survey. The weakest evidence base despite the strongest
+credentials is Hooker's — every quantity in it is vendor-stated without a
+baseline.
+
+## Coinage record — 2026-08-14
+
+User approved both batch-19 recommendations at review. Two patterns coined,
+bringing the corpus to **12 coined patterns** (5 seed + 2 b1 + 2 b2 + 1 b5 +
+2 b19). This is the first coinage since batch 5 — the corpus ran 14 batches
+on ledger discipline before either candidate cleared.
+
+### `pat-agent-memory-layer` — The Agent Memory Layer (dynamic)
+Defined in `khemani-every-memory-system.md`. Recommended since b10, complete
+at b17, coined on b19's survey evidence.
+
+**Support edges attached (6):**
+| signal | file | note |
+|---|---|---|
+| `sig-memory-architectures-converged` | khemani (b19) | ChatGPT and Claude converged from opposite ends; neither uses RAG |
+| `sig-continual-learning-already-shipping` | khemani (b19) | dual edge with `pat-continual-learning-turn` — running profiles *are* a learning loop, outside the weights |
+| `sig-memory-budget-is-a-compute-decision` | khemani (b19) | **re-targeted** from `pat-model-not-bottleneck` |
+| `sig-session-log-powers-memory-and-dreaming` | bhat-he (b19) | frontier-lab roadmap: memory + dreaming as "cornerstones of a unified memory system" |
+| `sig-memory-is-what-the-agent-becomes` | rallabandi (b15) | **rehomed** from `pat-context-graphs` per that file's review note 4 |
+| `sig-ops-agent-value-is-learned-context` | smith-resolve (b17) | the clearest vendor-moat framing in the ledger |
+| `sig-observability-and-continual-learning-converge` | trivedy (b19) | dual edge with `pat-continual-learning-turn` |
+
+**Counter edges attached at coin (4)** — deliberate, and the reason the
+pattern is healthy:
+| signal | file | the counter |
+|---|---|---|
+| `sig-memory-adds-nothing-when-context-fits` | druga (b19) | controlled ablation: below the context window, memory costs tokens and buys **zero** capability |
+| `sig-memory-cannot-be-outsourced` | khemani (b19) | no serious consumer product outsources memory; converged part is cheap, divergent part is product-specific |
+| `sig-netflix-pattern-catalog-memory` | shah-netflix (b14) | convention counter — markdown in a git repo, not a memory product |
+| `sig-sla-budget-caps-agent-design` | kumar-flyerssoft (b15) | SLA counter — a sub-500 ms budget rules long-term agent memory out entirely |
+| `sig-docs-replace-chats-as-work-atom` | dailey (b17) | convention counter — the state layer is a shared document |
+
+_(5 rows; the Netflix and FlyersSoft signals keep their existing
+`pat-harness-over-model` edges and gain the counter as a second edge.)_
+
+**⚠ Follow-up pass still owed — b9/b10 graph-cluster files.** The b10 registry
+note counted ~9 data points toward this ledger from the graph/context/ontology
+cluster: Zep/Graphiti (`chalef-zep-kg-provenance`), BabyAGI 4's event log
+(`nakajima-babyagi4-active-graph-runtime`), TwelveLabs video memory
+(`le-twelvelabs-video-memory`), CrabRAG (`chin-neo4j-crabrag-graph-memory`),
+Eifrem's traces pillar (`eifrem-neo4j-ontology-semantic-layer`), monday.com's
+durable profile (`bruchim-ast-monday-systems-of-context`), plus batch 9's
+three. **Those signals were NOT auto-rehomed** — they are currently on
+`pat-context-graphs`, they were homed there deliberately, and several belong
+there on the merits (the talks argue graph organization, not memory-as-layer).
+Each needs a per-signal judgement: rehome, dual-edge, or leave. Recommend a
+dedicated pass rather than a sweep.
+
+**⚠ Also owed:** `smith-resolve-always-on-agents.md` withheld
+`ExemplifiesPattern` edges from `el-background-agents` and
+`el-production-learning-system` because no fitting pattern existed. The second
+now has one. Element-level edges were not swept in this pass.
+
+### `pat-continual-learning-turn` — The Continual Learning Turn (dynamic)
+Defined in `su-neocognition-continual-learning-expertise.md`. Proposed and
+coined in the same batch — justified by a ten-talk dedicated track in one day,
+the largest single-theme evidence base the corpus has seen.
+
+**Support edges attached (8):**
+| signal | file | leg |
+|---|---|---|
+| `sig-scaling-expertise-as-new-axis` | su | new axis of scale (anchor) |
+| `sig-reliability-plasticity-tension` | su | stability/plasticity |
+| `sig-scaling-only-ever-touched-public-data` | morris | supply economics |
+| `sig-fourth-scaling-axis-proposed` | morris | new axis of scale (second anchor) |
+| `sig-software-that-improves-every-use` | malde | algorithms |
+| `sig-cl-failures-split-stability-plasticity` | asawa | measurement / stability-plasticity |
+| `sig-enterprises-start-at-offline-traces` | denton | enterprise reality |
+| `sig-observability-and-continual-learning-converge` | trivedy | already shipping (dual edge) |
+| `sig-continual-learning-already-shipping` | khemani | already shipping (dual edge) |
+
+**Counter edge attached at coin (1):**
+| `sig-little-real-continual-learning` | hylak (b19) | an observability vendor with cross-customer production visibility reports seeing little real continual learning in the wild |
+
+**Two further dissents recorded but not edged**, because they target the
+methods rather than the thesis: Asawa's `sig-vanilla-icl-tops-the-leaderboard`
+(currently `ContradictsPattern → pat-harness-over-model`) and Malde's
+"pseudo continual learning" admission inside
+`sig-software-that-improves-every-use`. Both belong in the brief's contested
+clause, which they are in.
+
+### Consequences for the remaining ledgers
+- `pat-agent-economy`, `pat-environments-economy`, `pat-ai-native-org`, `pat-benchmark-trust-crisis`, `pat-durable-execution`, `pat-adaptive-software`/`pat-adaptive-harness`, `pat-fde-turn`, `pat-compute-liquidity` (b18) all remain **uncoined**. Nothing in this coinage changes their status.
+- `pat-durable-execution` is now the longest-standing recommendation (b5), and b17 recorded its ledger complete. It is the obvious next candidate.
+- b15's **FINDING 1** on `pat-harness-over-model` (re-scope to claim 1) is untouched by this coinage and still pending. The b19 Anthropic file remains the recommended test case.
+
+## Batch-20 additions (reconciled) — the Computer Use (CUA) track
+
+_7 talks, all published 2026-08-14, released as a dedicated **Computer Use
+(CUA)** channel playlist (`PLEz0frWjePik`) OUTSIDE the World's Fair 2026
+playlist — the first track the channel has published as its own collection
+rather than folding into the main playlist. Coherent theme: agents using the
+web the way humans do (pixels, clicks, browsers), the infrastructure and
+training behind it, and the data/context supply layer._
+
+### ⚑ The track is one sustained argument, split across two coined-pattern axes
+Four talks converge on **"the web gets agentified by computer-use, not
+protocols"** but split exactly along b15's FINDING 1 claim-1/claim-2 line:
+- **Batra (Yutori) — thesis talk.** The long tail of the web will never publish APIs/MCP; the browser is a rendering engine so pixels are the source of truth; general pixels-in models generalize where per-site scaffolds don't. `sig-scaffolds-dont-generalize-pixels-do` **contradicts** `pat-harness-over-model` (capability/claim-2 side — the model generalizes, the scaffold doesn't).
+- **Klein (Browserbase) — opposite emphasis, same track.** Models are already good enough; the gap is a *capabilities overhang* closed by harness + infrastructure. `sig-domain-harness-beats-raw-model` **supports** `pat-harness-over-model` (reliability/claim-1 side).
+- **Mishra (Amazon AGI) — from inside the training loop, holds BOTH.** Perception is a missing *model* capability coding can't supply (`sig-coding-skill-insufficient-for-cua` **contradicts** `pat-model-not-bottleneck`), AND the harness is temporary scaffolding that "thins as the model improves" (`sig-harness-thins-as-model-improves` **contradicts** `pat-harness-over-model`, claim-2).
+- **Gallon — the how-to.** CLI-driving-CDP beats MCP on reuse/speed/cost; `sig-cli-beats-mcp-for-browser-control` **supports** `pat-harness-over-model` (claim-1).
+
+**This track is the single best exhibit yet for the FINDING 1 re-scoping**
+(scope `pat-harness-over-model` to claim 1). Under it: Klein and Gallon's
+supports survive; Batra's and Mishra's counters resolve as claim-2 (capability
+migrates to the model). Read Mishra first at the pattern review — one speaker
+holding perception-needs-more *and* harness-needs-less coherently is the
+cleanest statement of the split the corpus has produced. Net counter-edges on
+`pat-harness-over-model` from this batch: +2 (Batra, Mishra), both claim-2.
+
+### ⚑ `pat-new-cyber-threats` — biggest single exhibit since batch 1
+**Gallon defeats four production CAPTCHAs live, no human in the loop**
+(Cloudflare Turnstile, MTCaptcha, GeeTest-style jigsaw, reCAPTCHA v2) on
+commodity primitives: CDP's **trusted-event path** (a real input-domain click
+is stamped "trusted," indistinguishable from a human mouse) plus a vision
+model. Two signals home directly on the pattern; `ins-captcha-is-over-as-a-boundary`
+ties it to Klein's "Verisign moment" gap in the same track — bot defense must
+move from challenge to **attestation/identity**, which nobody has built.
+`el-cdp-cli-driving` carries a rare `EnablesPattern → pat-new-cyber-threats`
+(element enabling a threat pattern — appropriate; the capability *is* the
+threat surface). Klein's `ins-trust-not-capability-gates-the-agent-web` adds a
+second `pat-new-cyber-threats` insight from the defense side.
+
+### ⚑ `pat-agent-economy` — the biggest single-batch haul (machine-web leg)
+The candidate the corpus has circled since b2/b5 (Povilionis receipts, Raskar
+bazaar, Vending-Bench, Local-AI panel, b16 MCP-apps). This batch adds the
+**machine-web leg**: agents becoming the web's primary actors, routing around
+API governance by using the human interface. Signals held pattern-less awaiting
+the coin: `sig-long-tail-will-never-publish-apis` (Batra — counter-flavoured
+vs the protocol-optimist side), `sig-web-agentified-by-browser-layer` (Batra),
+`sig-web-must-become-agent-legible` (Klein), `sig-web-ui-as-permissionless-api`
+(Gallon). **Recommend adding `pat-agent-economy` to the next coin review** — it
+now spans commerce (b2/b5/b11), protocols (b8/b16), and the machine-web (b20),
+which is either strong convergence or a sign the candidate is too broad and
+should split (machine-web vs agent-commerce). Flag the split question.
+
+### ⚑ `pat-benchmark-trust-crisis` — two rigorous new legs, with a proof
+D'Oro's **replay agent** (a <1MB blind script of recorded trajectories matches/
+beats the frontier model on deterministic CUA benchmarks) and the **pass@k =
+replay** proof are gaming/construction-methodology legs with a *formal proof*,
+not an anecdote — a CUA-specific determinism/replay leg distinct from the nine
+in b15 FINDING 2. Both held pattern-less (`sig-replay-agent-beats-frontier-models`,
+`sig-passk-is-a-gameable-metric`). This candidate (~13 registry mentions) is the
+best-evidenced uncoined pattern after `pat-agent-economy`. `sig-frontier-models-not-robust-to-variation`
+(DG-World shows models lose performance under theme/screen variation) homes on
+`pat-model-not-bottleneck`.
+
+### ⚑ `pat-agent-memory-layer` (COINED b19) — first supply-side evidence, already contested
+Primor (Bright Data) coins the term **CaaS (context-as-a-service)** — vendors
+structuring the web into agent-consumable knowledge graphs. This is the
+**acquisition** side of the memory layer (b19 coined it from the *retention*
+side). Arrives contested from the same talk: `sig-caas-category-emerging` and
+`sig-owned-context-compounds` **support**; `sig-caas-limited-to-what-it-holds`
+**contradicts** (pre-indexed context answers within its index, goes silent
+outside it). Žemaitytė (Oxylabs) adds `sig-web-infra-is-adapt-forever`
+(maintenance-as-moat) from the raw-data layer beneath CaaS.
+**Recommend the brief note both sides:** retention (memory products) +
+acquisition (CaaS), with data-decay as why acquisition is a subscription.
+
+### `pat-environments-economy` (uncoined) — two more data points
+Mishra's "flight school, not exams" (deliberately messy/adversarial training
+sandboxes; fidelity as moat) and D'Oro's PRISM/DG-World (verified-valid
+environments; verification strategy as the moat, not generation volume). Both
+held pattern-less. This candidate keeps accumulating without a coin — worth
+pairing with `pat-benchmark-trust-crisis` at review since D'Oro's work straddles
+both.
+
+### Companies (7 new)
+- CUA model/agent vendors: `co-yutori` (Batra — Navigator model), `co-browserbase` (Klein — browser infra + Browse.sh/AutoBrowse/Browserbase agents), `co-programma-labs` (D'Oro — CUA verification infra)
+- Web-data / context vendors: `co-bright-data` (Primor — CaaS, Scraper Studio), `co-oxylabs` (Žemaitytė — proxy/web-data infra)
+- Reused with new facts: `co-amazon` (**5th** AGI Lab appearance — Mishra, 1st on CUA *training*; also the AgentCore web index in Primor's talk — recommend widening brief), `co-cloudflare` (Turnstile, in Gallon), `co-microsoft` (web-BYOQ, in Primor), `co-openai` (Gallon's ban story + Codex), `co-meta` (D'Oro's work done there), `co-anthropic` (Opus 4.8 as harness), `co-google` (WebMCP, grounding docs, reCAPTCHA)
+- **Add-option:** the AI-search cohort Exa/you.com/Tavily named in Primor (Parallel already coined) — not coined, passing references.
+
+### Experts (7 new)
+`exp-dhruv-batra` (co-yutori), `exp-paul-klein` (co-browserbase), `exp-corey-gallon`
+(**no company edge** — Chrome Agent is his, no employer stated), `exp-gaurav-mishra`
+(co-amazon; ex-Google Brain/DeepMind), `exp-pierluca-doro` (co-programma-labs +
+co-meta, dual affiliation), `exp-omer-primor` (co-bright-data), `exp-patricija-zemaityte`
+(co-oxylabs).
+- NOT coined (passing references): Karpathy, Brockman, Will/Exa, "Docus" (unresolved).
+
+### Elements (~34 new)
+- CUA thesis/model: `el-long-tail-web`, `el-pixels-are-source-of-truth`, `el-yutori-navigator`, `el-agentification-by-accretion`, `el-cua-progress-rate`
+- Browser harness/infra: `el-cua-capability-overhang`, `el-browser-agent-triad`, `el-agent-legible-web`, `el-browserbase-agents`, `el-agent-identity-broker`
+- Web-automation how-to: `el-cdp-cli-driving`, `el-digital-senses`, `el-sense-act-verify-loop`, `el-meatbag-ladder`, `el-solver-operator-split`
+- CUA training: `el-rl-to-irl-gap`, `el-flight-school-not-exams`, `el-high-fidelity-sandbox`, `el-cua-perception-primitives`, `el-thinning-harness`
+- CUA evals: `el-replay-agent`, `el-passk-is-replay`, `el-prism-principles`, `el-dg-world`, `el-honest-confidence-intervals`
+- Context/data supply: `el-context-as-a-service`, `el-web-as-context-not-data`, `el-data-decay`, `el-rented-vs-owned-context`, `el-web-context-engineering`, `el-web-data-pipeline`, `el-speed-becomes-product`, `el-scale-is-not-a-finish-line`, `el-adapt-forever-infrastructure`
+- Reuse: `el-mcp`, `el-agents-md`, `el-code-mode`, `el-agent-skills`, `el-computer-use-verifier`, `el-openclaw`, `el-company-brain` — several with new deployment surfaces (Browse.sh = per-website skills; CLI-over-MCP = code-mode instance). Recommend widening `el-company-brain` if the Primor cross-file edge is accepted.
+
+### Cross-file edges (within batch, proposed but NOT emitted — left to review)
+- `el-context-as-a-service` (Primor) `UsesElement → el-web-data-pipeline` (Žemaitytė) — CaaS built on raw web-data infra. Same-batch siblings.
+- `el-rented-vs-owned-context` (Primor) → `el-company-brain` (b3, Tan) — the data-supply mechanics under Tan's company-brain thesis.
+- `el-dg-world` / `el-private-benchmark` (b12) — contamination-resistant construction neighbors.
+
+### Garbles / identity / merge-checks
+- ⚠ **Batra caption garble is load-bearing:** "agentify / API-fy the web" → "identify" throughout, INCLUDING the title's verb. Normalized on the video title's authority.
+- ⚠ **VERIFY before seeding (all vendor-stated, caption-sourced):** Yutori's 97%/Online-Mind2Web + $0.80-vs-$2.30; Arize CLI-vs-MCP study (83% parity, 7-vs-71 turns, 75× cheaper); D'Oro's OSWorld/MobileWorld names + DG-World 15apps/387/3.2M + 20%-vs-95% coverage + $12/1M-task cost; Bright Data scale (50B pages/day, "70% of AI labs"); Oxylabs 550ms + 400M→6B req; Amazon AgentCore index + Microsoft web-BYOQ launch dates.
+- ⚠ "by Lemon" (Gallon) → almost certainly **GeeTest** (jigsaw-slider CAPTCHA), medium confidence. "OffMD" (Klein) → **auth.md** (WorkOS), medium confidence. "MobileWorld" (D'Oro) → possibly **AndroidWorld**.
+- `exp-corey-gallon` and `exp-shlok-khemani` (b19) are the corpus's two experts with NO company edge (both genuinely independent).
+- `el-yutori-navigator` naming: "Navigator N1.5" per captions — verify the model name/version.
+
+## Coinage record — 2026-08-16 (four patterns + FDE reframe)
+
+User directive: "add" pat-agent-economy, pat-ai-native-org,
+pat-durable-execution, pat-benchmark-trust-crisis; reframe pat-fde-turn as
+the *rise* of FDE. Corpus now at **16 coined patterns**. Edges loaded via
+`seed-work/frag-21-coinage.jsonl` (4 Pattern nodes + 38 FormsPattern/
+ContradictsPattern edges); b16-20 element/signal edges that previously
+dangled against these candidates now also resolve.
+
+### `pat-durable-execution` (dynamic) — 6 support / 1 counter
+Support: `sig-mcp-spec-mandates-task-durability` (davis-temporal),
+`sig-knowledge-work-moves-to-nightly-cloud` (holmes-warp),
+`sig-background-agents-absorb-ops-long-tail` (smith-resolve),
+`sig-inngest-durable-execution-vendor` (farrelly-inngest),
+`sig-durable-runtime-category-emerging` (tahir-zenml),
+`sig-reset-over-compact` (lee-krafton — rehomed from `pat-harness-over-model`).
+Counter: `sig-mcp-tasks-zero-client-adoption` (davis-temporal — the
+convention/adoption-gap counter).
+
+### `pat-benchmark-trust-crisis` (challenge) — 9 support / 2 counter
+Support: `sig-benchmarks-saturate-while-deployment-stalls` (almeida),
+`sig-benchmarks-cannot-be-chained` (asawa), `sig-replay-agent-beats-frontier-models`
++ `sig-passk-is-a-gameable-metric` (doro — the formal proof), `sig-long-horizon-is-a-scalar`
+(garg), `sig-metr-50pct-headline-inflates-capability` (linkov), `sig-rl-environments-decoupled-from-reality`
+(malde), `sig-reward-hacking-arms-race` (desai — rehomed from `pat-verification-gap`),
+`sig-simulation-awareness-breaks-evals` (petersson — rehomed from `pat-verification-gap`).
+Counter: `sig-private-task-reruns-over-leaderboards` (linkov), `sig-benchmark-on-your-own-codebase`
+(singh) — private/real-codebase re-run suites as the trustworthy antidote.
+
+### `pat-ai-native-org` (dynamic) — 11 support / 0 counter
+Support: `sig-velocity-sickness-pathologies` (dailey), `sig-adoption-arc-fear-then-slop`
+(khandelwal), `sig-background-automation-is-the-ballgame` + `sig-multiplayer-surface-for-realtime-dev`
+(gazit), `sig-notion-software-factory` (sachs), `sig-agent-sessions-as-team-surface` (singh-superconductor),
+`sig-block-autonomy-then-layoffs` (jones — the layoffs/dark-side data point),
+`sig-boundary-ships-without-code-review` + `sig-writing-is-the-review-surface`
+(gupta-boundary — rehomed from `pat-value-of-judgement`), `sig-automattic-radical-speed-month`
++ `sig-designers-ship-ios-chat-6-days` (grbic).
+
+### `pat-agent-economy` (dynamic) — 8 support / 1 counter
+Support: `sig-web-agentified-by-browser-layer` (batra), `sig-web-ui-as-permissionless-api`
+(gallon), `sig-web-must-become-agent-legible` (klein), `sig-agent-walled-gardens-aol-era`
+(raskar), `sig-agent-mediated-consumers-break-human-ground-truth` (anand),
+`sig-andon-real-world-deployments` + `sig-vending-arena-emergent-misconduct` +
+`sig-agents-no-longterm-investment` (petersson — the Vending-Bench cluster, the
+ledger's strongest data).
+Counter: `sig-long-tail-will-never-publish-apis` (batra — the protocol-optimist
+counter to the machine-web leg).
+
+### ⚑ Completeness tail still owed (per-pattern sweeps)
+Coined with the clearly-held and explicitly-named-rehome signals above; the
+registry ledgers reference further scattered older-batch evidence NOT yet
+attached (same deferral shape as `pat-agent-memory-layer`'s b9/b10 tail):
+- **pat-ai-native-org:** the batch-4/5/6 echoes still on `pat-saaspocalypse`/`pat-harness-over-model` — Tan (3 saaspocalypse links, tan-yc file review note 1), Doshi, Lee-Chan, An/Hoe, Noring, Browne, Yaron survey. Each needs a rehome/dual-edge judgement.
+- **pat-durable-execution:** the b3/b4/b5 vendor cluster (ZenML/Kitaru original, KRAFTON `sig-multi-machine-five-failures`, Shrabony, OpenAI keynote, Paperclip, Resonate/Synadia, Chronicle, Bhargava Agency, FlyersSoft) — several still parked on `pat-harness-over-model`.
+- **pat-benchmark-trust-crisis:** the b3/b5/b6/b9/b12/b13 legs (Han reward-hacking, Vidal, Robinson, Kumar, Campos, Datacurve contamination, Cai economic motive, `sig-weak-verifier-attack-surface`) — many still on `pat-verification-gap`.
+- **pat-agent-economy:** Povilionis receipts (b2), Local-AI panel (b6), `sig-real-economy-runs-on-php-and-clicks` (klein, drop-option from `pat-saaspocalypse`).
+Recommend a dedicated per-signal rehome pass rather than a blind sweep, since
+each is a form/contradict + rehome-from-which-pattern judgement.
+
+### Consequences for remaining ledgers
+- Still uncoined: `pat-environments-economy`, `pat-liquid-software` (reframed below), `pat-compute-liquidity`, `pat-fde-rise` (reframed, uncoined), `pat-provider-blind-ai`/`pat-html-native-medium` (retired).
+
+### ⚑ REFRAME 2026-08-16 — `pat-adaptive-*` → single `pat-liquid-software`
+User rejected "adaptive" as too weak (it implies a fixed system adjusting
+within bounds). Chosen framing: **Dissolving / Liquid**. **Pair-vs-merge
+resolved (user, 2026-08-16): keep ONE pattern, `pat-liquid-software`; drop
+the separate `pat-liquid-harness`.** The former `pat-adaptive-software` and
+`pat-adaptive-harness` both consolidate here — a harness is a build artifact
+too, so it's a facet of the same thesis, not its own pattern.
+- `pat-adaptive-software` **and** `pat-adaptive-harness` → **`pat-liquid-software`** — "Liquid Software"
+
+Thesis (sharpened): **the frozen build artifact dissolves** — software (and
+its harness) is materialized per-use/per-context at runtime instead of being
+shipped as a fixed thing. One stem + per-user live divergences (ten Teije
+"the pipeline is dead"); harness as runtime output not input (Chandegra);
+spec-is-the-product / bespoke-on-demand (Tornow); optimizer rewrites the
+harness from production signals (RELAI); agents mutating agents (Mutagent).
+
+**Still uncoined** (no "add" given). ~5 data points across b7 (ten Teije,
+Chandegra) + b8 (Tornow, RELAI, Mutagent). Historical registry/extraction
+mentions of `pat-adaptive-software` / `pat-adaptive-harness` predate this
+reframe and stand as record; this note is the authority. If coined, the
+harness-side evidence attaches to `pat-liquid-software` as a facet.
+- `pat-agent-economy` breadth: watch whether the machine-web signals (Batra/Klein/Gallon) and the agent-commerce signals (Petersson/Povilionis/Raskar) stay coherent under one pattern or want splitting.

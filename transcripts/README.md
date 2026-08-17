@@ -354,12 +354,66 @@ Resources file — "RL" transcribes as "IO", "Modal" as "Moto", "Adam" as
 "addon", "sidecar" as "scikar". Full normalization table in the extraction
 file's review note 1; no figure in it should be quoted without checking.
 
-Premiere pending: K0X9QDRkIdg ("Evolution of agentic surfaces" — Gagan Bhat &
-Isabella Kai He, Anthropic, ~2026-08-12).
+## Batch 19 — Continual Learning track + agent design (published 2026-08-11 → 08-12)
 
-Channel state as of 2026-08-11: the World's Fair 2026 playlist holds 118
-entries, of which 11 are staged-but-private uploads queued ahead of their
-premieres — more talks are coming. Nine videos in the playlists are
+**The largest single-theme batch in the corpus.** The channel released a
+dedicated ten-talk **Continual Learning track** in one day, plus three
+agent-design talks including batch-18's twice-slipped Anthropic premiere.
+
+Continual Learning track (all published 2026-08-12):
+
+| File | Talk | Video |
+|---|---|---|
+| su-neocognition-continual-learning-expertise.txt | Intelligence + Continual Learning = Expertise — Yu Su, NeoCognition | https://youtu.be/I6aiEf3aEFQ |
+| morris-engram-scaling-compute-on-context.txt | Scaling Compute on Context — Jack Morris, Engram | https://youtu.be/WiqDvX6isc4 |
+| malde-trajectory-scaling-continual-learning.txt | Scaling up Continual Learning — Ronak Malde, Trajectory | https://youtu.be/zL1kLftVTlo |
+| asawa-berkeley-evaluating-continual-learning.txt | Beyond Static Intelligence: Evaluating Continual Learning — Parth Asawa, UC Berkeley | https://youtu.be/iqloyWCGYQQ |
+| denton-applied-compute-continual-learning-enterprise.txt | Bringing Continual Learning into Enterprises — Samuel Denton, Applied Compute | https://youtu.be/ZTA0GwpAUak |
+| hooker-adaption-gradient-free-learning.txt | Adaption Labs: Gradient-Free Continual Learning — Sara Hooker, Adaption Labs (⚠ title/content mismatch) | https://youtu.be/XEd_SRVHBgU |
+| khemani-every-memory-system.txt | Lessons from Studying Every Memory System — Shlok Khemani, Independent | https://youtu.be/5ZGyKWjQDr0 |
+| druga-sakana-memory-harnesses.txt | Memory Harnesses for Long-Running Research Agents — Stefania Druga, Sakana AI | https://youtu.be/R3-anFK1YM8 |
+| holmes-warp-llm-knowledge-bases.txt | LLM Knowledge Bases: a practical guide — Ben Holmes, Warp | https://youtu.be/I3bpdgFJCUY |
+| trivedy-langchain-agents-data-mining.txt | Improving Agents is a Data Mining Problem — Vivek Trivedy, LangChain | https://youtu.be/CvRngaQZQ3Y |
+
+Agent design (published 2026-08-11 → 08-12):
+
+| File | Talk | Video |
+|---|---|---|
+| bhat-he-anthropic-agentic-surfaces.txt | Evolution of Agentic Surfaces — Gagan Bhat & Isabella Kai He, Anthropic (batch-18's pending premiere) | https://youtu.be/K0X9QDRkIdg |
+| khandelwal-amazon-agents-codebases-teams.txt | Agents, codebases, and teams — Aditya Khandelwal, Amazon AGI Lab | https://youtu.be/aeTb5BdmTTc |
+| hylak-raindrop-designing-agents.txt | Designing Agents (The Floor Is the Frontier) — Ben Hylak, Raindrop | https://youtu.be/jHMiYtjoJfA |
+
+⚠ `hylak-raindrop-designing-agents` is **Ben** Hylak (Raindrop) — a different
+person from **Veronica** Hylak (Hey AI), extracted in batch 8. ⚠ The Hooker
+video is billed "Gradient-Free Continual Learning" but the delivered talk
+never uses the phrase; see that extraction's review note 1.
+
+## Batch 20 — Computer Use (CUA) track (published 2026-08-14)
+
+A dedicated **Computer Use (CUA)** track, released as its own channel
+playlist (`PLEz0frWjePik`) **outside** the World's Fair 2026 playlist — 7
+talks, all published 2026-08-14, all fully available (no premieres).
+
+| File | Talk | Video |
+|---|---|---|
+| batra-yutori-agentify-web-not-apis.txt | Computer-use models will agentify the web, not APIs — Dhruv Batra, Yutori | https://youtu.be/Ki980nV0__0 |
+| klein-browserbase-agents-www.txt | Bringing agents onto the world wide web — Paul Klein IV, Browserbase | https://youtu.be/GqoNrUz8hEU |
+| gallon-dark-arts-web-automation.txt | The Dark Arts of Web Automation — Corey Gallon | https://youtu.be/26RtyAm9y_Q |
+| mishra-amazon-rl-to-irl.txt | From RL to IRL — Gaurav Mishra, Amazon AGI Lab | https://youtu.be/Cc0_nyxROBA |
+| doro-programma-statistical-precipice.txt | Computer Use at the Edge of the Statistical Precipice — Pierluca D'Oro, Programma Labs | https://youtu.be/CTLa_p6iOiY |
+| primor-brightdata-context-as-a-service.txt | The Rise of CaaS: Context-as-a-Service — Omer Primor, Bright Data | https://youtu.be/Ot4OPrPH4xY |
+| zemaityte-oxylabs-web-data-infrastructure.txt | How Web Data Infrastructure Powers the Next Generation of AI — Patricija Žemaitytė, Oxylabs | https://youtu.be/1UmZHb_E_SM |
+
+⚠ Several talks carry heavy caption garbles — Batra's is the worst: the
+title's own verb ("agentify"/"API-fy the web") transcribes as "identify"
+throughout. Per-file normalization tables in each extraction's header.
+
+Channel state as of 2026-08-14: the CUA track lives in its own playlist
+(`PLEz0frWjePik`, 10 videos — these 7 plus Bonacci/b3, Raj/b9, and one more
+already in-corpus); the World's Fair 2026 playlist is unchanged at 119
+entries, so this track was published as a separate collection. No premieres
+pending. Nine
+videos in the playlists are
 permanently private or removed by the uploader (sJHg0mC5Png, Z3fP-eMEx-8,
 PXXNCtfKZs0, tB9RKTrU-Ig, EfcfUB2uprc, rX14bHH5wI0, rCVVsxHWai8, M7-KY0W-BPo,
 SDW7LJ07FZk), alongside the long-known Lance Martin/Anthropic talk. Two
