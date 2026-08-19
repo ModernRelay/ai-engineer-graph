@@ -62,11 +62,17 @@ must be updated in the same change:
    ones by slug marked **[registry]**/**[seed]** (never re-defined). New
    cross-cutting entities and merge-review flags get reconciled here per
    batch.
-4. **`seed-work/`** — conversion agents emit `frag-N.jsonl` following
-   `seed-work/CONVERSION-SPEC.md` EXACTLY (it enumerates legal fields, enum
-   coercions, and the complete edge set); `merge_validate.py` merges and
-   validates. Transcript chunks: raw JSONL → `omnigraph embed` → load
-   (chunk slug = `<talk-slug>#<idx>`, linked via PartOfArtifact).
+4. **`seed-work/`** — extractions become `frag-N.jsonl` following
+   `seed-work/CONVERSION-SPEC.md` EXACTLY (legal fields, enum coercions, the
+   complete edge set); `merge_validate.py` merges + validates into
+   `seed-full.jsonl`. Batches 16–21 are converted **deterministically** by
+   `seed-work/convert_1719.py` (add new batch stems to its `BATCHES` dict);
+   earlier fragments were agent-authored. Cross-batch pattern coinage goes in a
+   supplementary `frag-N-coinage.jsonl` rather than re-converting old batches.
+   Transcript chunks: `chunk_talks.py` → `omnigraph embed` → `finalize_chunks.py`
+   → `load --mode merge` (chunk slug = `<talk-slug>#<idx>`, linked via
+   PartOfArtifact). **RUNBOOK.md "Adding a batch" is the authoritative
+   step-by-step for loading the graph.**
 
 All generated JSONL (`seed.jsonl`, `seed-work/*.jsonl`) is gitignored — the
 committed artifacts are the markdown, schema, and queries.
