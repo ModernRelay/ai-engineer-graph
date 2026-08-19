@@ -1,0 +1,222 @@
+>> Okay. So, I am Sangwha. I'm from Korea. I'm going to be talking a little bit about how we
+recently trained our like image foundation model Create 2, as well as and we also recently like
+open-sourced the medium version of our model. So, I'll be like talking about like how we like
+trained that mostly from research perspective. Later in the day, uh like my colleague will also give
+a little bit of details on like infrastructure and training infrastructure and like everything that
+needed to be like set up for that. But, today I'll mostly be talking about like research. Also,
+public speaking is not one of my best abilities. So, take that in mind. But, anyways, I'll go ahead
+and start. So, we recent As I said, we recently open-sourced our Create 2, Create 2 medium variant
+of our like closed-source model. Now, it's like open-source and I think people are enjoying quite a
+bit. One thing we focused quite a bit was like stylistic diversity. So, how we are going to like go
+about this is that I'm going to like describe a little bit of the training like pipeline that we
+have like used to like curate data, curate data, actually like train the model, train the model, and
+then I'll like talk a little bit about like what were like the most effective levers for actually
+improving model performance. And then, the last thing would be, you know, like what I think would be
+our like kind of exciting directions for the next generation image models. So, I'll go ahead and
+then start talking about that. So, one of the trend that we've been like seeing recently is that,
+you know, existing models like ChatGPT, ChatGPT and Nano Banana like the like the production grade
+uh models that are like from the big labs. One thing is that they kind of like focus on like slower
+generation, but like very reliable output. So, I know Chat GPT-2 or like Nano Banana Pro, I think
+they take up to like a minute or like two to like give an output. Typically, it's like something
+very acceptable. There's like hardly barely any like flaws, but one problem is that in order to get
+like good consistency, they have like kind of like significantly mode collapse their models because
+I don't know, like if you're trying to render a person, the easiest and most reliable way to like
+render a person is render the most boring average person that exists and then like put it in a
+center frame. Uh And like this for example, like this is one of the examples that I like to use. So,
+like if you type like burning skull, Chat GPT-2 like is very consistent. All the outputs are like
+fine, but you know, there's barely any diversity. On the other end, like kind of the thing that we
+kind of like focus on is like faster generation so that like people can like iterate with like
+different visual ideas and then also have like a little bit of knobs on kind of because, you know,
+when people like comment, sometimes like they want very something very specific. They want to
+generate like a poster or like a birthday card. In that case, like Chat GPT-2 or Nano Banana Pro
+like excellent solution, but sometimes like when you're like a creative studio, you don't quite know
+what you want yet and want to like slightly explore what kind of like visuals you want to make.
+That's something that we wanted to uh focus on a little bit. So, you know, with that in mind, like
+how do you actually like train a diffusion model? Uh I hope most of the people in the audience like
+know how diffusion models work, but just to give a small recap. How it works is that you have an
+image and you add a little bit of like noise and then you ask the model to like, "Okay, like how
+here is an image with some of the noise added in? Like how do you like remove this noise uh remove
+this noise to get like a valid image. So, like at a high level, this is how diffusion models are
+like trained. And once you train a model to do this, you can just like get a random noise and then
+tell the model to like progressively remove the noise uh noise to generate like an image. So, at a
+high level, like this is how a diffusion models are like trained. But right now, most of the
+production uh production diffusion models, at least the open-source ones that are very competitive,
+including ours, use a autoencoder. So, this is typically called a latent diffusion model, where you
+use a autoencoder to like, instead of taking the raw pixels, you first like spatially compress it
+and then decompress it uh later. But the generation works in a spatially compressed uh latent space,
+so that is a little bit more efficient to train. One of the main reason is that most people use
+diffusion transformers uh transformers or like some variant of that to train diffusion models. And
+as you know, transformers, at least the non-sparse ones, uh they tend to have like all like all been
+squared uh all been squared uh time complexity. So, if you try to like model every single pixel,
+that's very expensive. So, now uh and that was the initial motivation for like why people kind of
+like started with like latent uh latent diffusion models, because now they can actually like model
+this a little bit in a more efficient space. So, one thing that I'll say is that like really like
+data is like quite everything that goes into the model. Like typically, you lock in your
+architecture and then you just a lot of work just goes into like just feeding the model like what it
+wants. Like, I mean, this sounds stupid, but I cannot iterate this more. That's why I put like,
+again, like really data is quite like everything. Like again, like this this just comes up again and
+again. And typically, after you lock in your architecture, like most of the work actually goes into
+like data curation, like making sure that the data is good. And in our case, like we wanted to focus
+on like stylistic diversity, so making sure that like we don't necessarily like remove like remove
+like remove like data data unintentionally to like cut stylistic diversity. Like that was also very
+important focus for us. For instance, like some people like think I know like low-resolution CRT
+videos are like a bad image, but some people like that kind of like aesthetics, so making sure that
+we have like good coverage and don't just rely on like very standard like aesthetic scores or like
+image quality scores to like cut like oversample uh typically what are considered like
+conventionally good images was also something that we had to like take into account. So, with that
+in mind, I'm going to describe some of the things that I think we did uh quite cool when we came to
+like data and kind of like things that we like kind of consider bad data or like duplicated samples,
+overrepresented concepts. So, these are typically taken uh care of by like deduplication and and uh
+clustering uh based uh rebalancing. And then, you know, there are certain samples that like visual
+language models we used to generate the captions, they sometimes constantly fail to like capture
+important aspect of the image, which leads to certain biases, uh which is also the third point. And
+then, like you know, sometimes when you train on like very low resolution, it doesn't make sense to
+like put train on an image that has like I don't know, like 20 100 like characters on a 256 by 256
+pixels because that's just going to be like too hard for the model to like learn at least at like
+low resolution stages. So, that's one uh example. And then, obviously, AI images uh distillation is
+like a very big like topic, but we tried very hard to like remove any AI images like at all because
+it does like provide you a shortcut to to get you like a good model, but synthetic data is like so
+sticky to the model that once you like start training on AI image data, sure your model's good, but
+you kind of lose the point because then you're going to get like very like ChatGPT or like Nano
+banner aesthetic. And at least for me like I can tell when like a model has been very heavily
+trained or like distilled on like ChatGPT 2 or like Nano banner Pro. And in the long run like that's
+just not how you want to like do like you don't I and you know, as a researcher it always slightly
+hurts my ego if all I'm doing is distillation. So, yeah. And then, you know, captions are very
+important. So, like just to briefly describe our like captioning pipeline, how we we take the images
+and then we run OCR because text rendering is quite important. Uh so, we make sure that we first
+extract out all the text that are like visible in the image. And then we also add like optional
+metadata if we know this is like a picture of a famous person, we make sure that that's included.
+And then we do a second pass with our vision language model to generate like very detailed caption
+for this image. And once we have like a caption that sufficiently captures all the things that are
+relevant about the image, then we can like rewrite it to like whatever like JSON prompts or like
+other formats you would like to like uh feed the model. So, like this our like captioning pipeline.
+And this is actually uh one good example of what I consider like bad data. It doesn't look that bad,
+but one of the issues that we had with this kind of images is that we would like try many things
+with the captioner. Uh and it would say that oh, this is a painting of blah blah blah blah blah
+blah, but it would not mention the fact that it's framed on a wall with like a on and have a white
+background. And I know sometimes the captioner would like consistently like fail to mention this
+fact. So, when you try to generate a painting of whatever, it'll be always hanged on a wall, on a
+white wall, which is pulling that what the user wants. So, this is an example of like, you know, the
+image is fine. It's you can train on it, but if it's a kind of image that, you know, LLMs or vision
+language models cannot like consistently like capture important aspect of the model. Like, this is
+an example where we just had to like design filters and then threw this kind of like data out or at
+least undersample it. And, you know, deduplication, we mostly use like hash-based solutions. We when
+we like train these models, we need to use like like, I don't know, anywhere from like 2 to like 10
+billion images. That's a lot of images to run like filters on. So, like, first thing we do is like
+just tip calculate like pHash or like MD5 hash to do basic deduplication. And then, once we get to
+like a smaller like size, that's when we bring in, you know, some of the embedding-based uh
+deduplication method, SSCD, like SigLip, to do uh set semantic de- duplication or like near du- uh
+remove near duplicates. And like, typically how we like also like design filters that we use like
+large uh large vision language model. I know, for instance, you design a prompt to like get a large
+language model to like learn, does this look like a AI image or not? And then like, we can act after
+like we get a good like fine-tuned or a system from from a large uh vision language model, one thing
+that uh we can do is we can like distill this data, this kind of like decision and like to like a
+very small like SigLip classifier. And then, you can base you have like a very like cheap classifier
+that is somewhat like reliable. And, you know, like typically if you run a classifier over like a
+billion images, you do need things to be like SigLip-sized, uh for instance. So, this is one of And
+also like, this is if you guys are into like LLM literature, like this is one of the approaches that
+uh the essential web data is used. They also used a big LLM big LLM to like come up with like some
+kind of taxonomy or like classifiers to like judge whether this text data is like good or not in
+this and then distill that down to like I don't know like 500 uh million parameter model so that you
+can actually run this over like a pre-training level corpus. Otherwise, it'll be somewhat expensive
+and frankly inefficient use of your GPUs to do so. And another thing which I'm a little bit proud of
+uh is that we actually use like sparse autoencoders uh for some of our filtering. Uh I don't know
+how many of you guys are still like into like sparse autoencoders, but I we did some work or at
+least I did some work in doing uh sparse autoencoder research on like clip or these kind of like
+image models uh vision models. And one thing that you can actually get out of SAE is a unsupervised
+tagging system. So, one thing you can do is that once you train a SAE on a vision model, what you
+can do is that you can feed an image and then it will give you like sparse features that get
+activated. For instance, let's say you feed this image to a sparse auto vision sparse autoencoder
+and it will give you like it'll get activated for like features like horse, black and white, blur uh
+blurry like image blurry image. So, once So, you can kind of use this as like off-the-shelf like uh
+unsupervised tagging system. And if one of these like have like something that you want to like
+filter on or oversample like easy things or like signatures or like watermarks or like some kind of
+like border artifacts that I was like talking about. So, if you have like a feature for that in your
+sparse autoencoder, like this is one nice thing to remove uh to like remove like data that's kind of
+like undesirable uh in your data set. And then, one thing that I think like people have quite liked
+about our uh open source create model is like world knowledge. Frankly, I don't know how much this
+has helped, but this is one of the things we did. Uh is that you know, this was something that like
+clip, the original clip paper did, is that you can actually take the Wikipedia, the entire
+Wikipedia, and for each article or concept, you can compute the page rank of each of the concepts,
+and then if it's like if it has like quite high, it's in the top 90% percentile of like page rank on
+Wikipedia, it's probably something quite important for the model to know, and what we do is uh what
+we do is we kind of like take these keywords and then make sure that and then just run like I know
+like standard like plain text search or like embedding search just to make sure that like these kind
+of concepts are in our dataset. And during this little bit of exploration, like one thing that we
+did find was that there's a Barack Obama the horse. I actually don't know if this ended up in our
+dataset, but you know, like there are many interesting things in the Wikipedia article, so something
+fun to share, but actually I don't think we had this specific Barack Obama the horse, but it's uh
+it's a nice horse. Anyways, uh yeah, and and at the end of the day, like we have like around like 32
+we I counted, uh and then I think we ended up having around like 30 to 40 like custom in-house
+classifier, like different heuristics and like filters that we've used. And again, like data is very
+important because once you lock in your I think now we're I mean, you're probably going to train
+like transformer, you know what you're training, and then like data is like what really determines
+the quality of your model, so again, can't emphasize enough how important data is. And then like
+once your data is set up, like we kind kind of go through this like Barry LM inspired training
+pipeline, where we do we progress we do like uh low resolution to like high resolution pre-training,
+mid-training, supervised fine-tuning, preference optimization, reinforcement learning, and we also
+like train our prompt expander, which takes a user prompt and then expands it out to a long prompt.
+So, this is pretty straightforward, you know, at typically most people like train start training at
+low resolution because that's where the model actually learns like text-to-image capabilities like
+you know, like it needs to know like how a horse looks like. You can do train that at low resolution
+and then you can progressively like scale up your training resolution so that it first learns
+semantics and then learns like structure, detail, like these kind of things that can be learned at
+high resolution later. So, we trained from 256 to 1K resolution. And then once you have your like
+pre-trained model, you kind of have this very malleable base to like train on and similar to like
+LLMs like what if you pre-train LLM, it's just basically auto complete. But typically, at least for
+LLMs, you want it to do like chat or like agentic stuff, tool calling. So, you actually need to like
+mold this into like things that are useful for you. So, in our case, we curate like illustration,
+graphic design, photography, cinematics, you know, kind of like data you want you have in mind for
+your downstream use case. So, we curate some like large-scale mid-train data and then SFT data to
+kind of mold your distribution. And once this little bit of like molding is done, then we do like
+preference optimization, which is, you know, if you do ChatGPT, they'll ask you like, do you like
+this over this? So, we collect bunch of these pairs where we use this for doing a little bit of like
+preference optimization to just polish out the model a little bit. This is where we get a little bit
+more opinionated need opinionated about like the kind of model we want to train. And then, you know,
+reinforcement learning is also like kind of is now extremely standard in LLMs. That's what we do in
+diffusion land, too. So, we have like a pretty much like a GRPO inspired method where where we have
+model like generate images and then we send it to the reward servers and then based on this like
+feedback we teach the model like I know like how to like improve text rendering like have like
+better anatomy structure these kind of things. And then the last step this is kind of become a
+almost essential step for production grade diffusion models you actually need to train a small LLM
+that takes in like user prompt and then outputs like a very long detail prompt because typically
+longer detail prompt they're more in distribution with your models like training data that tends to
+like make better images. And you know the kind of next step if you're into like LLM literature is
+something that we are doing is doing like multi-expert on positive distillation that we are like
+currently working on so we would like train experts that are like specialized in like photography
+text rendering and different capabilities and then kind of like merge all of these capabilities into
+a single student so so that like we can have like kind of all we can have a student that can
+effectively match the capabilities of each of the expert in like whatever you want the expert to be
+good at. And like in my experience like kind of like things that mattered for me was like
+infrastructure to iterate fast and also again like data is important like masses can like change
+every time code is something you can change very easily but you know data is like eternal like you
+can if you have that's going to be valuable no matter what the hot new training paradigm is. Uh
+simplicity and scalability I we very much prefer like masses that have like low number of hyper
+parameters that we need to tune. Efficiency again this goes ties back to just fast iteration like
+speed. And then like you know our thing that I like to do is steal a lot from LLM research so that I
+can just reuse their kernels and like research and like literature so all of these are things that I
+kind of like found very useful to iterate. I think I only have like 1 minute, but kind of things
+that I find funny is that, you know, we started with like encoder and like decoder uh transformers.
+Now we are going the opposite way because we have a prompt expander which is all the regressive
+decoder and then diffusion which is the encoder, so it's kind of getting reversed. And with that in
+mind, it's also starting to look a little bit like DALL-E 2 where, you know, you have like a model
+that will like generate conditioning using like auto regressive model or like diffusion model and
+then we feed that to our diffusion model, so it's kind of this prompt expansion pipeline makes
+reminds me a little bit of like DALL-E 2. So, that's kind of a funny observation. And you know, like
+there's bunch of stuff that go into like diffusion model training. I really like to, you know,
+simplify the stack so that we can get rid of VAEs and then text encoders and then just train a
+single clean transformer. Uh so, that's something I always look forward to working on. And then, you
+know, vision language models has gotten like more powerful like this from the original LDM paper,
+but you know, like bounding boxes before it was expensive to generate, but now you can perfectly
+generate good bounding box for every image and you can condition the image model on this. Uh this
+something that Ideogram rev uh I have had also like been working on. And then, you know, this is
+from actually 2017 from uh Fei-Fei Li uh this lab like you could do like scene graph to like image
+generation. So, again like image generation, I think it's really like a proxy for like BLM like
+progress, so kind of things I'm like excited for is like what are other what are interesting like
+textual ways to like describe an image now that we have more like more like powerful visual language
+models, so this something that I'm quite excited about like bounding boxes, you know, scene graphs.
+I mean, there's different things that could be like quite useful here. And then, yes, and this is my
+shameless recruiting slide. So, if you enjoyed this talk, send me an email here, take a picture, and
+yeah, I think that's mostly it. I don't know if there's time for Q&A, but sorry that I went slightly
+over, but hopefully you enjoyed it. I'll stick around for another 30 minutes if anybody wants to
+talk to me, but yeah. >>

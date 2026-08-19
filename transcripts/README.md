@@ -408,6 +408,39 @@ talks, all published 2026-08-14, all fully available (no premieres).
 title's own verb ("agentify"/"API-fy the web") transcribes as "identify"
 throughout. Per-file normalization tables in each extraction's header.
 
+## Batch 21 — CUA/agent-eng tail + Generative Media track (published 2026-08-17 → 08-18)
+
+Eleven talks in two groups. Three agent-engineering talks (2026-08-17) and a
+dedicated **Generative Media** track (2026-08-18, own playlist PLKfy8g4yBtRY),
+the first substantial media/video cluster the corpus has taken — an open scope
+decision, parsed in full at user direction.
+
+Agent engineering (2026-08-17):
+
+| File | Talk | Video |
+|---|---|---|
+| dahl-deno-security-firewall-agents.txt | Security Firewall for Agents — Ryan Dahl, Deno | https://youtu.be/MkRYPFIMCSA |
+| jain-aviator-kill-code-review.txt | How to Kill the Code Review — Ankit Jain, Aviator | https://youtu.be/YgEv7IQzGdM |
+| bouchard-towards-ai-context-engineering-2026.txt | Context Engineering in 2026 — Bouchard, Solano & Vaid, Towards AI (~80-min workshop) | https://youtu.be/WP3hjUXd918 |
+
+Generative Media track (2026-08-18):
+
+| File | Talk | Video |
+|---|---|---|
+| ahres-reactor-realtime-interactive-video.txt | The Next Medium: Real-Time Interactive Video — Ahmed Ahres, Reactor | https://youtu.be/5dCAmSDOAjI |
+| mccallum-urun-generative-video-speed.txt | Generative Video at the Speed of Light — Keegan McCallum, uRun | https://youtu.be/Xln-On3syJk |
+| primas-lemonslice-voice-realtime-video.txt | Voice agents with Realtime Video — Sidney Primas, LemonSlice | https://youtu.be/z1dqv74SpUs |
+| menezes-krea-infra-train-serve.txt | Infra behind Krea 2 — Gabriel Menezes, Krea | https://youtu.be/byn9PURoBNY |
+| lee-krea-training-krea2.txt | Training Krea 2 — Sangwu Lee, Krea | https://youtu.be/-tviRdpmHvs |
+| deyneka-reelful-agentic-video-editor.txt | Agentic Video Editor for Mass Consumer — Ekaterina Deyneka, Reelful | https://youtu.be/pPj_tjlvYjA |
+| nunez-nereu-game-engine-no-manual.txt | The Next Game Engine Won't Have a Manual — Arturo Nunez, Nereu | https://youtu.be/VBCDhRrvlYo |
+| fisher-philo-guitar-gently-speaks.txt | While my guitar gently speaks — Todd Fisher, Philo Ventures (⚠ hobbyist, thin signal) | https://youtu.be/E_Txocq-Lrw |
+
+⚠ Media talks carry heavy model-name garbles (Krea/"Korea", Seedance/"C dance",
+Helios, Wan 2.1/"Juan", LongLive 2); per-file normalization tables in each
+extraction header. The Bouchard workshop is the standout: a rigorous empirical
+case that NOT compacting wins when prompt caching is available.
+
 Channel state as of 2026-08-14: the CUA track lives in its own playlist
 (`PLEz0frWjePik`, 10 videos — these 7 plus Bonacci/b3, Raj/b9, and one more
 already in-corpus); the World's Fair 2026 playlist is unchanged at 119

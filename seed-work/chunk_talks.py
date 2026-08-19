@@ -45,9 +45,11 @@ def main(stems, out_path):
 
 if __name__ == "__main__":
     stems = [
-        "batra-yutori-agentify-web-not-apis", "klein-browserbase-agents-www",
-        "gallon-dark-arts-web-automation", "mishra-amazon-rl-to-irl",
-        "doro-programma-statistical-precipice", "primor-brightdata-context-as-a-service",
-        "zemaityte-oxylabs-web-data-infrastructure",
+        "dahl-deno-security-firewall-agents", "jain-aviator-kill-code-review",
+        "bouchard-towards-ai-context-engineering-2026", "ahres-reactor-realtime-interactive-video",
+        "mccallum-urun-generative-video-speed", "primas-lemonslice-voice-realtime-video",
+        "menezes-krea-infra-train-serve", "lee-krea-training-krea2",
+        "deyneka-reelful-agentic-video-editor", "nunez-nereu-game-engine-no-manual",
+        "fisher-philo-guitar-gently-speaks",
     ]
-    main(stems, ROOT / "seed-work" / "chunks20-raw.jsonl")
+    main(stems, ROOT / "seed-work" / "chunks21-raw.jsonl")

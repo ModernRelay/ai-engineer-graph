@@ -297,6 +297,19 @@ in `domain:` enums. Every Signal/KnowHow carries artifact provenance edges.
 | [primor-brightdata-context-as-a-service.md](primor-brightdata-context-as-a-service.md) | Primor, Bright Data — The Rise of CaaS: Context-as-a-Service | for review |
 | [zemaityte-oxylabs-web-data-infrastructure.md](zemaityte-oxylabs-web-data-infrastructure.md) | Žemaitytė, Oxylabs — How Web Data Infrastructure Powers the Next Generation of AI | for review |
 
+| **Batch 21 — agent-eng tail + Generative Media track** (11 talks) | | |
+| [dahl-deno-security-firewall-agents.md](dahl-deno-security-firewall-agents.md) | Dahl, Deno — Security Firewall for Agents (Claw Patrol; agent-as-untrusted-software) | for review |
+| [jain-aviator-kill-code-review.md](jain-aviator-kill-code-review.md) | Jain, Aviator — How to Kill the Code Review (verify intent, not the diff) | for review |
+| [bouchard-towards-ai-context-engineering-2026.md](bouchard-towards-ai-context-engineering-2026.md) | Bouchard/Solano/Vaid, Towards AI — Context Engineering in 2026 (keep-everything beats compaction) | for review |
+| [ahres-reactor-realtime-interactive-video.md](ahres-reactor-realtime-interactive-video.md) | Ahres, Reactor — Real-Time Interactive Video (media-track thesis) | for review |
+| [mccallum-urun-generative-video-speed.md](mccallum-urun-generative-video-speed.md) | McCallum, uRun — Generative Video at the Speed of Light | for review |
+| [primas-lemonslice-voice-realtime-video.md](primas-lemonslice-voice-realtime-video.md) | Primas, LemonSlice — Voice agents with Realtime Video (model harness) | for review |
+| [menezes-krea-infra-train-serve.md](menezes-krea-infra-train-serve.md) | Menezes, Krea — Infra behind Krea 2 (metrics, spot-arbitrage) | for review |
+| [lee-krea-training-krea2.md](lee-krea-training-krea2.md) | Lee, Krea — Training Krea 2 (data curation) | for review |
+| [deyneka-reelful-agentic-video-editor.md](deyneka-reelful-agentic-video-editor.md) | Deyneka, Reelful — Agentic Video Editor (media agent = coding agent) | for review |
+| [nunez-nereu-game-engine-no-manual.md](nunez-nereu-game-engine-no-manual.md) | Nunez, Nereu — Game Engine Won't Have a Manual (intent-over-engine; LOD context) | for review |
+| [fisher-philo-guitar-gently-speaks.md](fisher-philo-guitar-gently-speaks.md) | Fisher, Philo — While my guitar gently speaks (⚠ hobbyist, thin — drop candidate) | for review |
+
 Review starting points: the batch-2 merge flags in [registry.md](registry.md)
 § "Batch-2 additions" (`pat-model-not-bottleneck` vs `pat-harness-over-model`;
 `co-google` vs `co-google-deepmind`; `co-aws` vs `co-amazon`), and the seven

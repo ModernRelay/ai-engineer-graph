@@ -1273,3 +1273,100 @@ mentions of `pat-adaptive-software` / `pat-adaptive-harness` predate this
 reframe and stand as record; this note is the authority. If coined, the
 harness-side evidence attaches to `pat-liquid-software` as a facet.
 - `pat-agent-economy` breadth: watch whether the machine-web signals (Batra/Klein/Gallon) and the agent-commerce signals (Petersson/Povilionis/Raskar) stay coherent under one pattern or want splitting.
+
+## Batch-21 additions (reconciled) — agent-eng tail + Generative Media track
+
+_11 talks (3 agent-engineering published 2026-08-17; an 8-talk **Generative
+Media** track published 2026-08-18 as its own playlist PLKfy8g4yBtRY). The
+first substantial media/video cluster in the corpus — an open scope decision,
+parsed in full at user direction. The three agent-eng talks are squarely on
+the spine; the media 8 are peripheral but consistently confirm
+`pat-model-not-bottleneck` and `pat-harness-over-model` from a new domain._
+
+### ⚑ Bouchard workshop — the corpus's strongest empirical counter to compaction-by-default
+Towards AI ran real experiments on their open-source AI tutor (11 presets, 2
+models, ~$600) and found **NOT compacting — keeping the full history — wins on
+recall, cost AND latency** when prompt caching is available: cached tokens up
+to ~50× cheaper (DeepSeek), summarization breaks the cache and drops buried-fact
+recall from ~95% to ~32%, and compaction forces re-retrieval. `sig-keep-everything-beats-compaction`
+is emitted `ContradictsPattern → pat-harness-over-model` (claim-2: the "smart"
+compaction machinery is a net negative vs model+cache) — a clean b15-FINDING-1
+test case that resolves under the claim-1 re-scoping. Also
+`sig-graphrag-ties-rag-costs-more` → **`ContradictsPattern → pat-context-graphs`**
+(a neutral team measuring GraphRAG tied-but-costlier vs hybrid RAG) — a measured
+counter to the corpus's 2nd-most-supported seed thesis. Boundary preserved:
+compaction/retrieval genuinely win when caching doesn't apply (local models,
+context over the window). Directly stress-tests `el-context-compaction` (b6) and
+Kundel's b18 auto-compaction.
+
+### ⚑ pat-new-cyber-threats — Dahl/Deno, a load-bearing source
+The creator of Node.js: **the agent is untrusted software; the guard can't live
+inside it**; alignment lowers risk but can't bound it (prompt-injectable). Deno's
+Claw Patrol is an MIT proxy parsing every byte at the protocol layer (Postgres
+wire protocol included), injecting credentials the agent never sees, enforcing a
+1,000-line HCL rule file with unit tests, routing risky actions to a human/LLM
+judge. Pairs with Gallon's b20 CAPTCHA-defeat (agents *are* the threat surface).
+**Fourth independent "the model never sees secrets" arrival** after OpenAI vaults
+(b18), Anthropic credential-away-from-model (b19), Agent Vault (prior art). And
+the **fourth "verifier is a boxed external judge" talk** (OpenAI auto-review b18,
+Anthropic outcomes b19, Aviator's LLM-judge, Deno's egress approval) — candidate
+texture for a future "external constrained verifier" thread, none coined.
+
+### ⚑ pat-verification-gap + pat-ai-native-org — Jain/Aviator
+Line-by-line review "already dead" (30%+ merge unreviewed); the mistake is
+"AI reviews and nobody reads." Review's real function is **alignment**
+(knowledge-sharing/architecture) which must survive; automate semantic accuracy.
+Mechanism: capture **intent from the session (not the code)** as acceptance
+criteria + an **AI slop registry** of recurring comments → a test plan verified
+against a live preview → **the review surface becomes intent-and-evidence, not
+the diff**. Lands on `pat-verification-gap` (the oracle must come from a
+different source than the artifact — credits Dex Horthy) and gives coined
+`pat-ai-native-org` fresh engineering-practice evidence. New critical reading of
+`el-spec-driven-development` (b9) as waterfall-with-no-feedback-loop.
+
+### Generative Media track — cross-domain confirmation, held-pattern-less media ledger
+Four same-batch talks (Ahres/Reactor, McCallum/uRun, Menezes+Lee/Krea,
+Primas/LemonSlice) independently argue the media frontier is **serving
+infrastructure and orchestration, not model quality** — the cleanest confirmation
+of `pat-model-not-bottleneck` outside language. Primas's `sig-model-harness-is-the-real-time-value`
+is a strong `pat-harness-over-model` claim-1 point ("value is in the orchestration
+harness"). Deyneka/Reelful shows the **sandbox+skills+verification pattern is
+medium-agnostic** (video-as-Remotion-code = coding agent). Nunez/Nereu contributes
+`el-lod-context-assembly` (relevance-by-spatial-proximity — a novel progressive-disclosure
+framing) and the "flip context to domain intent" harness lesson. Lee/Krea confirms
+b15's data-quality-as-multiplier in the image domain and OPSD/GRPO crossing into
+diffusion (`pat-continual-learning-turn`). Menezes/Krea is a clean
+`pat-durable-execution` product-side point (cheap-checkpoint-and-resume + self-healing
+GPU spot-arbitrage).
+- **HELD PATTERN-LESS — a "media-as-medium" ledger** (real-time interactive video / world models as a new interactive form): `sig-realtime-makes-video-a-new-medium` (Ahres), `sig-visual-layer-on-every-ai-interaction` (Primas), `sig-agents-build-media-apps` (McCallum), `sig-editing-harder-than-generating` (Deyneka), `sig-game-making-as-creative-outlet` (Nunez). If the media track recurs, this is a candidate ledger. Per the standing scope question, NOT coined — flagged for review.
+- **HELD PATTERN-LESS — world-models-as-robotics-data** (`sig-world-models-generate-robotics-data`, Ahres) bears on uncoined `pat-environments-economy`.
+
+### Companies (13 new)
+- Agent-eng: `co-deno` (Dahl; Node.js creator's co), `co-aviator` (Jain)
+- Media: `co-reactor` (Ahres), `co-urun` (McCallum), `co-krea` (Menezes+Lee — research+infra, widen brief), `co-lemonslice` (Primas), `co-reelful` (Deyneka), `co-nereu` (Nunez), `co-philo-ventures` (Fisher — ⚠ barely-a-node, drop candidate)
+- Coined on reference: `co-unity` (Nunez's employer, incumbent contrast), `co-bytedance` (⚠ Helios model — flagged, may leave as prose), and reused `co-towards-ai` **[b9]** / `co-mongodb` / `co-microsoft` / `co-deepseek` / `co-nvidia` / `co-meta` / `co-google` with new facts.
+- ⚠ Alibaba, a16z, Brex, Stanford, Netflix referenced without coining.
+
+### Experts (14 new)
+`exp-ryan-dahl` (co-deno), `exp-ankit-jain` (co-aviator), `exp-omar-solano` +
+`exp-samridhi-vaid` (co-towards-ai; `exp-louis-francois-bouchard` **[b9]** reused —
+2nd appearance), `exp-ahmed-ahres` (co-reactor), `exp-keegan-mccallum` (co-urun),
+`exp-gabriel-menezes` + `exp-sangwu-lee` (co-krea), `exp-sidney-primas` (co-lemonslice),
+`exp-ekaterina-deyneka` (co-reelful), `exp-arturo-nunez` (co-nereu + co-unity),
+`exp-todd-fisher` (co-philo-ventures).
+
+### Elements (~44 new)
+- Security: `el-agent-as-untrusted-software`, `el-byte-level-egress-control`, `el-claw-patrol`, `el-hcl-egress-rules`, `el-egress-approval-routing`
+- Review: `el-review-is-alignment`, `el-review-crisis-metrics`, `el-intent-from-session`, `el-ai-slop-registry`, `el-intent-review-surface`
+- Context engineering: `el-context-mgmt-vs-memory`, `el-compaction-techniques`, `el-caching-makes-compaction-a-trap`, `el-keep-everything-wins`, `el-when-to-compact`, `el-agentic-kb-browsing`
+- Media infra/model: `el-realtime-interactive-video`, `el-interactive-video-model-classes`, `el-world-behind-an-api`, `el-realtime-video-evals-unsolved`, `el-generative-video-efficiency-axis`, `el-realtime-media-harness`, `el-software-factories-for-media`, `el-avatar-turing-test`, `el-human-focused-world-model`, `el-causal-realtime-video`, `el-model-harness-orchestration`
+- Media training/infra: `el-training-metrics-truth`, `el-crash-and-resume-training`, `el-priority-gpu-scheduling`, `el-inference-on-bad-gpus`, `el-data-is-everything`, `el-classifier-distillation-pipeline`, `el-synthetic-data-is-sticky`, `el-diffusion-borrows-llm-recipe`
+- Media harness/game: `el-agentic-editor-equals-app-builder`, `el-edit-not-generate`, `el-media-agent-skills`, `el-media-verification-layer`, `el-intent-over-engine-vocabulary`, `el-asset-tag-system`, `el-lod-context-assembly`, `el-vision-tagged-assets`
+- Hobbyist: `el-ai-lowers-build-cost`, `el-guitar-speech-pipeline` (drop candidates)
+- **Reuse, recommend widening briefs:** `el-context-compaction` (b6 — this batch supplies its strongest empirical counter), `el-prompt-caching` (b15 — the economics that flip context strategy), `el-remotion` (b8 — now an agent output format), `el-on-policy-distillation` (b5 — crosses into diffusion), `el-progressive-disclosure`, `el-karpathy-llm-wiki`, `el-hybrid-search`, `el-spec-driven-development` (new critical reading).
+
+### ⚑ Flags / merge-checks
+- **⚠ `el-world-model` is uncoined despite heavy corpus use** (b6 microworlds, b19 Su, this whole media track). Recommend coining centrally at review and re-pointing the media files' `UsesElement` edges. Left as a flag, not emitted, to avoid a half-defined node.
+- **⚠ `co-bytedance` / `co-unity` / `co-philo-ventures` coined-on-reference** — thin nodes; philo-ventures + `el-guitar-speech-pipeline` are explicit **drop candidates** if review prefers a tight corpus (Fisher is a hobbyist passion project).
+- **⚠ VERIFY before seeding (heavy media garbles):** Krea/"Korea", Seedance/"C dance 2", Helios, Wan 2.1 14B/"Juan", LongLive 2/"Long live 2", the Alibaba world model/"Link bot", "Clockwork"; Claw Patrol MIT/repo + "OpenShell"(NVIDIA)/"yellow mode"(Codex YOLO); Aviator "861% code churn"/"Verify"; Bouchard's ~50× cache / 95%-vs-32% / ~800k-no-rot / $600 figures; Kueue/"Q", Ceph/"SEF", cerebra.ai hiring alias (likely krea.ai, NOT Cerebras).
+- **Cross-file edges proposed, left to review:** `el-intent-review-surface`↔`el-doc-as-shared-state` (b17); `el-ai-slop-registry`↔`el-reviewdebt`(b5)/`el-slop-as-unread-code`(b15); `el-data-is-everything`↔`el-data-quality-multiplier`(b15); `el-priority-gpu-scheduling`↔b18 Jiang cross-cluster; the media `el-realtime-interactive-video` shared across Ahres/McCallum/Primas.
