@@ -318,7 +318,7 @@ EXPLORER-DESIGN.md for the result.
 
 ## Adding a batch (the per-batch pipeline)
 
-The graph is kept current per batch. As of batch 22 (2026-09-05, 275 talks) it is up to date. To add a
+The graph is kept current per batch. As of batch 22 (2026-09-05, 276 talks) it is up to date. To add a
 new batch of talks:
 
 ```bash
@@ -347,6 +347,11 @@ python3 seed-work/chunk_talks.py             # transcripts -> seed-work/chunksNN
 omnigraph embed --input seed-work/chunksNN-raw.jsonl --output seed-work/chunksNN-embedded.jsonl   --spec seed-work/embed-spec.json
 python3 seed-work/finalize_chunks.py seed-work/chunksNN-embedded.jsonl seed-work/chunksNN-final.jsonl <YYYY-MM-DD>
 omnigraph load --data seed-work/chunksNN-final.jsonl --mode merge --as act-analyst --yes "$G"
+
+# 5b. (0.10+) Rebuild full-text indexes so the new rows are indexed, not just scanned —
+#     server must be stopped for this direct-storage maintenance command
+pkill -f "omnigraph-server --cluster s3://intel-graph"; sleep 3
+omnigraph rebuild-full-text-indexes "$G" --branch main --as act-admin --json
 
 # 6. Restart the server so it re-pins to the new graph head, then verify
 pkill -f "omnigraph-server --cluster s3://intel-graph"; sleep 3

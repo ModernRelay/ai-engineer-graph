@@ -167,7 +167,23 @@ Same-speaker reuse: `exp-sachin-gupta` (batch 3) also owns the ReviewDebt talk._
   - `pat-agent-economy` — now TWO data points: Povilionis/Froglet receipts (batch 2), Raskar/Nanda agentic-web bazaar (batch 5, two pattern-less signals in the raskar file ready to rehome).
 - "AI-native organization" gained two more resonance points (Wu/Shihipar 65%-of-PRs-by-Claude, Brunet org-redesign demand) on top of Tan (batch 3) — borderline.
 
-### Companies (12 new)
+### Addendum — 18th talk: Sanchez/Adobe, "Agentic Sites" (added 2026-09-05)
+Adobe Experience Manager assembling per-user pages in ~1 s (Gemma 4 on Cerebras,
+~2,300 tokens/s) with per-site, speed-first model/provider evaluation
+(Promptfoo; 1.1 s vs 4.6 s) — a product-side `pat-model-not-bottleneck` point
+with numbers, plus `sig-speed-not-size-selects-the-model` → `pat-benchmark-trust-crisis`
+(per-site evals over public benchmarks) and `sig-personalize-blocks-not-the-site`
+→ `pat-harness-over-model` (brand-boxed generation). **Held pattern-less:**
+`sig-audience-of-one-beyond-the-browser` (voice → personalized page on a TV; any
+site agentic in <1 h) → `pat-liquid-software` ledger. New: `co-adobe` (bigtech),
+`exp-carlos-sanchez`, elements `el-agentic-sites`, `el-audience-of-one`,
+`el-site-dependent-model-eval`, `el-promptfoo`, `el-edge-blocks-plus-llm-backend`,
+`el-ofonelabs-site-generator` (⚠ name uncertain). Reused: `co-cerebras`,
+`co-google`, `co-cloudflare`, `co-aws`, `el-gemma-open-models`, `el-model-routing`
+(recommend widening with speed-first routing). Loaded as a second entity
+overwrite + chunk merge, followed by a full-text rebuild (0.10 procedure).
+
+### Companies (13 new)
 - Coding/frontier: `co-spacexai` (⚠ SpaceX vs SpaceXAI garble flagged)
 - Context/evals: `co-atlan` (data catalog/context layer), `co-mindmakers` (psychometric evals), `co-phaidra` (AI-factory agents)
 - Infra/training: `co-prime-intellect` (open superintelligence stack), `co-superagentic` (RLM-Code), `co-ratel` (⚠ name garble flagged)
@@ -1373,27 +1389,27 @@ GPU spot-arbitrage).
 
 ## Batch-22 additions (reconciled) — Enterprise agents & orgs
 
-_17 talks (published 2026-08-19 → 08-29; extracted 2026-09-05). The first
+_18 talks (published 2026-08-19 → 08-29; extracted 2026-09-05). The first
 tranche of the 79 uploads that accumulated after batch 21 — the AI-native
 enterprise / leadership-track cluster, chosen first because it feeds the most
-coined patterns. One talk (Adobe/Sanchez, "Agentic Sites") is held pending
-captions (HTTP 429 on every download attempt) and will land as an 18th.
-Converted deterministically (`convert_1719.py` batch 22): 12 companies, 18
-experts, 90 elements, 82 signals, 32 insights, 17 know-hows, 1,088 edges; zero
+coined patterns. Adobe/Sanchez ("Agentic Sites") cleared YouTube's caption rate limit later the
+same day and was added as the 18th in a second load.
+Converted deterministically (`convert_1719.py` batch 22): 13 companies, 19
+experts, 96 elements, 86 signals, 33 insights, 18 know-hows, 1,142 edges; zero
 coercions or skipped edges; `merge_validate` reports only the two pre-existing
 intentional dangling targets (`pat-environments-economy`, `el-world-model`)._
 
 ### Pattern evidence added (FormsPattern / ContradictsPattern from this batch)
 | pattern | +support | +counter | note |
 |---|---|---|---|
-| `pat-harness-over-model` | 24 | 0 | the batch's spine: runtime/guard/skills talks all locate control outside the model |
+| `pat-harness-over-model` | 25 | 0 | the batch's spine: runtime/guard/skills talks all locate control outside the model |
 | `pat-ai-native-org` | 19 | 0 | org design (QuantumBlack skills governance, Box six-month review, Akamai signal layer), dysfunction side (token maxing, "reviewing slop"), workforce framing (Decawork) |
 | `pat-verification-gap` | 16 | 0 | review/CI as the new bottleneck (Ironclad, Warp), trajectory evals (Navan), content-addressed replay (.txt), evals-from-architecture (Anterior) |
 | `pat-new-cyber-threats` | 14 | 0 | the guard-outside-the-agent cluster (below) |
-| `pat-model-not-bottleneck` | 14 | **1** | buyer side (Millennium: 5% funnel, "boring 60%"), Docker ("safety not intelligence"), Lease End; **counter:** Kus dates the agent epoch to Opus 4.0→4.5 |
+| `pat-model-not-bottleneck` | 16 | **1** | buyer side (Millennium: 5% funnel, "boring 60%"), Docker ("safety not intelligence"), Lease End; **counter:** Kus dates the agent epoch to Opus 4.0→4.5 |
 | `pat-durable-execution` | 10 | 0 | three vendor products in one week (Navan's maturity map, Warp Oz, Docker spx) + two demand-side derivations (.txt, TikTok) |
 | `pat-continual-learning-turn` | 4 | 0 | Maersk's 100k corrections (ops-scale), Lease End's context loop, QuantumBlack auto-evolving skills (cautious), TokenOps roadmap (cautious) |
-| `pat-agent-economy` / `pat-agent-supply-chain` / `pat-value-of-judgement` / `pat-benchmark-trust-crisis` / `pat-agent-memory-layer` | 4 / 4 / 3 / 3 / 3 | 0 | see per-file notes |
+| `pat-agent-economy` / `pat-agent-supply-chain` / `pat-value-of-judgement` / `pat-benchmark-trust-crisis` / `pat-agent-memory-layer` | 4 / 4 / 3 / 4 / 3 | 0 | see per-file notes |
 | `pat-saaspocalypse` | 2 | 0 | supply-side reading (Hall: cost of the average → 0; Millennium: rebuild in six weeks) |
 | `pat-sovereign-ai` | 1 | 0 | .txt replaced all third-party APIs with open/local models for background agents |
 | `pat-context-graphs` | 0 | **1** | Kus/Box demotes graph retrieval below agentic search at exabyte scale |
@@ -1492,7 +1508,7 @@ though it appears as a buyer — review may prefer `developer`), `co-quantumblac
 (Touil; consultancy→developer), `co-dottxt` (Louf), `co-docker` (Jain),
 `co-lease-end` (Bjornn), `co-decawork` (Aggarwal), `co-anterior` (Howard),
 `co-ironclad` (Hong), `co-tiktok` (Munaf; `bigtech`, parent `co-bytedance`
-b21 is a thin node — review may merge).
+b21 is a thin node — review may merge), `co-adobe` (Sanchez; `bigtech`).
 - **Reused with new facts:** `co-box` **[seed]** (exabyte, ~1T→10T tokens, agent
   abstraction, six-month reviews), `co-warp` **[b19]** (open-sourced, 20K→60K
   stars, Oz), `co-oxylabs` **[b20]** (agent-facing product line), `co-anthropic`
@@ -1503,17 +1519,17 @@ b21 is a thin node — review may merge).
 - ⚠ Referenced without coining: Okta, AIM Security, LiteLLM, Portkey, Cloudflare
   (gateway), Playwright, Epic, Salesforce, Air Canada, Backstage, Twitch.
 
-### Experts (18 new)
+### Experts (19 new)
 `exp-lena-hall`, `exp-dmitry-buykin`, `exp-roberto-milev` + `exp-uday-kanagala`,
 `exp-ben-kus` (co-box), `exp-brian-lewis`, `exp-imad-touil`,
 `exp-giedrius-steimantas` (co-oxylabs), `exp-safia-abdalla` (co-warp),
 `exp-remi-louf`, `exp-sachin-malhotra` (co-anthropic), `exp-tushar-jain`
 (co-docker — distinct from `exp-ankit-jain` b21), `exp-dan-bjornn`,
 `exp-sarthak-aggarwal`, `exp-christopher-lovejoy` (co-anthropic + co-anterior),
-`exp-saul-howard`, `exp-mingsheng-hong`, `exp-salman-munaf`. Reused (2nd
+`exp-saul-howard`, `exp-mingsheng-hong`, `exp-salman-munaf`, `exp-carlos-sanchez`. Reused (2nd
 appearance): `exp-tisha-chawla`, `exp-susheem-koul` **[registry]**.
 
-### Elements (90 new)
+### Elements (96 new)
 - Org/GTM: `el-convergence-machine`, `el-pointing-is-the-job`,
   `el-judgement-that-resists-training`, `el-signal-distortion-taxonomy`,
   `el-signal-layer`; `el-boring-sixty-percent`, `el-enterprise-funnel-five-percent`,

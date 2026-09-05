@@ -456,7 +456,7 @@ already extracted here.
 
 ## Batch 22 — Enterprise agents & orgs (published 2026-08-19 → 08-29)
 
-17 talks (extracted 2026-09-05). The first tranche of the 79 uploads that
+18 talks (extracted 2026-09-05; Adobe added the same day after its captions cleared YouTube's rate limit). The first tranche of the 79 uploads that
 accumulated after batch 21 — the AI-native-enterprise / leadership-track
 cluster: runtime and safety vendors (Docker, Warp, Navan), guard-outside-the-agent
 practice (Anthropic CI, Decawork, TikTok), agent spend governance (Microsoft
@@ -482,11 +482,9 @@ agents, infra) are still queued.
 | jain-docker-agent-runtime-autonomy.txt | Unlock Agent Autonomy: The Runtime for AI-Native Systems — Tushar Jain, Docker | https://youtu.be/zaGyGgLW3SM |
 | bjornn-leaseend-finetuned-model-tech-debt.txt | Your Fine-Tuned Model Is Tech Debt: A 50x ROI House of Cards — Dan Bjornn, Lease End | https://youtu.be/4loPnxvWWhg |
 | aggarwal-decawork-it-admin-ai-workforce.txt | IT Admin for the AI Workforce — Sarthak Aggarwal, Decawork | https://youtu.be/q-WOjZhOMCA |
+| sanchez-adobe-agentic-sites.txt | Agentic Sites: Building Hyper Personalized Websites — Carlos Sanchez, Adobe | https://youtu.be/jebp4V0vh30 |
 | lovejoy-howard-enterprise-stack-not-ready.txt | Why Your Enterprise Tech Stack Isn't Ready for AI Agents — Christopher Lovejoy (Anthropic) & Saul Howard (Anterior) | https://youtu.be/mav15aW9lLM |
 
-⚠ **Not yet transcribed:** *Agentic Sites: Building Hyper Personalized Websites — Carlos
-Sanchez, Adobe* (https://youtu.be/jebp4V0vh30) — YouTube returned HTTP 429 on every
-caption download during this batch; retry and add as an 18th talk.
 
 **Out of scope, recorded for the record:** the same channel carries **AIE
 Europe 2026** (243 videos, published ~2026-05-21 → 06-18, playlist

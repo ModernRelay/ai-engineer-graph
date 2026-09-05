@@ -310,7 +310,7 @@ in `domain:` enums. Every Signal/KnowHow carries artifact provenance edges.
 | [nunez-nereu-game-engine-no-manual.md](nunez-nereu-game-engine-no-manual.md) | Nunez, Nereu — Game Engine Won't Have a Manual (intent-over-engine; LOD context) | for review |
 | [fisher-philo-guitar-gently-speaks.md](fisher-philo-guitar-gently-speaks.md) | Fisher, Philo — While my guitar gently speaks (⚠ hobbyist, thin — drop candidate) | for review |
 
-| **Batch 22 — Enterprise agents & orgs** (17 talks; Adobe/Sanchez pending captions) | | |
+| **Batch 22 — Enterprise agents & orgs** (18 talks) | | |
 | [hall-akamai-signal-layer.md](hall-akamai-signal-layer.md) | Hall, Akamai — The Signal Layer (pointing is the job; signal distortion taxonomy) | for review |
 | [buykin-maersk-tribal-dungeons-shipping.md](buykin-maersk-tribal-dungeons-shipping.md) | Buykin, Maersk — Tribal Dungeons of Global Shipping (100k corrections → composite tools; rejects MCP) | for review |
 | [milev-kanagala-navan-agents-microservices-2015.md](milev-kanagala-navan-agents-microservices-2015.md) | Milev & Kanagala, Navan — Agents Are Where Microservices Were in 2015 (reference-architecture maturity map) | for review |
@@ -327,6 +327,7 @@ in `domain:` enums. Every Signal/KnowHow carries artifact provenance edges.
 | [jain-docker-agent-runtime-autonomy.md](jain-docker-agent-runtime-autonomy.md) | Jain, Docker — Unlock Agent Autonomy (spx microVM runtime; intent-based access) | for review |
 | [bjornn-leaseend-finetuned-model-tech-debt.md](bjornn-leaseend-finetuned-model-tech-debt.md) | Bjornn, Lease End — Your Fine-Tuned Model Is Tech Debt (calcification tax; context over weights) | for review |
 | [aggarwal-decawork-it-admin-ai-workforce.md](aggarwal-decawork-it-admin-ai-workforce.md) | Aggarwal, Decawork — IT Admin for the AI Workforce (agent as managed worker; plan/execute separation) | for review |
+| [sanchez-adobe-agentic-sites.md](sanchez-adobe-agentic-sites.md) | Sanchez, Adobe — Agentic Sites (per-user pages in ~1 s; speed-first per-site model eval) | for review |
 | [lovejoy-howard-enterprise-stack-not-ready.md](lovejoy-howard-enterprise-stack-not-ready.md) | Lovejoy (Anthropic FDE) & Howard, Anterior — Why Your Enterprise Stack Isn't Ready (immutable ledger; human–agent equivalency) | for review |
 
 Review starting points: the batch-2 merge flags in [registry.md](registry.md)

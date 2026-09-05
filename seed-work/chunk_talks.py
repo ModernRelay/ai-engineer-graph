@@ -44,15 +44,5 @@ def main(stems, out_path):
 
 
 if __name__ == "__main__":
-    stems = [
-        "hall-akamai-signal-layer", "buykin-maersk-tribal-dungeons-shipping",
-        "milev-kanagala-navan-agents-microservices-2015", "kus-box-half-life-agent-infra",
-        "lewis-millennium-startups-enterprise-contracts", "touil-quantumblack-ai-native-orgs-skills",
-        "steimantas-oxylabs-missing-layer", "abdalla-warp-oz-cloud-agent-platform",
-        "louf-dottxt-agent-frameworks-harmful", "chawla-koul-microsoft-finops-agents",
-        "malhotra-anthropic-budget-not-token", "jain-docker-agent-runtime-autonomy",
-        "bjornn-leaseend-finetuned-model-tech-debt", "aggarwal-decawork-it-admin-ai-workforce",
-        "lovejoy-howard-enterprise-stack-not-ready", "hong-ironclad-tokenmaxxing-trusted-throughput",
-        "munaf-tiktok-agents-distributed-systems",
-    ]
-    main(stems, ROOT / "seed-work" / "chunks22-raw.jsonl")
+    stems = ["sanchez-adobe-agentic-sites"]  # batch-22 addendum (18th talk)
+    main(stems, ROOT / "seed-work" / "chunks22b-raw.jsonl")
