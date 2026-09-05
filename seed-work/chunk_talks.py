@@ -62,5 +62,7 @@ if __name__ == "__main__":
         "werry-unblocked-mergeable-code-context-engine",
         "arora-together-llm-multi-gpu-kernels",
         "pant-aws-lean4-formal-verification",
+        "liguori-aws-ai-native-frontier-dev-team",
+        "bond-ketkar-uber-ureview-code-review",
     ]
     main(stems, ROOT / "seed-work" / "chunks23-raw.jsonl")

@@ -330,7 +330,7 @@ in `domain:` enums. Every Signal/KnowHow carries artifact provenance edges.
 | [sanchez-adobe-agentic-sites.md](sanchez-adobe-agentic-sites.md) | Sanchez, Adobe — Agentic Sites (per-user pages in ~1 s; speed-first per-site model eval) | for review |
 | [lovejoy-howard-enterprise-stack-not-ready.md](lovejoy-howard-enterprise-stack-not-ready.md) | Lovejoy (Anthropic FDE) & Howard, Anterior — Why Your Enterprise Stack Isn't Ready (immutable ledger; human–agent equivalency) | for review |
 
-| **Batch 23 — AI-native engineering & coding agents** (17 talks; Liguori/AWS, Bond & Ketkar/Uber, Debois/Tessl pending captions) | | |
+| **Batch 23 — AI-native engineering & coding agents** (19 talks; Debois/Tessl pending captions) | | |
 | [shenoy-longlake-diffuse-ai-real-world.md](shenoy-longlake-diffuse-ai-real-world.md) | Shenoy, Long Lake — How do you diffuse AI into the real world? (owner-operator deployment; earn the rungs; touch grass) | for review |
 | [blum-figma-org-adopt-coding-agents.md](blum-figma-org-adopt-coding-agents.md) | Blum, Figma — Adopting coding agents without shipping garbage (verification first; plan-not-prompt; skeptics own the roadmap) | for review |
 | [pant-aws-lean4-formal-verification.md](pant-aws-lean4-formal-verification.md) | Pant, AWS — Lean4 Has Proofs (humans own the spec, machines own code + proof; Cedar; Strata) | for review |
@@ -348,6 +348,8 @@ in `domain:` enums. Every Signal/KnowHow carries artifact provenance edges.
 | [agrawal-browser-company-prototyping-as-leadership.md](agrawal-browser-company-prototyping-as-leadership.md) | Agrawal, The Browser Company — Prototyping as Leadership (manager schedule as building time; the overnight loop; models trained overnight) | for review |
 | [friedman-qodo-last-human-code-review.md](friedman-qodo-last-human-code-review.md) | Friedman, Qodo — The Last Human Code Review (context not models; context lake; 100 silent PRs; software-graph governance) | for review |
 | [bhatawdekar-braintrust-agent-evolved-evals-didnt.md](bhatawdekar-braintrust-agent-evolved-evals-didnt.md) | Bhatawdekar, Braintrust — Your Agent Evolved, Your Evals Didn't (architecture generations; pass@k vs pass^k; production clustering) | for review |
+| [liguori-aws-ai-native-frontier-dev-team.md](liguori-aws-ai-native-frontier-dev-team.md) | Liguori, AWS — Building a Frontier Development Team (50-team pilot: median 4.5× when the way of working changes; five habits; decision speed as the new bottleneck) | for review |
+| [bond-ketkar-uber-ureview-code-review.md](bond-ketkar-uber-ureview-code-review.md) | Bond & Ketkar, Uber — uReview (first review 3 h → 9 h; observability ladder −60% cost / +70% accuracy; agent cavitation; expand the outer loop) | for review |
 
 Review starting points: the batch-2 merge flags in [registry.md](registry.md)
 § "Batch-2 additions" (`pat-model-not-bottleneck` vs `pat-harness-over-model`;

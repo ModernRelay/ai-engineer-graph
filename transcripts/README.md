@@ -488,13 +488,14 @@ agents, infra) are still queued.
 
 ## Batch 23 — AI-native engineering & coding agents (published 2026-08-20 → 08-28)
 
-17 talks (extracted 2026-09-05/06). The coding-agents / AI-native engineering
+19 talks (extracted 2026-09-05/06). The coding-agents / AI-native engineering
 track from the Sep-3 check plus the two engineering-practice keynotes (Krieger,
-Jarmak): verification and review (Lean proofs, Qodo, Braintrust, DoorDash evals),
-org practice (Figma adoption, Browser Company, Every, Anthropic Labs), platforms
-(Uber's factory, Twilio gateways, Unblocked context engine, Figma MCP), and
-the agent as buyer/user (Stripe/Metronome, Sourcegraph). Three talks are held
-pending captions (table below).
+Jarmak): verification and review (Lean proofs, Qodo, Braintrust, DoorDash evals,
+Uber's uReview), org practice (Figma adoption, Browser Company, Every, Anthropic
+Labs, Amazon's frontier teams), platforms (Uber's factory, Twilio gateways,
+Unblocked context engine, Figma MCP), and the agent as buyer/user
+(Stripe/Metronome, Sourcegraph). Liguori and Bond & Ketkar landed on a delayed
+caption retry the same day; one talk is still held pending captions (below).
 
 | File | Talk | Video |
 |---|---|---|
@@ -515,10 +516,10 @@ pending captions (table below).
 | agrawal-browser-company-prototyping-as-leadership.txt | Prototyping as Leadership: How a CTO Ships with AI Agents — Hursh Agrawal, The Browser Company | https://youtu.be/bdHaOXZOhcM |
 | friedman-qodo-last-human-code-review.txt | The Last Human Code Review: Building Trust in AI-Generated Code — Itamar Friedman, Qodo | https://youtu.be/s-aixZYJG4c |
 | bhatawdekar-braintrust-agent-evolved-evals-didnt.txt | Your Agent Evolved. Your Evals Didn't. — Ameya Bhatawdekar, Braintrust | https://youtu.be/nxokqOq1imY |
+| liguori-aws-ai-native-frontier-dev-team.txt | From AI-Assisted to AI-Native: Building a Frontier Development Team — Clare Liguori, AWS | https://youtu.be/pqlWNihgdjI |
+| bond-ketkar-uber-ureview-code-review.txt | Building uReview, Uber's Multi-Agent Code Review Engine — Will Bond & Ameya Ketkar, Uber | https://youtu.be/EL123UNokkI |
 
 ⚠ **Not yet transcribed (batch 23):**
-- *From AI-Assisted to AI-Native: Building a Frontier Development Team — Clare Liguori, AWS* (https://youtu.be/pqlWNihgdjI) — HTTP 429 on every caption download; add as `liguori-aws-ai-native-frontier-dev-team` when available.
-- *Building uReview, Uber's Multi-Agent Code Review Engine — Will Bond & Ameya Ketkar, Uber* (https://youtu.be/EL123UNokkI) — HTTP 429 on every caption download; add as `bond-ketkar-uber-ureview-code-review` when available.
 - *Coding Agents Don't Scale Themselves. Neither Do Your Teams. — Patrick Debois, Tessl* (https://youtu.be/zCJtYuqwm7E) — no captions published for this video; add as `debois-tessl-coding-agents-dont-scale-themselves` when available.
 
 **Out of scope, recorded for the record:** the same channel carries **AIE
