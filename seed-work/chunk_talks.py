@@ -44,5 +44,23 @@ def main(stems, out_path):
 
 
 if __name__ == "__main__":
-    stems = ["sanchez-adobe-agentic-sites"]  # batch-22 addendum (18th talk)
-    main(stems, ROOT / "seed-work" / "chunks22b-raw.jsonl")
+    stems = [
+        "shenoy-longlake-diffuse-ai-real-world",
+        "blum-figma-org-adopt-coding-agents",
+        "garvin-stripe-vibe-coding-billing-engine",
+        "paranjape-haridas-doordash-cross-functional-evals",
+        "lumarie-figma-mcp-server-launch",
+        "medisetty-huda-uber-agentic-sdlc",
+        "rogge-huggingface-automate-own-job",
+        "klaassen-every-compound-engineering",
+        "agrawal-browser-company-prototyping-as-leadership",
+        "friedman-qodo-last-human-code-review",
+        "bhatawdekar-braintrust-agent-evolved-evals-didnt",
+        "krieger-anthropic-how-anthropic-builds",
+        "jarmak-sourcegraph-death-of-developer-advocates",
+        "manuja-twilio-llm-gateways",
+        "werry-unblocked-mergeable-code-context-engine",
+        "arora-together-llm-multi-gpu-kernels",
+        "pant-aws-lean4-formal-verification",
+    ]
+    main(stems, ROOT / "seed-work" / "chunks23-raw.jsonl")

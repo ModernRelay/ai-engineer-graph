@@ -318,7 +318,7 @@ EXPLORER-DESIGN.md for the result.
 
 ## Adding a batch (the per-batch pipeline)
 
-The graph is kept current per batch. As of batch 22 (2026-09-05, 276 talks) it is up to date. To add a
+The graph is kept current per batch. As of batch 23 (2026-09-06, 313 talks) it is up to date. To add a
 new batch of talks:
 
 ```bash
