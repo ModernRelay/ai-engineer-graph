@@ -297,6 +297,39 @@ in `domain:` enums. Every Signal/KnowHow carries artifact provenance edges.
 | [primor-brightdata-context-as-a-service.md](primor-brightdata-context-as-a-service.md) | Primor, Bright Data — The Rise of CaaS: Context-as-a-Service | for review |
 | [zemaityte-oxylabs-web-data-infrastructure.md](zemaityte-oxylabs-web-data-infrastructure.md) | Žemaitytė, Oxylabs — How Web Data Infrastructure Powers the Next Generation of AI | for review |
 
+| **Batch 21 — agent-eng tail + Generative Media track** (11 talks) | | |
+| [dahl-deno-security-firewall-agents.md](dahl-deno-security-firewall-agents.md) | Dahl, Deno — Security Firewall for Agents (Claw Patrol; agent-as-untrusted-software) | for review |
+| [jain-aviator-kill-code-review.md](jain-aviator-kill-code-review.md) | Jain, Aviator — How to Kill the Code Review (verify intent, not the diff) | for review |
+| [bouchard-towards-ai-context-engineering-2026.md](bouchard-towards-ai-context-engineering-2026.md) | Bouchard/Solano/Vaid, Towards AI — Context Engineering in 2026 (keep-everything beats compaction) | for review |
+| [ahres-reactor-realtime-interactive-video.md](ahres-reactor-realtime-interactive-video.md) | Ahres, Reactor — Real-Time Interactive Video (media-track thesis) | for review |
+| [mccallum-urun-generative-video-speed.md](mccallum-urun-generative-video-speed.md) | McCallum, uRun — Generative Video at the Speed of Light | for review |
+| [primas-lemonslice-voice-realtime-video.md](primas-lemonslice-voice-realtime-video.md) | Primas, LemonSlice — Voice agents with Realtime Video (model harness) | for review |
+| [menezes-krea-infra-train-serve.md](menezes-krea-infra-train-serve.md) | Menezes, Krea — Infra behind Krea 2 (metrics, spot-arbitrage) | for review |
+| [lee-krea-training-krea2.md](lee-krea-training-krea2.md) | Lee, Krea — Training Krea 2 (data curation) | for review |
+| [deyneka-reelful-agentic-video-editor.md](deyneka-reelful-agentic-video-editor.md) | Deyneka, Reelful — Agentic Video Editor (media agent = coding agent) | for review |
+| [nunez-nereu-game-engine-no-manual.md](nunez-nereu-game-engine-no-manual.md) | Nunez, Nereu — Game Engine Won't Have a Manual (intent-over-engine; LOD context) | for review |
+| [fisher-philo-guitar-gently-speaks.md](fisher-philo-guitar-gently-speaks.md) | Fisher, Philo — While my guitar gently speaks (⚠ hobbyist, thin — drop candidate) | for review |
+
+| **Batch 22 — Enterprise agents & orgs** (18 talks) | | |
+| [hall-akamai-signal-layer.md](hall-akamai-signal-layer.md) | Hall, Akamai — The Signal Layer (pointing is the job; signal distortion taxonomy) | for review |
+| [buykin-maersk-tribal-dungeons-shipping.md](buykin-maersk-tribal-dungeons-shipping.md) | Buykin, Maersk — Tribal Dungeons of Global Shipping (100k corrections → composite tools; rejects MCP) | for review |
+| [milev-kanagala-navan-agents-microservices-2015.md](milev-kanagala-navan-agents-microservices-2015.md) | Milev & Kanagala, Navan — Agents Are Where Microservices Were in 2015 (reference-architecture maturity map) | for review |
+| [munaf-tiktok-agents-distributed-systems.md](munaf-tiktok-agents-distributed-systems.md) | Munaf, TikTok — AI Agents Are Just Distributed Systems Now (idempotency, compensation, budgets) | for review |
+| [hong-ironclad-tokenmaxxing-trusted-throughput.md](hong-ironclad-tokenmaxxing-trusted-throughput.md) | Hong, Ironclad — From Tokenmaxxing to Trusted Throughput (token ROI; review + CI bottlenecks) | for review |
+| [kus-box-half-life-agent-infra.md](kus-box-half-life-agent-infra.md) | Kus, Box — The Half-Life of Agent Infrastructure (months, not years; evals decide switching) | for review |
+| [lewis-millennium-startups-enterprise-contracts.md](lewis-millennium-startups-enterprise-contracts.md) | Lewis, Millennium — Which AI startups land enterprise contracts? (buyer side; the boring 60%) | for review |
+| [touil-quantumblack-ai-native-orgs-skills.md](touil-quantumblack-ai-native-orgs-skills.md) | Touil, QuantumBlack — AI-Native Organisations Run on Skills (skills registry as IDP) | for review |
+| [steimantas-oxylabs-missing-layer.md](steimantas-oxylabs-missing-layer.md) | Šteimantas, Oxylabs — The Missing Layer in Agentic AI (scraping principles for agents) | for review |
+| [abdalla-warp-oz-cloud-agent-platform.md](abdalla-warp-oz-cloud-agent-platform.md) | Abdalla, Warp — The Agent Behind the Curtain: Oz (harness-agnostic platform; workshop not factory) | for review |
+| [louf-dottxt-agent-frameworks-harmful.md](louf-dottxt-agent-frameworks-harmful.md) | Louf, .txt — Agent Frameworks Considered Harmful (events not graphs; content-addressed prompts) | for review |
+| [chawla-koul-microsoft-finops-agents.md](chawla-koul-microsoft-finops-agents.md) | Chawla & Koul, Microsoft — FinOps for AI Agents (TokenOps: steer, don't halt) | for review |
+| [malhotra-anthropic-budget-not-token.md](malhotra-anthropic-budget-not-token.md) | Malhotra, Anthropic — Give the Agent a Budget, Not a Token (asymmetric verbs, tripwires, undo test) | for review |
+| [jain-docker-agent-runtime-autonomy.md](jain-docker-agent-runtime-autonomy.md) | Jain, Docker — Unlock Agent Autonomy (spx microVM runtime; intent-based access) | for review |
+| [bjornn-leaseend-finetuned-model-tech-debt.md](bjornn-leaseend-finetuned-model-tech-debt.md) | Bjornn, Lease End — Your Fine-Tuned Model Is Tech Debt (calcification tax; context over weights) | for review |
+| [aggarwal-decawork-it-admin-ai-workforce.md](aggarwal-decawork-it-admin-ai-workforce.md) | Aggarwal, Decawork — IT Admin for the AI Workforce (agent as managed worker; plan/execute separation) | for review |
+| [sanchez-adobe-agentic-sites.md](sanchez-adobe-agentic-sites.md) | Sanchez, Adobe — Agentic Sites (per-user pages in ~1 s; speed-first per-site model eval) | for review |
+| [lovejoy-howard-enterprise-stack-not-ready.md](lovejoy-howard-enterprise-stack-not-ready.md) | Lovejoy (Anthropic FDE) & Howard, Anterior — Why Your Enterprise Stack Isn't Ready (immutable ledger; human–agent equivalency) | for review |
+
 Review starting points: the batch-2 merge flags in [registry.md](registry.md)
 § "Batch-2 additions" (`pat-model-not-bottleneck` vs `pat-harness-over-model`;
 `co-google` vs `co-google-deepmind`; `co-aws` vs `co-amazon`), and the seven

@@ -44,10 +44,5 @@ def main(stems, out_path):
 
 
 if __name__ == "__main__":
-    stems = [
-        "batra-yutori-agentify-web-not-apis", "klein-browserbase-agents-www",
-        "gallon-dark-arts-web-automation", "mishra-amazon-rl-to-irl",
-        "doro-programma-statistical-precipice", "primor-brightdata-context-as-a-service",
-        "zemaityte-oxylabs-web-data-infrastructure",
-    ]
-    main(stems, ROOT / "seed-work" / "chunks20-raw.jsonl")
+    stems = ["sanchez-adobe-agentic-sites"]  # batch-22 addendum (18th talk)
+    main(stems, ROOT / "seed-work" / "chunks22b-raw.jsonl")

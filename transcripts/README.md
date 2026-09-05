@@ -408,6 +408,39 @@ talks, all published 2026-08-14, all fully available (no premieres).
 title's own verb ("agentify"/"API-fy the web") transcribes as "identify"
 throughout. Per-file normalization tables in each extraction's header.
 
+## Batch 21 — CUA/agent-eng tail + Generative Media track (published 2026-08-17 → 08-18)
+
+Eleven talks in two groups. Three agent-engineering talks (2026-08-17) and a
+dedicated **Generative Media** track (2026-08-18, own playlist PLKfy8g4yBtRY),
+the first substantial media/video cluster the corpus has taken — an open scope
+decision, parsed in full at user direction.
+
+Agent engineering (2026-08-17):
+
+| File | Talk | Video |
+|---|---|---|
+| dahl-deno-security-firewall-agents.txt | Security Firewall for Agents — Ryan Dahl, Deno | https://youtu.be/MkRYPFIMCSA |
+| jain-aviator-kill-code-review.txt | How to Kill the Code Review — Ankit Jain, Aviator | https://youtu.be/YgEv7IQzGdM |
+| bouchard-towards-ai-context-engineering-2026.txt | Context Engineering in 2026 — Bouchard, Solano & Vaid, Towards AI (~80-min workshop) | https://youtu.be/WP3hjUXd918 |
+
+Generative Media track (2026-08-18):
+
+| File | Talk | Video |
+|---|---|---|
+| ahres-reactor-realtime-interactive-video.txt | The Next Medium: Real-Time Interactive Video — Ahmed Ahres, Reactor | https://youtu.be/5dCAmSDOAjI |
+| mccallum-urun-generative-video-speed.txt | Generative Video at the Speed of Light — Keegan McCallum, uRun | https://youtu.be/Xln-On3syJk |
+| primas-lemonslice-voice-realtime-video.txt | Voice agents with Realtime Video — Sidney Primas, LemonSlice | https://youtu.be/z1dqv74SpUs |
+| menezes-krea-infra-train-serve.txt | Infra behind Krea 2 — Gabriel Menezes, Krea | https://youtu.be/byn9PURoBNY |
+| lee-krea-training-krea2.txt | Training Krea 2 — Sangwu Lee, Krea | https://youtu.be/-tviRdpmHvs |
+| deyneka-reelful-agentic-video-editor.txt | Agentic Video Editor for Mass Consumer — Ekaterina Deyneka, Reelful | https://youtu.be/pPj_tjlvYjA |
+| nunez-nereu-game-engine-no-manual.txt | The Next Game Engine Won't Have a Manual — Arturo Nunez, Nereu | https://youtu.be/VBCDhRrvlYo |
+| fisher-philo-guitar-gently-speaks.txt | While my guitar gently speaks — Todd Fisher, Philo Ventures (⚠ hobbyist, thin signal) | https://youtu.be/E_Txocq-Lrw |
+
+⚠ Media talks carry heavy model-name garbles (Krea/"Korea", Seedance/"C dance",
+Helios, Wan 2.1/"Juan", LongLive 2); per-file normalization tables in each
+extraction header. The Bouchard workshop is the standout: a rigorous empirical
+case that NOT compacting wins when prompt caching is available.
+
 Channel state as of 2026-08-14: the CUA track lives in its own playlist
 (`PLEz0frWjePik`, 10 videos — these 7 plus Bonacci/b3, Raj/b9, and one more
 already in-corpus); the World's Fair 2026 playlist is unchanged at 119
@@ -420,6 +453,38 @@ SDW7LJ07FZk), alongside the long-known Lance Martin/Anthropic talk. Two
 further playlist entries are deliberately skipped: htM02KMNZnk and
 4sX_He5c4sI are 8.5-hour full-day track livestreams whose individual talks are
 already extracted here.
+
+## Batch 22 — Enterprise agents & orgs (published 2026-08-19 → 08-29)
+
+18 talks (extracted 2026-09-05; Adobe added the same day after its captions cleared YouTube's rate limit). The first tranche of the 79 uploads that
+accumulated after batch 21 — the AI-native-enterprise / leadership-track
+cluster: runtime and safety vendors (Docker, Warp, Navan), guard-outside-the-agent
+practice (Anthropic CI, Decawork, TikTok), agent spend governance (Microsoft
+TokenOps, Ironclad), the buyer's side (Millennium), org design (QuantumBlack,
+Akamai, Box). Remaining tracks from that check (commerce, GTM, health, coding
+agents, infra) are still queued.
+
+| File | Talk | Video |
+|---|---|---|
+| hall-akamai-signal-layer.txt | The Signal Layer: What to Build When Anything Can Be Built — Lena Hall, Akamai | https://youtu.be/1KOdiGgMtpY |
+| buykin-maersk-tribal-dungeons-shipping.txt | Tribal Dungeons of Global Shipping: AI Agents at Global Scale — Dmitry Buykin, Maersk | https://youtu.be/dQ-_i1tZiws |
+| milev-kanagala-navan-agents-microservices-2015.txt | Agents Are Where Microservices Were in 2015 — Roberto Milev & Uday Kanagala, Navan | https://youtu.be/32nrHU6zHU8 |
+| munaf-tiktok-agents-distributed-systems.txt | AI Agents Are Just Distributed Systems Now — Salman Munaf, TikTok | https://youtu.be/hD9-V56FNRI |
+| hong-ironclad-tokenmaxxing-trusted-throughput.txt | From Tokenmaxxing to Trusted Throughput — Mingsheng Hong, Ironclad | https://youtu.be/dSg0pu8d6qg |
+| kus-box-half-life-agent-infra.txt | The Half Life of Agent Infrastructure — Ben Kus, Box | https://youtu.be/sM1iYgz93HI |
+| lewis-millennium-startups-enterprise-contracts.txt | Which AI startups actually land enterprise contracts? — Brian Lewis, Millennium | https://youtu.be/7A65O-0lvKE |
+| touil-quantumblack-ai-native-orgs-skills.txt | AI-Native Organisations Run on Skills: How to Structure and Scale Them — Imad Touil, QuantumBlack | https://youtu.be/M05vON8i0aI |
+| steimantas-oxylabs-missing-layer.txt | The Missing Layer in Agentic AI — Giedrius Šteimantas, Oxylabs | https://youtu.be/XsvUhpnHepE |
+| abdalla-warp-oz-cloud-agent-platform.txt | The Agent Behind the Curtain: Building the Oz Cloud Agent Platform — Safia Abdalla, Warp | https://youtu.be/L173Z8DpaJg |
+| louf-dottxt-agent-frameworks-harmful.txt | Agent Frameworks Considered Harmful — Rémi Louf, .txt | https://youtu.be/KHudyx5wW3U |
+| chawla-koul-microsoft-finops-agents.txt | FinOps for AI Agents: Who Spent All the Tokens? — Tisha Chawla & Susheem Koul, Microsoft | https://youtu.be/GJX19pNhmSw |
+| malhotra-anthropic-budget-not-token.txt | Give the Agent a Budget, Not a Token — Sachin Malhotra, Anthropic | https://youtu.be/rbjWzZK2LU0 |
+| jain-docker-agent-runtime-autonomy.txt | Unlock Agent Autonomy: The Runtime for AI-Native Systems — Tushar Jain, Docker | https://youtu.be/zaGyGgLW3SM |
+| bjornn-leaseend-finetuned-model-tech-debt.txt | Your Fine-Tuned Model Is Tech Debt: A 50x ROI House of Cards — Dan Bjornn, Lease End | https://youtu.be/4loPnxvWWhg |
+| aggarwal-decawork-it-admin-ai-workforce.txt | IT Admin for the AI Workforce — Sarthak Aggarwal, Decawork | https://youtu.be/q-WOjZhOMCA |
+| sanchez-adobe-agentic-sites.txt | Agentic Sites: Building Hyper Personalized Websites — Carlos Sanchez, Adobe | https://youtu.be/jebp4V0vh30 |
+| lovejoy-howard-enterprise-stack-not-ready.txt | Why Your Enterprise Tech Stack Isn't Ready for AI Agents — Christopher Lovejoy (Anthropic) & Saul Howard (Anterior) | https://youtu.be/mav15aW9lLM |
+
 
 **Out of scope, recorded for the record:** the same channel carries **AIE
 Europe 2026** (243 videos, published ~2026-05-21 → 06-18, playlist
