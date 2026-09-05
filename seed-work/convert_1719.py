@@ -15,6 +15,15 @@ ROOT = pathlib.Path("/Users/andrew/code/intel-graph")
 EX = ROOT / "extraction"
 
 BATCHES = {
+    22: ["hall-akamai-signal-layer", "buykin-maersk-tribal-dungeons-shipping",
+         "milev-kanagala-navan-agents-microservices-2015", "kus-box-half-life-agent-infra",
+         "lewis-millennium-startups-enterprise-contracts", "touil-quantumblack-ai-native-orgs-skills",
+         "steimantas-oxylabs-missing-layer", "abdalla-warp-oz-cloud-agent-platform",
+         "louf-dottxt-agent-frameworks-harmful", "chawla-koul-microsoft-finops-agents",
+         "malhotra-anthropic-budget-not-token", "jain-docker-agent-runtime-autonomy",
+         "bjornn-leaseend-finetuned-model-tech-debt", "aggarwal-decawork-it-admin-ai-workforce",
+         "lovejoy-howard-enterprise-stack-not-ready", "hong-ironclad-tokenmaxxing-trusted-throughput",
+         "munaf-tiktok-agents-distributed-systems"],
     # NOTE: frag-16a/frag-16b on disk are batch *15*'s conversion (29 talks).
     # Batch 16's own 9 talks were never converted — emitted here as frag-16c.
     "16c": ["davis-temporal-mcp-tasks", "salomon-yosef-mcp-apps", "varda-cloudflare-gadgets",

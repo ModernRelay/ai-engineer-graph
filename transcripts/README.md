@@ -454,6 +454,40 @@ further playlist entries are deliberately skipped: htM02KMNZnk and
 4sX_He5c4sI are 8.5-hour full-day track livestreams whose individual talks are
 already extracted here.
 
+## Batch 22 — Enterprise agents & orgs (published 2026-08-19 → 08-29)
+
+17 talks (extracted 2026-09-05). The first tranche of the 79 uploads that
+accumulated after batch 21 — the AI-native-enterprise / leadership-track
+cluster: runtime and safety vendors (Docker, Warp, Navan), guard-outside-the-agent
+practice (Anthropic CI, Decawork, TikTok), agent spend governance (Microsoft
+TokenOps, Ironclad), the buyer's side (Millennium), org design (QuantumBlack,
+Akamai, Box). Remaining tracks from that check (commerce, GTM, health, coding
+agents, infra) are still queued.
+
+| File | Talk | Video |
+|---|---|---|
+| hall-akamai-signal-layer.txt | The Signal Layer: What to Build When Anything Can Be Built — Lena Hall, Akamai | https://youtu.be/1KOdiGgMtpY |
+| buykin-maersk-tribal-dungeons-shipping.txt | Tribal Dungeons of Global Shipping: AI Agents at Global Scale — Dmitry Buykin, Maersk | https://youtu.be/dQ-_i1tZiws |
+| milev-kanagala-navan-agents-microservices-2015.txt | Agents Are Where Microservices Were in 2015 — Roberto Milev & Uday Kanagala, Navan | https://youtu.be/32nrHU6zHU8 |
+| munaf-tiktok-agents-distributed-systems.txt | AI Agents Are Just Distributed Systems Now — Salman Munaf, TikTok | https://youtu.be/hD9-V56FNRI |
+| hong-ironclad-tokenmaxxing-trusted-throughput.txt | From Tokenmaxxing to Trusted Throughput — Mingsheng Hong, Ironclad | https://youtu.be/dSg0pu8d6qg |
+| kus-box-half-life-agent-infra.txt | The Half Life of Agent Infrastructure — Ben Kus, Box | https://youtu.be/sM1iYgz93HI |
+| lewis-millennium-startups-enterprise-contracts.txt | Which AI startups actually land enterprise contracts? — Brian Lewis, Millennium | https://youtu.be/7A65O-0lvKE |
+| touil-quantumblack-ai-native-orgs-skills.txt | AI-Native Organisations Run on Skills: How to Structure and Scale Them — Imad Touil, QuantumBlack | https://youtu.be/M05vON8i0aI |
+| steimantas-oxylabs-missing-layer.txt | The Missing Layer in Agentic AI — Giedrius Šteimantas, Oxylabs | https://youtu.be/XsvUhpnHepE |
+| abdalla-warp-oz-cloud-agent-platform.txt | The Agent Behind the Curtain: Building the Oz Cloud Agent Platform — Safia Abdalla, Warp | https://youtu.be/L173Z8DpaJg |
+| louf-dottxt-agent-frameworks-harmful.txt | Agent Frameworks Considered Harmful — Rémi Louf, .txt | https://youtu.be/KHudyx5wW3U |
+| chawla-koul-microsoft-finops-agents.txt | FinOps for AI Agents: Who Spent All the Tokens? — Tisha Chawla & Susheem Koul, Microsoft | https://youtu.be/GJX19pNhmSw |
+| malhotra-anthropic-budget-not-token.txt | Give the Agent a Budget, Not a Token — Sachin Malhotra, Anthropic | https://youtu.be/rbjWzZK2LU0 |
+| jain-docker-agent-runtime-autonomy.txt | Unlock Agent Autonomy: The Runtime for AI-Native Systems — Tushar Jain, Docker | https://youtu.be/zaGyGgLW3SM |
+| bjornn-leaseend-finetuned-model-tech-debt.txt | Your Fine-Tuned Model Is Tech Debt: A 50x ROI House of Cards — Dan Bjornn, Lease End | https://youtu.be/4loPnxvWWhg |
+| aggarwal-decawork-it-admin-ai-workforce.txt | IT Admin for the AI Workforce — Sarthak Aggarwal, Decawork | https://youtu.be/q-WOjZhOMCA |
+| lovejoy-howard-enterprise-stack-not-ready.txt | Why Your Enterprise Tech Stack Isn't Ready for AI Agents — Christopher Lovejoy (Anthropic) & Saul Howard (Anterior) | https://youtu.be/mav15aW9lLM |
+
+⚠ **Not yet transcribed:** *Agentic Sites: Building Hyper Personalized Websites — Carlos
+Sanchez, Adobe* (https://youtu.be/jebp4V0vh30) — YouTube returned HTTP 429 on every
+caption download during this batch; retry and add as an 18th talk.
+
 **Out of scope, recorded for the record:** the same channel carries **AIE
 Europe 2026** (243 videos, published ~2026-05-21 → 06-18, playlist
 PLcfpQ4tk2k0W4IhTx8dgBjTEYRmbEHcpP). The corpus contains only 8 of them, and

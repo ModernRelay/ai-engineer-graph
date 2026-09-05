@@ -1370,3 +1370,223 @@ GPU spot-arbitrage).
 - **⚠ `co-bytedance` / `co-unity` / `co-philo-ventures` coined-on-reference** — thin nodes; philo-ventures + `el-guitar-speech-pipeline` are explicit **drop candidates** if review prefers a tight corpus (Fisher is a hobbyist passion project).
 - **⚠ VERIFY before seeding (heavy media garbles):** Krea/"Korea", Seedance/"C dance 2", Helios, Wan 2.1 14B/"Juan", LongLive 2/"Long live 2", the Alibaba world model/"Link bot", "Clockwork"; Claw Patrol MIT/repo + "OpenShell"(NVIDIA)/"yellow mode"(Codex YOLO); Aviator "861% code churn"/"Verify"; Bouchard's ~50× cache / 95%-vs-32% / ~800k-no-rot / $600 figures; Kueue/"Q", Ceph/"SEF", cerebra.ai hiring alias (likely krea.ai, NOT Cerebras).
 - **Cross-file edges proposed, left to review:** `el-intent-review-surface`↔`el-doc-as-shared-state` (b17); `el-ai-slop-registry`↔`el-reviewdebt`(b5)/`el-slop-as-unread-code`(b15); `el-data-is-everything`↔`el-data-quality-multiplier`(b15); `el-priority-gpu-scheduling`↔b18 Jiang cross-cluster; the media `el-realtime-interactive-video` shared across Ahres/McCallum/Primas.
+
+## Batch-22 additions (reconciled) — Enterprise agents & orgs
+
+_17 talks (published 2026-08-19 → 08-29; extracted 2026-09-05). The first
+tranche of the 79 uploads that accumulated after batch 21 — the AI-native
+enterprise / leadership-track cluster, chosen first because it feeds the most
+coined patterns. One talk (Adobe/Sanchez, "Agentic Sites") is held pending
+captions (HTTP 429 on every download attempt) and will land as an 18th.
+Converted deterministically (`convert_1719.py` batch 22): 12 companies, 18
+experts, 90 elements, 82 signals, 32 insights, 17 know-hows, 1,088 edges; zero
+coercions or skipped edges; `merge_validate` reports only the two pre-existing
+intentional dangling targets (`pat-environments-economy`, `el-world-model`)._
+
+### Pattern evidence added (FormsPattern / ContradictsPattern from this batch)
+| pattern | +support | +counter | note |
+|---|---|---|---|
+| `pat-harness-over-model` | 24 | 0 | the batch's spine: runtime/guard/skills talks all locate control outside the model |
+| `pat-ai-native-org` | 19 | 0 | org design (QuantumBlack skills governance, Box six-month review, Akamai signal layer), dysfunction side (token maxing, "reviewing slop"), workforce framing (Decawork) |
+| `pat-verification-gap` | 16 | 0 | review/CI as the new bottleneck (Ironclad, Warp), trajectory evals (Navan), content-addressed replay (.txt), evals-from-architecture (Anterior) |
+| `pat-new-cyber-threats` | 14 | 0 | the guard-outside-the-agent cluster (below) |
+| `pat-model-not-bottleneck` | 14 | **1** | buyer side (Millennium: 5% funnel, "boring 60%"), Docker ("safety not intelligence"), Lease End; **counter:** Kus dates the agent epoch to Opus 4.0→4.5 |
+| `pat-durable-execution` | 10 | 0 | three vendor products in one week (Navan's maturity map, Warp Oz, Docker spx) + two demand-side derivations (.txt, TikTok) |
+| `pat-continual-learning-turn` | 4 | 0 | Maersk's 100k corrections (ops-scale), Lease End's context loop, QuantumBlack auto-evolving skills (cautious), TokenOps roadmap (cautious) |
+| `pat-agent-economy` / `pat-agent-supply-chain` / `pat-value-of-judgement` / `pat-benchmark-trust-crisis` / `pat-agent-memory-layer` | 4 / 4 / 3 / 3 / 3 | 0 | see per-file notes |
+| `pat-saaspocalypse` | 2 | 0 | supply-side reading (Hall: cost of the average → 0; Millennium: rebuild in six weeks) |
+| `pat-sovereign-ai` | 1 | 0 | .txt replaced all third-party APIs with open/local models for background agents |
+| `pat-context-graphs` | 0 | **1** | Kus/Box demotes graph retrieval below agentic search at exabyte scale |
+
+### ⚑ The guard-outside-the-agent cluster — now four consecutive designs
+Malhotra/Anthropic (budgets over tokens: asymmetric verbs, refilling rate
+limits, tripwires, the undo test, **identity stamped by a per-session proxy**),
+Jain/Docker (**spx** microVM runtime: containment, scoped sub-sandboxes,
+intent-based access, credentials as stubs), Aggarwal/Decawork (**plan-then-execute
+privilege separation**: trusted intent → typed plan → executor over untrusted
+evidence → policy gate → short-lived capabilities → receipts), Munaf/TikTok
+(idempotency, compensation, parameter-bound approvals) — with Dahl/Deno (b21)
+that is five practitioner designs converging on *the model proposes,
+deterministic policy decides*. Three same-batch arrivals at **approvals must be
+bound to parameters** ($30 ≠ $300). `sig-identity-must-come-from-infrastructure`
+is the fifth "model never holds its own credentials" instance; Docker's stub
+injection the sixth. **Candidate element at review:** a named
+`el-policy-gate-outside-the-model` (not coined here — would duplicate
+`el-plan-then-execute-privilege-separation`; widen that or coin centrally).
+Lovejoy/Howard add a *data-plane* variant: orchestration-adjacent object
+storage that defeats the lethal trifecta by construction. Aggarwal extends
+`el-lethal-trifecta` with a fourth "action layer" element — widen the b-earlier
+element's brief.
+
+### ⚑ pat-durable-execution — supply and demand in one batch
+Vendor side: Navan's reference-architecture maturity map grades the runtime
+layer "solved" by cloud providers but names **cost** and **replay/debugging** as
+unsolved; Warp's Oz and Docker's spx productize sandboxes, state rehydration,
+multi-harness structure and portability. Demand side: Louf/.txt re-derived the
+layer (append-only causal log, queue with attempt counts, content-addressed
+prompts) from three background agents in two weeks and concludes "build before
+you buy"; Munaf/TikTok writes the requirements list from distributed-systems
+first principles. Four same-batch instances of *the log is the system of record*
+(.txt, Anterior's immutable ledger, Anthropic's proxy-stamped audit rows,
+Maersk's trace-as-shared-evidence) — recommend widening `el-durable-session-log`
+/ `el-flat-trace-log` rather than new nodes. **`el-content-addressed-prompts`
+(.txt) is genuinely new**: prompt-part provenance/diff/replay as a build graph.
+
+### ⚑ HELD LEDGER — "agent spend governance" (new this batch)
+Chawla/Koul (Microsoft **TokenOps**: run-level, out-of-band, steer-don't-halt;
+−78% spend / 67→96% completion on browser-use + MetaGPT), Malhotra (budgets for
+*writes*), Hong/Ironclad (**trusted throughput** as the ROI unit; token dashboard
+as smoke detector, never leaderboard; review + CI as the new bottlenecks),
+Navan (cost "very hard to predict… driven by vendors whose interest is that we
+spend more tokens"), Munaf (max turns/parallelism/spend). Mechanism-level and
+absorbed by `pat-harness-over-model` / `pat-durable-execution` — **no pattern
+proposed**; recorded as a ledger in case it recurs. Widen `el-token-maxing`
+(b15) with the leaderboard-inversion and value-maxing framing.
+
+### ⚑ Skills as the unit — third and fourth arrivals
+Navan (skills as the unit of context; single master agent + sub-skills over
+multi-agent), Box (recursive agent + skills as the current rung), QuantumBlack
+(skills as the unit of organizational know-how; **ungoverned skills are a new
+technical debt**; skills registry as the IDP; SkillsBench cited), Lease End
+(context over weights — fixes via skills in <1 h vs a week of fine-tune
+whack-a-mole). **Recommend widening `el-agent-skills` (b1)** with the
+governance/registry dimension rather than coining a skills pattern.
+`pat-agent-supply-chain` gets its first *governance-side* evidence (Touil:
+registry, owners, security scanning, permissions) after being coined on the
+exploitation side.
+
+### Reframes and counters worth carrying to review
+- **Hall/Akamai refines `pat-value-of-judgement`:** broad taste is
+  preference-under-feedback (trainable); only judgement about the not-yet-happened
+  and judgement inside unobservable relationships resists training. Fold into
+  the pattern brief.
+- **Kus/Box, two calibrated counters from a neutral exabyte-scale source:**
+  `ContradictsPattern → pat-model-not-bottleneck` (the epoch dated to a model
+  step) and `ContradictsPattern → pat-context-graphs` (graphs "difficult to get
+  working well, probably not the best"; agentic search over hybrid). Keep both.
+- **Bjornn/Lease End vs `el-harness-then-finetune-sandwich` /
+  `el-synthetic-finetuning-playbook`:** "fine-tune only when you literally
+  cannot call a frontier model" is stricter than the earlier conditional
+  positions — texture, not a contradiction edge.
+- **Abdalla/Warp rejects "software factory"** for the *workshop* — a critical
+  reading to append to `el-software-factory` (b15/b17).
+- **Same-batch practitioner disagreements (texture, no edges):** Maersk rejects
+  MCP for tuned function calling vs Navan "MCP is the de facto protocol"; Navan
+  "don't over-engineer multi-agent" vs Warp productizing multi-harness sub-agent
+  orchestration.
+
+### HELD PATTERN-LESS (3 signals)
+- `sig-anthropic-fde-embedded-in-enterprises` (Lovejoy) → **`pat-fde-rise`
+  ledger** (uncoined): a first-person Anthropic FDE on the enterprise stage.
+- `sig-maersk-rejects-mcp-for-tuned-function-calling` → integration-surface
+  texture.
+- `sig-tuis-and-phone-agents-are-transitional` (Louf) → `el-agentic-surface-generations`
+  texture; with Kus's half-life thesis (`sig-agent-infra-half-life-measured-in-months`,
+  edged to `pat-ai-native-org`) and Bjornn's calcification tax, this is
+  **`pat-liquid-software` ledger** material (uncoined).
+
+### Companies (12 new)
+`co-akamai` (Hall), `co-maersk` (Buykin; enterprise→developer), `co-navan`
+(Milev/Kanagala), `co-millennium` (Lewis; ⚠ hedge fund coerced → `investor`
+though it appears as a buyer — review may prefer `developer`), `co-quantumblack`
+(Touil; consultancy→developer), `co-dottxt` (Louf), `co-docker` (Jain),
+`co-lease-end` (Bjornn), `co-decawork` (Aggarwal), `co-anterior` (Howard),
+`co-ironclad` (Hong), `co-tiktok` (Munaf; `bigtech`, parent `co-bytedance`
+b21 is a thin node — review may merge).
+- **Reused with new facts:** `co-box` **[seed]** (exabyte, ~1T→10T tokens, agent
+  abstraction, six-month reviews), `co-warp` **[b19]** (open-sourced, 20K→60K
+  stars, Oz), `co-oxylabs` **[b20]** (agent-facing product line), `co-anthropic`
+  **[seed]** (CI team practice; FDE function), `co-microsoft` (TokenOps),
+  `co-replit` **[b1]** (the incident, twice cited), `co-amazon`/`co-meta`
+  (token leaderboards), `co-aws` (AgentCore runtime/memory/identity),
+  `co-zhipu-ai` (GLM 5.2), `co-y-combinator`, `co-openai`, `co-google`, `co-nvidia`.
+- ⚠ Referenced without coining: Okta, AIM Security, LiteLLM, Portkey, Cloudflare
+  (gateway), Playwright, Epic, Salesforce, Air Canada, Backstage, Twitch.
+
+### Experts (18 new)
+`exp-lena-hall`, `exp-dmitry-buykin`, `exp-roberto-milev` + `exp-uday-kanagala`,
+`exp-ben-kus` (co-box), `exp-brian-lewis`, `exp-imad-touil`,
+`exp-giedrius-steimantas` (co-oxylabs), `exp-safia-abdalla` (co-warp),
+`exp-remi-louf`, `exp-sachin-malhotra` (co-anthropic), `exp-tushar-jain`
+(co-docker — distinct from `exp-ankit-jain` b21), `exp-dan-bjornn`,
+`exp-sarthak-aggarwal`, `exp-christopher-lovejoy` (co-anthropic + co-anterior),
+`exp-saul-howard`, `exp-mingsheng-hong`, `exp-salman-munaf`. Reused (2nd
+appearance): `exp-tisha-chawla`, `exp-susheem-koul` **[registry]**.
+
+### Elements (90 new)
+- Org/GTM: `el-convergence-machine`, `el-pointing-is-the-job`,
+  `el-judgement-that-resists-training`, `el-signal-distortion-taxonomy`,
+  `el-signal-layer`; `el-boring-sixty-percent`, `el-enterprise-funnel-five-percent`,
+  `el-enterprise-ready-from-the-inside`, `el-vendor-anti-pattern-catalog`,
+  `el-agents-inherit-your-entitlements`, `el-buyer-written-success-criteria`;
+  `el-agent-infra-half-life`, `el-agent-approach-succession`,
+  `el-swappable-agent-abstraction`, `el-six-month-review-cadence`,
+  `el-eval-sets-decide-switching`, `el-vendor-change-track-record`
+- Operations/learning loop: `el-tribal-dungeons`, `el-agent-sop`,
+  `el-sop-corpus-as-process-memory`, `el-refining-loop-around-the-agent`,
+  `el-correction-as-executable-change`, `el-failure-heatmap-triage`,
+  `el-composite-tools-from-proven-scenarios`; `el-calcification-tax`,
+  `el-fine-tune-whack-a-mole`, `el-context-over-weights-rebuild`,
+  `el-fine-tune-decision-list`
+- Runtime/reference architecture: `el-agentic-reference-architecture`,
+  `el-skills-as-unit-of-context`, `el-hook-based-agent-tracing`,
+  `el-trajectory-evals`, `el-pre-post-tool-guardrails`,
+  `el-single-master-agent-with-subskills`; `el-platforms-absorb-complexity`,
+  `el-oz-cloud-agent-platform`, `el-api-for-every-primitive`,
+  `el-agent-managed-open-source-repo`, `el-workshop-not-factory`,
+  `el-intent-to-implementation-for-non-developers`;
+  `el-markdown-agents-over-frameworks`, `el-event-driven-agent-topology`,
+  `el-append-only-event-log-as-memory`, `el-content-addressed-prompts`,
+  `el-typed-boundaries-kernel`; `el-probabilistic-coordinator`,
+  `el-agent-loop-boundary-crossings`, `el-timeout-means-unknown`,
+  `el-compensating-transactions-for-agents`, `el-memory-as-cache-with-provenance`,
+  `el-agent-circuit-breakers-and-budgets`
+- Skills governance: `el-two-loop-agentic-stack`, `el-enterprise-sdlc-is-not-four-steps`,
+  `el-skills-as-executable-knowhow`, `el-skills-technical-debt`,
+  `el-skills-registry-platform`
+- Security/guard: `el-token-is-a-boolean-budget-is-a-shape`, `el-asymmetric-verbs`,
+  `el-refilling-rate-limits-for-writes`, `el-tripwires-over-allowlists`,
+  `el-undo-test`, `el-identity-from-the-proxy-not-the-request`;
+  `el-goal-expansion-crosses-trust-boundaries`, `el-cross-model-cross-harness-safety`,
+  `el-safety-runtime-three-pillars`, `el-spx`, `el-runtime-follows-the-work`;
+  `el-agent-as-managed-worker`, `el-untrusted-text-causes-trusted-action`,
+  `el-echoleak-and-replit-as-boundary-failures`,
+  `el-plan-then-execute-privilege-separation`, `el-ai-workforce-it-department`;
+  `el-enterprise-poc-trap`, `el-immutable-action-ledger`,
+  `el-orchestration-adjacent-object-storage`, `el-human-agent-equivalency`,
+  `el-evals-as-emergent-property`
+- Spend governance: `el-cost-control-surface-by-era`, `el-run-level-token-governance`,
+  `el-tokenops`, `el-steer-not-halt`; `el-token-dashboard-as-smoke-detector`,
+  `el-trusted-throughput`, `el-review-and-ci-are-the-new-bottlenecks`,
+  `el-token-roi-framework`
+- Web layer: `el-scraping-principles-for-agents`, `el-web-access-layer-for-agents`,
+  `el-fast-search-api`, `el-validated-content-before-llm`, `el-oxylabs-headless-browser`
+- **Reuse, recommend widening briefs:** `el-agent-skills` (governance),
+  `el-token-maxing` (leaderboard inversion), `el-lethal-trifecta` (action
+  layer), `el-software-factory` (workshop critique), `el-durable-session-log` /
+  `el-flat-trace-log` (log as system of record), `el-agent-execution-traces`
+  (judgment pointers, not logs), `el-spec-driven-development` (Maersk: stalls
+  before the refining loop), `el-bedrock-agentcore` (gaps Navan filled),
+  `el-context-compaction` / `el-prompt-caching` (cost-policy use).
+
+### ⚑ Flags / merge-checks
+- **⚠ VERIFY before seeding:** Maersk's "over 100,000 corrections / 9 months",
+  "200+ instances", 20:1 corpus-to-runtime; Box's ~1T→10T tokens; Millennium's
+  5% funnel and "a frontier model every 11 days"; Hall's SWE-bench "fraction →
+  high eighties"; TokenOps −78% / 67→96%; the Uber four-month and "$500M in a
+  month" stories (cited by two talks); Anthropic's 200 workloads / 90 seconds;
+  Lease End's $12M / 50×; EchoLeak attribution (AIM Security); `spx` and
+  `brew install spx`; the skills-adoption timeline (8 months / February).
+- **Domain empty on the leadership-track thesis signals** (Hall, Lewis, Touil,
+  Hong, Abdalla's workshop, Lovejoy's PoC/FDE) — outside the `domain` enum;
+  the GTM and Health tracks still queued will widen this gap. Scope decision
+  pending: extend the enum or accept null.
+- **`co-millennium` type** (investor vs developer) and **`co-tiktok`/`co-bytedance`**
+  merge are the only node-identity questions.
+- **Cross-file edges proposed, left to review:** `el-correction-as-executable-change`
+  ↔ `el-trace-to-simulation` (b15) / `el-continuous-fix-loop` (b17);
+  `el-failure-heatmap-triage` ↔ `el-agent-trace-mining`;
+  `el-intent-to-implementation-for-non-developers` ↔ `el-fde-agent`;
+  `el-agents-inherit-your-entitlements` ↔ `el-agent-scoped-authorization`
+  (edged) and Malhotra's proxy identity; `el-validated-content-before-llm` ↔
+  `el-context-rot`.

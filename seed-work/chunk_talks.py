@@ -45,11 +45,14 @@ def main(stems, out_path):
 
 if __name__ == "__main__":
     stems = [
-        "dahl-deno-security-firewall-agents", "jain-aviator-kill-code-review",
-        "bouchard-towards-ai-context-engineering-2026", "ahres-reactor-realtime-interactive-video",
-        "mccallum-urun-generative-video-speed", "primas-lemonslice-voice-realtime-video",
-        "menezes-krea-infra-train-serve", "lee-krea-training-krea2",
-        "deyneka-reelful-agentic-video-editor", "nunez-nereu-game-engine-no-manual",
-        "fisher-philo-guitar-gently-speaks",
+        "hall-akamai-signal-layer", "buykin-maersk-tribal-dungeons-shipping",
+        "milev-kanagala-navan-agents-microservices-2015", "kus-box-half-life-agent-infra",
+        "lewis-millennium-startups-enterprise-contracts", "touil-quantumblack-ai-native-orgs-skills",
+        "steimantas-oxylabs-missing-layer", "abdalla-warp-oz-cloud-agent-platform",
+        "louf-dottxt-agent-frameworks-harmful", "chawla-koul-microsoft-finops-agents",
+        "malhotra-anthropic-budget-not-token", "jain-docker-agent-runtime-autonomy",
+        "bjornn-leaseend-finetuned-model-tech-debt", "aggarwal-decawork-it-admin-ai-workforce",
+        "lovejoy-howard-enterprise-stack-not-ready", "hong-ironclad-tokenmaxxing-trusted-throughput",
+        "munaf-tiktok-agents-distributed-systems",
     ]
-    main(stems, ROOT / "seed-work" / "chunks21-raw.jsonl")
+    main(stems, ROOT / "seed-work" / "chunks22-raw.jsonl")

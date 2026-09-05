@@ -246,7 +246,7 @@ stale one before any load.
 
 ## Adding a batch (the per-batch pipeline)
 
-The graph is kept current per batch. As of batch 21 it is up to date. To add a
+The graph is kept current per batch. As of batch 22 (2026-09-05, 275 talks) it is up to date. To add a
 new batch of talks:
 
 ```bash
@@ -288,6 +288,17 @@ Three traps, all verified:
 - **`--mode overwrite` is per-table, not whole-graph.** It replaces only the node/edge types present in the file, so `Chunk` and `PartOfArtifact` survive an entity-only overwrite untouched — which is why chunks are loaded separately with `--mode merge` and **must not** be re-loaded after an entity overwrite (re-loading trips `@unique` on `PartOfArtifact.src`, since edges have no `@key`).
 - **Load entities before finalizing chunks.** `finalize_chunks.py` checks every chunk's target artifact exists in `seed-full.jsonl` and refuses otherwise.
 - **A load >32 MiB of parsed bytes for one node type fails** (`resource limit exceeded`). The batch-1 `chunks-final.jsonl` (1,966 chunks) had to be split into 3 slug-partitioned parts; per-batch chunk files are far under the limit.
+- **Check the object store is alive before loading** (found 2026-09-05: RustFS had
+  died silently). `curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:9100/`
+  must return `403`, not `000`. With RustFS down, `omnigraph load` fails at its
+  first list call with a misleading `client.rs:304` storage error *before writing
+  anything*, and `omnigraph-server` refuses to boot (`cluster … is not ready to
+  serve`). Restart RustFS per "Start / restart", confirm `commit list` shows the
+  expected head, then load. Don't pipe `load` into `tail` — it masks the exit code.
+- **Server binary drift:** after the 2026-09-05 restart the server reports
+  `0.10.0` (homebrew upgraded `omnigraph-server`); it opens the internal-v6 graph
+  fine. Check `/healthz` `version` after any restart and keep `omnigraph` CLI and
+  server on the same minor.
 
 ## Cross-batch pattern coinage
 

@@ -65,7 +65,7 @@ must be updated in the same change:
 4. **`seed-work/`** — extractions become `frag-N.jsonl` following
    `seed-work/CONVERSION-SPEC.md` EXACTLY (legal fields, enum coercions, the
    complete edge set); `merge_validate.py` merges + validates into
-   `seed-full.jsonl`. Batches 16–21 are converted **deterministically** by
+   `seed-full.jsonl`. Batches 16–22 are converted **deterministically** by
    `seed-work/convert_1719.py` (add new batch stems to its `BATCHES` dict);
    earlier fragments were agent-authored. Cross-batch pattern coinage goes in a
    supplementary `frag-N-coinage.jsonl` rather than re-converting old batches.
