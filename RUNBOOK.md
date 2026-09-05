@@ -10,6 +10,8 @@ Stood up 2026-07-22. Native RustFS (no Docker) + cluster-booted omnigraph-server
   queries, policies, graph datasets — applied via `omnigraph cluster apply`).
 - **Graph**: `spike` → `s3://intel-graph/clusters/spike-intel/graphs/spike.omni`
   — clean base rebuilt 2026-08-14 on omnigraph 0.9.0 (internal schema v6);
+  upgraded in place to **0.10.0** on 2026-09-05 (same v6 format; full-text
+  indexes rebuilt for Lance 11 — see "The 0.10 upgrade");
   kept current per batch since. **As of batch 21 (2026-08-18):**
   7,525 nodes / 15,448 edges: 3,920 entity nodes (1,150 signals, 906 elements,
   523 insights, 472 knowhows, 295 experts, 278 artifacts, 263 companies,
@@ -41,7 +43,7 @@ secrets. To stand up this cluster from zero:
 ```bash
 # 1. Tools
 brew install rustfs/tap/rustfs           # native S3-compatible object store (no Docker)
-brew install omnigraph                    # CLI + omnigraph-server (needs >= 0.9 for this graph's v6 format)
+brew install omnigraph                    # CLI + omnigraph-server — 0.10.x (v6 format; FTS indexes are Lance 11 — never mix 0.9 and 0.10 binaries on this store)
 omnigraph version                         # confirm; the graph is internal-schema v6
 
 # 2. Start RustFS and create the bucket (one-time)
@@ -243,6 +245,76 @@ store and currently owns the port. A second, unrelated RustFS on
 :9100 if the first dies — the cluster would then silently resolve to an empty
 object store. Same hazard this runbook already documents for :9000. Kill the
 stale one before any load.
+
+## The 0.10 upgrade (2026-09-05)
+
+Homebrew had already moved `omnigraph`/`omnigraph-server` to **0.10.0**; the
+server picked it up at the batch-22 restart and opened the graph fine, because
+**0.9 and 0.10 share storage format v6** (Lance 9 → Lance 11 underneath). The
+upgrade is therefore *not* a rebuild — but it is not a no-op either. Per the
+0.10 upgrade guide (`docs/user/operations/upgrade.md` in the omnigraph repo):
+
+- The Lance 11 line changes the English **stemmer**, so pre-0.10 full-text
+  indexes must be rebuilt explicitly; `optimize` does not do it. Unindexed
+  fields keep working via scan, which is why `bm25()` queries *appeared* fine
+  before the rebuild — coverage, not correctness, was the gap.
+- The **CLI/HTTP vocabulary is not rolling-compatible** across 0.9/0.10
+  (legacy aliases such as `table_key`, `row_id`, `manifest_version`,
+  `rows_loaded`, `export --table` are removed). Update CLI, server and client
+  integrations together; never run a 0.9 and a 0.10 binary against the same
+  store.
+- New optional cluster-state field `external_blobs` (default-deny external
+  Blob URIs). We don't use Blobs; `cluster validate` now prints an
+  `external_blob_ingress_default_deny` WARN for `graphs.spike` — expected,
+  ignore. (Rollback note: once an `external_blobs` policy is *applied*, 0.9
+  can't read the cluster state; we have not applied one.)
+
+What was done, in order:
+
+```bash
+set -a && source .env.omni && source .env.embedding && set +a
+G=s3://intel-graph/clusters/spike-intel/graphs/spike.omni
+omnigraph version                                   # 0.10.0 / internal-schema 6
+for q in queries/*.gq; do omnigraph lint --schema schema.pg --query "$q"; done   # 10/10 clean
+omnigraph cluster validate --config .               # valid, 117 resources (+ the blob WARN)
+omnigraph cluster plan --config .                   # 0 changes
+aws --endpoint-url "$AWS_ENDPOINT_URL" s3 sync s3://intel-graph/clusters/spike-intel/ \
+  ~/.local/share/intel-graph-backups/spike-omni-raw-2026-09-05-pre-010/ --only-show-errors   # 1,122 objects, 73 MB
+pkill -f "omnigraph-server --cluster s3://intel-graph"; sleep 3      # server MUST be stopped
+omnigraph rebuild-full-text-indexes "$G" --branch main --as act-admin --json
+# → 20 indexes rebuilt in ONE graph commit (head v25 → v26, actor act-admin):
+#   Chunk: slug; Company: name, slug; Element: name, slug; Expert: name, slug; InformationArtifact: name, slug; Insight: name, slug; KnowHow: name, slug; Pattern: name, slug; Signal: brief, name, slug; SourceEntity: name, slug
+#   warning: "rebuilt with the default English analyzer; custom tokenizer settings replaced" (we had none)
+nohup omnigraph-server --cluster s3://intel-graph/clusters/spike-intel --bind 127.0.0.1:8081 \
+  > ~/.local/share/rustfs-intel-data/omnigraph-server.log 2>&1 & disown
+curl -s http://127.0.0.1:8081/healthz                # version 0.10.0, internal_schema_version 6
+omnigraph alias top-patterns; omnigraph alias hybrid-search "give the agent a budget"   # unchanged counts, search OK
+```
+
+Only `main` was rebuilt — there are no other live branches. Historical
+snapshots are not rewritten (restoring one would need another rebuild).
+
+Verification after restart: talks 295 / chunks 3,879 / pattern counts
+unchanged; `bm25()` over stem-sensitive words returns sensible rows; `nearest()`
+and `rrf()` hybrid unchanged; `POST /graphs/spike/export` (what the explorer
+streams) returns 200. The explorer (intel-graph-ui, SDK pinned at 0.9.0) was
+exercised against the 0.10 server with its Playwright suite — see
+EXPLORER-DESIGN.md for the result.
+
+0.10 quirks worth knowing:
+
+- **`omnigraph policy validate --cluster .` errors on our two-bundle layout**
+  ("cluster has 2 policy bundles [intel, server]; pass --graph") and
+  `--graph spike` still refuses ("matches 2 policy bundles; the cluster model
+  expects one bundle per graph scope") — the CLI's per-graph check doesn't
+  understand a cluster-scoped bundle (`applies_to: [cluster]`).
+  `cluster validate` is the working policy check; the server enforces both
+  bundles correctly (admin-only `graph_list` still denied to the analyst token).
+- `graphs list` needs the admin token (server policy); the `intel-local`
+  profile carries the analyst token, so it is denied by design.
+- `queries list` is a cluster control command (`--cluster .`), not a server one.
+- Rollback = restore the whole pre-0.10 backup above with 0.9 binaries; do not
+  point a 0.9 binary at the rebuilt store.
 
 ## Adding a batch (the per-batch pipeline)
 

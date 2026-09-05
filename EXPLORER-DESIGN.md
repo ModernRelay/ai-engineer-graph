@@ -13,7 +13,14 @@ Three facts make this a composition job rather than a build:
    streams a graph via `og.export` (one NDJSON pass) into a typed, atomic
    replace-ingest, parses `.pg` schemas, generates TypeScript attr types from
    `schema.pg`, and wires stored queries as a `SearchService`. Its pinned SDK
-   (`@modernrelay/omnigraph@0.9.0`) **matches our server exactly**.
+   (`@modernrelay/omnigraph@0.9.0`) matched our server exactly at design time.
+   **Update 2026-09-05:** the server is now omnigraph **0.10.0** (in-place
+   upgrade, storage format v6 unchanged). The 0.9.0 SDK was verified against
+   it with the explorer's live Playwright suite (export stream, deep links —
+   3/3): the routes it uses (`/healthz`, `POST /graphs/{id}/export`) are
+   unchanged. 0.10 removed legacy response aliases elsewhere and is not
+   rolling-compatible in general, so bump the SDK/adapter to the 0.10 line
+   when Orbit ships it rather than mixing further.
 2. **The scale is trivial for it.** Orbit's envelope is 100K+ nodes; our
    entity graph is ~3.9K nodes / ~11.8K edges. Everything interactive —
    crossfilter, timeline brushing, semantic zoom — stays instant.
