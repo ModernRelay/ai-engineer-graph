@@ -21,6 +21,7 @@
 {"type": "Expert", "data": {"id": "exp-alexander-embiricos", "name": "Alexander Embiricos", "slug": "exp-alexander-embiricos"}}
 {"type": "Expert", "data": {"id": "exp-alfonso-graziano", "name": "Alfonso Graziano", "slug": "exp-alfonso-graziano"}}
 {"type": "Expert", "data": {"id": "exp-ali-khial", "name": "Ali Khial", "slug": "exp-ali-khial"}}
+{"type": "Expert", "data": {"id": "exp-aliisa-rosenthal", "name": "Aliisa Rosenthal", "slug": "exp-aliisa-rosenthal"}}
 {"type": "Expert", "data": {"id": "exp-allen-pike", "name": "Allen Pike", "slug": "exp-allen-pike"}}
 {"type": "Expert", "data": {"id": "exp-aman-gupta", "name": "Aman Gupta", "slug": "exp-aman-gupta"}}
 {"type": "Expert", "data": {"id": "exp-ameya-bhatawdekar", "name": "Ameya Bhatawdekar", "slug": "exp-ameya-bhatawdekar"}}
@@ -41,14 +42,17 @@
 {"type": "Expert", "data": {"id": "exp-anna-spysz", "name": "Anna Spysz", "slug": "exp-anna-spysz"}}
 {"type": "Expert", "data": {"id": "exp-annabell-schafer", "name": "Annabell Schäfer", "slug": "exp-annabell-schafer"}}
 {"type": "Expert", "data": {"id": "exp-antje-barth", "name": "Antje Barth", "slug": "exp-antje-barth"}}
+{"type": "Expert", "data": {"id": "exp-anuj-iravane", "name": "Anuj Iravane", "slug": "exp-anuj-iravane"}}
 {"type": "Expert", "data": {"id": "exp-aparna-dhinakaran", "name": "Aparna Dhinakaran", "slug": "exp-aparna-dhinakaran"}}
 {"type": "Expert", "data": {"id": "exp-apoorva-joshi", "name": "Apoorva Joshi", "slug": "exp-apoorva-joshi"}}
 {"type": "Expert", "data": {"id": "exp-arek-borucki", "name": "Arek Borucki", "slug": "exp-arek-borucki"}}
 {"type": "Expert", "data": {"id": "exp-ari-morcos", "name": "Ari Morcos", "slug": "exp-ari-morcos"}}
 {"type": "Expert", "data": {"id": "exp-arjun-singh", "name": "Arjun Singh", "slug": "exp-arjun-singh"}}
+{"type": "Expert", "data": {"id": "exp-arman-vaziri", "name": "Arman Vaziri", "slug": "exp-arman-vaziri"}}
 {"type": "Expert", "data": {"id": "exp-armanas-povilionis", "name": "Armanas Povilionis", "slug": "exp-armanas-povilionis"}}
 {"type": "Expert", "data": {"id": "exp-arturo-nunez", "name": "Arturo Nunez", "slug": "exp-arturo-nunez"}}
 {"type": "Expert", "data": {"id": "exp-atul-ramachandran", "name": "Atul Ramachandran", "slug": "exp-atul-ramachandran"}}
+{"type": "Expert", "data": {"id": "exp-ayush-bhardwaj", "name": "Ayush Bhardwaj", "slug": "exp-ayush-bhardwaj"}}
 {"type": "Expert", "data": {"id": "exp-bala-ramdoss", "name": "Bala Ramdoss", "slug": "exp-bala-ramdoss"}}
 {"type": "Expert", "data": {"id": "exp-balaji", "name": "Balaji Srinivasan", "slug": "exp-balaji"}}
 {"type": "Expert", "data": {"id": "exp-balazs-horvath", "name": "Balázs Horváth", "slug": "exp-balazs-horvath"}}
@@ -68,12 +72,15 @@
 {"type": "Expert", "data": {"id": "exp-carter-abdallah", "name": "Carter Abdallah", "slug": "exp-carter-abdallah"}}
 {"type": "Expert", "data": {"id": "exp-cat-wu", "name": "Cat Wu", "slug": "exp-cat-wu"}}
 {"type": "Expert", "data": {"id": "exp-cedric-clyburn", "name": "Cedric Clyburn", "slug": "exp-cedric-clyburn"}}
+{"type": "Expert", "data": {"id": "exp-chaitanya-asawa", "name": "Chaitanya Asawa", "slug": "exp-chaitanya-asawa"}}
 {"type": "Expert", "data": {"id": "exp-chengxi-taylor", "name": "Chengxi Taylor", "slug": "exp-chengxi-taylor"}}
 {"type": "Expert", "data": {"id": "exp-chintan-agrawal", "name": "Chintan Agrawal", "slug": "exp-chintan-agrawal"}}
 {"type": "Expert", "data": {"id": "exp-chris-alexiuk", "name": "Chris Alexiuk", "slug": "exp-chris-alexiuk"}}
 {"type": "Expert", "data": {"id": "exp-chris-noring", "name": "Chris Noring", "slug": "exp-chris-noring"}}
+{"type": "Expert", "data": {"id": "exp-christopher-burns", "name": "Christopher Burns", "slug": "exp-christopher-burns"}}
 {"type": "Expert", "data": {"id": "exp-christopher-lovejoy", "name": "Christopher Lovejoy", "slug": "exp-christopher-lovejoy"}}
 {"type": "Expert", "data": {"id": "exp-clare-liguori", "name": "Clare Liguori", "slug": "exp-clare-liguori"}}
+{"type": "Expert", "data": {"id": "exp-clay-cockrell", "name": "Clay Cockrell", "slug": "exp-clay-cockrell"}}
 {"type": "Expert", "data": {"id": "exp-connor-adams", "name": "Connor Adams", "slug": "exp-connor-adams"}}
 {"type": "Expert", "data": {"id": "exp-corey-gallon", "name": "Corey Gallon", "slug": "exp-corey-gallon"}}
 {"type": "Expert", "data": {"id": "exp-cormac-brick", "name": "Cormac Brick", "slug": "exp-cormac-brick"}}
@@ -81,6 +88,7 @@
 {"type": "Expert", "data": {"id": "exp-dan-arpino", "name": "Dan Arpino", "slug": "exp-dan-arpino"}}
 {"type": "Expert", "data": {"id": "exp-dan-bjornn", "name": "Dan Bjornn", "slug": "exp-dan-bjornn"}}
 {"type": "Expert", "data": {"id": "exp-dan-farrelly", "name": "Dan Farrelly", "slug": "exp-dan-farrelly"}}
+{"type": "Expert", "data": {"id": "exp-dan-feng", "name": "Dan Feng", "slug": "exp-dan-feng"}}
 {"type": "Expert", "data": {"id": "exp-dan-fu", "name": "Dan Fu", "slug": "exp-dan-fu"}}
 {"type": "Expert", "data": {"id": "exp-daniel-bump", "name": "Daniel Bump", "slug": "exp-daniel-bump"}}
 {"type": "Expert", "data": {"id": "exp-daniel-chalef", "name": "Daniel Chalef", "slug": "exp-daniel-chalef"}}
@@ -113,8 +121,10 @@
 {"type": "Expert", "data": {"id": "exp-eugen-alpeza", "name": "Eugen Alpeza", "slug": "exp-eugen-alpeza"}}
 {"type": "Expert", "data": {"id": "exp-eugene-yan", "name": "Eugene Yan", "slug": "exp-eugene-yan"}}
 {"type": "Expert", "data": {"id": "exp-eve-bouffard", "name": "Eve Bouffard", "slug": "exp-eve-bouffard"}}
+{"type": "Expert", "data": {"id": "exp-everett-berry", "name": "Everett Berry", "slug": "exp-everett-berry"}}
 {"type": "Expert", "data": {"id": "exp-eyal-blum", "name": "Eyal Blum", "slug": "exp-eyal-blum"}}
 {"type": "Expert", "data": {"id": "exp-ezra-tanzer", "name": "Ezra Tanzer", "slug": "exp-ezra-tanzer"}}
+{"type": "Expert", "data": {"id": "exp-flora-liu", "name": "Flora Liu", "slug": "exp-flora-liu"}}
 {"type": "Expert", "data": {"id": "exp-francesco-bonacci", "name": "Francesco Bonacci (CEO, Cua; ex-Microsoft GUI-agents work)", "slug": "exp-francesco-bonacci"}}
 {"type": "Expert", "data": {"id": "exp-frank-coyle", "name": "Frank Coyle", "slug": "exp-frank-coyle"}}
 {"type": "Expert", "data": {"id": "exp-gabe-de-mesa", "name": "Gabe De Mesa", "slug": "exp-gabe-de-mesa"}}
@@ -152,11 +162,13 @@
 {"type": "Expert", "data": {"id": "exp-james-russo", "name": "James Russo", "slug": "exp-james-russo"}}
 {"type": "Expert", "data": {"id": "exp-james-shi", "name": "James Shi", "slug": "exp-james-shi"}}
 {"type": "Expert", "data": {"id": "exp-jan-curn", "name": "Jan Čurn", "slug": "exp-jan-curn"}}
+{"type": "Expert", "data": {"id": "exp-jared-joselowitz", "name": "Jared Joselowitz", "slug": "exp-jared-joselowitz"}}
 {"type": "Expert", "data": {"id": "exp-jason-liu", "name": "Jason Liu", "slug": "exp-jason-liu"}}
 {"type": "Expert", "data": {"id": "exp-jason-lopatecki", "name": "Jason Lopatecki", "slug": "exp-jason-lopatecki"}}
 {"type": "Expert", "data": {"id": "exp-jay-mok", "name": "Jay Mok", "slug": "exp-jay-mok"}}
 {"type": "Expert", "data": {"id": "exp-jd-puit", "name": "JD Puit", "slug": "exp-jd-puit"}}
 {"type": "Expert", "data": {"id": "exp-jeffrey-lee-chan", "name": "Jeffrey Lee-Chan", "slug": "exp-jeffrey-lee-chan"}}
+{"type": "Expert", "data": {"id": "exp-jeffrey-wang", "name": "Jeffrey Wang", "slug": "exp-jeffrey-wang"}}
 {"type": "Expert", "data": {"id": "exp-jesse-lumarie", "name": "Jesse Lumarie", "slug": "exp-jesse-lumarie"}}
 {"type": "Expert", "data": {"id": "exp-jia-wu", "name": "Jia Wu", "slug": "exp-jia-wu"}}
 {"type": "Expert", "data": {"id": "exp-joanne-song", "name": "Joanne Song", "slug": "exp-joanne-song"}}
@@ -164,9 +176,11 @@
 {"type": "Expert", "data": {"id": "exp-johan-lajili", "name": "Johan Lajili", "slug": "exp-johan-lajili"}}
 {"type": "Expert", "data": {"id": "exp-joseph-nelson", "name": "Joseph Nelson", "slug": "exp-joseph-nelson"}}
 {"type": "Expert", "data": {"id": "exp-joseph-wan", "name": "Joseph Wan", "slug": "exp-joseph-wan"}}
+{"type": "Expert", "data": {"id": "exp-justin-joyce", "name": "Justin Joyce", "slug": "exp-justin-joyce"}}
 {"type": "Expert", "data": {"id": "exp-justin-schroeder", "name": "Justin Schroeder", "slug": "exp-justin-schroeder"}}
 {"type": "Expert", "data": {"id": "exp-justin-smith", "name": "Justin Smith", "slug": "exp-justin-smith"}}
 {"type": "Expert", "data": {"id": "exp-kanish-manuja", "name": "Kanish Manuja", "slug": "exp-kanish-manuja"}}
+{"type": "Expert", "data": {"id": "exp-karan-vaidya", "name": "Karan Vaidya", "slug": "exp-karan-vaidya"}}
 {"type": "Expert", "data": {"id": "exp-karpathy", "name": "Andrej Karpathy", "slug": "exp-karpathy"}}
 {"type": "Expert", "data": {"id": "exp-kathryn-grayson-nanz", "name": "Kathryn Grayson Nanz", "slug": "exp-kathryn-grayson-nanz"}}
 {"type": "Expert", "data": {"id": "exp-keegan-mccallum", "name": "Keegan McCallum", "slug": "exp-keegan-mccallum"}}
@@ -243,6 +257,7 @@
 {"type": "Expert", "data": {"id": "exp-ramesh-raskar", "name": "Ramesh Raskar", "slug": "exp-ramesh-raskar"}}
 {"type": "Expert", "data": {"id": "exp-randall-degges", "name": "Randall Degges", "slug": "exp-randall-degges"}}
 {"type": "Expert", "data": {"id": "exp-raphael-kalandadze", "name": "Raphael Kalandadze", "slug": "exp-raphael-kalandadze"}}
+{"type": "Expert", "data": {"id": "exp-rashi-agrawal", "name": "Rashi Agrawal", "slug": "exp-rashi-agrawal"}}
 {"type": "Expert", "data": {"id": "exp-ravi-madabhushi", "name": "Ravi Madabhushi", "slug": "exp-ravi-madabhushi"}}
 {"type": "Expert", "data": {"id": "exp-rayan-garg", "name": "Rayan Garg", "slug": "exp-rayan-garg"}}
 {"type": "Expert", "data": {"id": "exp-raymond-feng", "name": "Raymond Feng", "slug": "exp-raymond-feng"}}
@@ -268,11 +283,13 @@
 {"type": "Expert", "data": {"id": "exp-sachin-malhotra", "name": "Sachin Malhotra", "slug": "exp-sachin-malhotra"}}
 {"type": "Expert", "data": {"id": "exp-safia-abdalla", "name": "Safia Abdalla", "slug": "exp-safia-abdalla"}}
 {"type": "Expert", "data": {"id": "exp-sai-krishna-rallabandi", "name": "Sai Krishna Rallabandi", "slug": "exp-sai-krishna-rallabandi"}}
+{"type": "Expert", "data": {"id": "exp-sait-izmit", "name": "Sait Izmit", "slug": "exp-sait-izmit"}}
 {"type": "Expert", "data": {"id": "exp-sajjan-kanukolanu", "name": "Sajjan Kanukolanu", "slug": "exp-sajjan-kanukolanu"}}
 {"type": "Expert", "data": {"id": "exp-salman-munaf", "name": "Salman Munaf", "slug": "exp-salman-munaf"}}
 {"type": "Expert", "data": {"id": "exp-sam-bhagwat", "name": "Sam Bhagwat", "slug": "exp-sam-bhagwat"}}
 {"type": "Expert", "data": {"id": "exp-samridhi-vaid", "name": "Samridhi Vaid", "slug": "exp-samridhi-vaid"}}
 {"type": "Expert", "data": {"id": "exp-samuel-denton", "name": "Samuel Denton", "slug": "exp-samuel-denton"}}
+{"type": "Expert", "data": {"id": "exp-sandhya-subramani", "name": "Sandhya Subramani", "slug": "exp-sandhya-subramani"}}
 {"type": "Expert", "data": {"id": "exp-sangwu-lee", "name": "Sangwu Lee", "slug": "exp-sangwu-lee"}}
 {"type": "Expert", "data": {"id": "exp-sanja-grbic", "name": "Sanja Grbic", "slug": "exp-sanja-grbic"}}
 {"type": "Expert", "data": {"id": "exp-saoud-rizwan", "name": "Saoud Rizwan", "slug": "exp-saoud-rizwan"}}
@@ -281,6 +298,7 @@
 {"type": "Expert", "data": {"id": "exp-sarthak-aggarwal", "name": "Sarthak Aggarwal", "slug": "exp-sarthak-aggarwal"}}
 {"type": "Expert", "data": {"id": "exp-saul-howard", "name": "Saul Howard", "slug": "exp-saul-howard"}}
 {"type": "Expert", "data": {"id": "exp-sean-cai", "name": "Sean Cai", "slug": "exp-sean-cai"}}
+{"type": "Expert", "data": {"id": "exp-sebastian-fox", "name": "Sebastian Fox", "slug": "exp-sebastian-fox"}}
 {"type": "Expert", "data": {"id": "exp-shafik-quoraishee", "name": "Shafik Quoraishee", "slug": "exp-shafik-quoraishee"}}
 {"type": "Expert", "data": {"id": "exp-shashi", "name": "Shashi", "slug": "exp-shashi"}}
 {"type": "Expert", "data": {"id": "exp-shawn-chan", "name": "Shawn Chan", "slug": "exp-shawn-chan"}}
@@ -320,6 +338,7 @@
 {"type": "Expert", "data": {"id": "exp-tisha-chawla", "name": "Tisha Chawla", "slug": "exp-tisha-chawla"}}
 {"type": "Expert", "data": {"id": "exp-todd-fisher", "name": "Todd Fisher", "slug": "exp-todd-fisher"}}
 {"type": "Expert", "data": {"id": "exp-tomer-ast", "name": "Tomer Ast", "slug": "exp-tomer-ast"}}
+{"type": "Expert", "data": {"id": "exp-tony-fabrikant", "name": "Tony Fabrikant", "slug": "exp-tony-fabrikant"}}
 {"type": "Expert", "data": {"id": "exp-tushar-jain", "name": "Tushar Jain", "slug": "exp-tushar-jain"}}
 {"type": "Expert", "data": {"id": "exp-uday-kanagala", "name": "Uday Kanagala", "slug": "exp-uday-kanagala"}}
 {"type": "Expert", "data": {"id": "exp-uday-kiran-medisetty", "name": "Uday Kiran Medisetty", "slug": "exp-uday-kiran-medisetty"}}
@@ -332,12 +351,14 @@
 {"type": "Expert", "data": {"id": "exp-varun-pant", "name": "Varun Pant", "slug": "exp-varun-pant"}}
 {"type": "Expert", "data": {"id": "exp-varun-shenoy", "name": "Varun Shenoy", "slug": "exp-varun-shenoy"}}
 {"type": "Expert", "data": {"id": "exp-varun-singh", "name": "Varun Singh", "slug": "exp-varun-singh"}}
+{"type": "Expert", "data": {"id": "exp-vasant-kearney", "name": "Vasant Kearney", "slug": "exp-vasant-kearney"}}
 {"type": "Expert", "data": {"id": "exp-vasuman-moza", "name": "Vasuman Moza", "slug": "exp-vasuman-moza"}}
 {"type": "Expert", "data": {"id": "exp-veronica-hylak", "name": "Veronica Hylak", "slug": "exp-veronica-hylak"}}
 {"type": "Expert", "data": {"id": "exp-victor-savkin", "name": "Victor Savkin", "slug": "exp-victor-savkin"}}
 {"type": "Expert", "data": {"id": "exp-victoria-melnikova", "name": "Victoria Melnikova (head of new business, Evil Martians; hosts the Dev Propulsion Labs podcast on the business of developer tools)", "slug": "exp-victoria-melnikova"}}
 {"type": "Expert", "data": {"id": "exp-vinoo-ganesh", "name": "Vinoo Ganesh", "slug": "exp-vinoo-ganesh"}}
 {"type": "Expert", "data": {"id": "exp-vinoth-govindarajan", "name": "Vinoth Govindarajan", "slug": "exp-vinoth-govindarajan"}}
+{"type": "Expert", "data": {"id": "exp-vivek-muppalla", "name": "Vivek Muppalla", "slug": "exp-vivek-muppalla"}}
 {"type": "Expert", "data": {"id": "exp-vivek-trivedy", "name": "Vivek Trivedy", "slug": "exp-vivek-trivedy"}}
 {"type": "Expert", "data": {"id": "exp-will-bond", "name": "Will Bond", "slug": "exp-will-bond"}}
 {"type": "Expert", "data": {"id": "exp-will-brown", "name": "Will Brown (leads applied research at Prime Intellect; author of the Verifiers RL-environments library)", "slug": "exp-will-brown"}}

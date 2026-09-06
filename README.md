@@ -1,6 +1,6 @@
 # AI Engineer Graph
 
-A knowledge graph of the **AI Engineer World's Fair 2026** talk corpus — 306
+A knowledge graph of the **AI Engineer World's Fair 2026** talk corpus — 326
 talks published April–September 2026 — modelled with the SPIKE framework and
 served by [Omnigraph](https://github.com/ModernRelay/omnigraph).
 
@@ -11,9 +11,9 @@ This repository is the complete, loadable definition of the graph:
 | `schema.pg` | the schema — source of truth for the data model |
 | `cluster.yaml`, `policies/` | Omnigraph cluster config and the two Cedar policy bundles |
 | `queries/*.gq` | 113 stored queries the server serves (82 reads, 31 mutations) |
-| `seed/01-sources.jsonl` … `09-knowhow.jsonl` | every node, one file per type in load order (4,614 nodes) |
-| `seed/10-edges.jsonl` | all 14,784 edges between those nodes |
-| `seed/chunks/part-01.jsonl` … `part-11.jsonl` | 4,370 transcript chunks + their `PartOfArtifact` edges, ≤400 chunks per part, embeddings added at load time |
+| `seed/01-sources.jsonl` … `09-knowhow.jsonl` | every node, one file per type in load order (4,874 nodes) |
+| `seed/10-edges.jsonl` | all 15,937 edges between those nodes |
+| `seed/chunks/part-01.jsonl` … `part-12.jsonl` | 4,691 transcript chunks + their `PartOfArtifact` edges, ≤400 chunks per part, embeddings added at load time |
 | `seed/embed-spec.json` | the embedding spec for the chunks (`gemini-embedding-2-preview`, 3072-d) |
 | `omnigraph-config.example.yaml` | client profile and alias pack for the CLI |
 
@@ -25,16 +25,16 @@ The seed files are an exact export of the served graph (last refreshed
 | type | count | notes |
 |---|---|---|
 | Pattern | 16 | theses about change; the analytical spine |
-| Signal | 1,368 | dated, sourced observations; each forms or contradicts patterns |
-| Element | 1,137 | products, technologies, frameworks, concepts, ops practices |
-| Insight | 592 | interpretations that highlight a pattern and rely on elements |
-| KnowHow | 519 | practices with guidelines, referencing elements |
-| Company | 292 | developers, labs, bigtech, investors, media, hardware |
-| Expert | 348 | speakers, affiliated with companies |
-| InformationArtifact | 325 | 306 talks (`youtube`, with video links) + 19 articles |
+| Signal | 1,455 | dated, sourced observations; each forms or contradicts patterns |
+| Element | 1,214 | products, technologies, frameworks, concepts, ops practices |
+| Insight | 612 | interpretations that highlight a pattern and rely on elements |
+| KnowHow | 539 | practices with guidelines, referencing elements |
+| Company | 307 | developers, labs, bigtech, investors, media, hardware |
+| Expert | 369 | speakers, affiliated with companies |
+| InformationArtifact | 345 | 326 talks (`youtube`, with video links) + 19 articles |
 | SourceEntity | 17 | publishers; the talks publish via `source-aie-yt` |
-| Chunk | 4,370 | ~220-word transcript passages over 283 talks, 3072-d embeddings |
-| edges | 19,154 | 14,784 between entities + 4,370 chunk → talk |
+| Chunk | 4,691 | ~220-word transcript passages over 303 talks, 3072-d embeddings |
+| edges | 20,628 | 15,937 between entities + 4,691 chunk → talk |
 
 ### The 16 patterns
 
@@ -42,22 +42,22 @@ Support and counter are `FormsPattern` / `ContradictsPattern` signal counts.
 
 | pattern | kind | support / counter | thesis |
 |---|---|---|---|
-| `pat-verification-gap` | challenge | 338 / 0 | generation has industrialized, verification has not |
-| `pat-harness-over-model` | dynamic | 254 / 20 | the load-bearing engineering sits around the model, and thins as models improve |
-| `pat-model-not-bottleneck` | dynamic | 179 / 8 | models are good enough; value and failure moved to the layers around them |
-| `pat-context-graphs` | dynamic | 92 / 4 | decision traces, ontology and time as an infrastructure layer above databases |
-| `pat-saaspocalypse` | disruption | 71 / 2 | agents dissolve the SaaS presentation layer and per-seat pricing |
-| `pat-value-of-judgement` | dynamic | 71 / 0 | as execution industrializes, the durable human edge is judgement |
+| `pat-verification-gap` | challenge | 368 / 0 | generation has industrialized, verification has not |
+| `pat-harness-over-model` | dynamic | 274 / 20 | the load-bearing engineering sits around the model, and thins as models improve |
+| `pat-model-not-bottleneck` | dynamic | 187 / 8 | models are good enough; value and failure moved to the layers around them |
+| `pat-context-graphs` | dynamic | 101 / 4 | decision traces, ontology and time as an infrastructure layer above databases |
+| `pat-ai-native-org` | dynamic | 82 / 0 | organizations restructure around agent delegation |
+| `pat-value-of-judgement` | dynamic | 82 / 0 | as execution industrializes, the durable human edge is judgement |
+| `pat-saaspocalypse` | disruption | 77 / 2 | agents dissolve the SaaS presentation layer and per-seat pricing |
 | `pat-sovereign-ai` | disruption | 69 / 2 | own the stack end to end; regulation removed optionality |
-| `pat-new-cyber-threats` | challenge | 62 / 1 | autonomous exploitation and agentic attack surfaces |
-| `pat-ai-native-org` | dynamic | 60 / 0 | organizations restructure around agent delegation |
-| `pat-agent-economy` | dynamic | 49 / 1 | agents as primary economic actors, and the payment rails being rebuilt for them |
-| `pat-accelerated-research` | dynamic | 48 / 1 | agents run research loops autonomously |
-| `pat-agent-supply-chain` | challenge | 35 / 0 | skills, MCP servers and hallucinated packages form a new, weaker package ecosystem |
-| `pat-durable-execution` | dynamic | 19 / 1 | a durable runtime layer below the harness becomes a product category |
-| `pat-benchmark-trust-crisis` | challenge | 18 / 2 | benchmarks decouple from real capability |
-| `pat-continual-learning-turn` | dynamic | 18 / 1 | improvement shifts from pre-training scale to post-deployment learning |
-| `pat-agent-memory-layer` | dynamic | 15 / 6 | persistent memory becomes a first-class layer of the agent stack |
+| `pat-new-cyber-threats` | challenge | 65 / 1 | autonomous exploitation and agentic attack surfaces |
+| `pat-agent-economy` | dynamic | 54 / 1 | agents as primary economic actors, and the payment rails being rebuilt for them |
+| `pat-accelerated-research` | dynamic | 48 / 2 | agents run research loops autonomously |
+| `pat-agent-supply-chain` | challenge | 37 / 0 | skills, MCP servers and hallucinated packages form a new, weaker package ecosystem |
+| `pat-benchmark-trust-crisis` | challenge | 25 / 2 | benchmarks decouple from real capability |
+| `pat-continual-learning-turn` | dynamic | 23 / 1 | improvement shifts from pre-training scale to post-deployment learning |
+| `pat-durable-execution` | dynamic | 22 / 1 | a durable runtime layer below the harness becomes a product category |
+| `pat-agent-memory-layer` | dynamic | 19 / 6 | persistent memory becomes a first-class layer of the agent stack |
 
 ## The model
 
