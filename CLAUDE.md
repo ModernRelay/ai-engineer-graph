@@ -1,130 +1,59 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code when working in this repository.
 
-## What This Is
+## What this is
 
-A SPIKE-framework knowledge graph of AI/ML industry intelligence, built on
-[Omnigraph](https://github.com/ModernRelay/omnigraph). Two halves:
+A SPIKE-framework knowledge graph of the AI Engineer World's Fair 2026 talk
+corpus, built on [Omnigraph](https://github.com/ModernRelay/omnigraph). The
+repository is the complete, loadable definition of the graph and nothing else:
 
-1. **Graph cookbook** — `schema.pg` (source of truth), `queries/*.gq`,
-   `cluster.yaml`, `policies/`, `seed.md`. No application code.
-2. **Corpus pipeline** — AI Engineer World's Fair talks flowing through
-   `transcripts/` → `extraction/` → `seed-work/` → the loaded graph. This is
-   the ongoing work (200+ talks so far, processed in batches).
+- `schema.pg` — the schema (source of truth for the data model)
+- `cluster.yaml` + `policies/` — cluster config and Cedar policy bundles
+- `queries/*.gq` — the stored queries the server serves (reads + mutations)
+- `seed/` — the full dataset: `entities.jsonl` (all nodes and edges) and
+  `chunks.jsonl` (transcript chunks, embedded at load time with `embed-spec.json`)
+- `omnigraph-config.example.yaml` — client profile and alias pack
+- `README.md` — the one document: model, layout, setup, load, query, operate
+
+The corpus pipeline that produces the seed (transcripts, per-talk extraction
+notes, conversion scripts, fragments) is a local, gitignored workflow
+(`transcripts/`, `extraction/`, `seed-work/`, `RUNBOOK.md` on the maintainer's
+machine). Never add those paths, generated JSONL work files, `.env*`,
+`__cluster/`, or `graphs/` to git.
 
 ## Commands
 
 ```bash
-# Validate schema + query against each other — run after ANY schema or query edit.
-# This is the repo's only check; there are no tests.
-omnigraph lint --schema schema.pg --query queries/<file>.gq
+# The repo's only check: schema and every query must lint against each other.
+for q in queries/*.gq; do omnigraph lint --schema schema.pg --query "$q"; done
+omnigraph cluster validate --config .        # config + policies (an external_blobs WARN is expected)
 
-# Control plane (schema/query/policy changes)
+# Control plane (after any schema / query / policy edit)
 omnigraph cluster plan  --config .
 omnigraph cluster apply --config . --as act-admin   # then restart the server
 
-# Rebuild full seed from fragments (validates and reports)
-python3 seed-work/merge_validate.py                  # → seed-work/seed-full.jsonl
-
-# Data plane
-omnigraph load --data <f.jsonl> --mode merge --as act-analyst \
-  s3://intel-graph/clusters/spike-intel/graphs/spike.omni
-omnigraph embed --input <raw.jsonl> --output <embedded.jsonl> --spec seed-work/embed-spec.json
-
-# Query the running server (alias pack merged into ~/.omnigraph/config.yaml)
-omnigraph alias pattern-signals pat-context-graphs
-omnigraph alias hybrid-search "reward hacking"
-omnigraph mutate add_signal --server intel-local --graph spike --params '{…}'
+# Data plane — see README "Load the seed" for the full procedure
+omnigraph load --data seed/entities.jsonl --mode overwrite --as act-analyst --yes <graph-uri>
 ```
 
-**RUNBOOK.md is the operational truth for this machine**: RustFS on
-`127.0.0.1:9100`, cluster root `s3://intel-graph/clusters/spike-intel`,
-server on `127.0.0.1:8081` (bearer-token auth; 8080 is an unrelated stale
-server — leave it alone). Env comes from `.env.omni` + `.env.embedding`
-(gitignored). README.md's quick start describes the generic local-cluster
-path instead; prefer RUNBOOK.md when operating here.
+Environment for local operation comes from `.env.omni` + `.env.embedding`
+(gitignored; key names are listed in the README). Source both before any
+`omnigraph` command:
+`set -a && source .env.omni && source .env.embedding && set +a`.
 
-## Corpus Pipeline
+## Conventions
 
-Each batch of talks moves through fixed stages, each with an index file that
-must be updated in the same change:
-
-1. **`transcripts/<talk>.txt`** — yt-dlp auto-captions (unreliable for
-   verbatim quotes; garbles like "Snyk"→"Sneak" are normal). Register in the
-   batch table in `transcripts/README.md` with the video URL.
-2. **`extraction/<talk>.md`** — one SPIKE extraction per talk, entity tables
-   for human review. Register in `extraction/README.md` with status
-   (`for review` → `reviewed`). Note caption garbles and their
-   normalizations in the file header; quotes are paraphrases.
-3. **`extraction/registry.md`** — single source of truth for shared slugs.
-   Extraction files define only talk-local entities and reference shared
-   ones by slug marked **[registry]**/**[seed]** (never re-defined). New
-   cross-cutting entities and merge-review flags get reconciled here per
-   batch.
-4. **`seed-work/`** — extractions become `frag-N.jsonl` following
-   `seed-work/CONVERSION-SPEC.md` EXACTLY (legal fields, enum coercions, the
-   complete edge set); `merge_validate.py` merges + validates into
-   `seed-full.jsonl`. Batches 16–23 are converted **deterministically** by
-   `seed-work/convert_1719.py` (add new batch stems to its `BATCHES` dict);
-   earlier fragments were agent-authored. Cross-batch pattern coinage goes in a
-   supplementary `frag-N-coinage.jsonl` rather than re-converting old batches.
-   Transcript chunks: `chunk_talks.py` → `omnigraph embed` → `finalize_chunks.py`
-   → `load --mode merge` (chunk slug = `<talk-slug>#<idx>`, linked via
-   PartOfArtifact). **RUNBOOK.md "Adding a batch" is the authoritative
-   step-by-step for loading the graph.**
-
-All generated JSONL (`seed.jsonl`, `seed-work/*.jsonl`) is gitignored — the
-committed artifacts are the markdown, schema, and queries.
-
-**Extraction conventions:**
-- Slug prefixes: `sig-`, `pat-`, `el-`, `ins-`, `how-`, `co-`, `exp-`,
-  `ia-`, `source-`; slug is the external identity everywhere.
-- Patterns are seed-altitude **theses about change** (e.g. "The Verification
-  Gap"), never domains or topics — the field lives in the `domain:` enum.
-  Coin new patterns sparingly (~1 per batch, reconciled in registry.md);
-  near-duplicates get an explicit merge-review note instead of silent merging.
-- Every Signal/KnowHow carries artifact provenance edges; talks publish as
-  `ia-aie-*` → `PublishedBySource → source-aie-yt`.
-
-## Schema Language (`.pg`)
-
-- `node` defines entity types; `edge` defines typed relationships (`edge Name: Source -> Target`)
-- `@key` marks external identity (always `slug` here)
-- `@index`, `@unique`, `@card(min..max)`, `@range(lo..hi)`, `@embed("prop")`
-- `?` = optional, `[Type]` = list, `enum(...)` = inline closed set
-- Comments use `//` not `#`
-
-## Domain Model
-
-**SPIKE nodes:** Signal, Element, Pattern, Insight, KnowHow.
-**Supportive:** Company, SourceEntity, Expert, InformationArtifact, Chunk.
-
-**Core analytical loop:** Signals form or contradict Patterns. Patterns drive
-or rely on other Patterns. Everything else supports this loop or maps the domain.
-
-**Design choices to preserve:**
-- Flat `kind` enums on Element and Pattern — no interfaces or subtypes
-- ElementKind: `product, technology, framework, concept, ops`; PatternKind: `challenge, disruption, dynamic`
-- Domain is an enum property on Signal/Element, not a node
-- Edges follow `VerbTargetType` naming (e.g. `FormsPattern`, `DevelopedByCompany`)
-- Embeddings only on Chunk: `Vector(3072) @embed("text")` (engine default `gemini-embedding-2-preview`)
-- Chunk is immutable (no `updatedAt`)
-
-## When Editing
-
-- Use `@rename_from(...)` on property/type renames for migration support.
-  Known engine limits: `id` is a reserved column name; migration v1 cannot
-  add a required key in place (needs a graph rebuild — see RUNBOOK.md Day-2).
-- Keep README.md in sync with schema.pg
-- Prefer semantic edge names over generic ones (`Enables` not `RelatedTo`)
-- Use the narrowest type that fits (enums over strings, Date over String)
-- Required vs optional is deliberate — don't add `?` without reason
-- Never commit `__cluster/`, `graphs/`, or `.env*` (gitignored — local state and secrets)
-
-## Other Directories
-
-- `skill/` — the `omnigraph-intel-bootstrap` skill (published upstream in
-  omnigraph-cookbooks): bootstraps a new SPIKE graph for any domain. Not part
-  of this repo's pipeline; keep in sync only if the cookbook structure changes.
-- `report.md` — a generated analysis artifact, not infrastructure.
+- `slug` is the external identity everywhere; prefixes `sig-`, `pat-`, `el-`,
+  `ins-`, `how-`, `co-`, `exp-`, `ia-`, `source-`, chunks `<talk-slug>#<idx>`.
+- Patterns are seed-altitude theses about change, never topics; coin them
+  sparingly. Domain is an enum property on Signal/Element, not a node.
+- Edges follow `VerbTargetType` naming; every Signal and KnowHow carries
+  artifact provenance edges.
+- Schema edits: `@rename_from(...)` on renames; enums over strings; `id` is an
+  engine-reserved column name; keep the README's model section in sync.
+- Loads: `--mode overwrite` replaces only the node/edge types present in the
+  file; edges have no `@key`, so never re-load chunk edges on top of existing
+  ones. Verify remote writes by comparing `commit list --branch main` heads.
+- Keep the seed files the exact export of the served graph: regenerate them
+  from the graph (`omnigraph export`) rather than hand-editing.

@@ -1,6 +1,6 @@
 // ── SPIKE operating-loop queries ──
 // The weekly review: triage unattached signals, watch pattern momentum,
-// spot stale patterns, check provenance gaps. See README "Weekly review".
+// spot stale patterns, check provenance gaps. See README "Query" (triage, momentum, stale, contested, unsourced).
 
 // Triage queue: signals not yet attached to any pattern (neither forming
 // nor contradicting one). Work this list down to zero each review.

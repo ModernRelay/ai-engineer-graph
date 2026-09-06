@@ -1,201 +1,277 @@
-# Industry Intel — SPIKE Cookbook
+# AI Engineer Graph
 
-Knowledge graph cookbook modeling AI/ML industry intelligence. Built on [Omnigraph](https://github.com/ModernRelay/omnigraph) using the [SPIKE framework](../README.md#spike-framework).
+A knowledge graph of the **AI Engineer World's Fair 2026** talk corpus — 296
+talks published April–August 2026 — modelled with the SPIKE framework and
+served by [Omnigraph](https://github.com/ModernRelay/omnigraph).
 
-## Core Analytical Loop
+This repository is the complete, loadable definition of the graph:
 
-Signals and Patterns form the analytical core. Insights interpret them. Elements and KnowHows map the domain around them.
+| path | what it is |
+|---|---|
+| `schema.pg` | the schema — source of truth for the data model |
+| `cluster.yaml`, `policies/` | Omnigraph cluster config and the two Cedar policy bundles |
+| `queries/*.gq` | 113 stored queries the server serves (82 reads, 31 mutations) |
+| `seed/entities.jsonl` | every node and edge except transcript chunks (18,694 records) |
+| `seed/chunks.jsonl` | 4,207 transcript chunks + their `PartOfArtifact` edges, embeddings added at load time |
+| `seed/embed-spec.json` | the embedding spec for the chunks (`gemini-embedding-2-preview`, 3072-d) |
+| `omnigraph-config.example.yaml` | client profile and alias pack for the CLI |
 
-```
-  Signal ── FormsPattern ──────────▶ Pattern
-    │                                  │
-    ├── ContradictsPattern ──────────▶ │
-    │                                  │
-    │                                  ├── DrivesPattern ──────▶ Pattern
-    │                                  └── ReliesOnPattern ────▶ Pattern
-    │
-    ├── OnElement ──▶ Element
-    │                   │
-    │                   ├── ExemplifiesPattern ──▶ Pattern
-    │                   ├── EnablesPattern ──────▶ Pattern
-    │                   │
-    │                   ├── EnablesElement ──▶ Element
-    │                   └── UsesElement ────▶ Element
-    │
-  Insight ── HighlightsPattern ──────▶ Pattern
-    │
-    └── ReliesOnElement ─────────────▶ Element
+The seed files are an exact export of the served graph (last refreshed
+2026-09-06). Nothing else is needed to stand the graph up.
 
-  KnowHow ── ReferencesElement ───────▶ Element
-```
+## What is in the graph
 
-## Reference Seed: AI Industry, Early 2026
+| type | count | notes |
+|---|---|---|
+| Pattern | 16 | theses about change; the analytical spine |
+| Signal | 1,325 | dated, sourced observations; each forms or contradicts patterns |
+| Element | 1,100 | products, technologies, frameworks, concepts, ops practices |
+| Insight | 582 | interpretations that highlight a pattern and rely on elements |
+| KnowHow | 509 | practices with guidelines, referencing elements |
+| Company | 285 | developers, labs, bigtech, investors, media, hardware |
+| Expert | 336 | speakers, affiliated with companies |
+| InformationArtifact | 315 | 296 talks (`youtube`, with video links) + 19 articles |
+| SourceEntity | 17 | publishers; the talks publish via `source-aie-yt` |
+| Chunk | 4,207 | ~220-word transcript passages over 273 talks, 3072-d embeddings |
+| edges | 18,416 | 14,209 between entities + 4,207 chunk → talk |
 
-Five live patterns in the AI industry:
+### The 16 patterns
 
-| Pattern | Kind | What it captures |
-|---------|------|------------------|
-| **Sovereign AI** | disruption | Enterprises moving AI off public cloud — driven by regulation (DORA, EU AI Act) and collapsing on-prem setup cost |
-| **SaaSpocalypse** | disruption | Per-seat SaaS pricing breaking as agents replace workflows — $830B wiped from S&P software index in six days |
-| **Context Graphs** | dynamic | Decision traces + ontology + temporal reasoning as a new infrastructure layer above databases |
-| **New Cyber Threats** | challenge | AI models autonomously exploiting vulnerabilities + agentic attack surfaces inside enterprises |
-| **Accelerated Research** | dynamic | AI agents running 100s of experiments autonomously — from Karpathy loops to AlphaEvolve to AI-proven math |
+Support and counter are `FormsPattern` / `ContradictsPattern` signal counts.
 
-Each pattern is backed by ~3 real, dated signals with source URLs. Signals connect to the Elements (products, frameworks, concepts) they're about, which in turn connect to Companies that built them.
+| pattern | kind | support / counter | thesis |
+|---|---|---|---|
+| `pat-verification-gap` | challenge | 332 / 0 | generation has industrialized, verification has not |
+| `pat-harness-over-model` | dynamic | 244 / 20 | the load-bearing engineering sits around the model, and thins as models improve |
+| `pat-model-not-bottleneck` | dynamic | 178 / 8 | models are good enough; value and failure moved to the layers around them |
+| `pat-context-graphs` | dynamic | 92 / 4 | decision traces, ontology and time as an infrastructure layer above databases |
+| `pat-sovereign-ai` | disruption | 69 / 2 | own the stack end to end; regulation removed optionality |
+| `pat-saaspocalypse` | disruption | 67 / 2 | agents dissolve the SaaS presentation layer and per-seat pricing |
+| `pat-value-of-judgement` | dynamic | 67 / 0 | as execution industrializes, the durable human edge is judgement |
+| `pat-new-cyber-threats` | challenge | 57 / 1 | autonomous exploitation and agentic attack surfaces |
+| `pat-ai-native-org` | dynamic | 57 / 0 | organizations restructure around agent delegation |
+| `pat-accelerated-research` | dynamic | 48 / 1 | agents run research loops autonomously |
+| `pat-agent-supply-chain` | challenge | 33 / 0 | skills, MCP servers and hallucinated packages form a new, weaker package ecosystem |
+| `pat-agent-economy` | dynamic | 20 / 1 | agents as primary economic actors |
+| `pat-durable-execution` | dynamic | 19 / 1 | a durable runtime layer below the harness becomes a product category |
+| `pat-continual-learning-turn` | dynamic | 18 / 1 | improvement shifts from pre-training scale to post-deployment learning |
+| `pat-benchmark-trust-crisis` | challenge | 18 / 2 | benchmarks decouple from real capability |
+| `pat-agent-memory-layer` | dynamic | 15 / 6 | persistent memory becomes a first-class layer of the agent stack |
 
-**Totals:** 109 nodes, 154 edges.
+## The model
 
-## Schema Essentials
+**SPIKE nodes:** Signal, Pattern, Insight, KnowHow, Element.
+**Supporting nodes:** Company, Expert, SourceEntity, InformationArtifact, Chunk.
 
-**Nodes (10):** Signal, Pattern, Insight, KnowHow, Element + Company, SourceEntity, Expert, InformationArtifact, Chunk
+The analytical loop is Signals forming or contradicting Patterns; everything
+else grounds, interprets, or attributes that loop.
 
-**Enums that carry the analytical lens:**
+| edge | route | meaning |
+|---|---|---|
+| `FormsPattern` / `ContradictsPattern` | Signal → Pattern | evidence for / against a thesis |
+| `DrivesPattern` / `ReliesOnPattern` / `ContradictsToPattern` | Pattern → Pattern | causality and tension between theses |
+| `OnElement` | Signal → Element | what the signal is about |
+| `ExemplifiesPattern` / `EnablesPattern` | Element → Pattern | concrete examples or enablers of a thesis |
+| `EnablesElement` / `UsesElement` | Element → Element | capability and dependency |
+| `HighlightsPattern` / `ReliesOnElement` | Insight → Pattern / Element | what an insight illuminates and rests on |
+| `ReferencesElement` | KnowHow → Element | practice grounded in a concrete thing |
+| `SpottedInArtifact`, `IdentifiedInArtifact`, `SourcedFromArtifact` | Signal / Element / KnowHow → InformationArtifact | provenance: the talk it came from |
+| `SourcedFromSource`, `PublishedBySource`, `ContributedByExpert` | → SourceEntity / Expert | publisher and speaker attribution |
+| `RelevantCompany`, `DevelopedByCompany`, `AffiliatedWithCompany` | → Company | who it concerns, who built it, who employs whom |
+| `PartOfArtifact` | Chunk → InformationArtifact | which talk a transcript chunk belongs to |
 
-| Enum | Values |
-|------|--------|
-| **PatternKind** | `challenge, disruption, dynamic` |
-| **ElementKind** | `product, technology, framework, concept, ops` |
-| **Domain** | `training, inference, infra, harness, robotics, security, data-eng, context` |
+Design choices, all visible in `schema.pg`:
 
-**Edges that carry the analytical logic** (everything else is provenance or classification):
+- `slug` is the external identity everywhere. Prefixes: `sig-`, `pat-`, `el-`,
+  `ins-`, `how-`, `co-`, `exp-`, `ia-`, `source-`; chunks are `<talk-slug>#<index>`.
+- Flat `kind` enums, no subtypes: `PatternKind` `challenge | disruption | dynamic`;
+  `ElementKind` `product | technology | framework | concept | ops`.
+- `domain` is an enum property on Signal and Element, not a node:
+  `training | inference | infra | harness | robotics | security | data-eng | context`.
+- Edges are named `VerbTargetType` so direction is unambiguous.
+- Embeddings live only on `Chunk.embedding` (`Vector(3072) @embed("text")`).
+- `stagingTimestamp` on Signals, KnowHow and artifacts is the talk's publish date.
 
-| Edge | Route | Meaning |
-|------|-------|---------|
-| `FormsPattern` | Signal → Pattern | this movement supports that theme |
-| `ContradictsPattern` | Signal → Pattern | this movement pushes back against that theme |
-| `DrivesPattern` / `ReliesOnPattern` / `ContradictsToPattern` | Pattern → Pattern | causality and structure between themes |
-| `HighlightsPattern` | Insight → Pattern | this observation illuminates a theme |
-| `ReliesOnElement` | Insight → Element | this insight is grounded in a concrete thing |
-| `ExemplifiesPattern` / `EnablesPattern` | Element → Pattern | concrete examples or enablers of a theme |
-| `OnElement` | Signal → Element | which thing the signal is about |
-| `EnablesElement` / `UsesElement` | Element → Element | capability and dependency relationships |
-| `ReferencesElement` | KnowHow → Element | practice grounded in a specific tool/concept |
+## Setup
 
-**Key design choices:**
+Prerequisites: Omnigraph 0.10.x (`brew install omnigraph` gives the CLI and
+`omnigraph-server`; `omnigraph version` should report internal-schema 6), an
+S3-compatible object store or a file-backed root, and a Gemini API key for
+embeddings (chunk load and query-time `nearest()`).
 
-- Flat node types with `kind` enums (no subtypes or interfaces)
-- Domain is a property, not a node
-- Edges follow `VerbTargetType` naming so direction is obvious
-- `slug` is the external identity everywhere (`sig-`, `pat-`, `el-`, `ins-`, `how-to-`, `co-`, `exp-`, `ia-`, `source-`)
-- Embeddings only on Chunk (`Vector(3072)`, produced at ingest by the engine's configured model — default `gemini-embedding-2-preview`)
+### 1. Object store
 
-Full property tables and constraints in `schema.pg`.
-
-## Files
-
-- `schema.pg` — Executable Omnigraph schema (source of truth)
-- `seed.md` / `seed.jsonl` — Seed dataset (human-readable / loadable)
-- `queries/*.gq` — Read and mutation queries
-- `omnigraph-config.example.yaml` — example operator config (aliases over the stored queries); merge into your per-user `~/.omnigraph/config.yaml`
-- `.env.omni` — RustFS credentials (not committed)
-
-## Quick Start
-
-All commands run from `industry-intel/`:
-
-The cookbook is a **cluster directory**: `cluster.yaml` declares the graph,
-its schema, and all 66 stored queries; `omnigraph cluster apply` converges it
-(creating the graph at `graphs/spike.omni`); the server serves the applied
-state. No object store or credentials needed to get started.
-
-```bash
-cd industry-intel
-
-# One-time: record the ledger, preview, converge (creates graphs/spike.omni,
-# applies schema.pg, publishes all stored queries)
-omnigraph cluster import --config .
-omnigraph cluster plan   --config .
-omnigraph cluster apply  --config . --as <you>
-
-# Load the seed through the data plane (one-time)
-omnigraph load --data seed.jsonl --mode overwrite graphs/spike.omni
-
-# Serve the applied state (keep running — separate terminal or background)
-omnigraph-server --cluster . --bind 127.0.0.1:8080 --unauthenticated   # local dev
-
-# Query via CLI aliases (operator-config sugar) …
-omnigraph alias pattern-signals pat-sovereign-ai
-# … or straight HTTP — every declared query is a served endpoint:
-curl -s -X POST http://127.0.0.1:8080/graphs/spike/queries/recent_signals \
-  -H 'content-type: application/json' -d '{"params":{}}'
-```
-
-> Aliases come from `omnigraph-config.example.yaml` — merge into
-> `~/.omnigraph/config.yaml` (or invoke a stored query directly:
-> `omnigraph query <name> --graph spike [--params …]`).
-
-Day-2 changes are declarative: edit `schema.pg` / a `.gq` file / `cluster.yaml`,
-then `cluster plan` (schema edits show real migration steps) → `cluster apply`
-→ restart the server. Deleting the graph requires an explicit
-`omnigraph cluster approve graph.spike --as <you>` first.
-
-### Serving with policy (drop `--unauthenticated`)
-
-The cookbook declares two Cedar bundles in `cluster.yaml`: `policies/intel.policy.yaml`
-(graph-bound — `readers` invoke stored read queries, `analysts` can also run
-the stored mutations) and `policies/server.policy.yaml` (cluster-bound — only
-`admins` may enumerate graphs). Serve secured:
+`cluster.yaml` roots the cluster at `s3://intel-graph/clusters/spike-intel`.
+A native [RustFS](https://rustfs.com) works locally without Docker:
 
 ```bash
-OMNIGRAPH_SERVER_BEARER_TOKENS_JSON='{"act-reader":"<tok>","act-analyst":"<tok>","act-admin":"<tok>"}' \
-  omnigraph-server --cluster . --bind 127.0.0.1:8080
+brew install rustfs/tap/rustfs
+mkdir -p ~/.local/share/rustfs-intel-data
+nohup rustfs server ~/.local/share/rustfs-intel-data --address 127.0.0.1:9100 \
+  --access-key "$AWS_ACCESS_KEY_ID" --secret-key "$AWS_SECRET_ACCESS_KEY" \
+  > ~/.local/share/rustfs-intel-data/rustfs.log 2>&1 & disown
+aws --endpoint-url http://127.0.0.1:9100 s3 mb s3://intel-graph      # once
+curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:9100/      # 403 means it is up
 ```
 
-What the gates do (verified): `GET /graphs` → admin 200 / reader 403 /
-anonymous 401; stored reads → reader 200; stored mutations (`add_signal`,
-…) → reader 403, analyst 200 — stored mutations are double-gated
-(`invoke_query` at the boundary, `change` inside the engine).
+For a purely local sandbox, remove the `storage:` line from `cluster.yaml`;
+Omnigraph then keeps the cluster under this directory (`__cluster/`,
+`graphs/` — both gitignored) and the graph URI below becomes `graphs/spike.omni`.
 
-<details>
-<summary><strong>RustFS / S3 alternative (cluster on object storage)</strong></summary>
+### 2. Environment
 
-To demo S3-compatible storage, start a local RustFS (see the omnigraph repo's
-`docs/user/deployment.md` → *Testing against S3 locally*), root the cluster on
-S3 with `storage: s3://omnigraph-local/clusters/spike` in `cluster.yaml`, then
-serve config-free from the bucket:
+Two gitignored files hold every secret. Source both before any command:
+`set -a && source .env.omni && source .env.embedding && set +a`.
 
 ```bash
-set -a && source .env.omni && set +a
-omnigraph cluster apply --config . --as <you>
-omnigraph load --data seed.jsonl --mode overwrite s3://omnigraph-local/clusters/spike/graphs/spike.omni
-omnigraph-server --cluster s3://omnigraph-local/clusters/spike --unauthenticated
+# .env.omni
+AWS_ACCESS_KEY_ID=…
+AWS_SECRET_ACCESS_KEY=…
+AWS_ENDPOINT_URL=http://127.0.0.1:9100
+AWS_REGION=us-east-1
+AWS_ALLOW_HTTP=true
+OMNIGRAPH_SERVER_BEARER_TOKENS_JSON={"act-reader":"…","act-analyst":"…","act-admin":"…"}
+TOKEN_ACT_READER=…
+TOKEN_ACT_ANALYST=…
+TOKEN_ACT_ADMIN=…
+OMNIGRAPH_EMBED_PROVIDER=gemini
+OMNIGRAPH_EMBED_MODEL=gemini-embedding-2-preview
+
+# .env.embedding
+GEMINI_API_KEY=…
 ```
 
-The cluster's ledger, catalog, and graph data all live under the S3 root.
+The three actors are the ones the policies know about (see Roles below).
 
-</details>
-
-## The weekly review (operating loop)
-
-The graph earns its keep through a recurring loop, supported by the
-`queries/workflow.gq` set (aliases in parentheses):
-
-1. **Triage** (`triage`) — `orphan_signals`: every signal not yet attached to
-   a pattern, newest first. Work it to zero: attach with the `link_*`
-   mutations, or drop the signal.
-2. **Momentum** (`momentum`, takes `since`) — `pattern_momentum`: signals per
-   pattern since the cutoff. Rising counts are where insights come from.
-3. **Staleness** (`stale`, takes `since`) — `stale_patterns`: patterns with
-   no new evidence since the cutoff. Prune, or push research at them.
-4. **Tension** (`contested`) — `contested_patterns`: patterns accumulating
-   contradicting signals. High counts deserve an Insight either way.
-5. **Provenance** (`unsourced`) — `unsourced_signals`: claims with no
-   artifact or source attached — an agent cannot verify them. Fix or drop.
+### 3. Converge the cluster
 
 ```bash
-omnigraph alias triage
-omnigraph alias momentum 2026-05-01T00:00:00Z
+omnigraph cluster validate --config .        # an external_blobs WARN is expected
+omnigraph cluster plan     --config .
+omnigraph cluster apply    --config . --as act-admin   # creates the graph, applies schema, publishes queries
 ```
 
-## Enable embeddings (hybrid retrieval)
+### 4. Load the seed
 
-`queries/hybrid.gq` adds semantic and hybrid search over chunk embeddings
-(`related_chunks`, `hybrid_chunks` — RRF of `nearest` + `bm25`). They
-type-check and serve out of the box, but invocation needs an embedding key
-(query-time text embedding): without one the server returns a clear error
-(`GEMINI_API_KEY is required when nearest() needs a string embedding`). To
-enable: export your embedding key (e.g. `GEMINI_API_KEY`), populate
-`Chunk.embedding` (`omnigraph embed graphs/spike.omni`), and restart the
-server with the key in its environment.
+```bash
+G=s3://intel-graph/clusters/spike-intel/graphs/spike.omni
 
-See the [Omnigraph](https://github.com/ModernRelay/omnigraph) repo for full CLI reference.
+# entities first — chunk edges need the talks to exist
+omnigraph load --data seed/entities.jsonl --mode overwrite --as act-analyst --yes "$G"
+
+# chunks: embed with Gemini, then merge in parts (one load must stay under
+# 32 MiB of parsed Chunk rows; 400 chunks per part is safe)
+omnigraph embed --input seed/chunks.jsonl --output chunks-embedded.jsonl --spec seed/embed-spec.json
+split -l 800 chunks-embedded.jsonl chunks-part-       # lines alternate chunk / edge, so pairs stay together
+for f in chunks-part-*; do
+  omnigraph load --data "$f" --mode merge --as act-analyst --yes "$G" || break
+done
+
+omnigraph commit list --branch main "$G" | head -1     # the head advances once per load
+```
+
+Gemini rate-limits large embedding runs (HTTP 429, "Resource exhausted"). If
+that happens, split `seed/chunks.jsonl` into smaller parts, embed each with
+backoff, and concatenate before loading. Edge lines pass through `embed` untouched.
+
+### 5. Serve
+
+```bash
+nohup omnigraph-server --cluster s3://intel-graph/clusters/spike-intel --bind 127.0.0.1:8081 \
+  > omnigraph-server.log 2>&1 & disown
+curl -s http://127.0.0.1:8081/healthz    # {"status":"ok","version":"0.10.0","internal_schema_version":6}
+```
+
+The server needs the `AWS_*` variables, `OMNIGRAPH_SERVER_BEARER_TOKENS_JSON`
+and `GEMINI_API_KEY` in its environment. Add `--unauthenticated` only for a
+throwaway local sandbox.
+
+### 6. Query
+
+Merge `omnigraph-config.example.yaml` into `~/.omnigraph/config.yaml`, then
+register the token once: `omnigraph login intel-local` (paste the analyst
+token). Every stored query is then an alias:
+
+```bash
+omnigraph alias top-patterns
+omnigraph alias pattern-signals pat-context-graphs
+omnigraph alias pattern-counter pat-harness-over-model      # counter-evidence
+omnigraph alias company-footprint co-anthropic              # company ← signals → patterns
+omnigraph alias expert-patterns exp-clare-liguori           # expert ← talks ← signals → patterns
+omnigraph alias el-dependents el-mcp                        # everything built on MCP, ≤3 hops
+omnigraph alias hybrid-search "give the agent a budget, not a token"   # RRF of nearest() + bm25()
+omnigraph alias talk-semantic ia-aie-krieger-anthropic-how-anthropic-builds "how do they decide what to unship"
+omnigraph alias triage                                      # signals not yet attached to a pattern
+```
+
+Direct stored-query and HTTP access work the same way:
+
+```bash
+omnigraph query top_patterns_by_signals --profile intel
+curl -s -X POST http://127.0.0.1:8081/graphs/spike/queries/recent_signals \
+  -H "authorization: Bearer $TOKEN_ACT_READER" -H 'content-type: application/json' \
+  -d '{"params":{}}'
+```
+
+Writes go through the 31 stored mutations (`queries/mutations.gq`: nine
+`add_*` node inserts and 22 `link_*` edge inserts), which are not aliasable:
+
+```bash
+omnigraph mutate add_signal --server intel-local --graph spike \
+  --params '{"slug":"sig-…","name":"…","brief":"…","stagingTimestamp":"2026-09-01T00:00:00Z","createdAt":"2026-09-01T00:00:00Z","updatedAt":"2026-09-01T00:00:00Z"}'
+omnigraph mutate link_signal_forms_pattern --server intel-local --graph spike \
+  --params '{"signal":"sig-…","pattern":"pat-verification-gap"}'
+```
+
+## Roles
+
+`policies/intel.policy.yaml` (graph-bound) and `policies/server.policy.yaml`
+(cluster-bound) define three actors; `main` is a protected branch.
+
+| actor | can |
+|---|---|
+| `act-reader` | invoke stored read queries; read and export data on any branch |
+| `act-analyst` | everything above plus `change`: stored mutations and direct data-plane loads |
+| `act-admin` | list the deployment's graphs; the actor for `cluster apply` and maintenance commands |
+
+Anonymous requests get 401; an actor outside a rule gets 403.
+
+## Operating notes
+
+- **Changing schema, queries or policies:** edit the file, lint
+  (`omnigraph lint --schema schema.pg --query queries/<f>.gq`), then
+  `cluster plan` → `cluster apply --as act-admin` → restart the server. Use
+  `@rename_from(...)` on renames; adding a required key needs a graph rebuild.
+- **Load semantics:** `--mode overwrite` replaces only the node and edge types
+  present in the file (chunks survive an entity overwrite); `--mode merge`
+  upserts by `@key`. Edges have no key, so loading the same chunk file twice
+  duplicates edges and trips `@unique` on `PartOfArtifact` — never re-load
+  chunks that are already in the graph.
+- **Verify every write** by comparing `omnigraph commit list --branch main`
+  heads before and after; the CLI exit code is not authoritative on remote stores.
+- **Full-text indexes on 0.10:** after bulk loads, rebuild them with the server
+  stopped so new rows are indexed rather than scanned:
+  `omnigraph rebuild-full-text-indexes "$G" --branch main --as act-admin --json`.
+- **Binaries:** keep `omnigraph` and `omnigraph-server` on the same minor and
+  never point a 0.9 binary at a store touched by 0.10. Check `/healthz` after
+  every restart.
+- **Refreshing the seed:** `omnigraph export --server intel-local --graph spike`
+  streams the whole graph as JSONL. `seed/entities.jsonl` is that export minus
+  `Chunk` rows and `PartOfArtifact` edges; `seed/chunks.jsonl` is the chunk rows
+  with `embedding` removed and `createdAt` as ISO time, each followed by its
+  edge. Regenerate rather than hand-edit.
+
+## Data notes
+
+- Every talk-derived Signal, Element and KnowHow links to its talk
+  (`ia-aie-*`, `artifactType: youtube`, `link` is the video URL), and every
+  Signal also to the publisher (`source-aie-yt`, "AI Engineer"). Chunks carry the
+  talk slug as a `[talk-slug]` prefix in their text.
+- Transcripts came from YouTube auto-captions. Quotes in briefs are paraphrases,
+  and names and figures can be caption garbles; treat numbers as unverified
+  unless a linked source confirms them.
+- The 19 `article` artifacts and the first five patterns are the original
+  hand-authored seed (April 2026) the corpus was grown from.
+- The corpus pipeline that produced the seed — transcripts, per-talk extraction
+  notes, deterministic conversion, validation, chunking — lives outside this
+  repository; the graph is the deliverable.

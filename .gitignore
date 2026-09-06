@@ -1,10 +1,23 @@
-# secrets — never commit (API keys, bearer tokens)
+# secrets — never commit (object-store credentials, bearer tokens, embedding API keys)
 .env*
 
-# seed data — generated from extraction/ via conversion agents + merge_validate.py;
-# embedded/final chunk JSONLs (~440MB) additionally need one `omnigraph embed` pass
+# local cluster / graph state created by `omnigraph cluster apply` with a file-backed root
+__cluster/
+graphs/
+
+# corpus pipeline — kept on the maintainer's machine, not part of the published graph:
+# raw transcripts, per-talk extraction notes, conversion scripts, fragments, work files
+transcripts/
+extraction/
+seed-work/
 seed.jsonl
-seed-work/*.jsonl
-seed-work/validation-report.txt
+seed.md
+
+# local notes and generated artifacts
+RUNBOOK.md
+EXPLORER-DESIGN.md
+report.md
+skill/
 
 __pycache__/
+.DS_Store
