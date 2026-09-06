@@ -1,6 +1,0 @@
-shi-datacurve-deepswe-benchmark.md
-cai-state-of-data.md
-abdin-mchardy-poolside-synthetic-data.md
-mistele-humanlayer-loop-engineering.md
-reed-revere-sondermind-evals-driven.md
-brick-google-tiny-lms-edge.md

@@ -1,7 +1,0 @@
-node Chunk {
-    id: String @key            // "<talk-slug>#<chunk_index>" — added 2026-07-22 so PartOfArtifact edges are loadable
-    text: String
-    chunk_index: I32
-    embedding: Vector(3072) @embed("text") @index
-    createdAt: DateTime
-}
