@@ -11,8 +11,9 @@ This repository is the complete, loadable definition of the graph:
 | `schema.pg` | the schema — source of truth for the data model |
 | `cluster.yaml`, `policies/` | Omnigraph cluster config and the two Cedar policy bundles |
 | `queries/*.gq` | 113 stored queries the server serves (82 reads, 31 mutations) |
-| `seed/entities.jsonl` | every node and edge except transcript chunks (18,694 records) |
-| `seed/chunks.jsonl` | 4,207 transcript chunks + their `PartOfArtifact` edges, embeddings added at load time |
+| `seed/01-sources.jsonl` … `09-knowhow.jsonl` | every node, one file per type in load order (4,485 nodes) |
+| `seed/10-edges.jsonl` | all 14,209 edges between those nodes |
+| `seed/chunks/part-01.jsonl` … `part-11.jsonl` | 4,207 transcript chunks + their `PartOfArtifact` edges, ≤400 chunks per part, embeddings added at load time |
 | `seed/embed-spec.json` | the embedding spec for the chunks (`gemini-embedding-2-preview`, 3072-d) |
 | `omnigraph-config.example.yaml` | client profile and alias pack for the CLI |
 
@@ -156,23 +157,25 @@ omnigraph cluster apply    --config . --as act-admin   # creates the graph, appl
 ```bash
 G=s3://intel-graph/clusters/spike-intel/graphs/spike.omni
 
-# entities first — chunk edges need the talks to exist
-omnigraph load --data seed/entities.jsonl --mode overwrite --as act-analyst --yes "$G"
+# entities: nodes in type order, then the edges (each file replaces its own tables)
+for f in seed/[0-9]*.jsonl; do
+  omnigraph load --data "$f" --mode overwrite --as act-analyst --yes "$G" || break
+done
 
-# chunks: embed with Gemini, then merge in parts (one load must stay under
-# 32 MiB of parsed Chunk rows; 400 chunks per part is safe)
-omnigraph embed --input seed/chunks.jsonl --output chunks-embedded.jsonl --spec seed/embed-spec.json
-split -l 800 chunks-embedded.jsonl chunks-part-       # lines alternate chunk / edge, so pairs stay together
-for f in chunks-part-*; do
-  omnigraph load --data "$f" --mode merge --as act-analyst --yes "$G" || break
+# chunks: embed each part with Gemini, then merge it (a part stays well under
+# the 32 MiB-per-load limit for parsed Chunk rows)
+mkdir -p embedded
+for f in seed/chunks/part-*.jsonl; do
+  omnigraph embed --input "$f" --output "embedded/$(basename "$f")" --spec seed/embed-spec.json &&
+  omnigraph load --data "embedded/$(basename "$f")" --mode merge --as act-analyst --yes "$G" || break
 done
 
 omnigraph commit list --branch main "$G" | head -1     # the head advances once per load
 ```
 
-Gemini rate-limits large embedding runs (HTTP 429, "Resource exhausted"). If
-that happens, split `seed/chunks.jsonl` into smaller parts, embed each with
-backoff, and concatenate before loading. Edge lines pass through `embed` untouched.
+Gemini rate-limits large embedding runs (HTTP 429, "Resource exhausted"); if a
+part fails, wait and retry that part. Edge lines pass through `embed` untouched,
+and a part already merged must not be merged again (see Load semantics below).
 
 ### 5. Serve
 
@@ -256,10 +259,11 @@ Anonymous requests get 401; an actor outside a rule gets 403.
   never point a 0.9 binary at a store touched by 0.10. Check `/healthz` after
   every restart.
 - **Refreshing the seed:** `omnigraph export --server intel-local --graph spike`
-  streams the whole graph as JSONL. `seed/entities.jsonl` is that export minus
-  `Chunk` rows and `PartOfArtifact` edges; `seed/chunks.jsonl` is the chunk rows
-  with `embedding` removed and `createdAt` as ISO time, each followed by its
-  edge. Regenerate rather than hand-edit.
+  streams the whole graph as JSONL. The seed files are that export split by
+  node type (sorted by slug, unset optional fields dropped, timestamps as ISO
+  time), the entity edges in one sorted file, and the chunk rows with
+  `embedding` removed in parts of 400, each chunk followed by its edge.
+  Regenerate rather than hand-edit; the sorted layout keeps refresh diffs small.
 
 ## Data notes
 
