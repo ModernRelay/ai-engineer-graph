@@ -12,11 +12,11 @@ Stood up 2026-07-22. Native RustFS (no Docker) + cluster-booted omnigraph-server
   — clean base rebuilt 2026-08-14 on omnigraph 0.9.0 (internal schema v6);
   upgraded in place to **0.10.0** on 2026-09-05 (same v6 format; full-text
   indexes rebuilt for Lance 11 — see "The 0.10 upgrade");
-  kept current per batch since. **As of batch 21 (2026-08-18):**
-  7,525 nodes / 15,448 edges: 3,920 entity nodes (1,150 signals, 906 elements,
-  523 insights, 472 knowhows, 295 experts, 278 artifacts, 263 companies,
-  17 sources, **16 patterns**) + 3,605 embedded transcript chunks (3072-dim,
-  gemini-embedding-2-preview) covering **258 talks**.
+  kept current per batch since. **As of batch 23 (2026-09-06, head v37):**
+  8,692 nodes / 18,416 edges: 4,485 entity nodes (1,325 signals, 1,100 elements,
+  582 insights, 509 knowhows, 336 experts, 315 artifacts, 285 companies,
+  17 sources, **16 patterns**) + 4,207 embedded transcript chunks (3072-dim,
+  gemini-embedding-2-preview) covering **315 talks**.
   ⚠ These counts drift every batch — re-check with
   `omnigraph snapshot --store <graph-uri> --json` rather than trusting them;
   the numbers here are a sanity anchor, not a live source of truth.
@@ -318,7 +318,7 @@ EXPLORER-DESIGN.md for the result.
 
 ## Adding a batch (the per-batch pipeline)
 
-The graph is kept current per batch. As of batch 22 (2026-09-05, 276 talks) it is up to date. To add a
+The graph is kept current per batch. As of batch 23 (2026-09-06, 315 talks) it is up to date. To add a
 new batch of talks:
 
 ```bash

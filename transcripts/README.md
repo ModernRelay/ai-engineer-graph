@@ -486,6 +486,42 @@ agents, infra) are still queued.
 | lovejoy-howard-enterprise-stack-not-ready.txt | Why Your Enterprise Tech Stack Isn't Ready for AI Agents — Christopher Lovejoy (Anthropic) & Saul Howard (Anterior) | https://youtu.be/mav15aW9lLM |
 
 
+## Batch 23 — AI-native engineering & coding agents (published 2026-08-20 → 08-28)
+
+19 talks (extracted 2026-09-05/06). The coding-agents / AI-native engineering
+track from the Sep-3 check plus the two engineering-practice keynotes (Krieger,
+Jarmak): verification and review (Lean proofs, Qodo, Braintrust, DoorDash evals,
+Uber's uReview), org practice (Figma adoption, Browser Company, Every, Anthropic
+Labs, Amazon's frontier teams), platforms (Uber's factory, Twilio gateways,
+Unblocked context engine, Figma MCP), and the agent as buyer/user
+(Stripe/Metronome, Sourcegraph). Liguori and Bond & Ketkar landed on a delayed
+caption retry the same day; one talk is still held pending captions (below).
+
+| File | Talk | Video |
+|---|---|---|
+| shenoy-longlake-diffuse-ai-real-world.txt | How do you diffuse AI into the real world? — Varun Shenoy, Long Lake | https://youtu.be/B0fjR3yaZFU |
+| blum-figma-org-adopt-coding-agents.txt | How to Get Your Org to Adopt Coding Agents (Without Shipping Garbage) — Eyal Blum, Figma | https://youtu.be/5Bn0xro2ol8 |
+| pant-aws-lean4-formal-verification.txt | Your Code Has Bugs. Lean4 Has Proofs: Formal Verification for Engineers — Varun Pant, AWS | https://youtu.be/lRa9sPaMyy4 |
+| garvin-stripe-vibe-coding-billing-engine.txt | How to avoid disaster when vibe-coding a billing engine — Andrew Garvin, Stripe / Metronome | https://youtu.be/mJqwmmOx4WA |
+| manuja-twilio-llm-gateways.txt | Productionizing LLM Gateways: Architecture, Tradeoffs and Hard Lessons — Kanish Manuja, Twilio | https://youtu.be/zrZ1amZBSPw |
+| paranjape-haridas-doordash-cross-functional-evals.txt | AI Evals for Cross-Functional Teams — Nachiket Paranjape & Swaroop Chitlur Haridas, DoorDash | https://youtu.be/bMjlRrWjdT0 |
+| lumarie-figma-mcp-server-launch.txt | Building the Engine While Flying the Plane: Launching the Figma MCP Server — Jesse Lumarie, Figma | https://youtu.be/ZIYYsAzaLlA |
+| werry-unblocked-mergeable-code-context-engine.txt | How to Generate Mergeable Code with a Context Engine — Peter Werry, Unblocked | https://youtu.be/qdAkxLoYNI8 |
+| arora-together-llm-multi-gpu-kernels.txt | Can LLMs Write Fast Multi-GPU Kernels? — Simran Arora, Together AI | https://youtu.be/pOvWgX7IJsc |
+| krieger-anthropic-how-anthropic-builds.txt | How Anthropic Builds: Lessons from Labs — Mike Krieger, Anthropic (keynote) | https://youtu.be/qqrk7CtkuIw |
+| jarmak-sourcegraph-death-of-developer-advocates.txt | The Death of Developer Advocates — Stephanie Jarmak, Sourcegraph | https://youtu.be/Lrw0jqBNaw0 |
+| medisetty-huda-uber-agentic-sdlc.txt | Agentic SDLC at Uber — Uday Kiran Medisetty & Adam Huda, Uber | https://youtu.be/17-YSUHo6Lk |
+| rogge-huggingface-automate-own-job.txt | How I automate my own job at Hugging Face using agents — Niels Rogge, Hugging Face | https://youtu.be/FLUoowDJg4I |
+| klaassen-every-compound-engineering.txt | The Era of Compound Engineering — Kieran Klaassen, Every / Cora | https://youtu.be/_ehJyfHg1Vk |
+| agrawal-browser-company-prototyping-as-leadership.txt | Prototyping as Leadership: How a CTO Ships with AI Agents — Hursh Agrawal, The Browser Company | https://youtu.be/bdHaOXZOhcM |
+| friedman-qodo-last-human-code-review.txt | The Last Human Code Review: Building Trust in AI-Generated Code — Itamar Friedman, Qodo | https://youtu.be/s-aixZYJG4c |
+| bhatawdekar-braintrust-agent-evolved-evals-didnt.txt | Your Agent Evolved. Your Evals Didn't. — Ameya Bhatawdekar, Braintrust | https://youtu.be/nxokqOq1imY |
+| liguori-aws-ai-native-frontier-dev-team.txt | From AI-Assisted to AI-Native: Building a Frontier Development Team — Clare Liguori, AWS | https://youtu.be/pqlWNihgdjI |
+| bond-ketkar-uber-ureview-code-review.txt | Building uReview, Uber's Multi-Agent Code Review Engine — Will Bond & Ameya Ketkar, Uber | https://youtu.be/EL123UNokkI |
+
+⚠ **Not yet transcribed (batch 23):**
+- *Coding Agents Don't Scale Themselves. Neither Do Your Teams. — Patrick Debois, Tessl* (https://youtu.be/zCJtYuqwm7E) — no captions published for this video; add as `debois-tessl-coding-agents-dont-scale-themselves` when available.
+
 **Out of scope, recorded for the record:** the same channel carries **AIE
 Europe 2026** (243 videos, published ~2026-05-21 → 06-18, playlist
 PLcfpQ4tk2k0W4IhTx8dgBjTEYRmbEHcpP). The corpus contains only 8 of them, and

@@ -15,6 +15,16 @@ ROOT = pathlib.Path("/Users/andrew/code/intel-graph")
 EX = ROOT / "extraction"
 
 BATCHES = {
+    23: ["shenoy-longlake-diffuse-ai-real-world", "blum-figma-org-adopt-coding-agents",
+         "garvin-stripe-vibe-coding-billing-engine", "paranjape-haridas-doordash-cross-functional-evals",
+         "lumarie-figma-mcp-server-launch", "medisetty-huda-uber-agentic-sdlc",
+         "rogge-huggingface-automate-own-job", "klaassen-every-compound-engineering",
+         "agrawal-browser-company-prototyping-as-leadership", "friedman-qodo-last-human-code-review",
+         "bhatawdekar-braintrust-agent-evolved-evals-didnt", "krieger-anthropic-how-anthropic-builds",
+         "jarmak-sourcegraph-death-of-developer-advocates", "manuja-twilio-llm-gateways",
+         "werry-unblocked-mergeable-code-context-engine", "arora-together-llm-multi-gpu-kernels",
+         "pant-aws-lean4-formal-verification",
+         "liguori-aws-ai-native-frontier-dev-team", "bond-ketkar-uber-ureview-code-review"],
     22: ["hall-akamai-signal-layer", "buykin-maersk-tribal-dungeons-shipping",
          "milev-kanagala-navan-agents-microservices-2015", "kus-box-half-life-agent-infra",
          "lewis-millennium-startups-enterprise-contracts", "touil-quantumblack-ai-native-orgs-skills",

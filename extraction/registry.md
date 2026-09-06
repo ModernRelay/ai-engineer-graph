@@ -1606,3 +1606,262 @@ appearance): `exp-tisha-chawla`, `exp-susheem-koul` **[registry]**.
   `el-agents-inherit-your-entitlements` ↔ `el-agent-scoped-authorization`
   (edged) and Malhotra's proxy identity; `el-validated-content-before-llm` ↔
   `el-context-rot`.
+
+## Batch-23 additions (reconciled) — AI-native engineering & coding agents
+
+_19 of 20 talks (published 2026-08-20 → 08-28; extracted 2026-09-05/06): the
+coding-agents / AI-native engineering track from the Sep-3 check plus two
+engineering-practice keynotes (Krieger/Anthropic, Jarmak/Sourcegraph).
+Liguori/AWS and Bond & Ketkar/Uber uReview cleared YouTube's caption rate limit
+on a delayed retry and were added in a second load (addendum below);
+Debois/Tessl is still held (no captions published). Converted deterministically
+(`convert_1719.py` batch 23): 9 companies, 22 experts, 99 elements, 89 signals,
+26 insights, 19 know-hows, 1,225 edges; `merge_validate` clean except the two
+pre-existing intentional dangling targets._
+
+### Addendum — talks 18–19: Liguori/AWS and Bond & Ketkar/Uber (added 2026-09-06)
+**Liguori, "Building a Frontier Development Team":** Amazon's pilot ladder —
+Bedrock pathfinder (6 people / 76 days vs 30 / 18 months), Prime Video sprint
+(90 → 24 weeks), a 50-team Amazon Stores pilot on existing systems measured by
+deployment velocity: half <3×, half a median 4.5× (some >10×), and the
+difference was practice, not tools (90% used Kiro). Five habits (agent context
+— and pruning it as models improve; slow down to speed up; feed, don't babysit;
+make intent explicit; shift testing left with local deterministic mocks);
+costs (flowmaxxing, parallel-agent load, review harder than writing for
+early-career engineers, leaders' impatience); and **decision speed as the new
+bottleneck**. `pat-ai-native-org` +5 (its best-controlled evidence),
+`pat-verification-gap` +3, `pat-model-not-bottleneck` +1 (same tools, different
+practice), `pat-harness-over-model` +1 (steering files thin as models improve —
+a fifth source for the REFRAME), `pat-value-of-judgement` +1. New: `exp-clare-liguori`
+(⚠ captions "Claire La Gory"; name from the byline), `el-frontier-development`,
+`el-frontier-pilot-ladder`, `el-five-frontier-habits`, `el-slow-down-to-speed-up`,
+`el-feed-agents-dont-babysit`, `el-flowmaxxing` (⚠ "flow mat" in captions),
+`el-decision-speed-bottleneck`. Reused: `co-aws`, `co-amazon`, `el-kiro`,
+`el-spec-driven-development`, `el-agents-md`, `el-thinning-harness`, `el-typescript`,
+`el-velocity-sickness`, `el-cognitive-debt`, `el-decision-layer`,
+`el-review-and-ci-are-the-new-bottlenecks`, and the batch's own
+`el-copilot-to-coworker-ladder`, `el-overnight-run-loop`, `el-plan-over-prompt`,
+`el-left-shift-verification-to-agents`, `el-three-act-adoption`,
+`el-uneven-adoption-frictions`, `el-moving-bottleneck`.
+**Bond & Ketkar, "Building uReview":** Uber's in-house multi-agent review engine
+— time to first review 3 h (2024) → 9 h (2026); surfaces (GitHub, Phabricator,
+the agent loop) → one service → cost/performance-tuned generators (per-file
+logic, per-monorepo deep review, AI linters, custom team agents) + third-party
+reviewers for comparison → rate/categorize/filter/dedupe. The observability
+ladder (cost/NPS → reply sentiment → address rate → agent trajectories; "the
+model doesn't know that it's wrong") gave −60% cost / +70% accuracy vs naive;
+25K comments/week, 67% addressed, ~¾ of high-severity. Customization rides the
+ownership model ("writing the skill was easy; running skills at scale with
+consistent quality and low cost was hard"). Inner-loop agents need a *higher*
+accuracy bar (**cavitation**) and absorb the nits; **expand the outer loop,
+don't kill it** — humans move up to architecture, domain, product, because
+their feedback is what trained the system. `pat-verification-gap` +3,
+`pat-harness-over-model` +1, `pat-model-not-bottleneck` +1, `pat-ai-native-org` +1,
+`pat-agent-supply-chain` +1, `pat-value-of-judgement` +1. New: `exp-will-bond`,
+`exp-ameya-ketkar`, `el-ureview`, `el-review-observability-ladder`,
+`el-review-customization-via-ownership`, `el-agent-review-cavitation`,
+`el-expanding-the-outer-loop`. Reused: `co-uber`, `el-review-crisis-metrics`,
+`el-review-is-alignment`, `el-intent-review-surface`, `el-accountable-human-signature`,
+`el-trajectory-evals`, `el-monorepo-for-agents`, `el-agent-skills`, `el-auto-review`,
+and the batch's `el-managed-software-factory`, `el-managed-skills-marketplace`,
+`el-two-purposes-of-code-review`, `el-context-not-models-gate-review`,
+`el-context-lake-for-review`. Closes the "review becomes governance" thread
+below for this batch. Pattern-table rows below include both talks.
+
+### Pattern evidence added (FormsPattern / ContradictsPattern)
+| pattern | +support | +counter | note |
+|---|---|---|---|
+| `pat-verification-gap` | 27 | 0 | strongest batch yet — proofs (Pant), review relocation (Qodo; Krieger's intent artifacts), evals as org loop (DoorDash, Braintrust), inner-loop validation (Uber), left-shift (Figma), uReview (3 h → 9 h; cavitation; outer loop expands), Liguori (feed, don't babysit; decision/launch reviews as the long pole) |
+| `pat-ai-native-org` | 25 | 0 | quantified: Uber 70% agent PRs / 2× LOC; Anthropic ~60% via Tag; Amazon's 50-team pilot (median 4.5× only where practice changed; the dip first; flowmaxxing); plus Figma's three acts, Browser Company CTO, Every solo, Long Lake owner-operator, Labs persevere-or-pivot, uReview's hundreds of rule-owning teams |
+| `pat-harness-over-model` | 18 | **2** | support from gateways/platforms (Twilio, Uber, Figma MCP, Stripe skills files); **counters** from Rogge (workflow → CLI+skill) and Bhatawdekar (graphs were borrowed control) — see reframe below |
+| `pat-model-not-bottleneck` | 11 | 0 | diffusion (Long Lake), representation (Figma MCP), context (Unblocked, Qodo), "be unreasonable" (Krieger), same tools / different practice (Liguori), observability not the model (uReview) |
+| `pat-agent-economy` | 8 | 0 | agent as product/buyer/user (Stripe/Metronome; HubSpot seats→credits), agent as dev-tool user/recommender (Sourcegraph GEO 65%/0%), agents doing outreach (Hugging Face) |
+| `pat-context-graphs` | 7 | 0 | Uber's 40M-entry graph (measured), Qodo's software graph, Unblocked's engine (2× demo, 50% tokens) — strongest coding-domain cluster; Box's b22 counter stands beside it |
+| `pat-value-of-judgement` | 9 | 0 | Klaassen (judgement is the bottleneck), Blum (the plan is the craft), Agrawal (models execute, leaders coach), Arora (principles first), Pant (own the spec), Liguori (decision speed), uReview (humans move up a layer) |
+| `pat-continual-learning-turn` / `pat-benchmark-trust-crisis` | 4 / 4 | 0 | Long Lake traces-as-regression-tests, Klaassen compounding; Braintrust static evals + pass@k, Arora "benchmaxxed on single-GPU" |
+| `pat-agent-supply-chain` | 4 | 0 | Uber's 2,500-skill marketplace (governance side) and uReview's team review skills at scale, Figma's MCP client drift, Sourcegraph's agent-installed libraries |
+| `pat-accelerated-research` | 2 | **1** | Pant's zlib→Lean (32k lines of proof) and Agrawal's overnight model training support; Arora's ParallelKernelBench (28/87, ~31% plateau) counters |
+| `pat-agent-memory-layer` / `pat-durable-execution` / `pat-saaspocalypse` / `pat-sovereign-ai` | 2 each | 0 | Unblocked + Klaassen; Twilio fallback + gateway; HubSpot seats→credits + "skillified" products; open models at DoorDash and Hugging Face |
+| `pat-new-cyber-threats` | 1 | 0 | Twilio guardrails fail-open/closed |
+
+### ⚑ REFRAME — `pat-harness-over-model` needs a date stamp
+Three sources this batch date heavy orchestration to a model deficit that
+closed in mid-2025: Rogge (Hugging Face) replaced a multi-step workflow with a
+CLI + one skill + a sandbox "because the models have become so good" (Cursor:
+12,000 lines → a 200-line skill); Bhatawdekar (Braintrust) reads the
+graph/state-machine era as control borrowed from the harness while ReAct loops
+were unreliable, returned when tool calling and planning became reliable;
+Krieger (Anthropic) says first-generation products "put the model in a box" and
+runs a standing unship list (styles → skills). With Box's ladder (b22) that is
+four independent readings. The pattern's claim-1 (control outside the model)
+still gains +16 here — gateways, guardrails, budgets, evals, proofs — but its
+*weight* is time-dependent. **Recommend adding to the brief:** "the harness
+thins as capability rises; what remains is the deterministic boundary (verify,
+budget, govern), not orchestration." Both counter-edges kept.
+
+### ⚑ "Review becomes governance" thread (no new pattern)
+Jain/Aviator (b21) → Abdalla/Warp (b22) → this batch: Qodo (context lake,
+100 silent PRs as the automation threshold, software-graph governance),
+Krieger (Claude Code artifacts: intent and trade-offs instead of the diff —
+the lab shipping b21's `el-intent-review-surface`), Uber (draft-PR until
+inner-loop validation; tiered review; the check table on the PR), Figma/Blum
+(testing pyramid with humans only at the top). Uber's uReview talk (late
+arrival, addendum above) closes it: expand the outer loop upward. Recorded under `pat-verification-gap`; recommend widening
+`el-review-is-alignment` / `el-intent-review-surface` briefs.
+
+### ⚑ Context as the bottleneck — three production answers
+Uber's context graph (150 node/edge types, 40M entries, "massive improvement in
+tokens, turns and latency"), Qodo's software graph (services, contracts, P0
+history, discussions), Unblocked's context engine (demo ~2× time/cost; customer
+50% fewer tokens) plus its named failure mode `el-satisfaction-of-search`. The
+strongest coding-domain support `pat-context-graphs` has had; keep Box's
+"agentic search over graphs" counter (b22) in the brief as the boundary.
+
+### ⚑ `pat-accelerated-research` is now contested
+Pant: an AI converted zlib to Lean with 32,000 lines of proof in about a week;
+Agrawal: a coding agent trained two ModernBERT classifiers overnight and
+shipped them. Arora: on 87 real multi-GPU kernel problems the best frontier model
+solves 28 zero-shot, "fast" plateaus at ~31% with sampling, and an agent
+harness lifts solves once then plateaus — models "do not understand how to
+reason through these trade-offs even when we provide them in context." First
+counter-edge on the seed pattern; add the boundary to its brief.
+
+### HELD LEDGERS
+- **`pat-fde-rise` (uncoined):** Long Lake's owner-operator model (acquire the
+  services business, deploy from inside — "we are not the vendor"); Krieger on
+  Anthropic hiring Lovejoy (b22) for healthcare. With b22's Lovejoy talk, the
+  coin case now has three batches of first-person evidence.
+- **"Agent spend governance" (b22):** Uber's gateway attribution + 40% fleet-wide
+  token savings (Omni MCP → CLI projection → code mode); Twilio's "centralized
+  governance over decentralized traffic"; Stripe/Metronome's agent wallets and
+  prepaid credits.
+- **Skills as the unit (b22):** Uber's managed marketplace (2,500 skills, 20K
+  executions/day, continuous evals to authors — QuantumBlack's blueprint in
+  production); Rogge's one-skill agent; Krieger unshipping styles for skills;
+  Klaassen's plugin used by hundreds of thousands daily. Widen `el-agent-skills`.
+- **HELD PATTERN-LESS:** `sig-bottleneck-shifted-to-gpu-networking` (Arora) —
+  infra texture (compute 7.2× vs interconnect 2–3×); loosely bears on the
+  uncoined `pat-compute-liquidity` (b18).
+
+### Same-batch convergences worth a line
+- **Tests first, then let it run overnight:** Blum (Figma), Agrawal (Browser
+  Company), Klaassen (`/lfg`) — three arrivals at the same loop shape.
+- **The plan/spec is the human artifact:** Blum (plan-over-prompt), Pant (humans
+  own the spec), Klaassen (brain at the ends), Krieger (express the end state).
+- **The best engineers adopt last** (Blum) and **the leader is the best prompter**
+  (Agrawal) — two new `pat-ai-native-org` textures, one dysfunction, one asset.
+- **Gateways as the control point:** DoorDash (what), Uber (at scale), Twilio
+  (failure discipline). Consider a gateway cluster under `el-model-routing`.
+- **Decision speed is the new bottleneck:** Liguori (Amazon: approvals, not
+  code, are the long pole), Uber SDLC ("should we build it"), Klaassen's
+  `el-moving-bottleneck` — three arrivals; Liguori also joins the tests-first /
+  run-overnight loop (feed, don't babysit) and the spec-is-the-human-artifact thread.
+
+### Companies (9 new)
+`co-long-lake` (Shenoy; ⚠ acquirer-operator coerced → `investor`), `co-metronome`
++ `co-stripe` (Garvin; fintech → `developer`), `co-twilio` (Manuja), `co-unblocked`
+(Werry), `co-every` (Klaassen; ⚠ publisher+studio coerced → `media`),
+`co-browser-company` (Agrawal), `co-qodo` (Friedman), `co-sourcegraph` (Jarmak).
+- **Reused with new facts:** `co-figma` (Blum, Lumarie — AI-first pivot; MCP as a
+  fastest-growing product), `co-uber` (70% agent PRs; six building blocks; uReview),
+  `co-doordash` (GenAI platform's four pillars), `co-hugging-face` (agent-run
+  outreach; inference providers), `co-braintrust` (Topics), `co-together-ai`
+  **[b15]** (Parallel Kittens, ParallelKernelBench), `co-anthropic` **[seed]**
+  (Labs cadence; ~60% via Tag; Claude Code artifacts), `co-aws` (Cedar, Strata,
+  Kiro; the frontier-team pilots), `co-amazon` (Bedrock / Prime Video / Stores
+  pilots; 2,000-team scale-out), `co-cursor`, `co-modal`, `co-zhipu-ai` (GLM 5.2 in production use),
+  `co-meta` **[seed]** (Instagram precedents), `co-anterior` **[b22]**.
+- ⚠ Referenced without coining: HubSpot, Lovable, Vercel (provider), Okta,
+  Notion, Midjourney, AMD, Stanford/Caltech, American Express GBT, Julie Zhuo /
+  Simon Last / Hamel Husain / Margaret Mitchell (citations).
+
+### Experts (22 new)
+`exp-varun-shenoy`, `exp-eyal-blum` (⚠ captions say "Alon"), `exp-varun-pant`,
+`exp-andrew-garvin` (co-metronome + co-stripe), `exp-kanish-manuja`,
+`exp-nachiket-paranjape` + `exp-swaroop-chitlur-haridas`, `exp-jesse-lumarie`,
+`exp-peter-werry`, `exp-simran-arora`, `exp-mike-krieger`, `exp-stephanie-jarmak`,
+`exp-uday-kiran-medisetty` + `exp-adam-huda`, `exp-niels-rogge`,
+`exp-kieran-klaassen`, `exp-hursh-agrawal`, `exp-itamar-friedman`,
+`exp-ameya-bhatawdekar`; late arrivals `exp-clare-liguori`, `exp-will-bond`,
+`exp-ameya-ketkar`.
+
+### Elements (99 new)
+- Diffusion / org: `el-ai-diffusion-problem`, `el-copilot-to-coworker-ladder`,
+  `el-async-agents-for-services-work`, `el-real-work-traces-flywheel`,
+  `el-software-service-co-design`; `el-three-act-adoption`,
+  `el-uneven-adoption-frictions`, `el-left-shift-verification-to-agents`,
+  `el-plan-over-prompt`, `el-attention-aware-communication`,
+  `el-skeptics-own-the-safety-roadmap`; `el-manager-schedule-as-building-time`,
+  `el-four-things-leaders-should-build`, `el-overnight-run-loop`,
+  `el-feedback-json-hill-climb`, `el-overnight-model-training`,
+  `el-prototyping-hygiene-for-leaders`; `el-compound-engineering`,
+  `el-moving-bottleneck`, `el-solution-documents-in-repo`,
+  `el-compound-engineering-plugin`, `el-brain-at-the-ends`;
+  `el-express-the-end-state`, `el-be-unreasonable`, `el-tag-multiplayer-delegation`,
+  `el-intent-artifacts-over-diffs`, `el-labs-persevere-or-pivot`,
+  `el-unship-previous-generation-primitives`
+- Verification / review / evals: `el-humans-own-the-spec-machines-own-code-and-proof`,
+  `el-lean-kernel-and-tactics`, `el-cedar-differential-verification`,
+  `el-strata-verification-ir`; `el-two-purposes-of-code-review`,
+  `el-context-not-models-gate-review`, `el-context-lake-for-review`,
+  `el-software-graph-governance`, `el-artificial-wisdom`;
+  `el-architecture-generations-and-their-evals`, `el-evals-follow-architecture`,
+  `el-pass-at-k-and-pass-hat-k`, `el-eval-flywheel-in-practice`,
+  `el-production-topic-clustering`; `el-evals-as-cross-functional-sport`,
+  `el-eight-step-quality-loop`, `el-ui-first-api-first-workflow-first`,
+  `el-vibe-coded-annotation-uis`, `el-self-serve-judge-calibration`;
+  `el-hand-eval-to-judged-runs`
+- Platforms / context: `el-uber-model-gateway`, `el-mcp-gateway-token-optimization`,
+  `el-agent-devpods`, `el-managed-skills-marketplace`, `el-uber-context-graph`,
+  `el-managed-software-factory`; `el-gateway-four-way-tradeoff`,
+  `el-per-request-fallback-for-llms`, `el-per-route-latency-discipline`,
+  `el-guardrails-fail-open-or-closed`, `el-decentralized-gateway-centralized-governance`;
+  `el-context-engine`, `el-agents-reset-like-new-employees`,
+  `el-context-maturity-curve`, `el-satisfaction-of-search`,
+  `el-engineering-social-graph`; `el-figma-mcp-server`,
+  `el-scene-graph-serialization-for-agents`, `el-code-connect-pointers`,
+  `el-mcp-client-compatibility-drift`
+- Agents as actors: `el-stripe-projects`, `el-vendor-skills-files-for-agents`,
+  `el-agent-as-product-buyer-user`, `el-agent-spend-controls-and-wallets`;
+  `el-agent-advocate`, `el-codescalebench`, `el-generative-engine-optimization`,
+  `el-devrel-three-flavors`, `el-agent-experience-report`;
+  `el-community-science-outreach-agent`, `el-workflow-then-agent-choice`,
+  `el-cli-skill-sandbox-agent`, `el-undisclosed-agent-outreach`, `el-daily-papers-bot`
+- Infra research: `el-multi-gpu-communication-bottleneck`, `el-parallel-kittens`,
+  `el-multi-gpu-kernel-tradeoffs`, `el-parallel-kernel-bench`,
+  `el-models-dont-reason-about-hardware-tradeoffs`
+- Late arrivals: `el-frontier-development`, `el-frontier-pilot-ladder`,
+  `el-five-frontier-habits`, `el-slow-down-to-speed-up`, `el-feed-agents-dont-babysit`,
+  `el-flowmaxxing`, `el-decision-speed-bottleneck`; `el-ureview`,
+  `el-review-observability-ladder`, `el-review-customization-via-ownership`,
+  `el-agent-review-cavitation`, `el-expanding-the-outer-loop`
+- **Reuse, recommend widening briefs:** `el-agent-skills` (marketplace,
+  one-skill agents, plugins), `el-review-is-alignment` + `el-intent-review-surface`
+  (lab-shipped), `el-spec-driven-development` (Blum's validation gates; Pant's
+  spec-as-human-artifact), `el-thinning-harness` (Rogge's 12,000 → 200),
+  `el-model-routing` (gateway cluster), `el-context-acquisition-gap`
+  (satisfaction of search), `el-skills-registry-platform` (Uber in production),
+  `el-lean` (kernel/tactics; Cedar), `el-software-factory` (Uber's "managed" form).
+
+### ⚑ Flags / merge-checks
+- **⚠ VERIFY before seeding (garbled captions throughout):** Uber's figures
+  (70%, 2×, 250/9M, 800/100M, 1,000+/40%, 2,500/20K, 150/40M, 300/20K);
+  Anthropic "~60% via Tag"; Arora's 28/87, ~36, ~31%, 24→35, 7.2×/3×/2×;
+  Long Lake $3B / 35 / $6.3B; Blum ~5×; Figma MCP launch dates; Metronome's
+  "largest Stripe deal" and HubSpot's EMEA move; Sourcegraph 65%/0% and
+  12,000 commits; Pant's zlib "32,000 lines / a week" and Cedar's ~100M nightly;
+  Rogge's GLM 5.2 vs Opus 4.8 and 90K followers; Klaassen's "hundreds of
+  thousands daily"; Braintrust's periodization; Liguori's 4.5× median / >10× / 6 people in 76 days /
+  90 → 24 weeks / 50 → 2,000 teams; uReview's 3 h → 9 h, 25K comments/week,
+  67% / ¾, −60% / +70%.
+- **Node-identity questions:** `co-long-lake` (`investor` vs `developer`),
+  `co-every` (`media` vs `developer`), `exp-eyal-blum` first name,
+  `exp-clare-liguori` (byline spelling; captions "Claire La Gory").
+- **Domain enum gap persists** (b22 flag): the leadership/GTM signals here carry
+  no `domain`; Sourcegraph's GEO content foreshadows the queued GTM track.
+- **Cross-file edges left to review:** `el-plan-over-prompt` ↔ `el-overnight-run-loop`
+  ↔ `el-compound-engineering-plugin` (the same loop shape);
+  `el-satisfaction-of-search` ↔ `el-context-rot`; `el-per-request-fallback-for-llms`
+  ↔ `el-agent-circuit-breakers-and-budgets` (edged); `el-agent-experience-report`
+  ↔ `el-codescalebench` ↔ b22's `el-validated-content-before-llm`;
+  `el-uber-context-graph` ↔ `el-company-brain` (edged) ↔ `el-context-engine`.
