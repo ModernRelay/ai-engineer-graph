@@ -11,8 +11,9 @@ repository is the complete, loadable definition of the graph and nothing else:
 - `schema.pg` — the schema (source of truth for the data model)
 - `cluster.yaml` + `policies/` — cluster config and Cedar policy bundles
 - `queries/*.gq` — the stored queries the server serves (reads + mutations)
-- `seed/` — the full dataset: `entities.jsonl` (all nodes and edges) and
-  `chunks.jsonl` (transcript chunks, embedded at load time with `embed-spec.json`)
+- `seed/` — the full dataset in load order: `01-sources.jsonl` … `09-knowhow.jsonl`
+  (one file per node type), `10-edges.jsonl`, and `chunks/part-NN.jsonl`
+  (transcript chunks in parts of 400, embedded at load time with `embed-spec.json`)
 - `omnigraph-config.example.yaml` — client profile and alias pack
 - `README.md` — the one document: model, layout, setup, load, query, operate
 
@@ -34,7 +35,7 @@ omnigraph cluster plan  --config .
 omnigraph cluster apply --config . --as act-admin   # then restart the server
 
 # Data plane — see README "Load the seed" for the full procedure
-omnigraph load --data seed/entities.jsonl --mode overwrite --as act-analyst --yes <graph-uri>
+for f in seed/[0-9]*.jsonl; do omnigraph load --data "$f" --mode overwrite --as act-analyst --yes <graph-uri>; done
 ```
 
 Environment for local operation comes from `.env.omni` + `.env.embedding`

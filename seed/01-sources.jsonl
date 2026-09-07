@@ -1,0 +1,17 @@
+{"type": "SourceEntity", "data": {"id": "source-aie-yt", "name": "AI Engineer", "platform": "YouTube", "slug": "source-aie-yt", "type": "video_channel", "url": "https://www.youtube.com/@aiDotEngineer"}}
+{"type": "SourceEntity", "data": {"id": "source-anthropic-bl", "name": "Anthropic Blog", "platform": "web", "slug": "source-anthropic-bl", "type": "blog", "url": "https://anthropic.com"}}
+{"type": "SourceEntity", "data": {"id": "source-bloomberg-nl", "name": "Bloomberg", "platform": "web", "slug": "source-bloomberg-nl", "type": "newsletter", "url": "https://bloomberg.com"}}
+{"type": "SourceEntity", "data": {"id": "source-cloudian-bl", "name": "Cloudian / EnterpriseNews", "platform": "web", "slug": "source-cloudian-bl", "type": "blog", "url": "https://enterprisenews.com"}}
+{"type": "SourceEntity", "data": {"id": "source-deepmind-bl", "name": "Google DeepMind Blog", "platform": "web", "slug": "source-deepmind-bl", "type": "blog", "url": "https://deepmind.google"}}
+{"type": "SourceEntity", "data": {"id": "source-forbes-nl", "name": "Forbes", "platform": "web", "slug": "source-forbes-nl", "type": "newsletter", "url": "https://forbes.com"}}
+{"type": "SourceEntity", "data": {"id": "source-fortune-nl", "name": "Fortune", "platform": "web", "slug": "source-fortune-nl", "type": "newsletter", "url": "https://fortune.com"}}
+{"type": "SourceEntity", "data": {"id": "source-google-research-bl", "name": "Google Research Blog", "platform": "web", "slug": "source-google-research-bl", "type": "blog", "url": "https://research.google"}}
+{"type": "SourceEntity", "data": {"id": "source-moonshot-bl", "name": "Moonshot AI", "platform": "web", "slug": "source-moonshot-bl", "type": "blog", "url": "https://kimi.com"}}
+{"type": "SourceEntity", "data": {"id": "source-paloalto-bl", "name": "Palo Alto Networks", "platform": "web", "slug": "source-paloalto-bl", "type": "blog", "url": "https://www.paloaltonetworks.com/blog"}}
+{"type": "SourceEntity", "data": {"id": "source-red-anthropic-bl", "name": "Anthropic Red Team", "platform": "web", "slug": "source-red-anthropic-bl", "type": "blog", "url": "https://red.anthropic.com"}}
+{"type": "SourceEntity", "data": {"id": "source-reuters-nl", "name": "Reuters", "platform": "web", "slug": "source-reuters-nl", "type": "newsletter", "url": "https://reuters.com"}}
+{"type": "SourceEntity", "data": {"id": "source-sequoia-bl", "name": "Sequoia Capital Blog", "platform": "web", "slug": "source-sequoia-bl", "type": "blog", "url": "https://sequoiacap.com"}}
+{"type": "SourceEntity", "data": {"id": "source-snyk-bl", "name": "Snyk", "platform": "web", "slug": "source-snyk-bl", "type": "blog", "url": "https://snyk.io"}}
+{"type": "SourceEntity", "data": {"id": "source-tao-mastodon-bl", "name": "Terence Tao (Mastodon)", "platform": "mastodon", "slug": "source-tao-mastodon-bl", "type": "blog", "url": "https://mathstodon.xyz/@tao"}}
+{"type": "SourceEntity", "data": {"id": "source-techcrunch-bl", "name": "TechCrunch", "platform": "web", "slug": "source-techcrunch-bl", "type": "blog", "url": "https://techcrunch.com"}}
+{"type": "SourceEntity", "data": {"id": "source-zylon-bl", "name": "Zylon", "platform": "web", "slug": "source-zylon-bl", "type": "blog", "url": "https://zylon.ai"}}
