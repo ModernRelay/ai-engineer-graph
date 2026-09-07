@@ -1,6 +1,7 @@
 {"type": "Expert", "data": {"id": "exp-aamir-shakir", "name": "Aamir Shakir", "slug": "exp-aamir-shakir"}}
 {"type": "Expert", "data": {"id": "exp-aaron-levie", "name": "Aaron Levie", "slug": "exp-aaron-levie"}}
 {"type": "Expert", "data": {"id": "exp-aaron-stanley", "name": "Aaron Stanley", "slug": "exp-aaron-stanley"}}
+{"type": "Expert", "data": {"id": "exp-abduallah-mohamed", "name": "Abduallah Mohamed", "slug": "exp-abduallah-mohamed"}}
 {"type": "Expert", "data": {"id": "exp-abed-matini", "name": "Abed Matini", "slug": "exp-abed-matini"}}
 {"type": "Expert", "data": {"id": "exp-abhilash-asokan", "name": "Abhilash Asokan", "slug": "exp-abhilash-asokan"}}
 {"type": "Expert", "data": {"id": "exp-abhishek-bhardwaj", "name": "Abhishek Bhardwaj", "slug": "exp-abhishek-bhardwaj"}}
@@ -45,12 +46,14 @@
 {"type": "Expert", "data": {"id": "exp-anuj-iravane", "name": "Anuj Iravane", "slug": "exp-anuj-iravane"}}
 {"type": "Expert", "data": {"id": "exp-aparna-dhinakaran", "name": "Aparna Dhinakaran", "slug": "exp-aparna-dhinakaran"}}
 {"type": "Expert", "data": {"id": "exp-apoorva-joshi", "name": "Apoorva Joshi", "slug": "exp-apoorva-joshi"}}
+{"type": "Expert", "data": {"id": "exp-archana-kamath", "name": "Archana Kamath", "slug": "exp-archana-kamath"}}
 {"type": "Expert", "data": {"id": "exp-arek-borucki", "name": "Arek Borucki", "slug": "exp-arek-borucki"}}
 {"type": "Expert", "data": {"id": "exp-ari-morcos", "name": "Ari Morcos", "slug": "exp-ari-morcos"}}
 {"type": "Expert", "data": {"id": "exp-arjun-singh", "name": "Arjun Singh", "slug": "exp-arjun-singh"}}
 {"type": "Expert", "data": {"id": "exp-arman-vaziri", "name": "Arman Vaziri", "slug": "exp-arman-vaziri"}}
 {"type": "Expert", "data": {"id": "exp-armanas-povilionis", "name": "Armanas Povilionis", "slug": "exp-armanas-povilionis"}}
 {"type": "Expert", "data": {"id": "exp-arturo-nunez", "name": "Arturo Nunez", "slug": "exp-arturo-nunez"}}
+{"type": "Expert", "data": {"id": "exp-ashish-kamra", "name": "Ashish Kamra", "slug": "exp-ashish-kamra"}}
 {"type": "Expert", "data": {"id": "exp-atul-ramachandran", "name": "Atul Ramachandran", "slug": "exp-atul-ramachandran"}}
 {"type": "Expert", "data": {"id": "exp-ayush-bhardwaj", "name": "Ayush Bhardwaj", "slug": "exp-ayush-bhardwaj"}}
 {"type": "Expert", "data": {"id": "exp-bala-ramdoss", "name": "Bala Ramdoss", "slug": "exp-bala-ramdoss"}}
@@ -62,6 +65,7 @@
 {"type": "Expert", "data": {"id": "exp-ben-hylak", "name": "Ben Hylak", "slug": "exp-ben-hylak"}}
 {"type": "Expert", "data": {"id": "exp-ben-kus", "name": "Ben Kus", "slug": "exp-ben-kus"}}
 {"type": "Expert", "data": {"id": "exp-benedikt-sanftl", "name": "Benedikt Sanftl", "slug": "exp-benedikt-sanftl"}}
+{"type": "Expert", "data": {"id": "exp-benjamin-guo", "name": "Benjamin Guo", "slug": "exp-benjamin-guo"}}
 {"type": "Expert", "data": {"id": "exp-bennet-fenner", "name": "Bennet Fenner (engineer at Zed; works on the Agent Client Protocol; live-built an ACP agent on stage)", "slug": "exp-bennet-fenner"}}
 {"type": "Expert", "data": {"id": "exp-benoit-schillings", "name": "Benoit Schillings", "slug": "exp-benoit-schillings"}}
 {"type": "Expert", "data": {"id": "exp-bereket-habtemeskel", "name": "Bereket Habtemeskel", "slug": "exp-bereket-habtemeskel"}}
@@ -111,6 +115,7 @@
 {"type": "Expert", "data": {"id": "exp-dominik-tornow", "name": "Dominik Tornow (founder & CEO, Resonate; distributed-systems and agentic-engineering practitioner)", "slug": "exp-dominik-tornow"}}
 {"type": "Expert", "data": {"id": "exp-dotta", "name": "Dotta", "slug": "exp-dotta"}}
 {"type": "Expert", "data": {"id": "exp-drasko-profirovic", "name": "Draško Profirović", "slug": "exp-drasko-profirovic"}}
+{"type": "Expert", "data": {"id": "exp-dumitru-erhan", "name": "Dumitru Erhan", "slug": "exp-dumitru-erhan"}}
 {"type": "Expert", "data": {"id": "exp-ekaterina-deyneka", "name": "Ekaterina Deyneka", "slug": "exp-ekaterina-deyneka"}}
 {"type": "Expert", "data": {"id": "exp-elizabeth-fuentes", "name": "Elizabeth Fuentes Leon", "slug": "exp-elizabeth-fuentes"}}
 {"type": "Expert", "data": {"id": "exp-elvin-aghammadzada", "name": "Elvin Aghammadzada", "slug": "exp-elvin-aghammadzada"}}
@@ -141,6 +146,7 @@
 {"type": "Expert", "data": {"id": "exp-hamza-tahir", "name": "Hamza Tahir", "slug": "exp-hamza-tahir"}}
 {"type": "Expert", "data": {"id": "exp-hanna-lichtenberg", "name": "Hanna Lichtenberg", "slug": "exp-hanna-lichtenberg"}}
 {"type": "Expert", "data": {"id": "exp-harshal-bhangale", "name": "Harshal Bhangale", "slug": "exp-harshal-bhangale"}}
+{"type": "Expert", "data": {"id": "exp-hassan-el-mghari", "name": "Hassan El Mghari", "slug": "exp-hassan-el-mghari"}}
 {"type": "Expert", "data": {"id": "exp-hursh-agrawal", "name": "Hursh Agrawal", "slug": "exp-hursh-agrawal"}}
 {"type": "Expert", "data": {"id": "exp-ian-livingstone", "name": "Ian Livingstone", "slug": "exp-ian-livingstone"}}
 {"type": "Expert", "data": {"id": "exp-idan-gazit", "name": "Idan Gazit", "slug": "exp-idan-gazit"}}
@@ -161,12 +167,15 @@
 {"type": "Expert", "data": {"id": "exp-james-le", "name": "James Le", "slug": "exp-james-le"}}
 {"type": "Expert", "data": {"id": "exp-james-russo", "name": "James Russo", "slug": "exp-james-russo"}}
 {"type": "Expert", "data": {"id": "exp-james-shi", "name": "James Shi", "slug": "exp-james-shi"}}
+{"type": "Expert", "data": {"id": "exp-james-zou", "name": "James Zou", "slug": "exp-james-zou"}}
 {"type": "Expert", "data": {"id": "exp-jan-curn", "name": "Jan Čurn", "slug": "exp-jan-curn"}}
 {"type": "Expert", "data": {"id": "exp-jared-joselowitz", "name": "Jared Joselowitz", "slug": "exp-jared-joselowitz"}}
 {"type": "Expert", "data": {"id": "exp-jason-liu", "name": "Jason Liu", "slug": "exp-jason-liu"}}
 {"type": "Expert", "data": {"id": "exp-jason-lopatecki", "name": "Jason Lopatecki", "slug": "exp-jason-lopatecki"}}
 {"type": "Expert", "data": {"id": "exp-jay-mok", "name": "Jay Mok", "slug": "exp-jay-mok"}}
 {"type": "Expert", "data": {"id": "exp-jd-puit", "name": "JD Puit", "slug": "exp-jd-puit"}}
+{"type": "Expert", "data": {"id": "exp-jean-denis-greze", "name": "Jean-Denis Greze", "slug": "exp-jean-denis-greze"}}
+{"type": "Expert", "data": {"id": "exp-jeff-ng", "name": "Jeff Ng", "slug": "exp-jeff-ng"}}
 {"type": "Expert", "data": {"id": "exp-jeffrey-lee-chan", "name": "Jeffrey Lee-Chan", "slug": "exp-jeffrey-lee-chan"}}
 {"type": "Expert", "data": {"id": "exp-jeffrey-wang", "name": "Jeffrey Wang", "slug": "exp-jeffrey-wang"}}
 {"type": "Expert", "data": {"id": "exp-jesse-lumarie", "name": "Jesse Lumarie", "slug": "exp-jesse-lumarie"}}
@@ -225,6 +234,7 @@
 {"type": "Expert", "data": {"id": "exp-nick-heiner", "name": "Nick Heiner", "slug": "exp-nick-heiner"}}
 {"type": "Expert", "data": {"id": "exp-nick-taylor", "name": "Nick Taylor", "slug": "exp-nick-taylor"}}
 {"type": "Expert", "data": {"id": "exp-nick-ung", "name": "Nick Ung", "slug": "exp-nick-ung"}}
+{"type": "Expert", "data": {"id": "exp-nicole-brichtova", "name": "Nicole Brichtova", "slug": "exp-nicole-brichtova"}}
 {"type": "Expert", "data": {"id": "exp-nidhi-kaushik-vyas", "name": "Nidhi Kaushik Vyas", "slug": "exp-nidhi-kaushik-vyas"}}
 {"type": "Expert", "data": {"id": "exp-niels-rogge", "name": "Niels Rogge", "slug": "exp-niels-rogge"}}
 {"type": "Expert", "data": {"id": "exp-nishant-gupta", "name": "Nishant Gupta", "slug": "exp-nishant-gupta"}}
@@ -300,10 +310,12 @@
 {"type": "Expert", "data": {"id": "exp-sean-cai", "name": "Sean Cai", "slug": "exp-sean-cai"}}
 {"type": "Expert", "data": {"id": "exp-sebastian-fox", "name": "Sebastian Fox", "slug": "exp-sebastian-fox"}}
 {"type": "Expert", "data": {"id": "exp-shafik-quoraishee", "name": "Shafik Quoraishee", "slug": "exp-shafik-quoraishee"}}
+{"type": "Expert", "data": {"id": "exp-shane-gu", "name": "Shane Gu", "slug": "exp-shane-gu"}}
 {"type": "Expert", "data": {"id": "exp-shashi", "name": "Shashi", "slug": "exp-shashi"}}
 {"type": "Expert", "data": {"id": "exp-shawn-chan", "name": "Shawn Chan", "slug": "exp-shawn-chan"}}
 {"type": "Expert", "data": {"id": "exp-shlok-khemani", "name": "Shlok Khemani", "slug": "exp-shlok-khemani"}}
 {"type": "Expert", "data": {"id": "exp-shreya-rajpal", "name": "Shreya Rajpal", "slug": "exp-shreya-rajpal"}}
+{"type": "Expert", "data": {"id": "exp-shu-fang", "name": "Shu Fang", "slug": "exp-shu-fang"}}
 {"type": "Expert", "data": {"id": "exp-sidney-primas", "name": "Sidney Primas", "slug": "exp-sidney-primas"}}
 {"type": "Expert", "data": {"id": "exp-simon-eskildsen", "name": "Simon Eskildsen", "slug": "exp-simon-eskildsen"}}
 {"type": "Expert", "data": {"id": "exp-simon-willison", "name": "Simon Willison", "slug": "exp-simon-willison"}}
@@ -325,6 +337,7 @@
 {"type": "Expert", "data": {"id": "exp-susheem-koul", "name": "Susheem Koul", "slug": "exp-susheem-koul"}}
 {"type": "Expert", "data": {"id": "exp-swaroop-chitlur-haridas", "name": "Swaroop Chitlur Haridas", "slug": "exp-swaroop-chitlur-haridas"}}
 {"type": "Expert", "data": {"id": "exp-talha-sheikh", "name": "Talha Sheikh", "slug": "exp-talha-sheikh"}}
+{"type": "Expert", "data": {"id": "exp-tanmai-gopal", "name": "Tanmai Gopal", "slug": "exp-tanmai-gopal"}}
 {"type": "Expert", "data": {"id": "exp-tariq-shaukat", "name": "Tariq Shaukat", "slug": "exp-tariq-shaukat"}}
 {"type": "Expert", "data": {"id": "exp-ted-johnson", "name": "Ted Johnson", "slug": "exp-ted-johnson"}}
 {"type": "Expert", "data": {"id": "exp-terence-tao", "name": "Terence Tao", "slug": "exp-terence-tao"}}
@@ -333,6 +346,7 @@
 {"type": "Expert", "data": {"id": "exp-theo-browne", "name": "Theo Browne", "slug": "exp-theo-browne"}}
 {"type": "Expert", "data": {"id": "exp-thiyagarajan-maruthavanan", "name": "Thiyagarajan Maruthavanan", "slug": "exp-thiyagarajan-maruthavanan"}}
 {"type": "Expert", "data": {"id": "exp-thom-wolf", "name": "Thom Wolf", "slug": "exp-thom-wolf"}}
+{"type": "Expert", "data": {"id": "exp-thomas-wolf", "name": "Thomas Wolf", "slug": "exp-thomas-wolf"}}
 {"type": "Expert", "data": {"id": "exp-tim-ainge", "name": "Tim Ainge (Good Collective; practitioner focused on graph data structures and algorithms for AI applications)", "slug": "exp-tim-ainge"}}
 {"type": "Expert", "data": {"id": "exp-tim-rocktaschel", "name": "Tim Rocktäschel", "slug": "exp-tim-rocktaschel"}}
 {"type": "Expert", "data": {"id": "exp-tisha-chawla", "name": "Tisha Chawla", "slug": "exp-tisha-chawla"}}
@@ -340,6 +354,7 @@
 {"type": "Expert", "data": {"id": "exp-tomer-ast", "name": "Tomer Ast", "slug": "exp-tomer-ast"}}
 {"type": "Expert", "data": {"id": "exp-tony-fabrikant", "name": "Tony Fabrikant", "slug": "exp-tony-fabrikant"}}
 {"type": "Expert", "data": {"id": "exp-tushar-jain", "name": "Tushar Jain", "slug": "exp-tushar-jain"}}
+{"type": "Expert", "data": {"id": "exp-tyler-gillam", "name": "Tyler Gillam", "slug": "exp-tyler-gillam"}}
 {"type": "Expert", "data": {"id": "exp-uday-kanagala", "name": "Uday Kanagala", "slug": "exp-uday-kanagala"}}
 {"type": "Expert", "data": {"id": "exp-uday-kiran-medisetty", "name": "Uday Kiran Medisetty", "slug": "exp-uday-kiran-medisetty"}}
 {"type": "Expert", "data": {"id": "exp-udi-menkes", "name": "Udi Menkes", "slug": "exp-udi-menkes"}}
@@ -365,5 +380,6 @@
 {"type": "Expert", "data": {"id": "exp-yogendra-miraje", "name": "Yogendra Miraje", "slug": "exp-yogendra-miraje"}}
 {"type": "Expert", "data": {"id": "exp-yohei-nakajima", "name": "Yohei Nakajima", "slug": "exp-yohei-nakajima"}}
 {"type": "Expert", "data": {"id": "exp-yu-su", "name": "Yu Su", "slug": "exp-yu-su"}}
+{"type": "Expert", "data": {"id": "exp-yuchen-fama", "name": "Yuchen Fama", "slug": "exp-yuchen-fama"}}
 {"type": "Expert", "data": {"id": "exp-zach-blumenfeld", "name": "Zach Blumenfeld", "slug": "exp-zach-blumenfeld"}}
 {"type": "Expert", "data": {"id": "exp-zhengyao-jiang", "name": "Zhengyao Jiang", "slug": "exp-zhengyao-jiang"}}
