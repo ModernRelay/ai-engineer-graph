@@ -12,8 +12,9 @@ repository is the complete, loadable definition of the graph and nothing else:
 - `cluster.yaml` + `policies/` — cluster config and Cedar policy bundles
 - `queries/*.gq` — the stored queries the server serves (reads + mutations)
 - `seed/` — the full dataset in load order: `01-sources.jsonl` … `09-knowhow.jsonl`
-  (one file per node type), `10-edges.jsonl`, and `chunks/part-NN.jsonl`
-  (transcript chunks in parts of 400, embedded at load time with `embed-spec.json`)
+  (one file per node type), `10-edges.jsonl`, `chunks/part-NN.jsonl`
+  (transcript chunks in parts of 400, embedded at load time with `embed-spec.json`),
+  and `11-evidence.jsonl` (Signal → Chunk evidence edges; load last, after the chunks)
 - `omnigraph-config.example.yaml` — client profile and alias pack
 - `README.md` — the one document: model, layout, setup, load, query, operate
 
@@ -54,7 +55,11 @@ Environment for local operation comes from `.env.omni` + `.env.embedding`
 - Schema edits: `@rename_from(...)` on renames; enums over strings; `id` is an
   engine-reserved column name; keep the README's model section in sync.
 - Loads: `--mode overwrite` replaces only the node/edge types present in the
-  file; edges have no `@key`, so never re-load chunk edges on top of existing
-  ones. Verify remote writes by comparing `commit list --branch main` heads.
+  file; edges have no `@key`, so never re-load chunk or evidence edges on top of
+  existing ones. Verify remote writes by comparing `commit list --branch main` heads.
+- Evidence and polarity: `Signal.evidenceType` is derived (first_party when the
+  signal's company is the speaker's employer); `ContradictsPattern.polarity`
+  separates refutations from boundary conditions; `EvidencedByChunk.score` is the
+  cosine similarity to the matched passage. Keep them populated for new signals.
 - Keep the seed files the exact export of the served graph: regenerate them
   from the graph (`omnigraph export`) rather than hand-editing.
