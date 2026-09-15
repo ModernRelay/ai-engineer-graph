@@ -71,3 +71,28 @@ query signal_sources($slug: String) {
     }
     return { $a.slug, $a.name, $a.artifactType, $a.link }
 }
+
+// Signal -> Chunk (audit 2026-09-13): the transcript passages a signal paraphrases, best match first.
+// score is the cosine similarity between the signal brief and the chunk text.
+
+query signal_evidence($slug: String) {
+    match {
+        $s: Signal { slug: $slug }
+        $s $e:evidencedByChunk $c
+        $c partOfArtifact $a
+    }
+    return { $c.slug, $e.score, $a.slug as artifact, $c.text }
+    order { $e.score desc }
+    limit 5
+}
+
+// Signals by evidence type (first_party = the speaker's own company is the subject).
+
+query signals_by_evidence_type($evidenceType: String) {
+    match {
+        $s: Signal { evidenceType: $evidenceType }
+    }
+    return { $s.slug, $s.name, $s.stagingTimestamp }
+    order { $s.stagingTimestamp desc }
+    limit 200
+}

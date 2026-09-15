@@ -28,6 +28,11 @@ aliases:
   patterns:         { server: intel-local, graph: spike, query: patterns_by_kind, args: [kind] }
   pattern-signals:  { server: intel-local, graph: spike, query: pattern_signals, args: [slug] }
   pattern-counter:  { server: intel-local, graph: spike, query: pattern_counter_signals, args: [slug] }
+  pattern-evidence: { server: intel-local, graph: spike, query: pattern_signals_by_evidence, args: [slug, evidenceType] }
+  pattern-polarity: { server: intel-local, graph: spike, query: pattern_counters_by_polarity, args: [slug, polarity] }
+  pattern-layer:    { server: intel-local, graph: spike, query: pattern_layer_relies }
+  pattern-drivers:  { server: intel-local, graph: spike, query: pattern_layer_drives }
+  pattern-tensions: { server: intel-local, graph: spike, query: pattern_layer_contradicts }
   pattern-elements: { server: intel-local, graph: spike, query: pattern_elements, args: [slug] }
   element:          { server: intel-local, graph: spike, query: get_element, args: [slug], format: kv }
   elements:         { server: intel-local, graph: spike, query: elements_by_kind, args: [kind] }
@@ -63,6 +68,8 @@ aliases:
   # ── Semantic / hybrid retrieval over transcript chunks (hybrid.gq, traversals.gq) ──
   related:          { server: intel-local, graph: spike, query: related_chunks, args: [q] }
   hybrid-search:    { server: intel-local, graph: spike, query: hybrid_chunks, args: [q] }
+  signal-evidence:  { server: intel-local, graph: spike, query: signal_evidence, args: [slug] }
+  signals-by-evidence: { server: intel-local, graph: spike, query: signals_by_evidence_type, args: [evidenceType] }
   signal-hybrid:    { server: intel-local, graph: spike, query: signal_hybrid, args: [q] }
   talk-semantic:    { server: intel-local, graph: spike, query: talk_semantic, args: [talk, q] }
   sem-context:      { server: intel-local, graph: spike, query: semantic_context, args: [q] }

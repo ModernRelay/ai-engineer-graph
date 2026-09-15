@@ -10,22 +10,23 @@ This repository is the complete, loadable definition of the graph:
 |---|---|
 | `schema.pg` | the schema — source of truth for the data model |
 | `cluster.yaml`, `policies/` | Omnigraph cluster config and the two Cedar policy bundles |
-| `queries/*.gq` | 113 stored queries the server serves (82 reads, 31 mutations) |
-| `seed/01-sources.jsonl` … `09-knowhow.jsonl` | every node, one file per type in load order (5,025 nodes) |
-| `seed/10-edges.jsonl` | all 16,645 edges between those nodes |
-| `seed/chunks/part-01.jsonl` … `part-13.jsonl` | 4,926 transcript chunks + their `PartOfArtifact` edges, ≤400 chunks per part, embeddings added at load time |
+| `queries/*.gq` | 120 stored queries the server serves (89 reads, 31 mutations) |
+| `seed/01-sources.jsonl` … `09-knowhow.jsonl` | every node, one file per type in load order (5,034 nodes) |
+| `seed/10-edges.jsonl` | all 17,942 edges between those nodes |
+| `seed/chunks/part-01.jsonl` … `part-14.jsonl` | 5,339 transcript chunks + their `PartOfArtifact` edges, ≤400 chunks per part, embeddings added at load time |
+| `seed/11-evidence.jsonl` | 2,619 `EvidencedByChunk` edges (Signal → Chunk, with a similarity score); load last, after the chunks |
 | `seed/embed-spec.json` | the embedding spec for the chunks (`gemini-embedding-2-preview`, 3072-d) |
 | `omnigraph-config.example.yaml` | client profile and alias pack for the CLI |
 
 The seed files are an exact export of the served graph (last refreshed
-2026-09-06). Nothing else is needed to stand the graph up.
+2026-09-13). Nothing else is needed to stand the graph up.
 
 ## What is in the graph
 
 | type | count | notes |
 |---|---|---|
-| Pattern | 16 | theses about change; the analytical spine |
-| Signal | 1,504 | dated, sourced observations; each forms or contradicts patterns |
+| Pattern | 18 | theses about change; the analytical spine |
+| Signal | 1,511 | dated, sourced observations; each forms or contradicts patterns; typed first-party / third-party / unattributed |
 | Element | 1,258 | products, technologies, frameworks, concepts, ops practices |
 | Insight | 624 | interpretations that highlight a pattern and rely on elements |
 | KnowHow | 551 | practices with guidelines, referencing elements |
@@ -33,31 +34,33 @@ The seed files are an exact export of the served graph (last refreshed
 | Expert | 385 | speakers, affiliated with companies |
 | InformationArtifact | 357 | 338 talks (`youtube`, with video links) + 19 articles |
 | SourceEntity | 17 | publishers; the talks publish via `source-aie-yt` |
-| Chunk | 4,926 | ~220-word transcript passages over 315 talks, 3072-d embeddings |
-| edges | 21,571 | 16,645 between entities + 4,926 chunk → talk |
+| Chunk | 5,339 | ~220-word transcript passages over 336 talks, 3072-d embeddings |
+| edges | 25,900 | 17,942 between entities + 5,339 chunk → talk + 2,619 signal → chunk evidence |
 
-### The 16 patterns
+### The 18 patterns
 
-Support and counter are `FormsPattern` / `ContradictsPattern` signal counts.
+Support and counter are `FormsPattern` / `ContradictsPattern` signal counts; a counter carries a `polarity` (contradiction or boundary condition).
 
 | pattern | kind | support / counter | thesis |
 |---|---|---|---|
-| `pat-verification-gap` | challenge | 373 / 0 | generation has industrialized, verification has not |
-| `pat-harness-over-model` | dynamic | 290 / 20 | the load-bearing engineering sits around the model, and thins as models improve |
-| `pat-model-not-bottleneck` | dynamic | 195 / 10 | models are good enough; value and failure moved to the layers around them |
+| `pat-verification-gap` | challenge | 375 / 5 | generation has industrialized, verification has not |
+| `pat-harness-over-model` | dynamic | 295 / 22 | the load-bearing engineering sits around the model, and thins as models improve |
+| `pat-model-not-bottleneck` | dynamic | 201 / 13 | models are good enough; value and failure moved to the layers around them |
 | `pat-context-graphs` | dynamic | 111 / 4 | decision traces, ontology and time as an infrastructure layer above databases |
-| `pat-value-of-judgement` | dynamic | 88 / 0 | as execution industrializes, the durable human edge is judgement |
-| `pat-ai-native-org` | dynamic | 87 / 0 | organizations restructure around agent delegation |
-| `pat-saaspocalypse` | disruption | 79 / 2 | agents dissolve the SaaS presentation layer and per-seat pricing |
-| `pat-sovereign-ai` | disruption | 75 / 2 | own the stack end to end; regulation removed optionality |
-| `pat-new-cyber-threats` | challenge | 70 / 1 | autonomous exploitation and agentic attack surfaces |
-| `pat-agent-economy` | dynamic | 55 / 1 | agents as primary economic actors, and the payment rails being rebuilt for them |
+| `pat-value-of-judgement` | dynamic | 89 / 5 | as execution industrializes, the durable human edge is judgement |
+| `pat-ai-native-org` | dynamic | 91 / 5 | organizations restructure around agent delegation |
+| `pat-saaspocalypse` | disruption | 81 / 2 | agents dissolve the SaaS presentation layer and per-seat pricing |
+| `pat-sovereign-ai` | disruption | 76 / 3 | own the stack end to end; regulation removed optionality |
+| `pat-new-cyber-threats` | challenge | 71 / 1 | autonomous exploitation and agentic attack surfaces |
+| `pat-agent-economy` | dynamic | 61 / 1 | agents as primary economic actors, and the payment rails being rebuilt for them |
 | `pat-accelerated-research` | dynamic | 53 / 2 | agents run research loops autonomously |
-| `pat-agent-supply-chain` | challenge | 37 / 0 | skills, MCP servers and hallucinated packages form a new, weaker package ecosystem |
-| `pat-benchmark-trust-crisis` | challenge | 29 / 2 | benchmarks decouple from real capability |
-| `pat-continual-learning-turn` | dynamic | 25 / 1 | improvement shifts from pre-training scale to post-deployment learning |
-| `pat-durable-execution` | dynamic | 23 / 1 | a durable runtime layer below the harness becomes a product category |
-| `pat-agent-memory-layer` | dynamic | 23 / 6 | persistent memory becomes a first-class layer of the agent stack |
+| `pat-agent-supply-chain` | challenge | 39 / 3 | skills, MCP servers and hallucinated packages form a new, weaker package ecosystem |
+| `pat-benchmark-trust-crisis` | challenge | 32 / 2 | benchmarks decouple from real capability |
+| `pat-environments-economy` | dynamic | 31 / 3 | RL environments and their verifiers become a traded product layer and the unit of design after the harness |
+| `pat-continual-learning-turn` | dynamic | 30 / 2 | improvement shifts from pre-training scale to post-deployment learning |
+| `pat-durable-execution` | dynamic | 24 / 1 | a durable runtime layer below the harness becomes a product category |
+| `pat-agent-memory-layer` | dynamic | 24 / 7 | persistent memory becomes a first-class layer of the agent stack |
+| `pat-fde-rise` | dynamic | 17 / 1 | the forward-deployed engineer absorbs the product role and becomes the product's stickiness |
 
 ## The model
 
@@ -69,7 +72,7 @@ else grounds, interprets, or attributes that loop.
 
 | edge | route | meaning |
 |---|---|---|
-| `FormsPattern` / `ContradictsPattern` | Signal → Pattern | evidence for / against a thesis |
+| `FormsPattern` / `ContradictsPattern` | Signal → Pattern | evidence for / against a thesis; a counter's `polarity` is `contradiction` or `boundary` |
 | `DrivesPattern` / `ReliesOnPattern` / `ContradictsToPattern` | Pattern → Pattern | causality and tension between theses |
 | `OnElement` | Signal → Element | what the signal is about |
 | `ExemplifiesPattern` / `EnablesPattern` | Element → Pattern | concrete examples or enablers of a thesis |
@@ -80,6 +83,7 @@ else grounds, interprets, or attributes that loop.
 | `SourcedFromSource`, `PublishedBySource`, `ContributedByExpert` | → SourceEntity / Expert | publisher and speaker attribution |
 | `RelevantCompany`, `DevelopedByCompany`, `AffiliatedWithCompany` | → Company | who it concerns, who built it, who employs whom |
 | `PartOfArtifact` | Chunk → InformationArtifact | which talk a transcript chunk belongs to |
+| `EvidencedByChunk` | Signal → Chunk | the transcript passage a signal paraphrases, with a cosine `score` |
 
 Design choices, all visible in `schema.pg`:
 
@@ -92,6 +96,10 @@ Design choices, all visible in `schema.pg`:
 - Edges are named `VerbTargetType` so direction is unambiguous.
 - Embeddings live only on `Chunk.embedding` (`Vector(3072) @embed("text")`).
 - `stagingTimestamp` on Signals, KnowHow and artifacts is the talk's publish date.
+- `Signal.evidenceType` is derived, not asserted: `first_party` when a linked company is
+  the speaker's employer, `third_party` when companies are linked but none is the
+  speaker's, `unattributed` when none is linked. `Signal.verified` is set only after an
+  open-web check.
 
 ## Setup
 
@@ -169,6 +177,9 @@ for f in seed/chunks/part-*.jsonl; do
   omnigraph embed --input "$f" --output "embedded/$(basename "$f")" --spec seed/embed-spec.json &&
   omnigraph load --data "embedded/$(basename "$f")" --mode merge --as act-analyst --yes "$G" || break
 done
+
+# evidence edges (Signal → Chunk) reference chunk slugs, so they load last
+omnigraph load --data seed/11-evidence.jsonl --mode merge --as act-analyst --yes "$G"
 
 omnigraph commit list --branch main "$G" | head -1     # the head advances once per load
 ```
@@ -249,7 +260,7 @@ Anonymous requests get 401; an actor outside a rule gets 403.
   present in the file (chunks survive an entity overwrite); `--mode merge`
   upserts by `@key`. Edges have no key, so loading the same chunk file twice
   duplicates edges and trips `@unique` on `PartOfArtifact` — never re-load
-  chunks that are already in the graph.
+  chunks or evidence edges that are already in the graph.
 - **Verify every write** by comparing `omnigraph commit list --branch main`
   heads before and after; the CLI exit code is not authoritative on remote stores.
 - **Full-text indexes on 0.10:** after bulk loads, rebuild them with the server

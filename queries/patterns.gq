@@ -79,3 +79,46 @@ query pattern_insights($slug: String) {
     }
     return { $i.slug, $i.name, $i.brief }
 }
+
+// Pattern evidence split (audit 2026-09-13)
+
+query pattern_signals_by_evidence($slug: String, $evidenceType: String) {
+    match {
+        $p: Pattern { slug: $slug }
+        $s: Signal { evidenceType: $evidenceType }
+        $s formsPattern $p
+    }
+    return { $s.slug, $s.name, $s.brief, $s.stagingTimestamp }
+    order { $s.stagingTimestamp desc }
+}
+
+// Counters split by polarity: "contradiction" refutes the thesis, "boundary" limits its scope.
+
+query pattern_counters_by_polarity($slug: String, $polarity: String) {
+    match {
+        $p: Pattern { slug: $slug }
+        $s $e:contradictsPattern $p
+        $e.polarity = $polarity
+    }
+    return { $s.slug, $s.name, $s.brief, $e.polarity }
+}
+
+// The pattern layer: every pattern-to-pattern edge, one query per edge type.
+
+query pattern_layer_relies() {
+    match { $a: Pattern $a reliesOnPattern $b }
+    return { $a.slug as from, $b.slug as to }
+    order { $a.slug }
+}
+
+query pattern_layer_drives() {
+    match { $a: Pattern $a drivesPattern $b }
+    return { $a.slug as from, $b.slug as to }
+    order { $a.slug }
+}
+
+query pattern_layer_contradicts() {
+    match { $a: Pattern $a contradictsToPattern $b }
+    return { $a.slug as from, $b.slug as to }
+    order { $a.slug }
+}
