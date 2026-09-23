@@ -55,7 +55,8 @@ def _prices(model: str) -> dict[str, float]:
 
 def cost_usd(model: str, usage: dict) -> float:
     prices = _prices(model)
-    return sum(usage.get(field, 0) * prices[kind] for field, kind in USAGE_FIELDS.items()) / 1e6
+    # OpenRouter may send null for cache fields it didn't use.
+    return sum((usage.get(field) or 0) * prices[kind] for field, kind in USAGE_FIELDS.items()) / 1e6
 
 
 # The CLI's per-model tally (ResultMessage.model_usage). It covers every API call in

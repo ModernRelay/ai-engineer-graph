@@ -59,7 +59,9 @@ uv run bench probe                  # A2.4 — live isolation probe, both arms (
 uv run bench check-questions        # B1.2
 uv run bench run --pilot --max-spend 25   # C1.3 — 1 run per question per arm (20 runs)
 uv run bench run                    # C1.4 — 3 runs per question per arm (resumable)
-uv run bench score                  # D — quote checks + judge (cached)
+uv run bench score --dry-run        # D — claims to judge, cost estimate; no API calls
+uv run bench score --limit 10       # D — judge 10 claims (pilot); scores.json waits for all
+uv run bench score                  # D — quote checks + judge (cached), results/scores.json
 uv run bench report                 # E — results/results.md
 ```
 

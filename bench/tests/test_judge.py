@@ -154,3 +154,13 @@ def test_anthropic_ask_sends_the_request_and_reads_the_json_text():
 def test_anthropic_ask_raises_when_the_judge_did_not_finish(stop_reason):
     with pytest.raises(JudgeError, match=stop_reason):
         anthropic_ask(StubClient(response(stop_reason)))(support_request(**CLAIM))
+
+
+def test_anthropic_ask_raises_when_there_is_no_json_text():
+    no_text = response()
+    no_text.content = [SimpleNamespace(type="thinking", thinking="")]
+
+    with pytest.raises(JudgeError, match="no text"):
+        anthropic_ask(StubClient(no_text))(support_request(**CLAIM))
+    with pytest.raises(JudgeError, match="not JSON"):
+        anthropic_ask(StubClient(response(text="Supported.")))(support_request(**CLAIM))

@@ -61,32 +61,44 @@ def support_request(claim: str, item: str, quote: str, context: str) -> dict:
     }
 
 
+def valid_support(output: dict) -> bool:
+    return output.get("verdict") in VERDICTS and isinstance(output.get("reason"), str)
+
+
 def support(
     claim: str, item: str, quote: str, context: str, *, ask: Ask, cache_dir: Path = CACHE_DIR
 ) -> Support:
     """Does the quote, read in its transcript context, support the claim?"""
-
-    def valid(output: dict) -> bool:
-        return output.get("verdict") in VERDICTS and isinstance(output.get("reason"), str)
-
-    output = cached(support_request(claim, item, quote, context), ask, cache_dir, valid)["output"]
+    request = support_request(claim, item, quote, context)
+    output = cached(request, ask, cache_dir, valid_support)["output"]
     return Support(output["verdict"], output["reason"])
+
+
+def cache_path(request: dict, cache_dir: Path) -> Path:
+    key = hashlib.sha256(json.dumps(request, sort_keys=True).encode("utf-8")).hexdigest()
+    return cache_dir / f"{key}.json"
+
+
+def lookup(request: dict, cache_dir: Path) -> dict | None:
+    """The saved record for this exact request, or None if it was never asked."""
+    path = cache_path(request, cache_dir)
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
 
 
 def cached(
     request: dict, ask: Ask, cache_dir: Path, valid: Callable[[dict], bool] = lambda _: True
 ) -> dict:
     """The saved record for this exact request, asking the judge only the first time."""
-    key = hashlib.sha256(json.dumps(request, sort_keys=True).encode("utf-8")).hexdigest()
-    path = cache_dir / f"{key}.json"
-    if path.exists():
-        return json.loads(path.read_text(encoding="utf-8"))
+    if (record := lookup(request, cache_dir)) is not None:
+        return record
     answer = ask(request)
     if not valid(answer["output"]):
         raise JudgeError(f"judge output outside the schema: {answer['output']!r}")
     record = {"request": request, **answer}
     cache_dir.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
+    cache_path(request, cache_dir).write_text(
+        json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
     return record
 
 
@@ -97,9 +109,15 @@ def anthropic_ask(client) -> Ask:
         response = client.messages.create(**request)
         if response.stop_reason != "end_turn":
             raise JudgeError(f"judge stopped with {response.stop_reason}")
-        text = next(block.text for block in response.content if block.type == "text")
+        text = next((block.text for block in response.content if block.type == "text"), None)
+        if text is None:
+            raise JudgeError("judge returned no text block")
+        try:
+            output = json.loads(text)
+        except json.JSONDecodeError as e:
+            raise JudgeError(f"judge output is not JSON: {text[:200]!r}") from e
         return {
-            "output": json.loads(text),
+            "output": output,
             "usage": response.usage.to_dict(),
             "model": response.model,
             "id": response.id,

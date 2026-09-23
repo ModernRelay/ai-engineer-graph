@@ -88,3 +88,9 @@ def test_agents_run_sonnet_5_with_the_full_1m_context():
     from bench.provider import AGENT_MODEL
 
     assert AGENT_MODEL == "anthropic/claude-sonnet-5[1m]"
+
+
+def test_cost_counts_missing_or_null_usage_fields_as_zero():
+    usage = {"input_tokens": 1_000_000, "output_tokens": 0, "cache_read_input_tokens": None}
+
+    assert cost_usd("anthropic/claude-opus-5.5", usage) == 4.0

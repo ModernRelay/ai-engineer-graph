@@ -3,12 +3,14 @@
 import argparse
 import asyncio
 import hashlib
+import json
 import os
 import shutil
 import subprocess
 import sys
 import tempfile
 import urllib.request
+from collections import Counter
 from pathlib import Path
 
 from bench.corpus import CHUNK_TALK_OVERRIDES, build_corpus, relink_chunk_edges
@@ -66,6 +68,18 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--concurrency", type=int, default=4)
     run.add_argument("--max-spend", type=float, help="USD; no new run starts once this is spent")
 
+    score = commands.add_parser(
+        "score", help="quote checks + support judge (asking the judge spends money; cached)"
+    )
+    score.add_argument("--dry-run", action="store_true", help="count claims and cost; ask nothing")
+    score.add_argument("--limit", type=int, help="ask about at most N uncached claims, spread out")
+    score.add_argument("--concurrency", type=int, default=4)
+    score.add_argument("--runs-dir", type=Path, default=BENCH_DIR / "runs")
+    score.add_argument("--corpus", type=Path, default=BENCH_DIR / "corpus" / "talks")
+    score.add_argument("--seed", type=Path, default=REPO_DIR / "seed")
+    score.add_argument("--cache", type=Path, default=BENCH_DIR / "runs" / "_judge")
+    score.add_argument("--out", type=Path, default=BENCH_DIR / "results" / "scores.json")
+
     args = parser.parse_args(argv)
     if args.command == "corpus":
         written = build_corpus(args.seed, args.out, CHUNK_TALK_OVERRIDES)
@@ -100,6 +114,8 @@ def main(argv: list[str] | None = None) -> int:
         return _probe(parser, ["markdown", "omnigraph"] if args.arm == "both" else [args.arm])
     elif args.command == "run":
         return _run(parser, args)
+    elif args.command == "score":
+        return _score(args)
     return 0
 
 
@@ -191,6 +207,96 @@ def _run(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
     print(f"done: {len(results)} ran, {errors} errors, ${spent:.2f} spent")
     if (missing := len(plan) - already) > 0:
         print(f"{missing} runs not started (spend limit); re-run to continue")
+    return 1 if errors else 0
+
+
+def _score(args: argparse.Namespace) -> int:
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    import anthropic
+
+    from bench import judge
+    from bench.corpus import talk_labels
+    from bench.parse import normalise
+    from bench.provider import JUDGE_MODEL, cost_usd
+    from bench.score import load_runs, score_runs, spread, support_requests
+    from bench.verify import Corpus
+
+    corpus = Corpus.load(args.corpus, talk_labels(args.seed, CHUNK_TALK_OVERRIDES))
+    runs = load_runs(args.runs_dir)
+    todo = support_requests(runs, corpus)
+    unique: dict[Path, tuple[str, dict]] = {}  # identical requests share one judgment
+    for label, request in todo:
+        unique.setdefault(judge.cache_path(request, args.cache), (label, request))
+    records = [judge.lookup(request, args.cache) for _, request in unique.values()]
+    uncached = [item for item, rec in zip(unique.values(), records, strict=True) if rec is None]
+    claims = sum(len(normalise(run.get("answer_json")).claims) for run in runs)
+    print(
+        f"{len(runs)} runs, {claims} claims, {len(todo)} to judge: "
+        f"{len(unique) - len(uncached)} cached, {len(uncached)} to ask"
+    )
+    costs = [cost_usd(JUDGE_MODEL, record["usage"]) for record in records if record]
+    if costs and uncached:
+        mean = sum(costs) / len(costs)
+        rest = mean * len(uncached)
+        print(f"judged so far ${sum(costs):.2f}, ${mean:.4f} a claim: the rest ≈ ${rest:.2f}")
+    if args.dry_run:
+        return 0
+
+    batch = spread(uncached, args.limit) if args.limit is not None else uncached
+    errors, spent = 0, 0.0
+    if batch:
+        ask = judge.openrouter_ask(BENCH_DIR / ".env")
+        with ThreadPoolExecutor(args.concurrency) as pool:
+            futures = {
+                pool.submit(judge.cached, request, ask, args.cache, judge.valid_support): label
+                for label, request in batch
+            }
+            for n, future in enumerate(as_completed(futures), 1):
+                label = futures[future]
+                try:
+                    record = future.result()
+                except (judge.JudgeError, anthropic.APIError) as e:
+                    errors += 1
+                    print(f"  [{n}/{len(batch)}] {label}  error: {e}", flush=True)
+                    continue
+                cost = cost_usd(JUDGE_MODEL, record["usage"])
+                spent += cost
+                print(
+                    f"  [{n}/{len(batch)}] {label}  {record['output']['verdict']:<11} ${cost:.4f}"
+                    f"  out={record['usage'].get('output_tokens')}",
+                    flush=True,
+                )
+        done = len(batch) - errors
+        print(
+            f"asked {len(batch)}: {errors} errors, ${spent:.2f}"
+            + (f", ${spent / done:.4f} a claim" if done else "")
+        )
+
+    scored = score_runs(runs, corpus, args.cache)
+    left = sum(claim["grounding"] is None for run in scored for claim in run["claims"])
+    if left:
+        print(f"{left} claims still unjudged; {args.out} not written")
+        return 1 if errors else 0
+    total = sum(
+        cost_usd(JUDGE_MODEL, judge.lookup(request, args.cache)["usage"])
+        for _, request in unique.values()
+    )
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    scores = {
+        "judge": {"model": JUDGE_MODEL, "judgments": len(todo), "cost_usd": round(total, 4)},
+        "runs": scored,
+    }
+    args.out.write_text(json.dumps(scores, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    for arm in sorted({run["arm"] for run in scored}):
+        buckets = Counter(
+            c["grounding"] for run in scored if run["arm"] == arm for c in run["claims"]
+        )
+        print(
+            f"{arm}: "
+            + ", ".join(f"{b} {buckets[b]}" for b in ("grounded", "partial", "hallucinated"))
+        )
+    print(f"wrote {args.out}")
     return 1 if errors else 0
 
 

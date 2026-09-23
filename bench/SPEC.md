@@ -30,6 +30,7 @@
 | 2026-09-23 | D1.1 normalisation rules pinned down from the C1.4 answers and implemented (`parse.normalise`); D1.2 resolves bare chunk labels | Roman Pronskiy |
 | 2026-09-24 | D1.2 done: `verify.Corpus` quote check with a new `spliced` outcome (#37); C1.4 verbatim md 99.2%, og 97.2%; rapidfuzz added | Roman Pronskiy |
 | 2026-09-24 | D1.3 support judge written with stubbed tests (`judge.py`, cached Opus 5.5 requests, `Corpus.context`, `prompts/judge_support.md`); `anthropic` SDK added; real pass pending | Roman Pronskiy |
+| 2026-09-24 | `bench score` runner; D1.3 pilot 10/10 judged for $0.10; full pass about $7.10 | Roman Pronskiy |
 
 ### Status legend
 
@@ -37,7 +38,7 @@
 
 ### Current focus
 
-**Now on:** Epic D → Phase D1 → step D1.3 — the support judge's code is done; next is a runner for the real Opus 5.5 pass (a 10-claim pilot to measure cost, then all 698), which spends money and waits for your go. D1.4 (uncited statements) can be written with stubs meanwhile.
+**Now on:** Epic D → Phase D1 → step D1.3 — the full support pass (`uv run bench score`, 685 requests, about $7.10) waits for your go; the 10-claim pilot is done. D1.4 (uncited statements) can be written with stubs meanwhile.
 
 ---
 
@@ -577,7 +578,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 |------|-------------|--------|-------|
 | D1.1 | Parse the contract block and claims | ✅ | `parse.normalise` → `Answer` / `Item` / `Claim`; 13 tests, 6 mutations caught; 60 C1.4 answers: 0 unparseable, 286 items, 710 claims |
 | D1.2 | Mechanical quote check against the corpus | ✅ | `verify.Corpus` + `corpus.talk_labels`; `spliced` added (#37); 20 tests, 14 of 15 mutations caught (the 15th can't change a result); C1.4 verbatim: md 99.2%, og 97.2% |
-| D1.3 | Judge: does the quote support the claim? | 🔄 | Code done with stubbed tests (`judge.py`, `Corpus.context`, `prompts/judge_support.md`; 16 tests, 13 mutations caught). The real Opus pass over 698 claims waits for your go |
+| D1.3 | Judge: does the quote support the claim? | 🔄 | Judge + `bench score` runner done (stubbed tests). Pilot: 10/10 judged, $0.10 ($0.0104 a claim), 9 supported / 1 partial. The full pass (685 requests left, about $7.10) waits for your go |
 | D1.4 | Judge: uncited factual statements in the prose | 🔲 | |
 | D1.5 | Scorer calibration on planted claims | 🔲 | |
 
@@ -684,6 +685,19 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
     "graph") appear in the claims of both arms (18 md, 10 og), so they don't reveal the arm.
     Estimated cost is $7.5–31 depending on thinking length (300–2,000 output tokens per claim);
     a 10-claim pilot measures it first.
+  - **Runner.** `bench score` (`score.py`) quote-checks every claim of `runs/Qnn/*/*`, asks the
+    judge about the uncached ones (4 at a time, progress printed as it goes) and writes
+    `results/scores.json` only once every claim has a verdict, so a pilot never leaves partial
+    scores. Identical requests share one judgment: the 698 claims make 695 requests.
+    `--dry-run` counts claims and estimates cost from the judgments already cached; `--limit N`
+    asks about N claims spread evenly over the runs. A failed judgment is reported and skipped,
+    so a re-run retries it.
+  - **Pilot (2026-09-24):** `bench score --limit 10`: 10/10 judged, 0 errors, $0.10 ($0.0104 a
+    claim; about 1,950 input and 70–390 output tokens). 9 supported, 1 partial. The partial was a
+    real catch: the claim said Sonar acquired Gitar and that Gitar grades PRs, and the transcript
+    says neither. Opus 5.5 served every call with the schema honoured. Adaptive thinking used 0–277
+    tokens, so most claims need none even at `high` effort. Our computed cost matches OpenRouter's
+    `upstream_inference_cost` exactly. The full pass is about $7.10 for the 685 requests left.
 - **D1.4 — Uncited statements.** Deliverable: `judge.py::uncited`. The judge lists factual
   statements in the prose that no claim covers. The count goes into the report.
 - **D1.5 — Calibration.** Deliverable: `tests/test_scorer_calibration.py`.
