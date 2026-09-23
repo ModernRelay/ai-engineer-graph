@@ -3,8 +3,9 @@
     "model": "anthropic/claude-opus-5.5",
     "claims_judged": 698,
     "runs_checked": 60,
-    "requests": 755,
-    "cost_usd": 8.4566
+    "questions_clustered": 6,
+    "requests": 761,
+    "cost_usd": 8.5353
   },
   "runs": [
     {
@@ -19329,5 +19330,1595 @@
         "There were talks about GPU kernel optimization."
       ]
     }
-  ]
+  ],
+  "recall": {
+    "Q01": {
+      "shape": "ranked_list",
+      "groups": [
+        {
+          "name": "AI agents / agentic systems (general)",
+          "members": [
+            "AI Agents / agentic systems (general)",
+            "Building/orchestrating AI agents (overarching theme)"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "AI-native organization",
+          "members": [
+            "Becoming an AI-native organization",
+            "The AI-Native Organization"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Agent economy",
+          "members": [
+            "Agent economy (agents paying/transacting)",
+            "The Agent Economy"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Agent harnesses / harness over the model",
+          "members": [
+            "Agent Harnesses / frameworks",
+            "Agent harness design",
+            "Agent harnesses / coding-agent architecture",
+            "Harness/scaffolding engineering over the model",
+            "The Harness Over the Model"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Agent memory",
+          "members": [
+            "Agent Memory",
+            "Agent memory systems",
+            "Memory systems for agents"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Agent sandboxes / runtime isolation",
+          "members": [
+            "Agent Sandboxes / Runtime Isolation"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Agent security, guardrails and safety",
+          "members": [
+            "Agent Security",
+            "Agent security, guardrails and safety",
+            "Agent security, guardrails, and safety"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Agent skills",
+          "members": [
+            "Agent Skills"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Benchmarks",
+          "members": [
+            "Benchmarks",
+            "Benchmarks and benchmaxxing",
+            "Benchmarks and their flaws"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Coding agents",
+          "members": [
+            "Coding Agents",
+            "Coding agents & automated code review"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Context engineering",
+          "members": [
+            "Context engineering / context layer"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Context graphs",
+          "members": [
+            "Context Graphs"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Evals / evaluation",
+          "members": [
+            "Evals / Evaluation",
+            "Evals / evaluation of agentic systems",
+            "Evals / evaluation of agents"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "MCP (Model Context Protocol)",
+          "members": [
+            "MCP (Model Context Protocol)",
+            "MCP (Model Context Protocol) and MCP Apps"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Model is not the bottleneck",
+          "members": [
+            "Model is no longer the bottleneck",
+            "The Model Is Not the Bottleneck"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Multi-agent systems",
+          "members": [
+            "Multi-agent systems (design and critique)"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "New AI-driven cyber threats",
+          "members": [
+            "New AI-driven cybersecurity threats",
+            "New Cyber Threats"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Observability / self-improving agents",
+          "members": [
+            "Observability / self-improving agents"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Post-training, RL, and continual learning",
+          "members": [
+            "Continual learning, RL, and post-training",
+            "Post-training, RL, and fine-tuning"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "SaaSpocalypse",
+          "members": [
+            "SaaS disruption (SaaSpocalypse)",
+            "SaaSpocalypse"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Sovereign AI",
+          "members": [
+            "Sovereign / local AI infrastructure",
+            "Sovereign AI"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Tool calling / tool design",
+          "members": [
+            "Tool calling / tool design for agents"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Value of human judgement / taste",
+          "members": [
+            "Value of Judgement",
+            "Value of Judgement / Taste",
+            "Value of human judgment/taste"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Verification gap",
+          "members": [
+            "The Verification Gap",
+            "Verifying/trusting agent output (verification gap)"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Voice agents",
+          "members": [
+            "Voice agents / realtime voice"
+          ],
+          "pooled": true
+        }
+      ],
+      "k": 5,
+      "consensus_top": [
+        "Agent harnesses / harness over the model",
+        "Verification gap",
+        "Evals / evaluation",
+        "Model is not the bottleneck",
+        "Agent memory"
+      ],
+      "runs": [
+        {
+          "arm": "markdown",
+          "run": 1,
+          "found": [
+            "Agent harnesses / harness over the model",
+            "Agent memory",
+            "Agent security, guardrails and safety",
+            "Benchmarks",
+            "Coding agents",
+            "Evals / evaluation",
+            "MCP (Model Context Protocol)",
+            "Multi-agent systems",
+            "Post-training, RL, and continual learning",
+            "Voice agents"
+          ],
+          "recall": 0.4,
+          "overlap": 0.6
+        },
+        {
+          "arm": "markdown",
+          "run": 2,
+          "found": [
+            "AI agents / agentic systems (general)",
+            "Agent harnesses / harness over the model",
+            "Agent memory",
+            "Agent sandboxes / runtime isolation",
+            "Agent security, guardrails and safety",
+            "Agent skills",
+            "Benchmarks",
+            "Coding agents",
+            "Evals / evaluation",
+            "MCP (Model Context Protocol)"
+          ],
+          "recall": 0.4,
+          "overlap": 0.6
+        },
+        {
+          "arm": "markdown",
+          "run": 3,
+          "found": [
+            "AI agents / agentic systems (general)",
+            "Agent harnesses / harness over the model",
+            "Agent memory",
+            "Agent security, guardrails and safety",
+            "Benchmarks",
+            "Evals / evaluation",
+            "MCP (Model Context Protocol)",
+            "Observability / self-improving agents",
+            "Post-training, RL, and continual learning",
+            "Tool calling / tool design"
+          ],
+          "recall": 0.4,
+          "overlap": 0.6
+        },
+        {
+          "arm": "omnigraph",
+          "run": 1,
+          "found": [
+            "AI-native organization",
+            "Agent economy",
+            "Agent harnesses / harness over the model",
+            "Context graphs",
+            "Model is not the bottleneck",
+            "New AI-driven cyber threats",
+            "SaaSpocalypse",
+            "Sovereign AI",
+            "Value of human judgement / taste",
+            "Verification gap"
+          ],
+          "recall": 0.4,
+          "overlap": 0.6
+        },
+        {
+          "arm": "omnigraph",
+          "run": 2,
+          "found": [
+            "AI-native organization",
+            "Agent economy",
+            "Agent harnesses / harness over the model",
+            "Context graphs",
+            "Model is not the bottleneck",
+            "New AI-driven cyber threats",
+            "SaaSpocalypse",
+            "Sovereign AI",
+            "Value of human judgement / taste",
+            "Verification gap"
+          ],
+          "recall": 0.4,
+          "overlap": 0.6
+        },
+        {
+          "arm": "omnigraph",
+          "run": 3,
+          "found": [
+            "AI-native organization",
+            "Agent economy",
+            "Agent harnesses / harness over the model",
+            "Context engineering",
+            "Model is not the bottleneck",
+            "New AI-driven cyber threats",
+            "SaaSpocalypse",
+            "Sovereign AI",
+            "Value of human judgement / taste",
+            "Verification gap"
+          ],
+          "recall": 0.4,
+          "overlap": 0.6
+        }
+      ],
+      "count": 10,
+      "agreement": {
+        "pairs": [
+          {
+            "run": 1,
+            "shared": 1,
+            "agreement": 0.1
+          },
+          {
+            "run": 2,
+            "shared": 1,
+            "agreement": 0.1
+          },
+          {
+            "run": 3,
+            "shared": 1,
+            "agreement": 0.1
+          }
+        ],
+        "mean": 0.10000000000000002
+      }
+    },
+    "Q02": {
+      "shape": "ranked_list",
+      "groups": [
+        {
+          "name": "Agent portability & state durability",
+          "members": [
+            "Agent portability, state durability, and harness engineering at scale"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Agent security, identity & authorization",
+          "members": [
+            "Agent identity, authorization, and security scoping",
+            "Agentic security & new attack surfaces (rogue/autonomous agents)",
+            "Authentication, identity and trust for agents acting on a user's behalf",
+            "Identity, authentication & trust for agents acting on real systems",
+            "Security, identity & authorization for agentic tool use",
+            "Security, permissions & trust boundaries for autonomous action"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Agent supply chain (skills, MCP servers)",
+          "members": [
+            "The agent supply chain (ungoverned skills, MCP servers)"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Context & memory management",
+          "members": [
+            "Agent memory / context persistence across sessions",
+            "Agent memory / statelessness (\"amnesia\")",
+            "Context & memory management",
+            "Context & memory management across (multi-)agent systems",
+            "Context and memory management (staleness, ambiguity, sprawl, no episodic memory)",
+            "Enterprise context structure (ambiguity, staleness, preference)",
+            "Memory & long-horizon context management"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Continual learning from production",
+          "members": [
+            "Continual learning (agents improving from production feedback)",
+            "Continual learning from production experience"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Evaluation & verification",
+          "members": [
+            "Benchmark trust crisis (gameable/misleading evals)",
+            "Evaluation (knowing if an agent actually works / benchmarks vs. reality)",
+            "Evaluation that actually predicts production behavior",
+            "Evaluation — trusting/measuring agent output",
+            "Verification / evals gap (agents can't validate their own work)",
+            "Verification / no reliable way to check agent output",
+            "Verification/evaluation gap — the model can't validate itself, evals remain the #1 stack challenge"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Post-deployment observability",
+          "members": [
+            "Missing post-deployment observability/control layer",
+            "Post-launch observability/debugging — the \"missing layer\" after shipping"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Production reliability & control",
+          "members": [
+            "Production reliability & debugging non-reproducible, silent failures",
+            "Reliability & control of agents (\"the harness, not the model\") — no settled control layer or standard way to build robust agents",
+            "Reliability & reproducibility of agents in production"
+          ],
+          "pooled": true
+        }
+      ],
+      "k": 5,
+      "consensus_top": [
+        "Evaluation & verification",
+        "Context & memory management",
+        "Agent security, identity & authorization",
+        "Production reliability & control",
+        "Post-deployment observability"
+      ],
+      "runs": [
+        {
+          "arm": "markdown",
+          "run": 1,
+          "found": [
+            "Agent security, identity & authorization",
+            "Context & memory management",
+            "Continual learning from production",
+            "Evaluation & verification",
+            "Production reliability & control"
+          ],
+          "recall": 0.625,
+          "overlap": 0.8
+        },
+        {
+          "arm": "markdown",
+          "run": 2,
+          "found": [
+            "Agent security, identity & authorization",
+            "Context & memory management",
+            "Evaluation & verification",
+            "Production reliability & control"
+          ],
+          "recall": 0.5,
+          "overlap": 0.8
+        },
+        {
+          "arm": "markdown",
+          "run": 3,
+          "found": [
+            "Agent security, identity & authorization",
+            "Context & memory management",
+            "Continual learning from production",
+            "Evaluation & verification",
+            "Production reliability & control"
+          ],
+          "recall": 0.625,
+          "overlap": 0.8
+        },
+        {
+          "arm": "omnigraph",
+          "run": 1,
+          "found": [
+            "Agent portability & state durability",
+            "Agent security, identity & authorization",
+            "Context & memory management",
+            "Evaluation & verification",
+            "Post-deployment observability"
+          ],
+          "recall": 0.625,
+          "overlap": 0.8
+        },
+        {
+          "arm": "omnigraph",
+          "run": 2,
+          "found": [
+            "Agent security, identity & authorization",
+            "Context & memory management",
+            "Evaluation & verification",
+            "Post-deployment observability",
+            "Production reliability & control"
+          ],
+          "recall": 0.625,
+          "overlap": 1.0
+        },
+        {
+          "arm": "omnigraph",
+          "run": 3,
+          "found": [
+            "Agent security, identity & authorization",
+            "Agent supply chain (skills, MCP servers)",
+            "Context & memory management",
+            "Evaluation & verification"
+          ],
+          "recall": 0.5,
+          "overlap": 0.6
+        }
+      ],
+      "count": 5,
+      "agreement": {
+        "pairs": [
+          {
+            "run": 1,
+            "shared": 3,
+            "agreement": 0.6
+          },
+          {
+            "run": 2,
+            "shared": 4,
+            "agreement": 0.8
+          },
+          {
+            "run": 3,
+            "shared": 3,
+            "agreement": 0.6
+          }
+        ],
+        "mean": 0.6666666666666666
+      }
+    },
+    "Q03": {
+      "shape": "ranked_list",
+      "groups": [
+        {
+          "name": "AI velocity/vibe coding: empowering vs. 'velocity sickness'",
+          "members": [
+            "AI-driven velocity/vibe coding as empowering vs. as pathological ('velocity sickness')"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Agentic loops/software factories vs. hype outrunning discipline",
+          "members": [
+            "Agentic loops / software factories are the real inflection point vs. hype outrunning discipline",
+            "Loops/software factories already work vs. hype outrunning discipline",
+            "Loops/software factories: inevitable win vs. hype outrunning discipline"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Automating human code review vs. review debt",
+          "members": [
+            "Automate away human code review vs. review debt accumulates dangerously"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Fine-tuning as strategy vs. tech debt",
+          "members": [
+            "Fine-tuning as strategy vs. fine-tuning as tech debt"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Persistent memory as a first-class agent layer",
+          "members": [
+            "Persistent memory is a first-class agent layer",
+            "Persistent memory is becoming a first-class agent-stack layer",
+            "The Agent Memory Layer"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Single agent vs. multi-agent architectures",
+          "members": [
+            "Multi-agent decomposition vs. single-agent consolidation",
+            "Single consolidated agent vs. multi-agent/domain-specific orchestration",
+            "Single reasoning agent vs. multi-agent/domain-specific architectures"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "The harness carries reliability, not the model",
+          "members": [
+            "The Harness Over the Model",
+            "The harness carries reliability, not the model",
+            "The harness carries the reliability, not the model"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "The model is no longer the bottleneck",
+          "members": [
+            "The Model Is Not the Bottleneck",
+            "The model is good enough; the bottleneck has moved elsewhere",
+            "The model is no longer the bottleneck"
+          ],
+          "pooled": true
+        }
+      ],
+      "k": 3,
+      "consensus_top": [
+        "The harness carries reliability, not the model",
+        "Agentic loops/software factories vs. hype outrunning discipline",
+        "Single agent vs. multi-agent architectures"
+      ],
+      "runs": [
+        {
+          "arm": "markdown",
+          "run": 1,
+          "found": [
+            "Agentic loops/software factories vs. hype outrunning discipline",
+            "Fine-tuning as strategy vs. tech debt",
+            "Single agent vs. multi-agent architectures"
+          ],
+          "recall": 0.375,
+          "overlap": 0.6666666666666666
+        },
+        {
+          "arm": "markdown",
+          "run": 2,
+          "found": [
+            "Agentic loops/software factories vs. hype outrunning discipline",
+            "Automating human code review vs. review debt",
+            "Single agent vs. multi-agent architectures"
+          ],
+          "recall": 0.375,
+          "overlap": 0.6666666666666666
+        },
+        {
+          "arm": "markdown",
+          "run": 3,
+          "found": [
+            "AI velocity/vibe coding: empowering vs. 'velocity sickness'",
+            "Agentic loops/software factories vs. hype outrunning discipline",
+            "Single agent vs. multi-agent architectures"
+          ],
+          "recall": 0.375,
+          "overlap": 0.6666666666666666
+        },
+        {
+          "arm": "omnigraph",
+          "run": 1,
+          "found": [
+            "Persistent memory as a first-class agent layer",
+            "The harness carries reliability, not the model",
+            "The model is no longer the bottleneck"
+          ],
+          "recall": 0.375,
+          "overlap": 0.3333333333333333
+        },
+        {
+          "arm": "omnigraph",
+          "run": 2,
+          "found": [
+            "Persistent memory as a first-class agent layer",
+            "The harness carries reliability, not the model",
+            "The model is no longer the bottleneck"
+          ],
+          "recall": 0.375,
+          "overlap": 0.3333333333333333
+        },
+        {
+          "arm": "omnigraph",
+          "run": 3,
+          "found": [
+            "Persistent memory as a first-class agent layer",
+            "The harness carries reliability, not the model",
+            "The model is no longer the bottleneck"
+          ],
+          "recall": 0.375,
+          "overlap": 0.3333333333333333
+        }
+      ],
+      "count": 3,
+      "agreement": {
+        "pairs": [
+          {
+            "run": 1,
+            "shared": 0,
+            "agreement": 0.0
+          },
+          {
+            "run": 2,
+            "shared": 0,
+            "agreement": 0.0
+          },
+          {
+            "run": 3,
+            "shared": 0,
+            "agreement": 0.0
+          }
+        ],
+        "mean": 0.0
+      }
+    },
+    "Q04": {
+      "shape": "talk_set",
+      "groups": [
+        {
+          "name": "ia-aie-aws-voice-interrupts",
+          "members": [
+            "Chintan Agrawal & Daniel Wirjo (AWS)"
+          ],
+          "pooled": false
+        },
+        {
+          "name": "ia-aie-bhargava-harness-over-model",
+          "members": [
+            "Aditya Bhargava (Etsy)",
+            "Aditya Bhargava (Etsy) — \"What if the harness mattered more than the model?\"",
+            "Aditya Bhargava — Etsy"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-bhat-he-agentic-surfaces",
+          "members": [
+            "Gagan Bhat & Isabella Kai He — Anthropic"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-bouchard-context-engineering-2026",
+          "members": [
+            "Bouchard, Solano & Vaid (Towards AI) — \"Context Engineering in 2026\"",
+            "Bouchard/Omar/Samidi (Towards AI) — \"Context Engineering in 2026\"",
+            "Louis-François Bouchard, Omar Solano & Sami Vaid (Towards AI) — \"Context Engineering in 2026\""
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-chan-memo-not-demo",
+          "members": [
+            "Shawn Chan (China Resources Holdings) — \"Build for the Memo, Not the Demo\""
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-chandegra-beyond-harness",
+          "members": [
+            "Rajiv Chandegra (Anitcha Labs)",
+            "Rajiv Chandegra (Anitcha Labs) — \"Beyond the Harness: A Journey Towards Adaptive Engineering\"",
+            "Rajiv Chandegra (Annicha Labs) — \"Beyond the Harness\"",
+            "Rajiv Chandegra — Annicha Labs"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-desai-swe-marathon",
+          "members": [
+            "Rishi Desai (Abundant AI) — \"SWE-Marathon\""
+          ],
+          "pooled": false
+        },
+        {
+          "name": "ia-aie-emani-agent-bottleneck",
+          "members": [
+            "Ramana Siddanth Emani (Auditoria AI) — \"Your Finance Agent's Bottleneck Is You\""
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-govindarajan-harness-failed",
+          "members": [
+            "Vinoth Govindarajan (OpenAI) — \"Your Agent Didn't Fail. Your Harness Did.\"",
+            "Vinoth Govindarajan — OpenAI"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-gupta-deterministic-infra",
+          "members": [
+            "Nishant Gupta (Meta Superintelligence Labs)",
+            "Nishant Gupta (Meta Superintelligence Labs) — \"Deterministic Infra for Non-Deterministic AI Agents\""
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-horthy-loops-debate",
+          "members": [
+            "Greg Kostruba (Sentry), in \"The Great Loops Debate\""
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-iusztin-bouchard-notes-memory",
+          "members": [
+            "Paul Iusztin & Louis-François Bouchard — \"Turn 10,994 Notes Into Memory\""
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-kalandadze-missing-layer",
+          "members": [
+            "Raphael Kalandadze (Wandero AI) — \"The Missing Layer After Launch\""
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-kamath-gillam-digitalocean-preferences-over-benchmarks-routing",
+          "members": [
+            "Archana Kamath & Tyler Gillam — DigitalOcean"
+          ],
+          "pooled": false
+        },
+        {
+          "name": "ia-aie-khandelwal-agents-codebases-teams",
+          "members": [
+            "Aditya Khandelwal (Amazon AGI Lab) — \"Agents, codebases, and teams\""
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-klein-agents-www",
+          "members": [
+            "Paul Klein IV (Browserbase)",
+            "Paul Klein IV (Browserbase) — \"Bringing agents onto the World Wide Web\"",
+            "Paul Klein IV (Browserbase) — \"Bringing agents onto the world wide web\"",
+            "Paul Klein IV — Browserbase"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-menkes-understand-money",
+          "members": [
+            "Udi Menkes (Intuit) — \"Why Off-the-Shelf AI Doesn't Understand Money\""
+          ],
+          "pooled": false
+        },
+        {
+          "name": "ia-aie-mishra-rl-to-irl",
+          "members": [
+            "Gaurav Mishra — Amazon AGI Lab"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-msft-dont-let-llm-drive",
+          "members": [
+            "Joel Allou & Ornella Bahidika — Microsoft (\"Don't Let the LLM Drive\")",
+            "Ornella Bahidika & Joel Allou (Microsoft)"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-msft-voice-no-frontier",
+          "members": [
+            "Joel Allou & Ornella Bahidika (Microsoft) — \"Your Voice Agent Doesn't Need a Frontier Model\"",
+            "Joel Allou & Ornella Bahidika — Microsoft (\"Your Voice Agent Doesn't Need a Frontier Model\")"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-munaf-tiktok-agents-distributed-systems",
+          "members": [
+            "Salman Munaf (TikTok)"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-ng-unblocked-context-is-the-next-frontier",
+          "members": [
+            "Jeff Ng (Unblocked) — \"Building Agents Is Trivial Now, Context Is the Next Frontier\""
+          ],
+          "pooled": false
+        },
+        {
+          "name": "ia-aie-osmani-engineer-of-future",
+          "members": [
+            "Addy Osmani"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-risa-oncology",
+          "members": [
+            "Anant Shankhdhar (Risa Labs)"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-sakthivel-local-code-index",
+          "members": [
+            "Rajkumar Sakthivel (Tesco)"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-sankar-context-layer",
+          "members": [
+            "Prukalpa Sankar (Atlan) — \"WTF Is the Context Layer?\""
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-tan-new-physics",
+          "members": [
+            "Garry Tan (Y Combinator) — \"The New Physics of Business\""
+          ],
+          "pooled": true
+        },
+        {
+          "name": "ia-aie-vaidya-composio-coding-to-knowledge-work-agents",
+          "members": [
+            "Karan Vaidya (Composio) — \"From coding to Knowledge work agents\""
+          ],
+          "pooled": true
+        }
+      ],
+      "runs": [
+        {
+          "arm": "markdown",
+          "run": 1,
+          "found": [
+            "ia-aie-bhargava-harness-over-model",
+            "ia-aie-bouchard-context-engineering-2026",
+            "ia-aie-chandegra-beyond-harness",
+            "ia-aie-desai-swe-marathon",
+            "ia-aie-govindarajan-harness-failed",
+            "ia-aie-kalandadze-missing-layer",
+            "ia-aie-klein-agents-www",
+            "ia-aie-menkes-understand-money",
+            "ia-aie-ng-unblocked-context-is-the-next-frontier",
+            "ia-aie-tan-new-physics"
+          ],
+          "recall": 0.30434782608695654,
+          "overlap": null
+        },
+        {
+          "arm": "markdown",
+          "run": 2,
+          "found": [
+            "ia-aie-bhargava-harness-over-model",
+            "ia-aie-bouchard-context-engineering-2026",
+            "ia-aie-chandegra-beyond-harness",
+            "ia-aie-emani-agent-bottleneck",
+            "ia-aie-govindarajan-harness-failed",
+            "ia-aie-iusztin-bouchard-notes-memory",
+            "ia-aie-kalandadze-missing-layer",
+            "ia-aie-vaidya-composio-coding-to-knowledge-work-agents"
+          ],
+          "recall": 0.34782608695652173,
+          "overlap": null
+        },
+        {
+          "arm": "markdown",
+          "run": 3,
+          "found": [
+            "ia-aie-bhargava-harness-over-model",
+            "ia-aie-bouchard-context-engineering-2026",
+            "ia-aie-chandegra-beyond-harness",
+            "ia-aie-emani-agent-bottleneck",
+            "ia-aie-govindarajan-harness-failed",
+            "ia-aie-gupta-deterministic-infra",
+            "ia-aie-horthy-loops-debate",
+            "ia-aie-khandelwal-agents-codebases-teams",
+            "ia-aie-klein-agents-www",
+            "ia-aie-sankar-context-layer"
+          ],
+          "recall": 0.43478260869565216,
+          "overlap": null
+        },
+        {
+          "arm": "omnigraph",
+          "run": 1,
+          "found": [
+            "ia-aie-bhargava-harness-over-model",
+            "ia-aie-bhat-he-agentic-surfaces",
+            "ia-aie-chandegra-beyond-harness",
+            "ia-aie-govindarajan-harness-failed",
+            "ia-aie-kamath-gillam-digitalocean-preferences-over-benchmarks-routing",
+            "ia-aie-klein-agents-www",
+            "ia-aie-mishra-rl-to-irl",
+            "ia-aie-msft-dont-let-llm-drive",
+            "ia-aie-msft-voice-no-frontier",
+            "ia-aie-osmani-engineer-of-future"
+          ],
+          "recall": 0.391304347826087,
+          "overlap": null
+        },
+        {
+          "arm": "omnigraph",
+          "run": 2,
+          "found": [
+            "ia-aie-bhargava-harness-over-model",
+            "ia-aie-chan-memo-not-demo",
+            "ia-aie-chandegra-beyond-harness",
+            "ia-aie-klein-agents-www",
+            "ia-aie-msft-voice-no-frontier",
+            "ia-aie-vaidya-composio-coding-to-knowledge-work-agents"
+          ],
+          "recall": 0.2608695652173913,
+          "overlap": null
+        },
+        {
+          "arm": "omnigraph",
+          "run": 3,
+          "found": [
+            "ia-aie-aws-voice-interrupts",
+            "ia-aie-bhargava-harness-over-model",
+            "ia-aie-chandegra-beyond-harness",
+            "ia-aie-gupta-deterministic-infra",
+            "ia-aie-klein-agents-www",
+            "ia-aie-msft-dont-let-llm-drive",
+            "ia-aie-munaf-tiktok-agents-distributed-systems",
+            "ia-aie-risa-oncology",
+            "ia-aie-sakthivel-local-code-index"
+          ],
+          "recall": 0.34782608695652173,
+          "overlap": null
+        }
+      ]
+    },
+    "Q05": {
+      "shape": "ranked_list",
+      "groups": [
+        {
+          "name": "Amazon / AWS",
+          "members": [
+            "AWS",
+            "AWS (Amazon Web Services)",
+            "Amazon",
+            "Amazon (AWS, Amazon AGI Lab, Amazon)"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Anthropic",
+          "members": [
+            "Anthropic"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Google / Google DeepMind",
+          "members": [
+            "Google / Google DeepMind",
+            "Google DeepMind"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Microsoft",
+          "members": [
+            "Microsoft"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "NVIDIA",
+          "members": [
+            "NVIDIA"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "OpenAI",
+          "members": [
+            "OpenAI"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Together AI",
+          "members": [
+            "Together AI"
+          ],
+          "pooled": true
+        }
+      ],
+      "k": 5,
+      "consensus_top": [
+        "Anthropic",
+        "Amazon / AWS",
+        "Microsoft",
+        "OpenAI",
+        "NVIDIA"
+      ],
+      "runs": [
+        {
+          "arm": "markdown",
+          "run": 1,
+          "found": [
+            "Amazon / AWS",
+            "Anthropic",
+            "Google / Google DeepMind",
+            "Microsoft",
+            "OpenAI"
+          ],
+          "recall": 0.7142857142857143,
+          "overlap": 0.8
+        },
+        {
+          "arm": "markdown",
+          "run": 2,
+          "found": [
+            "Amazon / AWS",
+            "Anthropic",
+            "Google / Google DeepMind",
+            "Microsoft",
+            "OpenAI",
+            "Together AI"
+          ],
+          "recall": 0.8571428571428571,
+          "overlap": 0.8
+        },
+        {
+          "arm": "markdown",
+          "run": 3,
+          "found": [
+            "Amazon / AWS",
+            "Anthropic",
+            "Google / Google DeepMind",
+            "Microsoft",
+            "OpenAI",
+            "Together AI"
+          ],
+          "recall": 0.8571428571428571,
+          "overlap": 0.8
+        },
+        {
+          "arm": "omnigraph",
+          "run": 1,
+          "found": [
+            "Amazon / AWS",
+            "Anthropic",
+            "Google / Google DeepMind",
+            "Microsoft",
+            "NVIDIA",
+            "OpenAI"
+          ],
+          "recall": 0.8571428571428571,
+          "overlap": 1.0
+        },
+        {
+          "arm": "omnigraph",
+          "run": 2,
+          "found": [
+            "Amazon / AWS",
+            "Anthropic",
+            "Microsoft",
+            "NVIDIA",
+            "OpenAI"
+          ],
+          "recall": 0.7142857142857143,
+          "overlap": 1.0
+        },
+        {
+          "arm": "omnigraph",
+          "run": 3,
+          "found": [
+            "Amazon / AWS",
+            "Anthropic",
+            "Google / Google DeepMind",
+            "Microsoft",
+            "NVIDIA",
+            "OpenAI"
+          ],
+          "recall": 0.8571428571428571,
+          "overlap": 1.0
+        }
+      ],
+      "count": 5,
+      "agreement": {
+        "pairs": [
+          {
+            "run": 1,
+            "shared": 4,
+            "agreement": 0.8
+          },
+          {
+            "run": 2,
+            "shared": 4,
+            "agreement": 0.8
+          },
+          {
+            "run": 3,
+            "shared": 4,
+            "agreement": 0.8
+          }
+        ],
+        "mean": 0.8000000000000002
+      }
+    },
+    "Q06": {
+      "shape": "company_set",
+      "groups": [
+        {
+          "name": "Anthropic",
+          "members": [
+            "Anthropic"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Aviator",
+          "members": [
+            "Aviator"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Block",
+          "members": [
+            "Block"
+          ],
+          "pooled": false
+        },
+        {
+          "name": "Checkout.com",
+          "members": [
+            "Checkout.com"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Corridor",
+          "members": [
+            "Corridor"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Figma",
+          "members": [
+            "Figma"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Ironclad",
+          "members": [
+            "Ironclad"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Maven Clinic",
+          "members": [
+            "Maven Clinic"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Netflix",
+          "members": [
+            "Netflix"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Qodo",
+          "members": [
+            "Qodo"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Snyk",
+          "members": [
+            "Snyk"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Sonar",
+          "members": [
+            "Sonar"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Uber",
+          "members": [
+            "Uber"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Wandero AI",
+          "members": [
+            "Wandero AI"
+          ],
+          "pooled": false
+        },
+        {
+          "name": "Warp",
+          "members": [
+            "Warp"
+          ],
+          "pooled": true
+        }
+      ],
+      "runs": [
+        {
+          "arm": "markdown",
+          "run": 1,
+          "found": [
+            "Anthropic",
+            "Aviator",
+            "Corridor",
+            "Figma",
+            "Qodo",
+            "Sonar",
+            "Uber"
+          ],
+          "recall": 0.5384615384615384,
+          "overlap": null
+        },
+        {
+          "arm": "markdown",
+          "run": 2,
+          "found": [
+            "Anthropic",
+            "Aviator",
+            "Corridor",
+            "Figma",
+            "Qodo",
+            "Snyk",
+            "Uber"
+          ],
+          "recall": 0.5384615384615384,
+          "overlap": null
+        },
+        {
+          "arm": "markdown",
+          "run": 3,
+          "found": [
+            "Aviator",
+            "Figma",
+            "Qodo",
+            "Sonar",
+            "Uber"
+          ],
+          "recall": 0.38461538461538464,
+          "overlap": null
+        },
+        {
+          "arm": "omnigraph",
+          "run": 1,
+          "found": [
+            "Aviator",
+            "Checkout.com",
+            "Ironclad",
+            "Maven Clinic",
+            "Sonar",
+            "Uber"
+          ],
+          "recall": 0.46153846153846156,
+          "overlap": null
+        },
+        {
+          "arm": "omnigraph",
+          "run": 2,
+          "found": [
+            "Anthropic",
+            "Block",
+            "Ironclad",
+            "Netflix",
+            "Sonar",
+            "Wandero AI",
+            "Warp"
+          ],
+          "recall": 0.38461538461538464,
+          "overlap": null
+        },
+        {
+          "arm": "omnigraph",
+          "run": 3,
+          "found": [
+            "Anthropic",
+            "Aviator",
+            "Block",
+            "Corridor",
+            "Ironclad",
+            "Maven Clinic",
+            "Sonar",
+            "Warp"
+          ],
+          "recall": 0.5384615384615384,
+          "overlap": null
+        }
+      ]
+    },
+    "Q07": {
+      "shape": "ranked_list",
+      "groups": [
+        {
+          "name": "Arize Phoenix",
+          "members": [
+            "Arize (Phoenix / AX / Signal)",
+            "Arize (Phoenix / Signal)",
+            "Arize / Arize Phoenix",
+            "Arize Phoenix"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Braintrust",
+          "members": [
+            "Braintrust"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Chronicle (Microsoft)",
+          "members": [
+            "Chronicle (Microsoft)"
+          ],
+          "pooled": false
+        },
+        {
+          "name": "Datadog",
+          "members": [
+            "Datadog (agent-consistency tooling)"
+          ],
+          "pooled": false
+        },
+        {
+          "name": "DeepEval",
+          "members": [
+            "DeepEval"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Harbor (Terminal-Bench)",
+          "members": [
+            "Harbor (Terminal-Bench / Laude Institute)"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Kitaru (ZenML)",
+          "members": [
+            "Kitaru (ZenML)"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "LangSmith",
+          "members": [
+            "LangSmith"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Langfuse",
+          "members": [
+            "Langfuse"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "OpenTelemetry",
+          "members": [
+            "OpenTelemetry"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Promptfoo",
+          "members": [
+            "Promptfoo"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Raindrop",
+          "members": [
+            "Raindrop"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Snorkel AI",
+          "members": [
+            "Snorkel AI"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "τ-bench",
+          "members": [
+            "tau-bench (τ-bench)",
+            "τ-bench (tau-bench)"
+          ],
+          "pooled": true
+        }
+      ],
+      "k": 5,
+      "consensus_top": [
+        "Langfuse",
+        "Arize Phoenix",
+        "LangSmith",
+        "τ-bench",
+        "Braintrust"
+      ],
+      "runs": [
+        {
+          "arm": "markdown",
+          "run": 1,
+          "found": [
+            "Arize Phoenix",
+            "Braintrust",
+            "Harbor (Terminal-Bench)",
+            "LangSmith",
+            "Langfuse",
+            "Snorkel AI"
+          ],
+          "recall": 0.5,
+          "overlap": 0.6
+        },
+        {
+          "arm": "markdown",
+          "run": 2,
+          "found": [
+            "Arize Phoenix",
+            "Braintrust",
+            "LangSmith",
+            "Langfuse"
+          ],
+          "recall": 0.3333333333333333,
+          "overlap": 0.8
+        },
+        {
+          "arm": "markdown",
+          "run": 3,
+          "found": [
+            "Arize Phoenix",
+            "Braintrust",
+            "LangSmith",
+            "Langfuse"
+          ],
+          "recall": 0.3333333333333333,
+          "overlap": 0.8
+        },
+        {
+          "arm": "omnigraph",
+          "run": 1,
+          "found": [
+            "Arize Phoenix",
+            "Braintrust",
+            "LangSmith",
+            "Langfuse",
+            "OpenTelemetry",
+            "Promptfoo",
+            "τ-bench"
+          ],
+          "recall": 0.5833333333333334,
+          "overlap": 0.8
+        },
+        {
+          "arm": "omnigraph",
+          "run": 2,
+          "found": [
+            "Arize Phoenix",
+            "Braintrust",
+            "Chronicle (Microsoft)",
+            "Datadog",
+            "Kitaru (ZenML)",
+            "LangSmith",
+            "Langfuse",
+            "Raindrop",
+            "τ-bench"
+          ],
+          "recall": 0.5833333333333334,
+          "overlap": 1.0
+        },
+        {
+          "arm": "omnigraph",
+          "run": 3,
+          "found": [
+            "Arize Phoenix",
+            "DeepEval",
+            "LangSmith",
+            "Langfuse",
+            "τ-bench"
+          ],
+          "recall": 0.4166666666666667,
+          "overlap": 0.8
+        }
+      ]
+    }
+  }
 }

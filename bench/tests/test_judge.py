@@ -5,11 +5,14 @@ import pytest
 from anthropic.types import Usage
 
 from bench.judge import (
+    CLUSTER_SCHEMA,
     SUPPORT_SCHEMA,
     UNCITED_SCHEMA,
     JudgeError,
     Support,
     anthropic_ask,
+    cluster_request,
+    clusters,
     support,
     support_request,
     uncited,
@@ -224,3 +227,63 @@ def test_an_uncited_output_that_is_not_a_list_of_strings_raises(tmp_path):
         uncited(PROSE, CLAIMS, ask=FakeUncited({"uncited": [1, 2]}), cache_dir=tmp_path)
 
     assert list(tmp_path.iterdir()) == []
+
+
+# clusters (D2.1): item labels from every run of a question, grouped into canonical items.
+
+QUESTION = "Which five companies gave the most talks at the conference?"
+LABELS = ["Anthropic", "AWS", "Amazon Web Services", "AWS"]
+
+
+class FakeClusters(FakeJudge):
+    def __init__(self, groups):
+        super().__init__({"groups": groups})
+
+
+def test_the_cluster_request_numbers_the_distinct_labels_alphabetically():
+    request = cluster_request(QUESTION, LABELS)
+    content = request["messages"][0]["content"]
+
+    assert request["output_config"]["format"]["schema"] == CLUSTER_SCHEMA
+    assert f"<question>{QUESTION}</question>" in content
+    assert "<labels>\n1. AWS\n2. Amazon Web Services\n3. Anthropic\n</labels>" in content
+
+
+def test_the_cluster_request_is_blind_to_the_arms():
+    text = json.dumps(cluster_request(QUESTION, LABELS)).lower()
+
+    for word in ("omnigraph", "markdown", "graph", " arm", "benchmark"):
+        assert word not in text
+
+
+def test_clusters_map_every_label_to_its_group(tmp_path):
+    judge = FakeClusters(
+        [{"name": "Amazon", "members": [1, 2]}, {"name": "Anthropic", "members": [3]}]
+    )
+
+    groups = clusters(QUESTION, LABELS, ask=judge, cache_dir=tmp_path)
+
+    assert groups == {"AWS": "Amazon", "Amazon Web Services": "Amazon", "Anthropic": "Anthropic"}
+
+
+@pytest.mark.parametrize(
+    "groups",
+    [
+        [{"name": "Amazon", "members": [1, 2]}],  # label 3 left out
+        [{"name": "Amazon", "members": [1, 2]}, {"name": "All", "members": [2, 3]}],  # 2 twice
+        [{"name": "Amazon", "members": [1, 2, 3, 4]}],  # no label 4
+    ],
+)
+def test_clusters_that_miss_or_repeat_a_label_raise_and_are_not_cached(groups, tmp_path):
+    with pytest.raises(JudgeError):
+        clusters(QUESTION, LABELS, ask=FakeClusters(groups), cache_dir=tmp_path)
+
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_clusters_keep_two_groups_with_the_same_name_apart(tmp_path):
+    judge = FakeClusters([{"name": "Cloud", "members": [1]}, {"name": "Cloud", "members": [2, 3]}])
+
+    groups = clusters(QUESTION, LABELS, ask=judge, cache_dir=tmp_path)
+
+    assert groups["AWS"] != groups["Anthropic"]

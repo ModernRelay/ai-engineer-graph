@@ -105,6 +105,25 @@ def test_malformed_check_terms_are_refused(tmp_path, terms):
         load_questions(write(tmp_path, with_terms(terms)))
 
 
+def test_the_fixed_length_lists_carry_the_count_they_ask_for():
+    counts = {q.id: q.count for q in load_questions(QUESTIONS)}
+
+    assert {qid: n for qid, n in counts.items() if n} == {"Q01": 10, "Q02": 5, "Q03": 3, "Q05": 5}
+
+
+def test_a_count_loads_and_is_optional(tmp_path):
+    [with_count] = load_questions(write(tmp_path, one() + "    count: 5\n"))
+    [without] = load_questions(write(tmp_path, one()))
+
+    assert (with_count.count, without.count) == (5, None)
+
+
+@pytest.mark.parametrize("count", ["0", "-1", "five", "2.5", "true"])
+def test_a_count_must_be_a_positive_integer(tmp_path, count):
+    with pytest.raises(ValueError, match="count"):
+        load_questions(write(tmp_path, one() + f"    count: {count}\n"))
+
+
 @pytest.fixture
 def corpus(tmp_path):
     talks = tmp_path / "talks"

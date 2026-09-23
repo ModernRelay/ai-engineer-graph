@@ -5,6 +5,7 @@ in the report traces back to a stored response. The judge is never told which ar
 
 import hashlib
 import json
+from collections import Counter
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
@@ -34,6 +35,26 @@ UNCITED_SCHEMA = {
     "type": "object",
     "properties": {"uncited": {"type": "array", "items": {"type": "string"}}},
     "required": ["uncited"],
+    "additionalProperties": False,
+}
+
+CLUSTER_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "groups": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                    "members": {"type": "array", "items": {"type": "integer"}},
+                },
+                "required": ["name", "members"],
+                "additionalProperties": False,
+            },
+        }
+    },
+    "required": ["groups"],
     "additionalProperties": False,
 }
 
@@ -75,6 +96,51 @@ def uncited_request(prose: str, claims: list[tuple[str, str]]) -> dict:
     listed = "\n".join(lines) or "(none)"
     content = f"<answer>\n{prose}\n</answer>\n\n<claims>\n{listed}\n</claims>"
     return _request("judge_uncited.md", content, UNCITED_SCHEMA)
+
+
+def cluster_request(question: str, labels: list[str]) -> dict:
+    """The distinct labels, numbered in sorted order so no arm or run order shows."""
+    numbered = "\n".join(f"{n}. {label}" for n, label in enumerate(sorted(set(labels)), 1))
+    content = f"<question>{question}</question>\n\n<labels>\n{numbered}\n</labels>"
+    return _request("judge_cluster.md", content, CLUSTER_SCHEMA)
+
+
+def valid_clusters(count: int) -> Callable[[dict], bool]:
+    """Every label number 1..count in exactly one named group."""
+
+    def valid(output: dict) -> bool:
+        groups = output.get("groups")
+        if not isinstance(groups, list) or not all(isinstance(g, dict) for g in groups):
+            return False
+        members = [m for g in groups for m in g.get("members") or []]
+        names_ok = all(isinstance(g.get("name"), str) for g in groups)
+        return names_ok and sorted(members) == list(range(1, count + 1))
+
+    return valid
+
+
+def label_groups(labels: list[str], groups: list[dict]) -> dict[str, str]:
+    """label -> group name; a name the judge used twice gets a suffix so the groups stay apart."""
+    distinct, seen, out = sorted(set(labels)), Counter(), {}
+    for group in groups:
+        seen[group["name"]] += 1
+        name = (
+            group["name"]
+            if seen[group["name"]] == 1
+            else f"{group['name']} ({seen[group['name']]})"
+        )
+        for member in group["members"]:
+            out[distinct[member - 1]] = name
+    return out
+
+
+def clusters(
+    question: str, labels: list[str], *, ask: Ask, cache_dir: Path = CACHE_DIR
+) -> dict[str, str]:
+    """Every distinct label mapped to its canonical group."""
+    request = cluster_request(question, labels)
+    record = cached(request, ask, cache_dir, valid_clusters(len(set(labels))))
+    return label_groups(labels, record["output"]["groups"])
 
 
 def valid_support(output: dict) -> bool:

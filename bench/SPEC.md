@@ -35,6 +35,8 @@
 | 2026-09-24 | Support judge sees the talk title (#38), all claims re-judged; D1.4 uncited judge written with stubbed tests | Roman Pronskiy |
 | 2026-09-24 | D1.4 done: 60 answers checked for $1.39 (md 6.8, og 5.6 uncited statements per answer, varying a lot by question); Deterministic guardrail passed; D2.2 blindness question opened | Roman Pronskiy |
 | 2026-09-24 | D1.5 done: scorer calibration 10/10 (`bench calibrate`, recorded fixture); Phase D1 guardrails passed | Roman Pronskiy |
+| 2026-09-24 | D2.1 built and run (clusters $0.08); finding: recall is the same for every run on fixed-length lists; reporting question opened | Roman Pronskiy |
+| 2026-09-24 | D2.1 done: recall for the open questions, cross-arm agreement for fixed-length lists (#39, `count` in questions.yaml); Q01 and Q03 answers barely overlap between the arms | Roman Pronskiy |
 
 ### Status legend
 
@@ -42,7 +44,7 @@
 
 ### Current focus
 
-**Now on:** Phase D1 → D2 boundary. Both D1 guardrails pass (Calibrated 10/10, Deterministic); waiting for your confirmation before Phase D2 (D2.1 pooled recall). The D2.2 blindness question needs an answer before D2.2.
+**Now on:** Epic D → Phase D2. D2.1 is done. D2.3 (consistency) and D2.4 (absence, Q10) need no judge and can go next. D2.2 (pairwise) waits on the blindness question.
 
 ---
 
@@ -810,7 +812,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Step | Description | Status | Notes |
 |------|-------------|--------|-------|
-| D2.1 | Pooled recall for list questions | 🔲 | |
+| D2.1 | Pooled recall for list questions | ✅ | Cluster judge (6 requests, $0.08). Recall on the open questions: Q04 md 36 / og 33%, Q06 49 / 46%, Q07 39 / 53%. Fixed-length lists report cross-arm agreement (#39): Q01 10%, Q02 67%, Q03 0%, Q05 80%. 26 test cases, 11 mutations caught |
 | D2.2 | Blind pairwise quality judge | 🔲 | |
 | D2.3 | Run-to-run consistency | 🔲 | |
 | D2.4 | Absence scoring (Q10) | 🔲 | |
@@ -825,6 +827,64 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
   - Recall for a run is the share of the pool it contains. For `ranked_list`, also report overlap
     within the top 5.
   - Items neither arm found are invisible to the pool; the report says so.
+  - **Questions.** ranked_list: Q01, Q02, Q03, Q05, Q07; company_set: Q06; talk_set: Q04. Q08
+    and Q09 (prose) and Q10 (absence) have no recall.
+  - **Talk sets (Q04).** An item's identity is the talk its claims cite (resolved as in D1.2). An
+    item whose claims cite several talks counts for each; an item without claims can't be placed
+    and counts for nothing. In C1.4 every Q04 item has claims, each resolving to one talk.
+  - **Clustering (the other six).** One judge request per question: the question text and the
+    distinct item labels from all six runs, numbered in alphabetical order, so neither arm nor run
+    shows. It returns groups (`name`, `members` by number). Every label must be in exactly one
+    group, or it raises. Labels are merged when a reader would count them as the same entry ("AWS"
+    = "Amazon Web Services", "evals" = "agent evaluation") and kept apart when they name different
+    things, however related. A label that joins two things goes with the one it leads with.
+    Same model, cache and failure handling as D1.3 (`prompts/judge_cluster.md`).
+  - **Pool and recall.** A group is pooled when at least one claim for one of its labels, in any
+    run, is `grounded`. A run's recall is the share of pooled groups among its items, counting a
+    group once however many of the run's labels fall in it.
+  - **Top 5 (ranked lists).** There is no gold ranking, so the reference is the consensus: pooled
+    groups ranked by how many of the six runs have them in their top 5 (by `position`), then by
+    mean position. A run's overlap is the share of the consensus top 5 in its own top 5 (for Q03,
+    which asks for three, top 3 against top 3). Both arms feed the consensus equally.
+  - **Output.** `scores.json` gets a `recall` section per question (groups, pooled or not, the
+    consensus top 5, and each run's found groups, recall and overlap). `bench score` asks the
+    cluster requests with the others and writes nothing until they're all answered.
+  - **Run (2026-09-24):** 6 cluster requests, 0 errors, $0.08. The clusters read as right
+    ("AWS" / "Amazon (AWS, Amazon AGI Lab)" / "Amazon" in one group; four Arize/Phoenix spellings
+    in one; "tau-bench" = "τ-bench").
+
+    | question | shape | pool | recall md | recall og | top-k overlap md / og |
+    |---|---|---|---|---|---|
+    | Q01 top 10 topics | ranked, fixed 10 | 25 | 40% | 40% | 0.6 / 0.6 |
+    | Q02 top 5 unsolved | ranked, fixed 5 | 8 | 58% | 58% | 0.8 / 0.8 |
+    | Q03 three contested | ranked, fixed 3 | 8 | 38% | 38% | 0.7 / 0.3 |
+    | Q04 harness talks | talk_set, open | 23 | 36% | 33% | – |
+    | Q05 five companies | ranked, fixed 5 | 7 | 81% | 81% | 0.8 / 1.0 |
+    | Q06 code verification | company_set, open | 13 | 49% | 46% | – |
+    | Q07 eval tools | ranked, open | 12 | 39% | 53% | 0.7 / 0.9 |
+
+    **Finding: pooled recall can't separate the arms on fixed-length lists.** Every run lists
+    exactly the N items asked for and grounds them, so the pool is everything anyone listed and each
+    run's recall is N / pool (Q01: 10 / 25 = 40% for all six runs). Recall is informative only on
+    the open questions (Q04, Q06, Q07). The consensus overlap has the matching weakness: it is a
+    majority vote of six runs, so when the arms disagree it rewards the more consistent arm, or falls
+    to tie-breaks. On Q03 the arms name disjoint claims (md: agentic loops vs hype, single vs
+    multi-agent; og, identical in all 3 runs: the harness carries reliability, the model isn't the
+    bottleneck, persistent memory). All five top groups tie at 3 votes, so the md 0.7 / og 0.3 comes
+    from the mean-position tie-break, not quality.
+  - **Reporting (#39).** Recall is reported only for the open questions (Q04, Q06, Q07). The
+    fixed-length lists get `count` in `questions.yaml` (Q01 10, Q02 5, Q03 3, Q05 5; the scorer
+    reads it, the agents never see it). For them the report shows the cross-arm agreement: for run
+    n of each arm, the share of the N asked for that both name in their top N, averaged over the
+    three pairings. Add D2.3 consistency, and leave which answer is better to the D2.2 pairwise
+    judge. `scores.json` still carries recall and overlap for every list question.
+  - **Agreement (2026-09-24),** shared entries per run pairing / N: Q01 1, 1, 1 of 10 (10%); Q02
+    3, 4, 3 of 5 (67%); Q03 0, 0, 0 of 3 (0%); Q05 4, 4, 4 of 5 (80%). Q01 is not a clustering
+    miss: md lists subjects counted across talks (evals, security, memory, harnesses, benchmarks,
+    MCP), while og lists the graph's pattern theses ("Verification gap", "Model is not the
+    bottleneck", "SaaSpocalypse", "Sovereign AI", "Agent economy"). Only "harness over the
+    model" is in both. Q03 is disjoint in the same way. Which reading of the question is better is
+    D2.2's call. Rescoring from the cache is still byte-identical.
 - **D2.2 — Pairwise judge.** Deliverable: `judge.py::pairwise`.
   - For each question, pair run *i* of one arm with run *i* of the other: 3 pairings × 10
     questions = 30.
@@ -985,6 +1045,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 36 | 2026-09-23 | `talk_semantic` in `queries/traversals.gq` declares `$c: Chunk` first (was `$a: InformationArtifact { slug: $talk }` first), with a comment on why. The local cluster is re-applied and the server restarted. The C1.4 omnigraph runs made before the fix move to `runs/_og-broken-talk-semantic/` and are all re-run. The 18 markdown runs already finished are kept. | On 0.11.0 a `nearest()` whose target is reached by traversal fails at runtime; later engines reject it at compile time as T26. The query had never worked for a real talk id, in the pilot (29 errors) or in the first C1.4 attempt (52 errors in 11/16 runs), and the brief (#31) points agents at it. This fixes a broken tool; it adds no capability. Same results, same description, same brief text. The markdown arm doesn't read the graph and its prompt didn't change, so its runs stay valid. Full detail in the C1.4 incident note. | Roman Pronskiy |
 | 37 | 2026-09-24 | D1.2 adds a `spliced` outcome: a quote that joins real passages of the cited talk with an ellipsis counts like `fuzzy` for grounding. It is reported separately as a contract deviation, and the support judge still checks it. | On the C1.4 answers, most `not_found` quotes were splices whose every piece is in the cited talk: markdown 25 of 28, omnigraph 42 of 50. Scoring them as hallucinations would make that metric mostly measure ellipsis use, and would hit the omnigraph arm harder. The contract asks for exact copies, so splices stay visible as their own status rather than being folded into `exact`. | Roman Pronskiy |
 | 38 | 2026-09-24 | The support judge also sees the cited talk's title line (title, speakers, company). All 695 requests are asked again; the first pass's judgments move to `runs/_judge-before-title/`. | Both arms know each talk's title, speakers and company: md from the file header, og from the graph. The judge saw transcript only, so a correct attribution such as "Deno's CEO built …" could come back `partial` (about 14 md and 3 og partials in the first pass). Metadata the agents legitimately had shouldn't count against them. The title is context for the judge, not quotable: the quote check still reads the transcript only. | Roman Pronskiy |
+| 39 | 2026-09-24 | D2.1 is reported by question type. Pooled recall only for the open questions (Q04, Q06, Q07). For the fixed-length lists (Q01, Q02, Q03, Q05, now marked with `count` in `questions.yaml`), cross-arm agreement (shared share of the top N per run pairing) plus D2.3 consistency, with quality left to D2.2. | On a fixed-length list every run names N grounded items, so recall is N / pool for every run (Q01: 40% for all six) and can't separate the arms. The consensus top-5 overlap is a majority vote of six runs, so it rewards the more consistent arm and falls to tie-breaks when the arms disagree (Q03: disjoint answers, all tied at 3 votes). `count` is scorer metadata; the question `text` is unchanged. | Roman Pronskiy |
 
 ---
 
@@ -1001,6 +1062,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 - [ ] Follow-up (graph maintainer): the production 0.11 server still serves the broken `talk_semantic`. `cluster apply` of the fixed `queries/traversals.gq` plus a server restart fixes it (#36). T26 in a later Omnigraph release will catch this shape at lint time.
 - [x] ~~Should the support judge see the talk title (`# Title (Speaker, Company — …)`)?~~ Yes (#38). Both arms know it (the md file header, the og graph), but the judge sees transcript only, so correct attributions can come back `partial` (about 14 md / 3 og in D1.3). Adding it changes every request, so all 695 would be asked again (about $7).
 - [ ] D2.2 blindness: the answers' prose often names its tools. 14 of 30 og answers mention the graph or its searches ("this knowledge graph", "signal search"), and 8 of 30 md answers mention files or grep. A pairwise judge could tell A from B. Options: redact tool mentions before pairwise judging (a documented, symmetric rewrite), or accept it and report it as a limitation.
+- [x] ~~D2.1 reporting~~: split by question type (#39).
 
 ---
 

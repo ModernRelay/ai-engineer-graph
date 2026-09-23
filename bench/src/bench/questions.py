@@ -1,7 +1,7 @@
 """The question shortlist (questions.yaml)."""
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 import yaml
@@ -23,6 +23,8 @@ class Question:
     text: str
     # Corpus terms for the answerability check (B1.2); never shown to the agents.
     check_terms: tuple[str, ...] = ()
+    # How many entries a fixed-length list asks for (D2.1, #39); scorer-only, like check_terms.
+    count: int | None = None
 
 
 def load_questions(path: Path) -> list[Question]:
@@ -50,7 +52,12 @@ def load_questions(path: Path) -> list[Question]:
                 isinstance(terms, list) and terms and all(isinstance(t, str) and t for t in terms)
             ):
                 raise ValueError(f"{q.id}: check_terms must be a non-empty list of strings")
-            q = Question(q.id, q.category, q.shape, q.text, tuple(terms))
+            q = replace(q, check_terms=tuple(terms))
+        count = row.get("count")
+        if count is not None:
+            if not (isinstance(count, int) and not isinstance(count, bool) and count > 0):
+                raise ValueError(f"{q.id}: count must be a positive integer")
+            q = replace(q, count=count)
         seen.add(q.id)
         questions.append(q)
     return questions

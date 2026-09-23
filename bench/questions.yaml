@@ -8,6 +8,9 @@
 #   prose        a free answer; pairwise judge and grounding only
 #   absence      the right answer is that nothing covers it
 #
+# `count` marks a fixed-length list (how many entries the text asks for); the scorer
+# reports cross-arm agreement for those instead of pooled recall (SPEC #39).
+#
 # `check_terms` are for `bench check-questions` only (answerability against the markdown
 # corpus, never the graph). The agents see nothing but `text`.
 
@@ -15,6 +18,7 @@ questions:
   - id: Q01
     category: aggregate
     shape: ranked_list
+    count: 10
     text: >-
       What were the 10 most discussed topics at AI Engineer World's Fair 2026? Rank them by
       how many talks covered each, give an approximate talk count, and cite at least two
@@ -24,6 +28,7 @@ questions:
   - id: Q02
     category: aggregate
     shape: ranked_list
+    count: 5
     text: >-
       What do speakers most often name as the biggest unsolved problems in building and
       shipping AI agents? Give the top 5, ranked, with supporting talks.
@@ -32,6 +37,7 @@ questions:
   - id: Q03
     category: aggregate
     shape: ranked_list
+    count: 3
     text: >-
       Where do speakers disagree most? Name the three most contested claims, and for each,
       which talks argue for it and which push back.
@@ -49,6 +55,7 @@ questions:
   - id: Q05
     category: aggregate
     shape: ranked_list
+    count: 5
     text: >-
       Which five companies gave the most talks at the conference, and what did each
       company's talks focus on?

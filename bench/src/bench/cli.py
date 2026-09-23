@@ -79,6 +79,7 @@ def main(argv: list[str] | None = None) -> int:
     score.add_argument("--seed", type=Path, default=REPO_DIR / "seed")
     score.add_argument("--cache", type=Path, default=BENCH_DIR / "runs" / "_judge")
     score.add_argument("--out", type=Path, default=BENCH_DIR / "results" / "scores.json")
+    score.add_argument("--questions", type=Path, default=BENCH_DIR / "questions.yaml")
 
     calibrate = commands.add_parser(
         "calibrate",
@@ -235,17 +236,31 @@ def _score(args: argparse.Namespace) -> int:
     from bench.corpus import talk_labels
     from bench.parse import normalise
     from bench.provider import JUDGE_MODEL, cost_usd
-    from bench.score import load_runs, score_runs, spread, support_requests, uncited_requests
+    from bench.questions import load_questions
+    from bench.score import (
+        cluster_requests,
+        load_runs,
+        recall_sections,
+        score_runs,
+        spread,
+        support_requests,
+        uncited_requests,
+    )
     from bench.verify import Corpus
 
     corpus = Corpus.load(args.corpus, talk_labels(args.seed, CHUNK_TALK_OVERRIDES))
     runs = load_runs(args.runs_dir)
+    questions = {q.id: q for q in load_questions(args.questions)}
     support_todo, uncited_todo = support_requests(runs, corpus), uncited_requests(runs)
+    cluster_todo = cluster_requests(runs, questions)
     # Identical requests share one judgment: one entry per cache file.
     requests: dict[Path, tuple[str, dict, Callable[[dict], bool]]] = {}
-    for todo, valid in ((support_todo, judge.valid_support), (uncited_todo, judge.valid_uncited)):
-        for label, request in todo:
-            requests.setdefault(judge.cache_path(request, args.cache), (label, request, valid))
+    for label, request, valid in (
+        [(label, request, judge.valid_support) for label, request in support_todo]
+        + [(label, request, judge.valid_uncited) for label, request in uncited_todo]
+        + [(label, request, judge.valid_clusters(n)) for label, request, n in cluster_todo]
+    ):
+        requests.setdefault(judge.cache_path(request, args.cache), (label, request, valid))
     records = {
         path: judge.lookup(request, args.cache) for path, (_, request, _) in requests.items()
     }
@@ -261,6 +276,8 @@ def _score(args: argparse.Namespace) -> int:
         f"{len(runs)} runs, {claims} claims, {len(support_todo)} to judge: {counts(support_todo)}"
     )
     print(f"uncited check: {len(uncited_todo)} runs, {counts(uncited_todo)}")
+    clustered = [(label, request) for label, request, _ in cluster_todo]
+    print(f"clusters: {len(cluster_todo)} questions, {counts(clustered)}")
     costs = [cost_usd(JUDGE_MODEL, record["usage"]) for record in records.values() if record]
     if costs and uncached:
         mean = sum(costs) / len(costs)
@@ -289,7 +306,10 @@ def _score(args: argparse.Namespace) -> int:
                 cost = cost_usd(JUDGE_MODEL, record["usage"])
                 spent += cost
                 output = record["output"]
-                result = output.get("verdict") or f"uncited {len(output['uncited'])}"
+                if "groups" in output:
+                    result = f"{len(output['groups'])} groups"
+                else:
+                    result = output.get("verdict") or f"uncited {len(output['uncited'])}"
                 print(
                     f"  [{n}/{len(batch)}] {label}  {result:<11} ${cost:.4f}"
                     f"  out={record['usage'].get('output_tokens')}",
@@ -304,8 +324,13 @@ def _score(args: argparse.Namespace) -> int:
     scored = score_runs(runs, corpus, args.cache)
     left_claims = sum(claim["grounding"] is None for run in scored for claim in run["claims"])
     left_runs = sum(run["uncited"] is None for run in scored)
-    if left_claims or left_runs:
-        print(f"{left_claims} claims and {left_runs} runs still unjudged; {args.out} not written")
+    recall = recall_sections(scored, questions, args.cache)
+    left_questions = sum(section is None for section in recall.values())
+    if left_claims or left_runs or left_questions:
+        print(
+            f"{left_claims} claims, {left_runs} runs and {left_questions} questions still "
+            f"unjudged; {args.out} not written"
+        )
         return 1 if errors else 0
     total = sum(
         cost_usd(JUDGE_MODEL, judge.lookup(request, args.cache)["usage"])
@@ -317,10 +342,12 @@ def _score(args: argparse.Namespace) -> int:
             "model": JUDGE_MODEL,
             "claims_judged": len(support_todo),
             "runs_checked": len(uncited_todo),
+            "questions_clustered": len(cluster_todo),
             "requests": len(requests),
             "cost_usd": round(total, 4),
         },
         "runs": scored,
+        "recall": recall,
     }
     args.out.write_text(json.dumps(scores, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     for arm in sorted({run["arm"] for run in scored}):
@@ -332,6 +359,23 @@ def _score(args: argparse.Namespace) -> int:
             + ", ".join(f"{b} {buckets[b]}" for b in ("grounded", "partial", "hallucinated"))
             + f"; uncited {uncited} in {len(arm_runs)} answers"
         )
+    for qid, section in recall.items():
+        pool = sum(g["pooled"] for g in section["groups"])
+        if "agreement" in section:  # a fixed-length list: agreement, not recall (#39)
+            mean = section["agreement"]["mean"]
+            agreed = f"{mean:.0%}" if mean is not None else "-"
+            print(f"{qid} top-{section['count']} agreement between the arms: {agreed}")
+            continue
+        by_arm = {
+            arm: [
+                r["recall"] for r in section["runs"] if r["arm"] == arm and r["recall"] is not None
+            ]
+            for arm in ("markdown", "omnigraph")
+        }
+        means = "  ".join(
+            f"{arm} {sum(v) / len(v):.0%}" if v else f"{arm} -" for arm, v in by_arm.items()
+        )
+        print(f"{qid} recall ({section['shape']}, pool {pool}): {means}")
     print(f"wrote {args.out}")
     return 1 if errors else 0
 
