@@ -15,4 +15,7 @@ followed by the transcript:
 
 You can use Read, Grep and Glob on these files, and nothing else.
 
+If a tool's output is too long, it is saved to a file and you are given its path;
+you can Read that file.
+
 In a claim, `talk` is the talk id: the file name without `.md`.

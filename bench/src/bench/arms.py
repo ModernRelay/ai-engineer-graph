@@ -43,15 +43,23 @@ def _inside(root: Path, path: str) -> bool:
     return Path(root, path).resolve().is_relative_to(root.resolve())
 
 
+def _saved_output(spill_root: Path | None, path: str) -> bool:
+    """A file the CLI saved an oversized tool result to: <claude-home>/.../tool-results/<file>."""
+    if spill_root is None or not Path(path).is_absolute():
+        return False
+    resolved, root = Path(path).resolve(), spill_root.resolve()
+    return resolved.is_relative_to(root) and "tool-results" in resolved.relative_to(root).parts[:-1]
+
+
 def _escapes(pattern: str) -> bool:
     return pattern.startswith(("/", "~")) or ".." in Path(pattern).parts
 
 
-def markdown_gate(root: Path) -> Gate:
+def markdown_gate(root: Path, spill_root: Path | None = None) -> Gate:
     def gate(tool: str, tool_input: dict) -> str | None:
         if tool == "Read":
             path = tool_input.get("file_path", "")
-            if not _inside(root, path):
+            if not _inside(root, path) and not _saved_output(spill_root, path):
                 return f"Read is limited to the talk files; {path} is outside them"
             return None
         if tool in ("Grep", "Glob"):
@@ -92,12 +100,12 @@ def _check_omnigraph_command(command: str) -> str | None:
     return None
 
 
-def omnigraph_gate(scratch: Path) -> Gate:
+def omnigraph_gate(scratch: Path, spill_root: Path | None = None) -> Gate:
     def gate(tool: str, tool_input: dict) -> str | None:
         if tool == "Read":
             path = tool_input.get("file_path", "")
-            if not _inside(scratch, path):
-                return f"Read is limited to spilled tool output in {scratch}"
+            if not _inside(scratch, path) and not _saved_output(spill_root, path):
+                return f"Read is limited to tool output the CLI saved for you; {path} is not one"
             return None
         if tool != "Bash":
             return f"{tool} is not available here. {OMNIGRAPH_USAGE}"
@@ -153,7 +161,7 @@ def _env(provider_env: dict[str, str], claude_home: Path) -> dict[str, str]:
 def markdown_options(
     talks_dir: Path, system_prompt: str, provider_env: dict[str, str], claude_home: Path
 ) -> ClaudeAgentOptions:
-    gate = markdown_gate(talks_dir)
+    gate = markdown_gate(talks_dir, spill_root=claude_home)
     env = _env(provider_env, claude_home)
     return _options(["Read", "Grep", "Glob"], talks_dir, system_prompt, gate, env)
 
@@ -165,7 +173,7 @@ def omnigraph_options(
     provider_env: dict[str, str],
     claude_home: Path,
 ) -> ClaudeAgentOptions:
-    gate = omnigraph_gate(scratch_dir)
+    gate = omnigraph_gate(scratch_dir, spill_root=claude_home)
     env = _env(provider_env, claude_home)
     env["PATH"] = os.pathsep.join([str(shim_bin), os.environ.get("PATH", "")])
     return _options(["Bash", "Read"], scratch_dir, system_prompt, gate, env)

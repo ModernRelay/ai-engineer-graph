@@ -22,6 +22,7 @@
 | 2026-09-23 | C1.1 done: `bench run` runner, shared trace helpers, answer-block parser | Roman Pronskiy |
 | 2026-09-23 | C1.2 done: wall-clock cap, retries, spend limit | Roman Pronskiy |
 | 2026-09-23 | Query docs: `@description` on every read query; brief names the verbatim-text queries; local cluster re-applied (rev 3) | Roman Pronskiy |
+| 2026-09-23 | C1.3 pilot done (20/20 ok, $9.29); saved-output defect fixed; caps final | Roman Pronskiy |
 
 ### Status legend
 
@@ -29,7 +30,7 @@
 
 ### Current focus
 
-**Now on:** Epic C → Phase C1 → step C1.3 — the pilot. Calibration first: Q01 on both arms (`bench run --pilot --only Q01`).
+**Now on:** Epic C → Phase C1 → guardrail "Graph mis-link fixed", then C1.4 (the full 60-run benchmark, starting fresh).
 
 ---
 
@@ -398,7 +399,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 |------|-------------|--------|-------|
 | C1.1 | `bench run`: resumable runner with metrics capture | ✅ | `run.py`, `trace.py`, `parse.py`; 17 tests with an injected fake agent |
 | C1.2 | Caps, timeouts and failure statuses | ✅ | 30 min wall clock; 2 retries (30 s, 60 s) on exceptions and 429/5xx/529; `--max-spend`; 6 tests, 4 mutations caught |
-| C1.3 | Pilot: 1 run per question per arm (20 runs) | 🔄 | Q01 md $0.73/265 s/82 turns; Q01 og $0.60/224 s/70 turns after query docs (#31; before: $0.99/299 s/76). Q02–Q10 running |
+| C1.3 | Pilot: 1 run per question per arm (20 runs) | ✅ | 20/20 ok, $9.29; md $4.11 / 21.8 min; og $5.18 / 32.6 min; see outcome below |
 | C1.4 | Full run: 3 runs per question per arm (60 runs) | 🔲 | |
 
 **Steps (detail):**
@@ -449,8 +450,29 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
     concurrency × per-run budget.
   - The spec's earlier `bench.toml` idea was dropped: the caps are constants next to the code that
     enforces them (decision #29).
-- **C1.3 — Pilot.** Deliverable: `runs/` for 20 runs and a short pilot note in the Decision Log.
-  Read the traces. Set the final caps and concurrency from what the pilot shows.
+- **C1.3 — Pilot.** Deliverable: `runs/` for 20 runs (`bench run --pilot --max-spend 20`).
+  - **Q01 calibration first:** md $0.73 / 265 s / 82 turns; og $0.99 / 299 s / 76 turns. The
+    graph agent pulled 19 whole transcripts with `talk-chunks`, which led to the query docs (#31).
+    After them: og $0.60 / 224 s / 70 turns and 0 whole transcripts. The first og run is kept in
+    `runs/_before-query-docs/`.
+  - **Pilot outcome (2026-09-23):**
+
+    | | markdown | omnigraph |
+    |---|---|---|
+    | cost | $4.11 | $5.18 |
+    | total time | 21.8 min | 32.6 min |
+    | turns per run | 3–82 | 14–124 |
+    | parsed answers | 10/10 | 10/10 |
+    | verbatim quotes (quick check) | 112/128 | 90/109 |
+
+    The markdown arm is fast on lookups (Q09: 4 turns, $0.05; og: 22 turns, $0.22). Both arms
+    handle Q10 (absence) correctly. The og arm answers "topics" (Q01) with the graph's patterns;
+    the md arm counts topics bottom-up.
+  - **Harness defect found:** the CLI saves oversized tool output under the run's claude-home
+    (`…/tool-results/<id>.txt`) and tells the agent to Read it, but both gates only allowed Read in
+    the workdir. That cost 9 og reads + 3 `ls` + 1 md read, and probably most of the 22 attempts to
+    trim output with `| head`. Fixed by #32. The pilot ran under the defect, so it counts as
+    calibration and the full run starts fresh.
 - **C1.4 — Full run.** Deliverable: 60 `result.json` files. Record the graph commit head and the
   corpus hash in `results/run-meta.json`.
 
@@ -458,9 +480,9 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Guardrail | Criteria (pass/fail) | Status | Actual outcome |
 |-----------|----------------------|--------|----------------|
-| Pilot clean | 20/20 runs `ok` or `capped` with a clear reason; 0 sandbox escapes in the traces | 🔲 | |
-| Contract followed | ≥ 90% of pilot answers carry a parseable JSON block (otherwise fix the prompt, not the scorer) | 🔲 | |
-| Caps fixed | Final caps logged in §6 before the full run | 🔲 | |
+| Pilot clean | 20/20 runs `ok` or `capped` with a clear reason; 0 sandbox escapes in the traces | ✅ | 20/20 `ok` (no capped runs, errors or retries). 0 sandbox escapes: replaying the gate against each run's real cwd matched every live result. 35 calls were denied: 22 shell operators and 12 reads of saved tool output (a harness defect, fixed by #32), plus 1 markdown read of saved output. |
+| Contract followed | ≥ 90% of pilot answers carry a parseable JSON block (otherwise fix the prompt, not the scorer) | ✅ | 20/20 answers carry a parseable JSON block. Quick verbatim check: md 112/128 quotes (88%), og 90/109 (83%). Q10 correct on both arms (no claims). |
+| Caps fixed | Final caps logged in §6 before the full run | ✅ | Observed maxima: 124 turns (Q07 og), $1.05 per run, 366 s. Caps kept at 300 turns (2.4×), $10 (9.5×), 30 min (4.9×); decision #33. |
 | Graph mis-link fixed (before C1.4) | Chatterjee's 24 chunks re-linked to `ia-aie-chatterjee-guide-verify-solve` in the graph, the seed re-exported, and `CHUNK_TALK_OVERRIDES` emptied with the corpus build still at 337 files | 🔲 | |
 | Full run | 60/60 `result.json` written; no `error` status left unexplained | 🔲 | |
 
@@ -690,6 +712,8 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 29 | 2026-09-23 | Run caps are code constants (`arms.py`: 100 turns, $10 per run; `run.py`: 30 min, 2 retries); no `bench.toml` | Fewer moving parts; each cap sits next to what enforces it. Final values get revisited after the pilot (C1 guardrail "Caps fixed"). | Roman Pronskiy |
 | 30 | 2026-09-23 | `max_turns` raised from 100 to 300 | 100 was a placeholder. A turn cap that binds on aggregate questions would cut the markdown arm off and distort both quality and cost. At 300 it only guards against a runaway loop, and $10 per run plus 30 minutes are the real limits. Final caps get set after the pilot from the observed maximum turns and cost (about 2× headroom). | Roman Pronskiy |
 | 31 | 2026-09-23 | All 89 stored read queries get an explicit `@description` (49 added in `queries/*.gq`, docs only). The Omnigraph brief lists which queries return verbatim Chunk text. Q01 re-run on the Omnigraph arm. | In the Q01 calibration the graph agent used `signal-evidence` 24 times but also pulled 19 whole transcripts with `talk-chunks` ($0.99, 1.13M cache reads). 42 of 89 catalog entries had no description, `signal-evidence` among them: the queries' `//` comments sit one blank line above and the generator deliberately skips those. This is interface documentation, not a new capability. The first Q01 run is kept in `runs/_before-query-docs/` as a before/after point. A new `pattern-quotes` query (option 3) was deferred as a possible "graph v2" column. | Roman Pronskiy |
+| 32 | 2026-09-23 | Both gates allow Read of the run's own saved tool output (`<claude-home>/…/tool-results/…`, nothing else in claude-home); both briefs carry the same one-line note | The pilot showed the CLI saves oversized output there and the gates blocked it. The og arm hit it 9×, and the md arm 1×. A harness defect, not a tuning of either arm. | Roman Pronskiy |
+| 33 | 2026-09-23 | Final caps: 300 turns, $10 per run, 30 min per run | Pilot maxima were 124 turns, $1.05 and 366 s; every cap has at least 2× headroom, so none of them shaped a result. | Roman Pronskiy |
 
 ---
 
@@ -700,7 +724,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 - [x] ~~Does the `omnigraph` CLI accept a config path or profile env var?~~ Yes: `OMNIGRAPH_HOME` and `OMNIGRAPH_PROFILE` (decision #18).
 - [x] ~~Does `HookMatcher(matcher=None)` match every tool?~~ Yes: the A2.4 probe saw our reason on every denial across Read, Grep, Glob and Bash.
 - [x] ~~Context window: 200k or 1M?~~ 1M for both arms (decision #27). Verified live: `contextWindow: 1000000`.
-- [ ] How does the Claude Code Bash tool handle very large `omnigraph` output (truncate vs spill to file)? Confirm in the pilot.
+- [x] ~~How does the CLI handle very large tool output?~~ It saves it to `<claude-home>/projects/<cwd>/<session>/tool-results/<id>.txt` and tells the agent to Read it (decision #32).
 - [ ] Commit `runs/` traces for the demo, or only `results/`? Currently runs are gitignored.
 
 ---

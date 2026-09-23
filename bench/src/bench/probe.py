@@ -166,13 +166,13 @@ def run_probe(arm: str, bench_dir: Path, repo: Path, provider_env: dict, out_roo
     if arm == "markdown":
         workdir = base / "talks"
         shutil.copytree(bench_dir / "corpus" / "talks", workdir)
-        gate = markdown_gate(workdir)
+        gate = markdown_gate(workdir, spill_root=home)
         prompt = system_prompt("markdown", workdir)
         options = markdown_options(workdir, prompt, provider_env, home)
     else:
         workdir = base / "scratch"
         workdir.mkdir()
-        gate = omnigraph_gate(workdir)
+        gate = omnigraph_gate(workdir, spill_root=home)
         prompt = system_prompt("omnigraph", workdir)
         options = omnigraph_options(workdir, prompt, bench_dir / "bin", provider_env, home)
 

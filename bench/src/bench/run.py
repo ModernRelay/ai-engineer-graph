@@ -123,12 +123,13 @@ def _sandbox(planned: Planned, bench_dir: Path, work: Path, provider_env: dict[s
         workdir = work / "talks"
         shutil.copytree(bench_dir / "corpus" / "talks", workdir)
         prompt = system_prompt("markdown", workdir)
-        return markdown_options(workdir, prompt, provider_env, home), markdown_gate(workdir)
+        gate = markdown_gate(workdir, spill_root=home)
+        return markdown_options(workdir, prompt, provider_env, home), gate
     workdir = work / "scratch"
     workdir.mkdir()
     prompt = system_prompt("omnigraph", workdir)
     options = omnigraph_options(workdir, prompt, bench_dir / "bin", provider_env, home)
-    return options, omnigraph_gate(workdir)
+    return options, omnigraph_gate(workdir, spill_root=home)
 
 
 async def run_one(

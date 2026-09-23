@@ -9,9 +9,10 @@ omnigraph query <stored-query> --params '<json>'
 ```
 
 Optional flags: `--format table|kv|csv|jsonl|json` and `--help`. Pipes,
-redirects and other commands are refused. If an output is too long for the
-Bash tool, it may be saved to a file in your working directory, `{workdir}`;
-you can Read files there.
+redirects and other commands are refused. Your working directory is `{workdir}`.
+
+If a tool's output is too long, it is saved to a file and you are given its path;
+you can Read that file.
 
 ### What is in the graph
 

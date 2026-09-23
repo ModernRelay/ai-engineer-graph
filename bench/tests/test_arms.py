@@ -264,3 +264,58 @@ def test_anything_reaching_the_permission_prompt_is_denied(talks, tmp_path):
     result = asyncio.run(md.can_use_tool("Read", {"file_path": "x"}, None))
 
     assert result.behavior == "deny"
+
+
+# ── oversized tool output the CLI saves under the run's claude-home ─────────
+
+
+@pytest.fixture
+def home(tmp_path):
+    spill = tmp_path / "claude-home" / "projects" / "-run-cwd" / "session-1" / "tool-results"
+    spill.mkdir(parents=True)
+    (spill / "b1.txt").write_text("saved output")
+    (spill.parent / "transcript.jsonl").write_text("{}")
+    return tmp_path / "claude-home"
+
+
+def spill_file(home):
+    return str(home / "projects" / "-run-cwd" / "session-1" / "tool-results" / "b1.txt")
+
+
+@pytest.mark.parametrize("make_gate", ["markdown", "omnigraph"])
+def test_both_gates_let_the_agent_read_its_own_saved_tool_output(talks, scratch, home, make_gate):
+    gate = (
+        markdown_gate(talks, spill_root=home)
+        if make_gate == "markdown"
+        else omnigraph_gate(scratch, spill_root=home)
+    )
+
+    assert gate("Read", {"file_path": spill_file(home)}) is None
+
+
+@pytest.mark.parametrize("make_gate", ["markdown", "omnigraph"])
+def test_nothing_else_in_the_claude_home_is_readable(talks, scratch, home, make_gate, tmp_path):
+    gate = (
+        markdown_gate(talks, spill_root=home)
+        if make_gate == "markdown"
+        else omnigraph_gate(scratch, spill_root=home)
+    )
+    session = home / "projects" / "-run-cwd" / "session-1"
+    elsewhere = tmp_path / "other" / "tool-results"
+    elsewhere.mkdir(parents=True)
+
+    assert gate("Read", {"file_path": str(session / "transcript.jsonl")})
+    assert gate("Read", {"file_path": str(session / "tool-results" / ".." / "transcript.jsonl")})
+    assert gate("Read", {"file_path": str(elsewhere / "x.txt")})
+
+
+def test_without_a_spill_root_saved_output_stays_off_limits(talks, home):
+    assert markdown_gate(talks)("Read", {"file_path": spill_file(home)})
+
+
+def test_the_live_hook_uses_the_runs_claude_home(talks, tmp_path, home):
+    md = markdown_options(talks, "MD", PROVIDER, claude_home=home)
+
+    out = run_hook(md.hooks["PreToolUse"][0], "Read", {"file_path": spill_file(home)})
+
+    assert out["hookSpecificOutput"]["permissionDecision"] == "allow"
