@@ -1,13 +1,17 @@
 // Element reads
 
-query get_element($slug: String) {
+query get_element($slug: String)
+@description("Element card: name, kind, brief, description, category, domain")
+{
     match {
         $e: Element { slug: $slug }
     }
     return { $e.slug, $e.name, $e.kind, $e.brief, $e.description, $e.category, $e.domain }
 }
 
-query elements_by_kind($kind: String) {
+query elements_by_kind($kind: String)
+@description("Elements of one kind (product, technology, framework, concept, ops), by name")
+{
     match {
         $e: Element { kind: $kind }
     }
@@ -15,7 +19,9 @@ query elements_by_kind($kind: String) {
     order { $e.name }
 }
 
-query search_elements($q: String) {
+query search_elements($q: String)
+@description("Full-text search over element names")
+{
     match {
         $e: Element
         search($e.name, $q)
@@ -25,7 +31,9 @@ query search_elements($q: String) {
 
 // Element -> Element
 
-query element_enables($slug: String) {
+query element_enables($slug: String)
+@description("Elements this element enables (EnablesElement)")
+{
     match {
         $e: Element { slug: $slug }
         $e enablesElement $target
@@ -33,7 +41,9 @@ query element_enables($slug: String) {
     return { $target.slug, $target.name, $target.kind, $target.brief }
 }
 
-query element_uses($slug: String) {
+query element_uses($slug: String)
+@description("Elements this element depends on (UsesElement)")
+{
     match {
         $e: Element { slug: $slug }
         $e usesElement $dep
@@ -43,7 +53,9 @@ query element_uses($slug: String) {
 
 // Element -> Pattern
 
-query element_patterns($slug: String) {
+query element_patterns($slug: String)
+@description("Patterns this element exemplifies (ExemplifiesPattern)")
+{
     match {
         $e: Element { slug: $slug }
         $e exemplifiesPattern $p
@@ -53,7 +65,9 @@ query element_patterns($slug: String) {
 
 // Element <- Signal
 
-query element_signals($slug: String) {
+query element_signals($slug: String)
+@description("Signals about this element (OnElement), newest first")
+{
     match {
         $e: Element { slug: $slug }
         $s onElement $e
@@ -64,7 +78,9 @@ query element_signals($slug: String) {
 
 // Element -> Company
 
-query element_developer($slug: String) {
+query element_developer($slug: String)
+@description("Companies that develop this element (DevelopedByCompany)")
+{
     match {
         $e: Element { slug: $slug }
         $e developedByCompany $c
@@ -74,7 +90,9 @@ query element_developer($slug: String) {
 
 // Element provenance
 
-query element_sources($slug: String) {
+query element_sources($slug: String)
+@description("Talks and articles this element was identified in (IdentifiedInArtifact)")
+{
     match {
         $e: Element { slug: $slug }
         $e identifiedInArtifact $a

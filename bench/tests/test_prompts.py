@@ -156,3 +156,15 @@ def test_prompts_leak_no_graph_data(prompts):
 
     assert len(ids) == 5034
     assert sorted(i for i in ids if i in md or i in og) == []
+
+
+def test_every_stored_read_query_is_described(catalog):
+    undescribed = re.findall(r"^- `([^`]+)`(?: \(stored query `\w+`\))?: Returns:", catalog, re.M)
+
+    assert undescribed == []
+
+
+def test_the_brief_says_where_verbatim_transcript_text_comes_from(prompts):
+    _, _, og = prompts
+
+    assert "signal-evidence" in og.split("### Stored queries")[0]

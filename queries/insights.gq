@@ -1,13 +1,17 @@
 // Insight reads
 
-query get_insight($slug: String) {
+query get_insight($slug: String)
+@description("Insight card: name, brief, description, importance")
+{
     match {
         $i: Insight { slug: $slug }
     }
     return { $i.slug, $i.name, $i.brief, $i.description, $i.importance }
 }
 
-query search_insights($q: String) {
+query search_insights($q: String)
+@description("Full-text search over insight names")
+{
     match {
         $i: Insight
         search($i.name, $q)
@@ -17,7 +21,9 @@ query search_insights($q: String) {
 
 // Insight -> Pattern
 
-query insight_patterns($slug: String) {
+query insight_patterns($slug: String)
+@description("Patterns this insight highlights (HighlightsPattern)")
+{
     match {
         $i: Insight { slug: $slug }
         $i highlightsPattern $p
@@ -27,7 +33,9 @@ query insight_patterns($slug: String) {
 
 // Insight -> Element
 
-query insight_elements($slug: String) {
+query insight_elements($slug: String)
+@description("Elements this insight relies on (ReliesOnElement)")
+{
     match {
         $i: Insight { slug: $slug }
         $i reliesOnElement $e

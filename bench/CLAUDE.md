@@ -14,9 +14,11 @@ a local 0.11 graph and a passing live isolation probe. Epic B (the question file
 
 **`SPEC.md` is the task list and source of truth.** Start at the **Current focus** pointer near the top of the spec; it names the next actionable step so you don't have to scan the whole file. Work the spec: implement that step's deliverable, update its status (🔲 → 🔄 → ✅) in the phase tracker, and advance the Current focus pointer. Don't skip ahead past a phase's exit guardrails. When you reach a phase boundary, verify the guardrail criteria, fill in the **Actual outcome** column, and only then move on.
 
-The repo root `CLAUDE.md` still applies to everything outside `bench/`. Never
-edit `schema.pg`, `queries/`, `policies/` or `seed/` from benchmark work. The
-benchmark reads the seed and the running server; it never writes to either.
+The repo root `CLAUDE.md` still applies to everything outside `bench/`. Benchmark
+work doesn't change `schema.pg`, `queries/`, `policies/` or `seed/` unless the user
+explicitly approves it, and every such change gets a Decision Log row (e.g. #31,
+the query descriptions). Prefer documentation over new capability. The benchmark
+reads the seed and the running server; it never writes data to either.
 
 ## Code conventions
 

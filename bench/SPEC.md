@@ -21,6 +21,7 @@
 | 2026-09-23 | Q05/Q08 swapped; B1.2 done; Epic B guardrails passed | Roman Pronskiy |
 | 2026-09-23 | C1.1 done: `bench run` runner, shared trace helpers, answer-block parser | Roman Pronskiy |
 | 2026-09-23 | C1.2 done: wall-clock cap, retries, spend limit | Roman Pronskiy |
+| 2026-09-23 | Query docs: `@description` on every read query; brief names the verbatim-text queries; local cluster re-applied (rev 3) | Roman Pronskiy |
 
 ### Status legend
 
@@ -397,7 +398,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 |------|-------------|--------|-------|
 | C1.1 | `bench run`: resumable runner with metrics capture | ✅ | `run.py`, `trace.py`, `parse.py`; 17 tests with an injected fake agent |
 | C1.2 | Caps, timeouts and failure statuses | ✅ | 30 min wall clock; 2 retries (30 s, 60 s) on exceptions and 429/5xx/529; `--max-spend`; 6 tests, 4 mutations caught |
-| C1.3 | Pilot: 1 run per question per arm (20 runs) | 🔲 | |
+| C1.3 | Pilot: 1 run per question per arm (20 runs) | 🔄 | Q01 md $0.73/265 s/82 turns; Q01 og $0.60/224 s/70 turns after query docs (#31; before: $0.99/299 s/76). Q02–Q10 running |
 | C1.4 | Full run: 3 runs per question per arm (60 runs) | 🔲 | |
 
 **Steps (detail):**
@@ -688,6 +689,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 28 | 2026-09-23 | Q05 and Q08 replaced with questions that no graph pattern covers (talks per company and what each focused on; voice/robotics vs coding-agent concerns) | Five of the ten drafts mapped almost one-to-one onto the graph's precomputed patterns (memory layer, agent supply chain, verification gap, harness over model, contradictions). Two neutral aggregations show whether the graph helps beyond its prepared themes. The other three pattern-aligned questions stay and are named in the report's method notes. | Roman Pronskiy |
 | 29 | 2026-09-23 | Run caps are code constants (`arms.py`: 100 turns, $10 per run; `run.py`: 30 min, 2 retries); no `bench.toml` | Fewer moving parts; each cap sits next to what enforces it. Final values get revisited after the pilot (C1 guardrail "Caps fixed"). | Roman Pronskiy |
 | 30 | 2026-09-23 | `max_turns` raised from 100 to 300 | 100 was a placeholder. A turn cap that binds on aggregate questions would cut the markdown arm off and distort both quality and cost. At 300 it only guards against a runaway loop, and $10 per run plus 30 minutes are the real limits. Final caps get set after the pilot from the observed maximum turns and cost (about 2× headroom). | Roman Pronskiy |
+| 31 | 2026-09-23 | All 89 stored read queries get an explicit `@description` (49 added in `queries/*.gq`, docs only). The Omnigraph brief lists which queries return verbatim Chunk text. Q01 re-run on the Omnigraph arm. | In the Q01 calibration the graph agent used `signal-evidence` 24 times but also pulled 19 whole transcripts with `talk-chunks` ($0.99, 1.13M cache reads). 42 of 89 catalog entries had no description, `signal-evidence` among them: the queries' `//` comments sit one blank line above and the generator deliberately skips those. This is interface documentation, not a new capability. The first Q01 run is kept in `runs/_before-query-docs/` as a before/after point. A new `pattern-quotes` query (option 3) was deferred as a possible "graph v2" column. | Roman Pronskiy |
 
 ---
 

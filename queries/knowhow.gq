@@ -1,13 +1,17 @@
 // KnowHow reads
 
-query get_knowhow($slug: String) {
+query get_knowhow($slug: String)
+@description("KnowHow card: name, brief, description, guidelines, context, url")
+{
     match {
         $k: KnowHow { slug: $slug }
     }
     return { $k.slug, $k.name, $k.brief, $k.description, $k.guidelines, $k.context, $k.url }
 }
 
-query recent_knowhow() {
+query recent_knowhow()
+@description("The 50 most recent KnowHow practices")
+{
     match {
         $k: KnowHow
     }
@@ -16,7 +20,9 @@ query recent_knowhow() {
     limit 50
 }
 
-query search_knowhow($q: String) {
+query search_knowhow($q: String)
+@description("Full-text search over KnowHow names")
+{
     match {
         $k: KnowHow
         search($k.name, $q)
@@ -26,7 +32,9 @@ query search_knowhow($q: String) {
 
 // KnowHow -> Element
 
-query knowhow_elements($slug: String) {
+query knowhow_elements($slug: String)
+@description("Elements this practice references (ReferencesElement)")
+{
     match {
         $k: KnowHow { slug: $slug }
         $k referencesElement $e
@@ -36,7 +44,9 @@ query knowhow_elements($slug: String) {
 
 // KnowHow provenance
 
-query knowhow_sources($slug: String) {
+query knowhow_sources($slug: String)
+@description("Talks and articles this practice was sourced from (SourcedFromArtifact)")
+{
     match {
         $k: KnowHow { slug: $slug }
         $k sourcedFromArtifact $a

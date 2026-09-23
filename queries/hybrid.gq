@@ -5,7 +5,9 @@
 // a clear error naming it; the queries type-check and serve regardless.
 
 // Semantic neighbors: embed the question at query time, k-NN over chunks.
-query related_chunks($q: String) {
+query related_chunks($q: String)
+@description("Transcript passages semantically nearest to a question: verbatim chunk text, which starts with a [talk-label], top 10")
+{
     match { $c: Chunk }
     return { $c.text, $c.chunk_index }
     order { nearest($c.embedding, $q) }
@@ -14,7 +16,9 @@ query related_chunks($q: String) {
 
 // Hybrid: Reciprocal Rank Fusion of semantic similarity and BM25 over the
 // same chunk text — the robust default for agent retrieval.
-query hybrid_chunks($q: String) {
+query hybrid_chunks($q: String)
+@description("Transcript passages ranked by semantic similarity fused with BM25 keyword match: verbatim chunk text, which starts with a [talk-label], top 10")
+{
     match { $c: Chunk }
     return { $c.text, $c.chunk_index }
     order { rrf(nearest($c.embedding, $q), bm25($c.text, $q)) }

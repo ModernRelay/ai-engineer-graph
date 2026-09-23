@@ -1,13 +1,17 @@
 // Signal reads
 
-query get_signal($slug: String) {
+query get_signal($slug: String)
+@description("Signal card: name, brief, description, domain, date; the brief is a paraphrase, signal_evidence has the verbatim passage")
+{
     match {
         $s: Signal { slug: $slug }
     }
     return { $s.slug, $s.name, $s.brief, $s.description, $s.domain, $s.stagingTimestamp }
 }
 
-query recent_signals() {
+query recent_signals()
+@description("The 50 most recent signals")
+{
     match {
         $s: Signal
     }
@@ -16,7 +20,9 @@ query recent_signals() {
     limit 50
 }
 
-query search_signals($q: String) {
+query search_signals($q: String)
+@description("Full-text search over signal names")
+{
     match {
         $s: Signal
         search($s.name, $q)
@@ -26,7 +32,9 @@ query search_signals($q: String) {
 
 // Signal -> Pattern (core analytical)
 
-query signal_patterns($slug: String) {
+query signal_patterns($slug: String)
+@description("Patterns this signal supports (FormsPattern)")
+{
     match {
         $s: Signal { slug: $slug }
         $s formsPattern $p
@@ -34,7 +42,9 @@ query signal_patterns($slug: String) {
     return { $p.slug, $p.name, $p.kind, $p.brief }
 }
 
-query signal_contradictions($slug: String) {
+query signal_contradictions($slug: String)
+@description("Patterns this signal contradicts (ContradictsPattern)")
+{
     match {
         $s: Signal { slug: $slug }
         $s contradictsPattern $p
@@ -44,7 +54,9 @@ query signal_contradictions($slug: String) {
 
 // Signal -> Element
 
-query signal_elements($slug: String) {
+query signal_elements($slug: String)
+@description("Elements this signal is about (OnElement)")
+{
     match {
         $s: Signal { slug: $slug }
         $s onElement $e
@@ -54,7 +66,9 @@ query signal_elements($slug: String) {
 
 // Signal -> Company
 
-query signal_companies($slug: String) {
+query signal_companies($slug: String)
+@description("Companies this signal names (RelevantCompany)")
+{
     match {
         $s: Signal { slug: $slug }
         $s relevantCompany $c
@@ -64,7 +78,9 @@ query signal_companies($slug: String) {
 
 // Signal provenance
 
-query signal_sources($slug: String) {
+query signal_sources($slug: String)
+@description("Talks and articles this signal was spotted in (SpottedInArtifact)")
+{
     match {
         $s: Signal { slug: $slug }
         $s spottedInArtifact $a
@@ -75,7 +91,9 @@ query signal_sources($slug: String) {
 // Signal -> Chunk (audit 2026-09-13): the transcript passages a signal paraphrases, best match first.
 // score is the cosine similarity between the signal brief and the chunk text.
 
-query signal_evidence($slug: String) {
+query signal_evidence($slug: String)
+@description("The verbatim transcript passages a signal was extracted from, best match first, with the talk id (artifact) and cosine score")
+{
     match {
         $s: Signal { slug: $slug }
         $s $e:evidencedByChunk $c
@@ -88,7 +106,9 @@ query signal_evidence($slug: String) {
 
 // Signals by evidence type (first_party = the speaker's own company is the subject).
 
-query signals_by_evidence_type($evidenceType: String) {
+query signals_by_evidence_type($evidenceType: String)
+@description("Signals of one evidence type (first_party, third_party, unattributed), newest first")
+{
     match {
         $s: Signal { evidenceType: $evidenceType }
     }

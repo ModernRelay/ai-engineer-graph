@@ -1,13 +1,17 @@
 // Pattern reads
 
-query get_pattern($slug: String) {
+query get_pattern($slug: String)
+@description("Pattern card: name, kind, brief, description, evolution")
+{
     match {
         $p: Pattern { slug: $slug }
     }
     return { $p.slug, $p.name, $p.kind, $p.brief, $p.description, $p.evolution }
 }
 
-query patterns_by_kind($kind: String) {
+query patterns_by_kind($kind: String)
+@description("Patterns of one kind (challenge, disruption, dynamic), by name")
+{
     match {
         $p: Pattern { kind: $kind }
     }
@@ -15,7 +19,9 @@ query patterns_by_kind($kind: String) {
     order { $p.name }
 }
 
-query search_patterns($q: String) {
+query search_patterns($q: String)
+@description("Full-text search over pattern names")
+{
     match {
         $p: Pattern
         search($p.name, $q)
@@ -25,7 +31,9 @@ query search_patterns($q: String) {
 
 // Pattern <- Signal (what signals form this pattern?)
 
-query pattern_signals($slug: String) {
+query pattern_signals($slug: String)
+@description("Signals that support this pattern (FormsPattern), newest first; signal_evidence has the transcript passage behind each")
+{
     match {
         $p: Pattern { slug: $slug }
         $s formsPattern $p
@@ -36,7 +44,9 @@ query pattern_signals($slug: String) {
 
 // Pattern -> Pattern
 
-query pattern_drives($slug: String) {
+query pattern_drives($slug: String)
+@description("Patterns this pattern drives (DrivesPattern)")
+{
     match {
         $p: Pattern { slug: $slug }
         $p drivesPattern $target
@@ -44,7 +54,9 @@ query pattern_drives($slug: String) {
     return { $target.slug, $target.name, $target.kind, $target.brief }
 }
 
-query pattern_relies_on($slug: String) {
+query pattern_relies_on($slug: String)
+@description("Patterns this pattern relies on (ReliesOnPattern)")
+{
     match {
         $p: Pattern { slug: $slug }
         $p reliesOnPattern $dep
@@ -52,7 +64,9 @@ query pattern_relies_on($slug: String) {
     return { $dep.slug, $dep.name, $dep.kind, $dep.brief }
 }
 
-query pattern_contradicts($slug: String) {
+query pattern_contradicts($slug: String)
+@description("Patterns this pattern is in tension with (ContradictsToPattern)")
+{
     match {
         $p: Pattern { slug: $slug }
         $p contradictsToPattern $target
@@ -62,7 +76,9 @@ query pattern_contradicts($slug: String) {
 
 // Pattern <- Element
 
-query pattern_elements($slug: String) {
+query pattern_elements($slug: String)
+@description("Elements that exemplify this pattern (ExemplifiesPattern)")
+{
     match {
         $p: Pattern { slug: $slug }
         $e exemplifiesPattern $p
@@ -72,7 +88,9 @@ query pattern_elements($slug: String) {
 
 // Pattern <- Insight
 
-query pattern_insights($slug: String) {
+query pattern_insights($slug: String)
+@description("Insights that highlight this pattern (HighlightsPattern)")
+{
     match {
         $p: Pattern { slug: $slug }
         $i highlightsPattern $p
@@ -82,7 +100,9 @@ query pattern_insights($slug: String) {
 
 // Pattern evidence split (audit 2026-09-13)
 
-query pattern_signals_by_evidence($slug: String, $evidenceType: String) {
+query pattern_signals_by_evidence($slug: String, $evidenceType: String)
+@description("Supporting signals of one evidence type: first_party (the speaker's own company is the subject), third_party or unattributed")
+{
     match {
         $p: Pattern { slug: $slug }
         $s: Signal { evidenceType: $evidenceType }
@@ -94,7 +114,9 @@ query pattern_signals_by_evidence($slug: String, $evidenceType: String) {
 
 // Counters split by polarity: "contradiction" refutes the thesis, "boundary" limits its scope.
 
-query pattern_counters_by_polarity($slug: String, $polarity: String) {
+query pattern_counters_by_polarity($slug: String, $polarity: String)
+@description("Counter-signals of one polarity: contradiction refutes the thesis, boundary limits its scope")
+{
     match {
         $p: Pattern { slug: $slug }
         $s $e:contradictsPattern $p
@@ -105,19 +127,25 @@ query pattern_counters_by_polarity($slug: String, $polarity: String) {
 
 // The pattern layer: every pattern-to-pattern edge, one query per edge type.
 
-query pattern_layer_relies() {
+query pattern_layer_relies()
+@description("Every ReliesOnPattern edge between patterns")
+{
     match { $a: Pattern $a reliesOnPattern $b }
     return { $a.slug as from, $b.slug as to }
     order { $a.slug }
 }
 
-query pattern_layer_drives() {
+query pattern_layer_drives()
+@description("Every DrivesPattern edge between patterns")
+{
     match { $a: Pattern $a drivesPattern $b }
     return { $a.slug as from, $b.slug as to }
     order { $a.slug }
 }
 
-query pattern_layer_contradicts() {
+query pattern_layer_contradicts()
+@description("Every ContradictsToPattern edge between patterns")
+{
     match { $a: Pattern $a contradictsToPattern $b }
     return { $a.slug as from, $b.slug as to }
     order { $a.slug }

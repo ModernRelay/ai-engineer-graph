@@ -39,6 +39,11 @@ Everything except Chunk text was written by an extraction pipeline. Names,
 briefs and descriptions are paraphrases, not quotes. The `quote` in a claim
 must be copied from Chunk text.
 
+Verbatim Chunk text comes back from: `hybrid-search` and `related` (passages
+matching a question), `sem-context` (with talk and speaker), `talk-semantic`
+(inside one talk), `talk-chunks` (a whole talk), and `signal-evidence <signal>`
+(the passages a signal was extracted from, with its talk id).
+
 In a claim, `talk` is the talk's `ia-aie-…` id, or the bracketed label at the
 start of the Chunk text you quote.
 

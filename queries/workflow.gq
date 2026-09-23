@@ -4,7 +4,9 @@
 
 // Triage queue: signals not yet attached to any pattern (neither forming
 // nor contradicting one). Work this list down to zero each review.
-query orphan_signals() {
+query orphan_signals()
+@description("Signals not attached to any pattern, neither forming nor contradicting one")
+{
     match {
         $s: Signal
         not { $s formsPattern $_ }
@@ -16,7 +18,9 @@ query orphan_signals() {
 
 // Momentum: how many signals each pattern attracted since a cutoff.
 // Params: since — e.g. {"since": "2026-05-01T00:00:00Z"}
-query pattern_momentum($since: DateTime) {
+query pattern_momentum($since: DateTime)
+@description("How many signals each pattern attracted since a date (since: ISO datetime)")
+{
     match {
         $p: Pattern
         $s formsPattern $p
@@ -27,7 +31,9 @@ query pattern_momentum($since: DateTime) {
 
 // Staleness: patterns with no new signal since the cutoff — prune them or
 // push research. Params: since — e.g. {"since": "2026-05-01T00:00:00Z"}
-query stale_patterns($since: DateTime) {
+query stale_patterns($since: DateTime)
+@description("Patterns with no new signal since a date (since: ISO datetime)")
+{
     match {
         $p: Pattern
         not {
@@ -40,7 +46,9 @@ query stale_patterns($since: DateTime) {
 
 // Tension: patterns with contradicting evidence — where the thesis is
 // actively contested. High counts deserve an Insight.
-query contested_patterns() {
+query contested_patterns()
+@description("Patterns with contradicting signals, and how many")
+{
     match {
         $p: Pattern
         $s contradictsPattern $p
@@ -50,7 +58,9 @@ query contested_patterns() {
 
 // Provenance gaps: signals with no artifact and no source — claims an
 // agent cannot verify. Fix with attach mutations or drop the signal.
-query unsourced_signals() {
+query unsourced_signals()
+@description("Signals with no talk or source attached")
+{
     match {
         $s: Signal
         not { $s spottedInArtifact $_ }
