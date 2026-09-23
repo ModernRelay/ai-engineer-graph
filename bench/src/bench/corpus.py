@@ -9,12 +9,11 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
-# The graph attaches Anirban Chatterjee's "Guide, Verify, Solve" chunks to Tariq
-# Shaukat's talk (added by the 2026-09-08 audit backfill, commit 026ff7e).
-# Drop this entry once the PartOfArtifact edges are fixed in the graph.
-CHUNK_TALK_OVERRIDES = {
-    "chatterjee-sonar-guide-verify-solve": "ia-aie-chatterjee-guide-verify-solve",
-}
+# Transcript label -> talk, for chunks the seed attaches to the wrong talk. Applied to the
+# corpus build and (via `bench relink-chunks`) to the local graph's chunk edges. Empty now:
+# the one known case, Chatterjee's "Guide, Verify, Solve" chunks attached to Shaukat's talk
+# by the 2026-09-08 audit backfill, was fixed in seed/chunks/part-03.jsonl on 2026-09-23.
+CHUNK_TALK_OVERRIDES: dict[str, str] = {}
 
 
 def _read_jsonl(path: Path):

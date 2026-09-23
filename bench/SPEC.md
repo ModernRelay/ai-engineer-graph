@@ -24,6 +24,7 @@
 | 2026-09-23 | Query docs: `@description` on every read query; brief names the verbatim-text queries; local cluster re-applied (rev 3) | Roman Pronskiy |
 | 2026-09-23 | C1.3 pilot done (20/20 ok, $9.29); saved-output defect fixed; caps final | Roman Pronskiy |
 | 2026-09-23 | Local graph re-linked (`bench relink-chunks`); mis-link guardrail passed for the local graph | Roman Pronskiy |
+| 2026-09-23 | Sonar fix ported to `seed/chunks/part-03.jsonl`; override emptied; README notes the seed is ahead of the served graph | Roman Pronskiy |
 
 ### Status legend
 
@@ -134,8 +135,9 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
   - `CHUNK_TALK_OVERRIDES` corrects one known mis-link. The graph attaches all 24 chunks of
     Anirban Chatterjee's "Guide, Verify, Solve" (`chatterjee-sonar-guide-verify-solve`) to Tariq
     Shaukat's `ia-aie-shaukat-verifiers-king`. The override sends them to
-    `ia-aie-chatterjee-guide-verify-solve`. The same mapping re-links the local graph's chunk
-    edges (`bench relink-chunks`, #34); empty it once the production graph and seed are fixed.
+    `ia-aie-chatterjee-guide-verify-solve`. The same mapping re-linked the local graph's chunk
+    edges (`bench relink-chunks`, #34). Since #35 the seed itself is fixed and the mapping is empty;
+    the mechanism stays for any future mis-link.
   - If any talk ends up with chunks from more than one transcript, the build fails, so a future
     mis-link can't silently merge two talks.
   - Strip the leading `[talk-slug] ` label from each chunk's text. Join chunks with a blank line
@@ -717,6 +719,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 32 | 2026-09-23 | Both gates allow Read of the run's own saved tool output (`<claude-home>/…/tool-results/…`, nothing else in claude-home); both briefs carry the same one-line note | The pilot showed the CLI saves oversized output there and the gates blocked it. The og arm hit it 9×, and the md arm 1×. A harness defect, not a tuning of either arm. | Roman Pronskiy |
 | 33 | 2026-09-23 | Final caps: 300 turns, $10 per run, 30 min per run | Pilot maxima were 124 turns, $1.05 and 366 s; every cap has at least 2× headroom, so none of them shaped a result. | Roman Pronskiy |
 | 34 | 2026-09-23 | The mis-link is fixed in the benchmark's local graph only. `CHUNK_TALK_OVERRIDES` is the single mapping for both the corpus and the graph (`bench relink-chunks` on the embedded parts, run by `local-graph.sh load`). The tracked seed and production graph are a follow-up for the maintainer. | Fixing production needs production access and a delete path for key-less edges, which has no stored mutation. The benchmark only needs its own graph and corpus to agree, and they now share one mapping. Chatterjee's 5 signals still have no evidence passages (that needs the extraction pipeline), and one Shaukat signal keeps a Chatterjee passage as its evidence. | Roman Pronskiy |
+| 35 | 2026-09-23 | The fix is ported to the tracked seed: `bench relink-chunks ../seed/chunks` re-points exactly 24 `PartOfArtifact` rows in `seed/chunks/part-03.jsonl` (same formatting, only `to` changes). `CHUNK_TALK_OVERRIDES` is emptied; README says chunks cover 337 talks and documents the seed being ahead of the served graph. | You asked to port the fix. This departs from the repo's "regenerate the seed from `omnigraph export`, never hand-edit" rule: the served production graph still has the mis-link, so the seed runs ahead of it until the graph maintainer re-points the 24 edges there. The corpus rebuilds byte-identical (same fingerprint), and the one evidence edge from Shaukat's `sig-cmu-velocity-fade` to Chatterjee #1 is left alone because both passages discuss the same Carnegie Mellon study. | Roman Pronskiy |
 
 ---
 
@@ -729,7 +732,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 - [x] ~~Context window: 200k or 1M?~~ 1M for both arms (decision #27). Verified live: `contextWindow: 1000000`.
 - [x] ~~How does the CLI handle very large tool output?~~ It saves it to `<claude-home>/projects/<cwd>/<session>/tool-results/<id>.txt` and tells the agent to Read it (decision #32).
 - [ ] Commit `runs/` traces for the demo, or only `results/`? Currently runs are gitignored.
-- [ ] Follow-up (graph maintainer): re-link Chatterjee's 24 chunks in the production 0.11 graph, derive evidence passages for his 5 signals, re-export the seed, then empty `CHUNK_TALK_OVERRIDES`.
+- [ ] Follow-up (graph maintainer): re-point Chatterjee's 24 chunks in the production 0.11 graph so it matches the seed (#35), and derive evidence passages for his 5 signals. Then refresh the seed from an export as usual.
 
 ---
 

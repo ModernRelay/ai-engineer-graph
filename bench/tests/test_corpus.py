@@ -222,17 +222,29 @@ def test_relink_is_idempotent(tmp_path):
     assert part.read_text() == once
 
 
-def test_relink_chunks_command_reports_how_many_edges_moved(tmp_path, capsys):
+def test_relink_chunks_command_reports_how_many_edges_moved(tmp_path, capsys, monkeypatch):
+    monkeypatch.setattr("bench.cli.CHUNK_TALK_OVERRIDES", {"gamma-talk": "ia-aie-gamma-talk"})
     part = tmp_path / "part-01.jsonl"
     part.write_text(
-        "".join(
-            json.dumps(r) + "\n"
-            for r in chunk(
-                "chatterjee-sonar-guide-verify-solve", 0, "x", "ia-aie-shaukat-verifiers-king"
-            )
-        )
+        "".join(json.dumps(r) + "\n" for r in chunk("gamma-talk", 0, "x", "ia-aie-beta-talk"))
     )
 
     assert main(["relink-chunks", str(tmp_path)]) == 0
     assert "1 chunk edge" in capsys.readouterr().out
-    assert "ia-aie-chatterjee-guide-verify-solve" in part.read_text()
+    assert "ia-aie-gamma-talk" in part.read_text()
+
+
+def test_the_seed_itself_needs_no_relinking():
+    from bench.corpus import CHUNK_TALK_OVERRIDES
+
+    seed_parts = Path(__file__).resolve().parents[2] / "seed" / "chunks"
+    labels = {
+        json.loads(line)["from"].rsplit("#", 1)[0]: json.loads(line)["to"]
+        for part in seed_parts.glob("part-*.jsonl")
+        for line in part.open(encoding="utf-8")
+        if line.startswith('{"edge"')
+    }
+
+    assert CHUNK_TALK_OVERRIDES == {}
+    assert labels["chatterjee-sonar-guide-verify-solve"] == "ia-aie-chatterjee-guide-verify-solve"
+    assert labels["shaukat-sonar-verifiers-are-king"] == "ia-aie-shaukat-verifiers-king"

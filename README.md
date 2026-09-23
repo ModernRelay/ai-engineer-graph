@@ -22,6 +22,14 @@ The seed files are an exact export of the served graph (last refreshed
 2026-09-23, Omnigraph 0.11 envelope: identity is the top-level `id` on every
 line). Nothing else is needed to stand the graph up.
 
+One known exception, until the served graph catches up: in
+`seed/chunks/part-03.jsonl` the 24 chunks of Anirban Chatterjee's "Guide, Verify,
+Solve" (`chatterjee-sonar-guide-verify-solve#0–23`) belong to
+`ia-aie-chatterjee-guide-verify-solve`. The served graph still attaches them to
+Tariq Shaukat's `ia-aie-shaukat-verifiers-king`, a mis-link from the 2026-09-08
+audit backfill. Re-point those 24 `PartOfArtifact` edges in the served graph,
+then refresh the seed from an export as usual.
+
 ## What is in the graph
 
 | type | count | notes |
@@ -35,7 +43,7 @@ line). Nothing else is needed to stand the graph up.
 | Expert | 385 | speakers, affiliated with companies |
 | InformationArtifact | 357 | 338 talks (`youtube`, with video links) + 19 articles |
 | SourceEntity | 17 | publishers; the talks publish via `source-aie-yt` |
-| Chunk | 5,339 | ~220-word transcript passages over 336 talks, 3072-d embeddings |
+| Chunk | 5,339 | ~220-word transcript passages over 337 talks, 3072-d embeddings |
 | edges | 25,900 | 17,942 between entities + 5,339 chunk → talk + 2,619 signal → chunk evidence |
 
 ### The 18 patterns
