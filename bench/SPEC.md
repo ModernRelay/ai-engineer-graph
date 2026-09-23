@@ -1,0 +1,625 @@
+# Omnigraph vs Markdown — agent benchmark — Technical Spec
+
+**Author:** Roman Pronskiy · **Created:** 2026-09-23
+
+> 📄 **This is a living document.** Status markers, decisions, and guardrail outcomes are meant to be updated as the work happens. See [How to Update This Document](#how-to-update-this-document) before editing.
+
+### Changelog
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-09-23 | Initial spec created | Roman Pronskiy |
+| 2026-09-23 | A1.1 done on the 0.11 seed; corpus is 337 talks; Sonar mis-link override and graph-fix gate added | Roman Pronskiy |
+| 2026-09-23 | A1.2 done; Phase A1 guardrails passed | Roman Pronskiy |
+| 2026-09-23 | A2.1 done; gate moved from `can_use_tool` to a PreToolUse hook; Omnigraph flag allowlist; clean-environment check added to A2.2 | Roman Pronskiy |
+| 2026-09-23 | A2.2 done: `bench shim` + `bin/omnigraph` via `OMNIGRAPH_HOME`; secrets check implemented | Roman Pronskiy |
+| 2026-09-23 | A2.3 done: contract + briefs, generated query catalog; D1.2 accepts chunk labels as talk ids | Roman Pronskiy |
+
+### Status legend
+
+🔲 Not started · 🔄 In progress · ✅ Done · ⏸️ Blocked · ❌ Cut
+
+### Current focus
+
+**Now on:** Epic A → Phase A2 → step A2.4 — `bench probe` (isolation probe for both arms; the first step that spends API money).
+
+---
+
+## 1. Executive summary
+
+A small, repeatable benchmark that puts the same Claude agent in front of the
+same questions about the AI Engineer World's Fair 2026 talks twice. One arm
+answers from the Omnigraph graph through its stored read queries. The other
+answers from the raw talk transcripts as markdown files. The transcripts come
+to about 1.4–1.6M tokens, so they can't be pasted into context; the markdown
+agent has to search them the way a coding agent would. The benchmark leans
+toward aggregated questions ("what topics were discussed most", "which talks
+argue X"), where a graph should help most. It measures answer quality, time,
+cost and hallucination/grounding. The output is one two-column table, **Agent
++ Omnigraph** vs **Agent + Markdown files**, backed by per-question detail and a
+few side-by-side traces for a demo.
+
+---
+
+## 2. Technical decisions
+
+| Area | Decision | Rationale |
+|------|----------|-----------|
+| Location | `bench/` inside the graph repo | Keeps the benchmark next to the schema, queries and seed it measures. Corpus and raw runs stay gitignored. |
+| Language / tooling | Python ≥ 3.12, `uv`, `ruff`, `pytest` | Matches the local corpus scripts; `uv run bench …` is the single entry point. |
+| Agent harness | Claude Agent SDK (`claude-agent-sdk`) | The Claude Code harness as a library: same built-in Read/Grep/Glob/Bash tools, and a `ResultMessage` per run with `total_cost_usd`, `duration_ms`, `duration_api_ms`, `num_turns` and `usage`. |
+| Agent isolation | `setting_sources=[]`, `strict_mcp_config=True`, `tools=[…]` per arm, a PreToolUse-hook gate on every call (with `can_use_tool` as a deny-all backstop), cwd in a temp dir outside the repo | The SDK loads user, project and local settings plus CLAUDE.md by default. Neither arm may see the repo's CLAUDE.md, user hooks or plugins, or the other arm's data. |
+| Agent model | `claude-sonnet-5`, `effort="high"`, both arms | Cheaper for 60 runs. The difference between arms shows up just as clearly. |
+| Subagents | None in either arm (no `Agent`/`Task` tool) | The comparison is about the data interface, not orchestration. |
+| Judge model | `claude-opus-5-5` via the `anthropic` SDK, structured outputs, `effort` set explicitly to `high` | A stronger model than the agents, and a different one, to limit self-preference. Opus 5.5 defaults to `medium` effort, so it is set explicitly. |
+| Corpus | 337 markdown files rebuilt from `seed/chunks` via `PartOfArtifact`, plus one documented override for a mis-linked talk | The original `transcripts/` folder isn't on this machine. Chunks join back together without overlap. |
+| Correctness | No gold set, no human review: blind pairwise judge + pooled recall | User decision. Correctness is relative between the arms, not absolute. |
+| Grounding | Every claim cites `talk slug + verbatim quote`. A mechanical quote check, then a judge check that the quote supports the claim. | The same contract for both arms, and checkable against the corpus without a gold set. |
+| Cost scope | Per question only; graph build cost excluded | User decision. Stated as a footnote in the report. |
+| Runs | 10 questions × 2 arms × 3 runs = 60 agent runs | 3 runs expose variance without making the pilot expensive. |
+
+---
+
+## 3. Architecture overview
+
+```
+ seed/chunks/*.jsonl ──build_corpus──▶ bench/corpus/talks/<ia-aie-slug>.md  (337 files, gitignored)
+ seed/04-artifacts.jsonl ─(title, link, date header)─┘
+
+ questions.yaml ──┐
+                  ▼
+            ┌─────────────┐   per (question, arm, run)    ┌──────────────────────────────┐
+            │  bench run  │ ─────────────────────────────▶ │ Claude Agent SDK (Sonnet 5)  │
+            └─────────────┘                                │  setting_sources=[]          │
+                  ▲                                        ├──────────────┬───────────────┤
+                  │ runs/<q>/<arm>/<n>/                    │ markdown arm │ omnigraph arm │
+                  │  trace.jsonl, result.json              │ Read/Grep/   │ Bash gated to │
+                  │  (answer + metrics)                    │ Glob over a  │ `omnigraph    │
+                  │                                        │ temp copy of │  alias|query` │
+                  │                                        │ the corpus   │ → server:8081 │
+                  │                                        └──────────────┴───────────────┘
+            ┌─────────────┐   claims + quotes   ┌─────────────────────────┐
+            │ bench score │ ──────────────────▶ │ verify: quote in corpus │ (mechanical)
+            └─────────────┘                     │ judge: Opus 5.5         │ (support, pairwise,
+                  │                             └─────────────────────────┘  item clustering)
+                  ▼
+            ┌─────────────┐
+            │ bench report│ ──▶ bench/results/results.md  (two-column table + per-question + traces)
+            └─────────────┘
+```
+
+`bench run` runs each question through each arm three times and stores the
+full trace and a metrics record for every run. `bench score` checks every
+cited quote against the corpus, has the judge rate claim support and compare
+the two arms blind, and pools list items across runs. `bench report` turns the
+scores into the table.
+
+---
+
+## 4. Epics
+
+All five epics below are MVP. The MVP is done when `results/results.md` holds
+the two-column table for the 10-question shortlist at 3 runs per arm.
+
+### Epic A — Corpus and arm sandboxes  ·  MVP
+
+**Goal:** both agents can run, each sees only its own data source, and nothing else leaks in.
+**Success metrics:** 337 corpus files with every chunk accounted for. An isolation probe passes for both arms.
+
+#### Phase A1 — Markdown corpus
+
+| Step | Description | Status | Notes |
+|------|-------------|--------|-------|
+| A1.1 | `bench corpus` builds 337 talk files from `seed/chunks` | ✅ | 337 files, 6.9 MB; 6 unit tests |
+| A1.2 | Corpus integrity test against the real seed | ✅ | 7 tests; all 5 real-bug mutations caught |
+
+**Steps (detail):**
+
+- **A1.1 — Build the corpus.** Deliverable: `src/bench/corpus.py` and `bench corpus`, writing
+  `corpus/talks/<artifact-slug>.md`.
+  - Map each chunk to its talk through its `PartOfArtifact` edge. Order by `chunk_index`.
+  - `CHUNK_TALK_OVERRIDES` corrects one known mis-link. The graph attaches all 24 chunks of
+    Anirban Chatterjee's "Guide, Verify, Solve" (`chatterjee-sonar-guide-verify-solve`) to Tariq
+    Shaukat's `ia-aie-shaukat-verifiers-king`. The override sends them to
+    `ia-aie-chatterjee-guide-verify-solve`. Remove the entry once the graph is fixed (C1.4 gate).
+  - If any talk ends up with chunks from more than one transcript, the build fails, so a future
+    mis-link can't silently merge two talks.
+  - Strip the leading `[talk-slug] ` label from each chunk's text. Join chunks with a blank line
+    and no chunk markers, so the file reads like a plain transcript.
+  - The header comes only from `seed/04-artifacts.jsonl`: title (which already names the
+    speaker and company), video link and publish date. Nothing else from the graph goes into
+    the markdown arm.
+  ```markdown
+  # How Anthropic Builds: Lessons from Labs (Mike Krieger, Anthropic — AI Engineer World's Fair keynote)
+  - talk: ia-aie-krieger-anthropic-how-anthropic-builds
+  - video: https://youtu.be/…
+  - published: 2026-…
+
+  <transcript text, chunk 0>
+
+  <transcript text, chunk 1>
+  ```
+- **A1.2 — Integrity test.** Deliverable: `tests/test_corpus_seed.py`, run against the real
+  `../seed`. It checks:
+  - 337 files
+  - every chunk's text (without its label) appears verbatim in its talk's file, in
+    `chunk_index` order
+  - no `[talk-slug]` chunk label is left in any file
+  - the two Sonar talks are split by speaker (literal opening lines)
+  - transcript words (without headers) are within 1% of 1,192,360 (measured on 2026-09-23)
+  - the corpus build is deterministic (same bytes on a rebuild)
+
+**Exit guardrails — Phase A1 → A2**
+
+| Guardrail | Criteria (pass/fail) | Status | Actual outcome |
+|-----------|----------------------|--------|----------------|
+| Complete | 337 files; 5,339/5,339 chunks found verbatim | ✅ | 337 files; 5,339/5,339 chunks found verbatim and in index order; 1,192,360 transcript words (exactly the measured count) |
+| No graph leakage | Headers hold only title, video link and date; no pattern, signal or element text | ✅ | Every file's header is exactly title, talk slug (= file name), video and date, then the transcript. The slug is kept because citations need it. |
+| Tests green | `uv run pytest` passes | ✅ | 13 passed (6 unit + 7 seed), ruff clean. A mutation check (reverse order, label kept, extra header line, override ignored, no separator) was caught every time. |
+
+#### Phase A2 — Arm sandboxes
+
+| Step | Description | Status | Notes |
+|------|-------------|--------|-------|
+| A2.1 | `arms.py`: SDK options and the PreToolUse gate for both arms | ✅ | 55 tests; 7 gate mutations all caught |
+| A2.2 | Reader-only `omnigraph` shim | ✅ | `bench shim` + `bin/omnigraph`; 9 tests; real install waits on the reader token |
+| A2.3 | Prompts: shared answer contract and one tool brief per arm | ✅ | `prompts/*.md` + `prompts.py`; 8 tests; catalog of all 89 read queries |
+| A2.4 | `bench probe`: isolation probe for both arms | 🔲 | |
+
+**Steps (detail):**
+
+- **A2.1 — Arm configs.** Deliverable: `src/bench/arms.py` (built against `claude-agent-sdk`
+  0.2.158, bundled CLI 2.1.280). Both arms share the model, effort, caps and answer contract.
+  They differ only in tools, working directory and system prompt.
+  ```python
+  markdown_options(talks_dir, system_prompt)             # tools=["Read", "Grep", "Glob"], cwd=talks_dir
+  omnigraph_options(scratch_dir, system_prompt, shim_bin)  # tools=["Bash", "Read"], cwd=scratch_dir,
+                                                         # env PATH = shim_bin first
+  # shared: model="claude-sonnet-5", effort="high", max_turns=100, max_budget_usd=10.0,
+  #         setting_sources=[], strict_mcp_config=True, allowed_tools=[],
+  #         hooks={"PreToolUse": [gate_hook(gate)]}, can_use_tool=deny-all backstop
+  ```
+  - **The gate is a PreToolUse hook, not `can_use_tool`.** The SDK source shows `can_use_tool`
+    only fires for calls that still need permission, so reads inside cwd never reach it. The hook
+    runs on every call and returns an explicit `allow` or `deny` with a reason the agent can read.
+    `can_use_tool` denies anything that still reaches the permission prompt.
+  - `markdown_gate` allows Read, Grep and Glob only within the talks dir. It resolves symlinks,
+    rejects `~` and absolute paths, and rejects `..` or absolute glob patterns. Every other tool
+    is denied.
+  - `omnigraph_gate` allows Bash only as `omnigraph alias …` or `omnigraph query …`, and only with
+    the flags `--params`, `--format`, `--profile` and `--help`. It rejects shell operators
+    (`; & | $ \` < >`, newlines), unbalanced quotes and background runs. Read is allowed only
+    inside the arm's scratch dir.
+    - A flag allowlist is needed because `omnigraph query` also accepts ad-hoc GQ
+      (`-e`, `--query-string`, `--query <file>`), direct store access (`--direct`, `--store`),
+      `--as <actor>` and `--params-file <path>`. Any of these would let the agent get around the
+      stored-query interface.
+  - Tested with allowed and denied cases for both gates, a symlink escape, the hook's output
+    shape, arm symmetry, and the deny-all backstop.
+  - Mutation check: removing the shell-operator check, symlink resolution, the flag allowlist, the
+    verb check, glob-pattern checks or the background check, or making the hook always allow,
+    fails at least one test every time.
+- **A2.2 — Reader-only shim.** Deliverable: `bin/omnigraph`, `src/bench/omnigraph.py` and
+  `bench shim`. The agent calls `omnigraph …` as normal and never sees the analyst login.
+  - **`bench shim`** reads the **act-reader** token on stdin and writes `bench/.omnigraph-home/`
+    (mode 0700, gitignored). Setup: `printf %s "$TOKEN_ACT_READER" | uv run bench shim`. The
+    folder holds:
+    - the repo's `omnigraph-config.example.yaml` as `config.yaml` (65 aliases, all stored reads)
+    - the credential, stored by `omnigraph login intel-local`
+    - the path of the real CLI
+  - **`bin/omnigraph`** (first on the arm's PATH) drops every `OMNIGRAPH_*`, `AWS_*`,
+    `TOKEN_ACT_*` and `GEMINI_API_KEY` variable. It sets `OMNIGRAPH_HOME` to the bench folder and
+    `OMNIGRAPH_PROFILE=intel`, then runs the real CLI.
+  - Verified against CLI 0.11.0:
+    - `OMNIGRAPH_HOME` replaces `~/.omnigraph`, with `config.yaml` and `credentials` directly
+      inside it.
+    - A local echo server confirmed that the CLI sends the stored credential even when
+      `OMNIGRAPH_BEARER_TOKEN` is set.
+    - `OMNIGRAPH_PROFILE` lets a bare `omnigraph query <name>` reach
+      `/graphs/spike/queries/<name>`.
+  - The Bash tool inherits the harness environment, so `bench run` and `bench probe` refuse to
+    start if `graph_secrets_in(os.environ)` finds anything. It checks for `AWS_*`, `TOKEN_ACT_*`,
+    `GEMINI_API_KEY`, `OMNIGRAPH_BEARER_TOKEN`, `OMNIGRAPH_CONTROL_API` and
+    `OMNIGRAPH_SERVER_BEARER_TOKENS_JSON`. The check is implemented now and gets wired into those
+    commands when they're built (A2.4, C1.1). The server
+    runs in its own shell with `.env.omni` sourced; the benchmark never does.
+- **A2.3 — Prompts.** Deliverable: `prompts/answer_contract.md`, `prompts/markdown_arm.md`,
+  `prompts/omnigraph_arm.md` and `src/bench/prompts.py::system_prompt(arm, workdir)`, which
+  returns the contract followed by the arm's brief.
+  - **Custom system prompt, not the Claude Code preset.** Both arms get only contract + brief. That
+    keeps the framing identical and drops the coding-agent instructions and environment noise.
+    The brief names the run's working directory, because Read needs absolute paths.
+  - **Contract** (shared): work only from tool output, not prior knowledge. Transcripts are
+    auto-captions, so garbles are quoted as they appear. The answer is prose, then one fenced
+    `json` block with `items` (label, rank, talk_count) and `claims` (item, claim, talk, quote of
+    8–40 verbatim words). If nothing is found, the block has empty lists and the agent doesn't
+    guess.
+  - **Markdown brief**: one `<talk-id>.md` per talk and the header format. Tools are Read, Grep and
+    Glob only. `talk` is the file name without `.md`.
+  - **Omnigraph brief**:
+    - the two allowed command forms and flags
+    - the node types, edges, domain enum and id prefixes (from the README model section, with no
+      data)
+    - a warning that everything except Chunk text is pipeline paraphrase, so quotes must come from
+      Chunk text
+    - `talk` may be the `ia-aie-…` id **or** the chunk's `[label]`, since `hybrid-search` and
+      `related` return only chunk text and index
+  - **Query catalog**: generated by `query_catalog()` from `queries/*.gq` (excluding
+    `mutations.gq`) and the alias pack. It has one line per stored read query (89): the alias
+    usage if there is one (65), else `omnigraph query <name> --params '{…}'`, plus the
+    `@description` or the `//` comment directly above the query, plus the returned fields. It
+    stays in step with the graph automatically.
+  - **Size:** the Omnigraph prompt is about 16k characters (roughly 4k tokens) and the markdown
+    prompt about 1.8k. The difference is the catalog, which is the Omnigraph interface's
+    documentation. It is paid once per run and cached after the first turn.
+  - **Tests:**
+    - the exact catalog format on a fixture, including a comment separated by a blank line
+    - every read query and alias present, no mutation
+    - the shared contract prefix
+    - no unfilled placeholders
+    - each arm told only about its own tools
+    - none of the 5,034 seed node ids in either prompt
+  - **Mutation check:** mutations included, workdir not filled, a comment across a blank line
+    attached, and `as` aliases ignored are all caught.
+- **A2.4 — Isolation probe.** Deliverable: `bench probe`, which runs one scripted probe per arm and
+  writes `runs/_probe/`. The probe asks the agent to:
+  - list its tools
+  - read `../../README.md`, `seed/` and `~/.claude/CLAUDE.md`
+  - run `omnigraph mutate …`, `cat`, and `omnigraph alias top-patterns; ls`
+  - (markdown arm only) run a Grep outside its root
+
+**Exit guardrails — Phase A2 → Epic B**
+
+| Guardrail | Criteria (pass/fail) | Status | Actual outcome |
+|-----------|----------------------|--------|----------------|
+| Tool surface | The SDK init `SystemMessage` lists exactly the arm's tools, no MCP servers and no skills or agents | 🔲 | |
+| Nothing inherited | Neither the repo nor the user CLAUDE.md shows up in the probe trace; no user hooks fire | 🔲 | |
+| Escapes denied | Every out-of-bounds read, non-omnigraph command and chained command is denied | 🔲 | |
+| Reader only | `omnigraph mutate` through the shim is denied by the gate. Called directly with the shim's config, it returns 403. | 🔲 | |
+| Graph live | `omnigraph alias top-patterns` through the shim returns 18 patterns; `/healthz` is ok | 🔲 | |
+
+---
+
+### Epic B — Question shortlist  ·  MVP
+
+**Goal:** 10 questions, weighted toward aggregation, each with an answer shape the scorer can handle.
+**Success metrics:** you approve the shortlist, and each question is answerable (or, for Q10, provably not) from the corpus.
+
+#### Phase B1 — Shortlist
+
+| Step | Description | Status | Notes |
+|------|-------------|--------|-------|
+| B1.1 | `questions.yaml` with the 10 questions below | 🔲 | Draft; edit freely |
+| B1.2 | Corpus sanity check per question | 🔲 | |
+
+**Steps (detail):**
+
+- **B1.1 — Question file.** Deliverable: `questions.yaml`, with `id`, `category`, `shape` and
+  `text` per question. Questions use ordinary words, not graph vocabulary: no pattern slugs,
+  no "signals".
+
+  | ID | Category | Shape | Question |
+  |----|----------|-------|----------|
+  | Q01 | aggregate | ranked_list | What were the 10 most discussed topics at AI Engineer World's Fair 2026? Rank them by how many talks covered each, give an approximate talk count, and cite at least two talks per topic. |
+  | Q02 | aggregate | ranked_list | What do speakers most often name as the biggest unsolved problems in building and shipping AI agents? Give the top 5, ranked, with supporting talks. |
+  | Q03 | aggregate | ranked_list | Where do speakers disagree most? Name the three most contested claims, and for each, which talks argue for it and which push back. |
+  | Q04 | aggregate | talk_set | Which talks argue that the engineering around the model (harness, tools, context, scaffolding) matters more than which model you pick? List every talk you can find, with speaker and company. |
+  | Q05 | aggregate | talk_set | Which talks discuss persistent memory for agents, and what approaches do they propose? Group the talks by approach. |
+  | Q06 | aggregate | company_set | Which companies described how they verify or review AI-generated code before it ships? Summarize each company's approach. |
+  | Q07 | aggregate | ranked_list | Which tools, frameworks or products do speakers recommend most often for evaluating or observing LLM agents? Rank them by the number of talks that mention them favorably. |
+  | Q08 | multi-hop | talk_set | What do speakers from companies that build coding agents say about the security risks of agent skills, MCP servers or third-party packages? |
+  | Q09 | lookup | prose | In Mike Krieger's talk on how Anthropic builds, how does Anthropic decide what to unship? |
+  | Q10 | absence | absence | Which talks discuss running LLM inference on FPGAs or neuromorphic chips? |
+
+- **B1.2 — Sanity check.** Deliverable: `bench check-questions`.
+  - For each non-absence question, it greps the corpus for a few seed terms and confirms at least
+    one relevant talk.
+  - For Q10, it confirms zero hits for `fpga`, `f p g a`, `field programmable`,
+    `field-programmable`, `neuromorphic` and `spiking neural`. All were zero on 2026-09-23.
+  - The check uses only the markdown corpus, never the graph.
+
+**Exit guardrails — Epic B → Epic C**
+
+| Guardrail | Criteria (pass/fail) | Status | Actual outcome |
+|-----------|----------------------|--------|----------------|
+| Approved | Roman signs off on the 10 questions | 🔲 | |
+| Answerable | Q01–Q09 each have ≥1 relevant talk; Q10 has 0 hits | 🔲 | |
+
+---
+
+### Epic C — Runner  ·  MVP
+
+**Goal:** every (question, arm, run) executes unattended and leaves a full trace plus a metrics record.
+**Success metrics:** 60/60 runs recorded. The pilot shows no sandbox violations.
+
+#### Phase C1 — Runner and pilot
+
+| Step | Description | Status | Notes |
+|------|-------------|--------|-------|
+| C1.1 | `bench run`: resumable runner with metrics capture | 🔲 | |
+| C1.2 | Caps, timeouts and failure statuses | 🔲 | |
+| C1.3 | Pilot: 1 run per question per arm (20 runs) | 🔲 | |
+| C1.4 | Full run: 3 runs per question per arm (60 runs) | 🔲 | |
+
+**Steps (detail):**
+
+- **C1.1 — Runner.** Deliverable: `src/bench/run.py` and `bench run [--pilot] [--only Q01] [--arm markdown]`.
+  - Writes every SDK message to `runs/<qid>/<arm>/<n>/trace.jsonl`, and the final record to
+    `result.json`.
+  - Skips a run if its `result.json` already exists.
+  - Interleaves the arms, runs up to 4 at once (configurable) and copies the corpus fresh for
+    each markdown run.
+  ```python
+  @dataclass
+  class RunResult:
+      qid: str; arm: Literal["omnigraph", "markdown"]; run: int
+      status: Literal["ok", "capped", "error"]; stop_reason: str | None
+      wall_s: float                       # harness clock, start → ResultMessage
+      duration_ms: int; duration_api_ms: int
+      total_cost_usd: float
+      input_tokens: int; output_tokens: int
+      cache_read_input_tokens: int; cache_creation_input_tokens: int
+      num_turns: int; tool_calls: int; tool_calls_by_name: dict[str, int]
+      denied_tool_calls: int              # gate denials; >0 in a real run is a red flag
+      answer_text: str; answer_json: dict | None   # parsed contract block, None if missing
+      started_at: str; graph_head: str; corpus_sha: str; sdk_version: str
+  ```
+- **C1.2 — Caps.** Deliverable: caps in `bench.toml`.
+  - Pilot caps: `max_turns=100`, `max_budget_usd=10`, 30 min wall clock.
+  - A run that hits a cap is recorded as `capped` and scored as-is. Capped runs count against
+    that arm in the report.
+  - Infra errors (server down, HTTP 429) are retried up to 2 times, then recorded as `error`.
+- **C1.3 — Pilot.** Deliverable: `runs/` for 20 runs and a short pilot note in the Decision Log.
+  Read the traces. Set the final caps and concurrency from what the pilot shows.
+- **C1.4 — Full run.** Deliverable: 60 `result.json` files. Record the graph commit head and the
+  corpus hash in `results/run-meta.json`.
+
+**Exit guardrails — Phase C1 → Epic D**
+
+| Guardrail | Criteria (pass/fail) | Status | Actual outcome |
+|-----------|----------------------|--------|----------------|
+| Pilot clean | 20/20 runs `ok` or `capped` with a clear reason; 0 sandbox escapes in the traces | 🔲 | |
+| Contract followed | ≥ 90% of pilot answers carry a parseable JSON block (otherwise fix the prompt, not the scorer) | 🔲 | |
+| Caps fixed | Final caps logged in §6 before the full run | 🔲 | |
+| Graph mis-link fixed (before C1.4) | Chatterjee's 24 chunks re-linked to `ia-aie-chatterjee-guide-verify-solve` in the graph, the seed re-exported, and `CHUNK_TALK_OVERRIDES` emptied with the corpus build still at 337 files | 🔲 | |
+| Full run | 60/60 `result.json` written; no `error` status left unexplained | 🔲 | |
+
+---
+
+### Epic D — Scorer  ·  MVP
+
+**Goal:** turn the 60 answers into grounding, hallucination and correctness numbers without a gold set.
+**Success metrics:** the scorer passes its own calibration checks. Every number in the report traces back to a stored judgment.
+
+#### Phase D1 — Grounding and hallucination
+
+| Step | Description | Status | Notes |
+|------|-------------|--------|-------|
+| D1.1 | Parse the contract block and claims | 🔲 | |
+| D1.2 | Mechanical quote check against the corpus | 🔲 | |
+| D1.3 | Judge: does the quote support the claim? | 🔲 | |
+| D1.4 | Judge: uncited factual statements in the prose | 🔲 | |
+| D1.5 | Scorer calibration on planted claims | 🔲 | |
+
+**Steps (detail):**
+
+- **D1.1 — Parse.** Deliverable: `src/bench/parse.py`.
+  - Takes the last fenced `json` block in the answer.
+  - If there is no block, all claims count as zero and the run gets an `unparseable` flag.
+- **D1.2 — Quote check.** Deliverable: `src/bench/verify.py`.
+  - Resolve `talk` first. It may be a talk id (`ia-aie-…`) or a chunk `[label]`; a label maps to
+    its talk through `PartOfArtifact` plus `CHUNK_TALK_OVERRIDES`. Anything else is `not_found`.
+  - Normalizes case, punctuation and whitespace, then looks for the quote in the cited talk's file.
+  - Outcomes:
+    - `exact`
+    - `fuzzy`: rapidfuzz `partial_ratio ≥ 90`
+    - `wrong_talk`: the quote exists, but in a different talk
+    - `not_found`
+  - No LLM involved.
+- **D1.3 — Support judge.** Deliverable: `src/bench/judge.py::support`.
+  - Opus 5.5 gets the claim, the quote and the transcript around it (±1 chunk).
+  - It returns `supported | partial | unsupported` with a one-line reason, via structured output.
+  - Judgments are cached by hash of the inputs, so rescoring costs nothing.
+- **D1.4 — Uncited statements.** Deliverable: `judge.py::uncited`. The judge lists factual
+  statements in the prose that no claim covers. The count goes into the report.
+- **D1.5 — Calibration.** Deliverable: `tests/test_scorer_calibration.py`.
+  - Plants 10 claims with known labels: 5 real quotes, 2 real quotes paired with the wrong
+    claim, 2 invented quotes, and 1 real quote cited to the wrong talk.
+  - Requires the scorer to get ≥ 9/10 right.
+  - This checks the scorer, not the arms. It needs no human review of answers.
+
+  A claim counts as **grounded** when its quote is `exact` or `fuzzy` **and** the judge rates it
+  `supported`. It counts as **hallucinated** when its quote is `not_found` or `wrong_talk`, or
+  the judge rates it `unsupported`. `partial` gets its own bucket.
+
+**Exit guardrails — Phase D1 → D2**
+
+| Guardrail | Criteria (pass/fail) | Status | Actual outcome |
+|-----------|----------------------|--------|----------------|
+| Calibrated | ≥ 9/10 planted claims classified correctly | 🔲 | |
+| Deterministic | Rescoring from cache reproduces identical numbers | 🔲 | |
+
+#### Phase D2 — Correctness without a gold set
+
+| Step | Description | Status | Notes |
+|------|-------------|--------|-------|
+| D2.1 | Pooled recall for list questions | 🔲 | |
+| D2.2 | Blind pairwise quality judge | 🔲 | |
+| D2.3 | Run-to-run consistency | 🔲 | |
+| D2.4 | Absence scoring (Q10) | 🔲 | |
+
+**Steps (detail):**
+
+- **D2.1 — Pooled recall.** Deliverable: `src/bench/score.py::pooled_recall`.
+  - For `talk_set` questions, items are talk slugs.
+  - For `company_set` and `ranked_list` questions, the judge clusters item labels from every run
+    of both arms into canonical items (e.g. "evals" = "agent evaluation").
+  - The **pool** is every canonical item with at least one grounded claim.
+  - Recall for a run is the share of the pool it contains. For `ranked_list`, also report overlap
+    within the top 5.
+  - Items neither arm found are invisible to the pool; the report says so.
+- **D2.2 — Pairwise judge.** Deliverable: `judge.py::pairwise`.
+  - For each question, pair run *i* of one arm with run *i* of the other: 3 pairings × 10
+    questions = 30.
+  - The judge gets the question, both answers labelled A and B, and each answer's grounding
+    annotations, so a confident but ungrounded answer can't win.
+  - It rates coverage, specificity and correctness, and returns A, B or tie.
+  - Each pairing is judged twice with the order swapped. An arm wins only if it wins both
+    orders; anything else is a tie.
+- **D2.3 — Consistency.** Deliverable: mean Jaccard similarity of each arm's item sets across
+  its 3 runs, per list question.
+- **D2.4 — Absence.** Deliverable: Q10 is correct when the answer says nothing relevant was found
+  and makes no grounded claim of a talk. Any claim that a talk covers it is a hallucination.
+
+**Exit guardrails — Phase D2 → Epic E**
+
+| Guardrail | Criteria (pass/fail) | Status | Actual outcome |
+|-----------|----------------------|--------|----------------|
+| Position bias checked | Swapped-order agreement ≥ 80% (if lower, report it and treat those pairings as ties) | 🔲 | |
+| All scored | Every run has grounding, recall (where applicable) and pairwise results | 🔲 | |
+
+---
+
+### Epic E — Report  ·  MVP
+
+**Goal:** a single page that shows the comparison honestly and can go straight into a demo.
+**Success metrics:** `results/results.md` regenerates from `runs/` with one command, with no hand-edited numbers.
+
+#### Phase E1 — Results
+
+| Step | Description | Status | Notes |
+|------|-------------|--------|-------|
+| E1.1 | Headline two-column table | 🔲 | |
+| E1.2 | Per-question table | 🔲 | |
+| E1.3 | Three side-by-side showcase traces | 🔲 | |
+| E1.4 | Method notes and footnotes | 🔲 | |
+
+**Steps (detail):**
+
+- **E1.1 — Headline table.** Deliverable: `src/bench/report.py` and `bench report`, writing
+  `results/results.md` and `results/scores.json`.
+
+  | Metric | Agent + Omnigraph | Agent + Markdown files |
+  |---|---|---|
+  | Answer quality — pairwise wins / ties / losses (30 pairings) | | |
+  | Pooled recall, list questions — mean | | |
+  | Run-to-run consistency — mean item Jaccard | | |
+  | Claims per answer — mean | | |
+  | Grounded claims (verbatim quote + supported) | | |
+  | Hallucinated claims (quote not found, wrong talk, or unsupported) | | |
+  | Uncited factual statements per answer — mean | | |
+  | Absence question (Q10) answered correctly | x / 3 | x / 3 |
+  | Time per question — median / p90 | | |
+  | Cost per question — mean (total for 30 runs) | | |
+  | Tokens per question — input (incl. cache reads) / output | | |
+  | Turns / tool calls per question — mean | | |
+  | Capped or failed runs | | |
+
+- **E1.2 — Per-question table.** Deliverable: one row per question with the winner, recall,
+  grounded %, hallucinated %, median time and mean cost for each arm.
+- **E1.3 — Showcase traces.** Deliverable: pick 3 questions (one aggregate win, one lookup, one
+  loss or tie). Show them side by side: the tool calls in order (collapsed), an excerpt of the
+  answer, and the metrics.
+- **E1.4 — Method notes.** Deliverable: footnotes covering:
+  - Sonnet 5, no subagents, 3 runs
+  - the judge model and its cost, listed separately from the arms' cost
+  - correctness is relative, with no gold set
+  - graph build cost is excluded
+  - `total_cost_usd` is the SDK's estimate
+  - the graph commit and corpus hash
+  - the run date
+
+**Exit guardrails — Epic E → done**
+
+| Guardrail | Criteria (pass/fail) | Status | Actual outcome |
+|-----------|----------------------|--------|----------------|
+| Reproducible | `uv run bench score && uv run bench report` rebuilds results.md byte-identical from cache | 🔲 | |
+| Honest | Footnotes state n, the relative-correctness caveat and the build-cost exclusion | 🔲 | |
+
+---
+
+### Epic F — Extensions  ·  Post-MVP
+
+**Goal:** widen the comparison once the MVP table exists.
+**Success metrics:** each extension adds a column or rows to the same report without changing the MVP numbers.
+
+#### Phase F1 — Candidates (unordered)
+
+| Step | Description | Status | Notes |
+|------|-------------|--------|-------|
+| F1.1 | Grow the question set to ~40, still weighted to aggregation | 🔲 | |
+| F1.2 | Re-run both arms on Opus 5.5 | 🔲 | Does a stronger model close the gap? |
+| F1.3 | Subagent variant of the markdown arm (fan-out map-reduce) | 🔲 | Strongest raw baseline for aggregation |
+| F1.4 | "No tools" floor, to measure what the model already knows | 🔲 | |
+| F1.5 | Long-context arm on a subset of talks that fits in 1M tokens | 🔲 | |
+| F1.6 | Publish the report as a shareable page | 🔲 | |
+| F1.7 | Judge through the Batches API to halve scoring cost | 🔲 | |
+
+---
+
+## 5. Risk register
+
+| Risk | Likelihood | Impact | Mitigation |
+|------|------------|--------|------------|
+| Arms inherit user/project settings, CLAUDE.md, hooks or plugins (the SDK loads them by default) | High | High | `setting_sources=[]`, `strict_mcp_config=True`, cwd outside the repo, A2.4 probe gate |
+| The Omnigraph agent "quotes" paraphrased signal briefs rather than transcript text | High | Med | The contract requires verbatim transcript text, and the brief says quotes come from `talk-chunks` / `hybrid-search` / `talk-semantic`. If it persists, report it as a finding. |
+| The markdown arm hits turn or budget caps on aggregate questions | Med | High | Generous pilot caps. Set final caps after the pilot and log them. Capped runs are visible in the table. |
+| Large query output gets truncated or spilled to a file by the Bash tool | Med | Med | The Omnigraph arm gets `Read` limited to its own scratch dir. Check spill behaviour in the pilot. |
+| No gold set: an item both arms miss can't be seen, and recall is relative | Certain | Med | Stated in the report. Absolute recall is a possible later extension (per-talk map pass). |
+| Judge bias: position, or favoring longer answers | Med | Med | Both orders, win requires both, grounding annotations given to the judge, calibration test |
+| 10 questions × 3 runs is a small sample | Certain | Med | Show per-question results next to the aggregates. Avoid claims stronger than the data supports. |
+| Server-side `nearest()` needs Gemini; 429s during runs | Med | Low | Retry, then `error`; errors are listed in the report |
+| Caption garbles make quotes look wrong | Low | Low | Garbled text is still verbatim; fuzzy matching tolerates punctuation |
+| Graph data defects skew the Omnigraph arm (known: Chatterjee's chunks attached to Shaukat's talk) | Certain (one known) | Med | Fix the known one before C1.4. The corpus build fails on any other talk that mixes two transcripts. Report any others found in the traces. |
+| Sonnet 5 already knows some talks (published Apr–Sep 2026) | Low | Med | Affects both arms equally; the F1.4 no-tools floor measures it |
+
+---
+
+## 6. Decision log
+
+| # | Date | Decision | Context | Decided by |
+|---|------|----------|---------|------------|
+| 1 | 2026-09-23 | Benchmark lives in `bench/` inside the graph repo | Exception to the "graph definition only" rule; corpus, runs and credentials stay gitignored | Roman Pronskiy |
+| 2 | 2026-09-23 | Two arms only: Agent + Omnigraph vs Agent + Markdown files; the output is a two-column table | This is a demo of the graph's value against raw transcripts | Roman Pronskiy |
+| 3 | 2026-09-23 | Both arms run on `claude-sonnet-5` | Cost for 60+ runs; the difference between arms shows up just as clearly | Roman Pronskiy |
+| 4 | 2026-09-23 | No subagents in either arm | Isolates the data interface from orchestration | Roman Pronskiy |
+| 5 | 2026-09-23 | No gold answers and no human review; correctness via pooled recall + blind pairwise judge | You chose to keep it a comparison table | Roman Pronskiy |
+| 6 | 2026-09-23 | Hallucination/grounding measured by verbatim-quote check + judge support check | Works without a gold set and applies equally to both arms | Roman Pronskiy |
+| 7 | 2026-09-23 | Time and cost measured per run from the SDK `ResultMessage` plus harness wall clock | Wanted time and cost as explicit metrics | Roman Pronskiy |
+| 8 | 2026-09-23 | Graph build cost excluded; per-question numbers only | You chose per-question only | Roman Pronskiy |
+| 9 | 2026-09-23 | Shortlist of 10 questions, 8 of them aggregate or multi-hop | A shortlist for now, with more aggregated questions | Roman Pronskiy |
+| 10 | 2026-09-23 | 3 runs per question per arm | Shows variance while keeping the run count at 60 | Roman Pronskiy |
+| 11 | 2026-09-23 | Harness is the Claude Agent SDK in Python, not `claude -p` | Needs isolation control and per-run metrics in code | Roman Pronskiy |
+| 12 | 2026-09-23 | Corpus rebuilt from `seed/chunks` (336 talks), not the original transcripts | `transcripts/` isn't on this machine; chunks join back together without overlap | Roman Pronskiy |
+| 13 | 2026-09-23 | Judge is `claude-opus-5-5` at explicit `high` effort | Stronger than and different from the agent model | Roman Pronskiy |
+| 14 | 2026-09-23 | Omnigraph arm uses the act-reader token through a shim | Read-only access, without touching the analyst login | Roman Pronskiy |
+| 15 | 2026-09-23 | Local `main` rebased onto `origin/graph-0.11-upgrade` (c97a0d2); the corpus reads the 0.11 seed format (top-level `id`) | The graph moved to Omnigraph 0.11 (storage v9, root `spike-intel-011`); the benchmark targets that graph | Roman Pronskiy |
+| 16 | 2026-09-23 | Corpus has 337 talks, not 336; supersedes #12's count. Chatterjee's chunks are split from Shaukat's talk by a documented override, and the graph gets fixed before the full run (C1.4 gate). | The "two prefixes on one talk" was a graph mis-link from the 2026-09-08 audit backfill, not a joint session. Splitting now keeps the markdown arm true to the real talks. Fixing the graph before C1.4 keeps the Omnigraph arm from being scored "wrong talk" on Sonar quotes. | Roman Pronskiy |
+| 17 | 2026-09-23 | Arm gates run as a PreToolUse hook on every tool call; `can_use_tool` is only a deny-all backstop. The Omnigraph arm is limited to `alias`/`query` with an allowlist of four flags. | Reading SDK 0.2.158 showed `can_use_tool` only fires for calls that need permission. `omnigraph query` also takes ad-hoc GQ, direct store access, `--as` and `--params-file`, all of which would bypass the stored-query interface. | Roman Pronskiy |
+| 18 | 2026-09-23 | The reader-only CLI uses `OMNIGRAPH_HOME` + `OMNIGRAPH_PROFILE`, not a `HOME` override. `bench shim` takes the reader token on stdin only. | Found in the 0.11 binary, and resolves the open question on a config path. Overriding `HOME` would also move the agent's own config. Stdin keeps the token out of argv and shell history. The stored credential beats `OMNIGRAPH_BEARER_TOKEN` (checked against a local echo server). | Roman Pronskiy |
+| 19 | 2026-09-23 | Both arms get a custom system prompt (contract + brief), not the Claude Code preset | The same framing for both arms, without coding-agent instructions or environment noise. The brief states the working directory because Read needs absolute paths. | Roman Pronskiy |
+| 20 | 2026-09-23 | A claim's `talk` may be the `ia-aie-…` id or a chunk's `[label]`; the scorer maps labels to talks | `hybrid_chunks` and `related_chunks` return only chunk text and index. Requiring the `ia-aie-` id would penalize the graph arm for the shape of its query output rather than for its grounding. | Roman Pronskiy |
+
+---
+
+## 7. Open questions
+
+- [ ] Billing: run the SDK under an API key or under the Claude Code login? `total_cost_usd` is an API-price estimate either way.
+- [ ] Final caps (`max_turns`, `max_budget_usd`, wall clock) after the pilot. Do they stay the same for both arms?
+- [x] ~~Does the `omnigraph` CLI accept a config path or profile env var?~~ Yes: `OMNIGRAPH_HOME` and `OMNIGRAPH_PROFILE` (decision #18).
+- [ ] Does a PreToolUse `HookMatcher(matcher=None)` match every tool in the bundled CLI? Verify in the A2.4 probe (escapes denied, allows logged).
+- [ ] How does the Claude Code Bash tool handle very large `omnigraph` output (truncate vs spill to file)? Confirm in the pilot.
+- [ ] Commit `runs/` traces for the demo, or only `results/`? Currently runs are gitignored.
+
+---
+
+## How to Update This Document
+
+This spec is the source of truth for the build. Keep it current as work happens:
+
+- **Status markers.** Update a step's status in its tracker table as you go: 🔲 → 🔄 → ✅. Use ⏸️ for blocked (note why in Notes) and ❌ for cut (leave the row; the strikethrough of history is useful).
+- **Current focus.** Keep the pointer at the top aimed at the next actionable 🔲 step. Update it the moment you finish a step or cross a phase boundary. A stale pointer sends the next reader to the wrong place.
+- **Guardrails.** When you hit a phase boundary, fill the **Actual outcome** column with what really happened and set the guardrail status. Don't advance to the next phase until its guardrails pass, or log a decision explaining why you're proceeding anyway.
+- **Decisions.** Any non-trivial choice made during the build gets a new row in the Decision Log (§6). It's append-only: reversals are new rows, not edits. If the choice changes the architecture, also update the Technical Decisions snapshot (§2).
+- **Spec changes.** Structural changes (new epic, re-scoped phase) get a Changelog row at the top. Keep the executive summary honest if the project's shape shifts.
+- **Open questions.** When one resolves, strike it from §7 and log the decision in §6.

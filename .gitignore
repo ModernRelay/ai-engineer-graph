@@ -19,5 +19,11 @@ EXPLORER-DESIGN.md
 report.md
 skill/
 
+# bench: generated corpus, raw run traces, reader-only omnigraph config
+bench/corpus/
+bench/runs/
+bench/.omnigraph-home/
+.venv/
+
 __pycache__/
 .DS_Store

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Reader-only omnigraph for the benchmark's Omnigraph arm (first on its PATH).
+# Runs the real CLI against the bench-only OMNIGRAPH_HOME that `bench shim`
+# writes: the alias pack and the act-reader credential. Graph and store
+# credentials from the caller's environment are dropped.
+set -eo pipefail
+
+home="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)/.omnigraph-home"
+if [ ! -f "$home/omnigraph-bin" ]; then
+  echo "omnigraph shim is not installed: pipe the act-reader token into 'uv run bench shim'" >&2
+  exit 1
+fi
+
+for var in $(compgen -e); do
+  case "$var" in
+    OMNIGRAPH_* | AWS_* | TOKEN_ACT_* | GEMINI_API_KEY) unset "$var" ;;
+  esac
+done
+export OMNIGRAPH_HOME="$home" OMNIGRAPH_PROFILE=intel
+
+exec "$(cat "$home/omnigraph-bin")" "$@"

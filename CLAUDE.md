@@ -18,6 +18,10 @@ repository is the complete, loadable definition of the graph and nothing else:
 - `omnigraph-config.example.yaml` — client profile and alias pack
 - `README.md` — the one document: model, layout, setup, load, query, operate
 
+One exception: `bench/` holds an agent benchmark (Omnigraph vs raw markdown
+transcripts) that reads the seed and the server but never changes them. It has
+its own `bench/SPEC.md` and `bench/CLAUDE.md`.
+
 The corpus pipeline that produces the seed (transcripts, per-talk extraction
 notes, conversion scripts, fragments) is a local, gitignored workflow
 (`transcripts/`, `extraction/`, `seed-work/`, `RUNBOOK.md` on the maintainer's
