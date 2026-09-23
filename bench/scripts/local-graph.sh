@@ -88,6 +88,9 @@ load() {
   export -f embed_part strip && export L E
   ls seed/chunks/part-*.jsonl | xargs -P 4 -I{} bash -c 'embed_part "$1"' _ {} \
     || { echo "embedding failed; re-run load to resume" >&2; exit 1; }
+  # Known seed mis-links (bench.corpus.CHUNK_TALK_OVERRIDES) are corrected in the local
+  # copies only, so the graph and the markdown corpus agree; the tracked seed is untouched.
+  (cd bench && uv run --quiet bench relink-chunks "../$E")
   for f in seed/chunks/part-*.jsonl; do
     load_once "$E/$(basename "$f")" merge "$(basename "$f" .jsonl)"
   done

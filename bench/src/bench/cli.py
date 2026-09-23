@@ -11,7 +11,7 @@ import tempfile
 import urllib.request
 from pathlib import Path
 
-from bench.corpus import CHUNK_TALK_OVERRIDES, build_corpus
+from bench.corpus import CHUNK_TALK_OVERRIDES, build_corpus, relink_chunk_edges
 from bench.omnigraph import graph_secrets_in, install_shim
 
 BENCH_DIR = Path(__file__).resolve().parents[2]
@@ -34,6 +34,11 @@ def main(argv: list[str] | None = None) -> int:
     corpus = commands.add_parser("corpus", help="build corpus/talks/*.md from the seed's chunks")
     corpus.add_argument("--seed", type=Path, default=REPO_DIR / "seed")
     corpus.add_argument("--out", type=Path, default=BENCH_DIR / "corpus" / "talks")
+
+    relink = commands.add_parser(
+        "relink-chunks", help="apply CHUNK_TALK_OVERRIDES to embedded chunk parts (local graph)"
+    )
+    relink.add_argument("parts_dir", type=Path)
 
     shim = commands.add_parser(
         "shim", help="install the reader-only omnigraph config (act-reader token on stdin)"
@@ -65,6 +70,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "corpus":
         written = build_corpus(args.seed, args.out, CHUNK_TALK_OVERRIDES)
         print(f"wrote {written} talks to {args.out}")
+    elif args.command == "relink-chunks":
+        moved = sum(
+            relink_chunk_edges(part, CHUNK_TALK_OVERRIDES)
+            for part in sorted(args.parts_dir.glob("part-*.jsonl"))
+        )
+        print(f"re-pointed {moved} chunk edge(s) in {args.parts_dir}")
     elif args.command == "shim":
         token = sys.stdin.read().strip()
         if not token:

@@ -63,3 +63,26 @@ def build_corpus(seed_dir: Path, out_dir: Path, overrides: dict[str, str]) -> in
         body = "\n\n".join(text for _, _, text in sorted(rows, key=lambda r: r[1]))
         (out_dir / f"{talk}.md").write_text(header + "\n" + body + "\n", encoding="utf-8")
     return len(talks)
+
+
+def relink_chunk_edges(part: Path, overrides: dict[str, str]) -> int:
+    """Re-point PartOfArtifact edges of overridden transcripts in one chunk part file.
+
+    Used on the local graph's embedded parts (never on the tracked seed), so the
+    graph agrees with the corpus. Only changed lines are rewritten; everything else
+    (chunk rows with their embeddings) stays byte-for-byte. Returns edges moved.
+    """
+    lines = part.read_text(encoding="utf-8").splitlines()
+    changed = 0
+    for i, line in enumerate(lines):
+        if not line.startswith('{"edge"'):
+            continue
+        row = json.loads(line)
+        target = overrides.get(row["from"].rsplit("#", 1)[0])
+        if row.get("edge") == "PartOfArtifact" and target and row["to"] != target:
+            row["to"] = target
+            lines[i] = json.dumps(row)
+            changed += 1
+    if changed:
+        part.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return changed

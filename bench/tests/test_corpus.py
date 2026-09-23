@@ -180,3 +180,59 @@ def test_corpus_command_builds_into_the_given_directory(seed, tmp_path):
 
     assert code == 0
     assert (out / "ia-aie-alpha-talk.md").exists()
+
+
+# ── re-pointing mis-linked chunk edges in the local graph build ─────────────
+
+
+def test_relink_repoints_only_the_overridden_chunk_edges(tmp_path):
+    from bench.corpus import relink_chunk_edges
+
+    part = tmp_path / "part-01.jsonl"
+    rows = chunk("gamma-talk", 0, "gamma zero", "ia-aie-beta-talk") + chunk(
+        "beta-talk", 0, "beta zero", "ia-aie-beta-talk"
+    )
+    part.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    before = part.read_text().splitlines()
+
+    changed = relink_chunk_edges(part, {"gamma-talk": "ia-aie-gamma-talk"})
+
+    after = part.read_text().splitlines()
+    assert changed == 1
+    assert json.loads(after[1]) == {
+        "edge": "PartOfArtifact",
+        "from": "gamma-talk#0",
+        "to": "ia-aie-gamma-talk",
+        "data": {},
+    }
+    assert [after[0], after[2], after[3]] == [before[0], before[2], before[3]]
+
+
+def test_relink_is_idempotent(tmp_path):
+    from bench.corpus import relink_chunk_edges
+
+    part = tmp_path / "part-01.jsonl"
+    part.write_text(
+        "".join(json.dumps(r) + "\n" for r in chunk("gamma-talk", 0, "g", "ia-aie-beta-talk"))
+    )
+    relink_chunk_edges(part, {"gamma-talk": "ia-aie-gamma-talk"})
+    once = part.read_text()
+
+    assert relink_chunk_edges(part, {"gamma-talk": "ia-aie-gamma-talk"}) == 0
+    assert part.read_text() == once
+
+
+def test_relink_chunks_command_reports_how_many_edges_moved(tmp_path, capsys):
+    part = tmp_path / "part-01.jsonl"
+    part.write_text(
+        "".join(
+            json.dumps(r) + "\n"
+            for r in chunk(
+                "chatterjee-sonar-guide-verify-solve", 0, "x", "ia-aie-shaukat-verifiers-king"
+            )
+        )
+    )
+
+    assert main(["relink-chunks", str(tmp_path)]) == 0
+    assert "1 chunk edge" in capsys.readouterr().out
+    assert "ia-aie-chatterjee-guide-verify-solve" in part.read_text()
