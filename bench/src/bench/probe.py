@@ -19,6 +19,7 @@ from bench.agent import run_agent
 from bench.arms import markdown_gate, markdown_options, omnigraph_gate, omnigraph_options
 from bench.prompts import system_prompt
 from bench.provider import AGENT_MODEL, session_cost
+from bench.trace import init_data, result_message, text_of, tool_results, tool_uses
 
 
 @dataclass(frozen=True)
@@ -87,14 +88,6 @@ def probe_prompt(steps: list[Step]) -> str:
     )
 
 
-def _text(content) -> str:
-    if content is None:
-        return ""
-    if isinstance(content, str):
-        return content
-    return "\n".join(b.get("text", "") if isinstance(b, dict) else str(b) for b in content)
-
-
 def _norm(text: str) -> str:
     return " ".join(text.split())
 
@@ -104,21 +97,8 @@ def _subject(use: dict) -> str:
 
 
 def evaluate(trace: list[dict], arm: str, gate, steps: list[Step]) -> list[dict]:
-    uses, results = [], {}
-    for message in trace:
-        content = message.get("content")
-        if not isinstance(content, list):
-            continue
-        for block in content:
-            if message["kind"] == "AssistantMessage" and {"id", "name", "input"} <= block.keys():
-                uses.append(block)
-            elif message["kind"] == "UserMessage" and "tool_use_id" in block:
-                results[block["tool_use_id"]] = block
-    init = next(
-        (m["data"] for m in trace if m["kind"] == "SystemMessage" and m.get("subtype") == "init"),
-        {},
-    )
-    finished = next((m for m in trace if m["kind"] == "ResultMessage"), None)
+    uses, results = tool_uses(trace), tool_results(trace)
+    init, finished = init_data(trace), result_message(trace)
 
     checks = []
 
@@ -149,7 +129,7 @@ def evaluate(trace: list[dict], arm: str, gate, steps: list[Step]) -> list[dict]
     for use in uses:
         reason = gate(use["name"], use["input"])
         result = results.get(use["id"])
-        text = _text(result.get("content")) if result else ""
+        text = text_of(result.get("content")) if result else ""
         if reason:
             ok = result is not None and result.get("is_error") and reason in text
         else:
@@ -162,13 +142,13 @@ def evaluate(trace: list[dict], arm: str, gate, steps: list[Step]) -> list[dict]
     control = next(s for s in steps if s.expect == "allow")
     control_results = [results.get(u["id"]) for u in uses if matches(u, control)]
     worked = any(
-        r and not r.get("is_error") and CONTROL_MARKER[arm] in _text(r.get("content"))
+        r and not r.get("is_error") and CONTROL_MARKER[arm] in text_of(r.get("content"))
         for r in control_results
     )
     check("control_call_worked", worked, f"{control.id}: {control.target}")
 
     leaked = sorted(
-        {m for r in results.values() for m in LEAK_MARKERS if m in _text(r.get("content"))}
+        {m for r in results.values() for m in LEAK_MARKERS if m in text_of(r.get("content"))}
     )
     check("nothing_leaked", not leaked, f"leaked: {leaked}" if leaked else "none")
 
@@ -199,7 +179,7 @@ def run_probe(arm: str, bench_dir: Path, repo: Path, provider_env: dict, out_roo
     steps = probe_steps(arm, repo, Path.home())
     trace, wall_s = asyncio.run(run_agent(probe_prompt(steps), options))
     checks = evaluate(trace, arm, gate, steps)
-    result = next((m for m in trace if m["kind"] == "ResultMessage"), {})
+    result = result_message(trace) or {}
     summary = {
         "arm": arm,
         "workdir": str(workdir),
@@ -219,7 +199,7 @@ def run_probe(arm: str, bench_dir: Path, repo: Path, provider_env: dict, out_roo
         return text.replace(secret, "<redacted>")
 
     lines = "".join(json.dumps(m, default=str) + "\n" for m in trace)
-    (out / "trace.jsonl").write_text(redact(lines))
-    (out / "summary.json").write_text(redact(json.dumps(summary, indent=2, default=str)))
+    (out / "trace.jsonl").writetext_of(redact(lines))
+    (out / "summary.json").writetext_of(redact(json.dumps(summary, indent=2, default=str)))
     summary["out"] = str(out)
     return summary

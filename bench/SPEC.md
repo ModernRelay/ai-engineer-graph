@@ -19,6 +19,7 @@
 | 2026-09-23 | Agents switched to 1M context (`…[1m]`) | Roman Pronskiy |
 | 2026-09-23 | B1.1 done: `questions.yaml` + validating loader | Roman Pronskiy |
 | 2026-09-23 | Q05/Q08 swapped; B1.2 done; Epic B guardrails passed | Roman Pronskiy |
+| 2026-09-23 | C1.1 done: `bench run` runner, shared trace helpers, answer-block parser | Roman Pronskiy |
 
 ### Status legend
 
@@ -26,7 +27,7 @@
 
 ### Current focus
 
-**Now on:** Epic C → Phase C1 → step C1.1 — `bench run`, the resumable runner with metrics capture.
+**Now on:** Epic C → Phase C1 → step C1.2 — caps, wall-clock timeout, infra retries, and a spend limit per invocation.
 
 ---
 
@@ -393,34 +394,40 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Step | Description | Status | Notes |
 |------|-------------|--------|-------|
-| C1.1 | `bench run`: resumable runner with metrics capture | 🔲 | |
+| C1.1 | `bench run`: resumable runner with metrics capture | ✅ | `run.py`, `trace.py`, `parse.py`; 17 tests with an injected fake agent |
 | C1.2 | Caps, timeouts and failure statuses | 🔲 | |
 | C1.3 | Pilot: 1 run per question per arm (20 runs) | 🔲 | |
 | C1.4 | Full run: 3 runs per question per arm (60 runs) | 🔲 | |
 
 **Steps (detail):**
 
-- **C1.1 — Runner.** Deliverable: `src/bench/run.py` and `bench run [--pilot] [--only Q01] [--arm markdown]`.
-  - Writes every SDK message to `runs/<qid>/<arm>/<n>/trace.jsonl`, and the final record to
-    `result.json`.
-  - Skips a run if its `result.json` already exists.
-  - Interleaves the arms, runs up to 4 at once (configurable) and copies the corpus fresh for
-    each markdown run.
-  ```python
-  @dataclass
-  class RunResult:
-      qid: str; arm: Literal["omnigraph", "markdown"]; run: int
-      status: Literal["ok", "capped", "error"]; stop_reason: str | None
-      wall_s: float                       # harness clock, start → ResultMessage
-      duration_ms: int; duration_api_ms: int
-      total_cost_usd: float
-      input_tokens: int; output_tokens: int
-      cache_read_input_tokens: int; cache_creation_input_tokens: int
-      num_turns: int; tool_calls: int; tool_calls_by_name: dict[str, int]
-      denied_tool_calls: int              # gate denials; >0 in a real run is a red flag
-      answer_text: str; answer_json: dict | None   # parsed contract block, None if missing
-      started_at: str; graph_head: str; corpus_sha: str; sdk_version: str
-  ```
+- **C1.1 — Runner.** Deliverable: `src/bench/run.py` (+ `trace.py`, `parse.py`) and
+  `bench run [--pilot | --runs N] [--only Q01,Q09] [--arm markdown|omnigraph|both] [--concurrency 4]`.
+  - **Order:** run-major, then question, then arm, so both arms meet each question at about the
+    same time. Up to `--concurrency` runs go in parallel. A run whose `result.json` exists is
+    skipped, so the command resumes.
+  - **Isolation:** each run gets a fresh workdir under `$TMPDIR/aie-bench/runs/<q>/<arm>/<n>/`
+    (a corpus copy, or an empty scratch dir) and its own claude-home. The prompt is the question
+    text. The workdir is removed afterwards, except when the run errored.
+  - **Output:** `runs/<q>/<arm>/<n>/trace.jsonl` (every SDK message) and `result.json`, with the
+    OpenRouter key redacted from both.
+    ```python
+    {"qid", "arm", "run", "question", "started_at",
+     "status": "ok|capped|error", "stop_reason",           # result subtype, or the exception
+     "wall_s", "duration_ms", "duration_api_ms", "num_turns",
+     "cost_usd",                                           # model_usage × OpenRouter prices
+     "sdk_cost_usd",                                       # the SDK's own figure, a cross-check
+     "input_tokens", "output_tokens", "cache_read_input_tokens", "cache_creation_input_tokens",
+     "tool_calls", "tool_calls_by_name",
+     "denied_tool_calls",                                  # the gate replayed on every call
+     "answer_text", "answer_json",                         # parse.answer_block: last fenced json
+     "model", "cli_version", "sdk_version", "graph_head", "corpus_sha"}
+    ```
+  - **Per invocation:** the local graph's head (`omnigraph commit list`) and a SHA-256 of the
+    corpus are recorded once. Pre-flight is shared with `bench probe`: no graph secrets, the key,
+    the corpus, the shim and `/healthz`. `--only` rejects unknown ids before anything runs.
+  - **Checked:** graph head `01M37RTNV78NW2BA9M5BKK3G2X`; the pilot plan is 20 runs and the full
+    plan 60.
 - **C1.2 — Caps.** Deliverable: caps in `bench.toml`.
   - Pilot caps: `max_turns=100`, `max_budget_usd=10`, 30 min wall clock.
   - A run that hits a cap is recorded as `capped` and scored as-is. Capped runs count against
@@ -452,7 +459,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Step | Description | Status | Notes |
 |------|-------------|--------|-------|
-| D1.1 | Parse the contract block and claims | 🔲 | |
+| D1.1 | Parse the contract block and claims | 🔄 | `parse.answer_block` landed with C1.1 (the C1 contract guardrail needs it); normalising claims is still to do |
 | D1.2 | Mechanical quote check against the corpus | 🔲 | |
 | D1.3 | Judge: does the quote support the claim? | 🔲 | |
 | D1.4 | Judge: uncited factual statements in the prose | 🔲 | |
