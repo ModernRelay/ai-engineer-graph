@@ -19,7 +19,8 @@ This repository is the complete, loadable definition of the graph:
 | `omnigraph-config.example.yaml` | client profile and alias pack for the CLI |
 
 The seed files are an exact export of the served graph (last refreshed
-2026-09-13). Nothing else is needed to stand the graph up.
+2026-09-23, Omnigraph 0.11 envelope: identity is the top-level `id` on every
+line). Nothing else is needed to stand the graph up.
 
 ## What is in the graph
 
@@ -103,14 +104,14 @@ Design choices, all visible in `schema.pg`:
 
 ## Setup
 
-Prerequisites: Omnigraph 0.10.x (`brew install omnigraph` gives the CLI and
-`omnigraph-server`; `omnigraph version` should report internal-schema 6), an
+Prerequisites: Omnigraph 0.11.x (`brew install omnigraph` gives the CLI and
+`omnigraph-server`; `omnigraph version` should report internal-schema 9), an
 S3-compatible object store or a file-backed root, and a Gemini API key for
 embeddings (chunk load and query-time `nearest()`).
 
 ### 1. Object store
 
-`cluster.yaml` roots the cluster at `s3://intel-graph/clusters/spike-intel`.
+`cluster.yaml` roots the cluster at `s3://intel-graph/clusters/spike-intel-011`.
 A native [RustFS](https://rustfs.com) works locally without Docker:
 
 ```bash
@@ -163,7 +164,7 @@ omnigraph cluster apply    --config . --as act-admin   # creates the graph, appl
 ### 4. Load the seed
 
 ```bash
-G=s3://intel-graph/clusters/spike-intel/graphs/spike.omni
+G=s3://intel-graph/clusters/spike-intel-011/graphs/spike.omni
 
 # entities: nodes in type order, then the edges (each file replaces its own tables)
 for f in seed/[0-9]*.jsonl; do
@@ -191,9 +192,9 @@ and a part already merged must not be merged again (see Load semantics below).
 ### 5. Serve
 
 ```bash
-nohup omnigraph-server --cluster s3://intel-graph/clusters/spike-intel --bind 127.0.0.1:8081 \
+nohup omnigraph-server --cluster s3://intel-graph/clusters/spike-intel-011 --bind 127.0.0.1:8081 \
   > omnigraph-server.log 2>&1 & disown
-curl -s http://127.0.0.1:8081/healthz    # {"status":"ok","version":"0.10.0","internal_schema_version":6}
+curl -s http://127.0.0.1:8081/healthz    # {"status":"ok","version":"0.11.0","internal_schema_version":9}
 ```
 
 The server needs the `AWS_*` variables, `OMNIGRAPH_SERVER_BEARER_TOKENS_JSON`
@@ -263,16 +264,19 @@ Anonymous requests get 401; an actor outside a rule gets 403.
   chunks or evidence edges that are already in the graph.
 - **Verify every write** by comparing `omnigraph commit list --branch main`
   heads before and after; the CLI exit code is not authoritative on remote stores.
-- **Full-text indexes on 0.10:** after bulk loads, rebuild them with the server
+- **Indexes:** after bulk loads, reconcile declared indexes with the server
   stopped so new rows are indexed rather than scanned:
+  `omnigraph optimize "$G" --json` (no `--as`; it is a direct storage command).
+  Rebuild full-text indexes explicitly only when the analyzer changes:
   `omnigraph rebuild-full-text-indexes "$G" --branch main --as act-admin --json`.
 - **Binaries:** keep `omnigraph` and `omnigraph-server` on the same minor and
-  never point a 0.9 binary at a store touched by 0.10. Check `/healthz` after
-  every restart.
+  never point a 0.9/0.10 binary at this store (storage format v9 since the 0.11
+  rebuild; the pre-0.11 root `spike-intel` is retained read-only for rollback).
+  Check `/healthz` after every restart.
 - **Refreshing the seed:** `omnigraph export --server intel-local --graph spike`
   streams the whole graph as JSONL. The seed files are that export split by
   node type (sorted by slug, unset optional fields dropped, timestamps as ISO
-  time), the entity edges in one sorted file, and the chunk rows with
+  time, identity kept as the top-level `id`), the entity edges in one sorted file, and the chunk rows with
   `embedding` removed in parts of 400, each chunk followed by its edge.
   Regenerate rather than hand-edit; the sorted layout keeps refresh diffs small.
 
