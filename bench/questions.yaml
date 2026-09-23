@@ -1,0 +1,81 @@
+# The benchmark shortlist (SPEC Epic B). Both arms get exactly this text.
+#
+# Plain language only: no graph ids (pat-, sig-, co-, …) and no graph terms like
+# "signals"; the loader refuses them. `shape` tells the scorer how to read an answer:
+#   ranked_list  ranked items with labels; labels are clustered across runs for pooled recall
+#   talk_set     a set of talks; items are talk ids
+#   company_set  a set of companies; names are clustered across runs
+#   prose        a free answer; pairwise judge and grounding only
+#   absence      the right answer is that nothing covers it
+
+questions:
+  - id: Q01
+    category: aggregate
+    shape: ranked_list
+    text: >-
+      What were the 10 most discussed topics at AI Engineer World's Fair 2026? Rank them by
+      how many talks covered each, give an approximate talk count, and cite at least two
+      talks per topic.
+
+  - id: Q02
+    category: aggregate
+    shape: ranked_list
+    text: >-
+      What do speakers most often name as the biggest unsolved problems in building and
+      shipping AI agents? Give the top 5, ranked, with supporting talks.
+
+  - id: Q03
+    category: aggregate
+    shape: ranked_list
+    text: >-
+      Where do speakers disagree most? Name the three most contested claims, and for each,
+      which talks argue for it and which push back.
+
+  - id: Q04
+    category: aggregate
+    shape: talk_set
+    text: >-
+      Which talks argue that the engineering around the model (harness, tools, context,
+      scaffolding) matters more than which model you pick? List every talk you can find,
+      with speaker and company.
+
+  - id: Q05
+    category: aggregate
+    shape: ranked_list
+    text: >-
+      Which five companies gave the most talks at the conference, and what did each
+      company's talks focus on?
+
+  - id: Q06
+    category: aggregate
+    shape: company_set
+    text: >-
+      Which companies described how they verify or review AI-generated code before it
+      ships? Summarize each company's approach.
+
+  - id: Q07
+    category: aggregate
+    shape: ranked_list
+    text: >-
+      Which tools, frameworks or products do speakers recommend most often for evaluating
+      or observing LLM agents? Rank them by the number of talks that mention them favorably.
+
+  - id: Q08
+    category: multi-hop
+    shape: prose
+    text: >-
+      How do the concerns raised in talks about voice or robotics agents differ from those
+      raised in talks about coding agents?
+
+  - id: Q09
+    category: lookup
+    shape: prose
+    text: >-
+      In Mike Krieger's talk on how Anthropic builds, how does Anthropic decide what to
+      unship?
+
+  - id: Q10
+    category: absence
+    shape: absence
+    text: >-
+      Which talks discuss running LLM inference on FPGAs or neuromorphic chips?

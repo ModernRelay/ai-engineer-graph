@@ -16,6 +16,8 @@
 | 2026-09-23 | A2.3 done: contract + briefs, generated query catalog; D1.2 accepts chunk labels as talk ids | Roman Pronskiy |
 | 2026-09-23 | A2.5 added and done: local 0.11 graph via `scripts/local-graph.sh`, OpenRouter for embeddings, agents and judge; Reader-only and Graph-live guardrails passed | Roman Pronskiy |
 | 2026-09-23 | A2.4 done: live probe 8/8 on both arms via OpenRouter; Phase A2 guardrails passed; cost now from `model_usage` | Roman Pronskiy |
+| 2026-09-23 | Agents switched to 1M context (`…[1m]`) | Roman Pronskiy |
+| 2026-09-23 | B1.1 done: `questions.yaml` + validating loader | Roman Pronskiy |
 
 ### Status legend
 
@@ -23,7 +25,7 @@
 
 ### Current focus
 
-**Now on:** Epic B → Phase B1 → step B1.1 — `questions.yaml` from the draft shortlist, for your approval. Also open: the context-window question in §7.
+**Now on:** Epic B → Phase B1 → step B1.2 — `bench check-questions` (corpus-only answerability check).
 
 ---
 
@@ -51,7 +53,7 @@ few side-by-side traces for a demo.
 | Language / tooling | Python ≥ 3.12, `uv`, `ruff`, `pytest` | Matches the local corpus scripts; `uv run bench …` is the single entry point. |
 | Agent harness | Claude Agent SDK (`claude-agent-sdk`) | The Claude Code harness as a library: same built-in Read/Grep/Glob/Bash tools, and a `ResultMessage` per run with `total_cost_usd`, `duration_ms`, `duration_api_ms`, `num_turns` and `usage`. |
 | Agent isolation | `setting_sources=[]`, `strict_mcp_config=True`, `tools=[…]` per arm, a PreToolUse-hook gate on every call (with `can_use_tool` as a deny-all backstop), cwd in a temp dir outside the repo | The SDK loads user, project and local settings plus CLAUDE.md by default. Neither arm may see the repo's CLAUDE.md, user hooks or plugins, or the other arm's data. |
-| Agent model | `claude-sonnet-5`, `effort="high"`, both arms | Cheaper for 60 runs. The difference between arms shows up just as clearly. |
+| Agent model | `anthropic/claude-sonnet-5[1m]` (Sonnet 5 with its full 1M context), `effort="high"`, both arms | Cheaper for 60 runs. The `[1m]` suffix makes the CLI use the whole 1M window: without it, it assumes 200k for OpenRouter ids, which would force the markdown arm to compact early. |
 | Model access | OpenRouter's Anthropic-compatible API: `ANTHROPIC_BASE_URL=https://openrouter.ai/api`, `ANTHROPIC_AUTH_TOKEN` = `OPENROUTER_KEY` from `bench/.env`, `ANTHROPIC_API_KEY=""`; model ids `anthropic/claude-sonnet-5` (agents) and `anthropic/claude-opus-5.5` (judge) | You chose OpenRouter as the billing account. Both models are listed there at Anthropic list prices. |
 | Cost | Computed per run as usage × a snapshot of OpenRouter prices, recorded with the results: Sonnet 5 $2 in / $10 out / $0.20 cache read / $2.50 cache write per Mtok; Opus 5.5 $4 / $20 / $0.20 / $5. The SDK's `total_cost_usd` is kept as a cross-check. | The SDK's cost comes from Claude Code's own price table, which may not recognise OpenRouter model ids. Tokens × a recorded price is exact and reproducible. |
 | Local graph | File-backed copy under `bench/.graph/` (gitignored), built by `scripts/local-graph.sh`. Chunks are embedded with `google/gemini-embedding-2-preview` (the seed's model) through OpenRouter using Omnigraph's `openai-compatible` provider, and the server uses the same model for `nearest()`. | There was no S3 store or Gemini key here, and the tracked `cluster.yaml` stays untouched. The embedding model matches production's. |
@@ -335,13 +337,19 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Step | Description | Status | Notes |
 |------|-------------|--------|-------|
-| B1.1 | `questions.yaml` with the 10 questions below | 🔲 | Draft; edit freely |
+| B1.1 | `questions.yaml` with the 10 questions below | ✅ | Loader + 12 tests; waiting on your approval (B guardrail) |
 | B1.2 | Corpus sanity check per question | 🔲 | |
 
 **Steps (detail):**
 
 - **B1.1 — Question file.** Deliverable: `questions.yaml`, with `id`, `category`, `shape` and
-  `text` per question. Questions use ordinary words, not graph vocabulary: no pattern slugs,
+  `text` per question, and `src/bench/questions.py::load_questions`. The loader refuses:
+  - malformed ids or duplicate ids
+  - an unknown category or shape
+  - empty text
+  - graph vocabulary: id slugs such as `pat-…` or `co-…`, and the word "signal(s)"
+
+  A test also checks that no question text appears in either system prompt. Questions use ordinary words, not graph vocabulary: no pattern slugs,
   no "signals".
 
   | ID | Category | Shape | Question |
@@ -350,10 +358,10 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
   | Q02 | aggregate | ranked_list | What do speakers most often name as the biggest unsolved problems in building and shipping AI agents? Give the top 5, ranked, with supporting talks. |
   | Q03 | aggregate | ranked_list | Where do speakers disagree most? Name the three most contested claims, and for each, which talks argue for it and which push back. |
   | Q04 | aggregate | talk_set | Which talks argue that the engineering around the model (harness, tools, context, scaffolding) matters more than which model you pick? List every talk you can find, with speaker and company. |
-  | Q05 | aggregate | talk_set | Which talks discuss persistent memory for agents, and what approaches do they propose? Group the talks by approach. |
+  | Q05 | aggregate | ranked_list | Which five companies gave the most talks at the conference, and what did each company's talks focus on? |
   | Q06 | aggregate | company_set | Which companies described how they verify or review AI-generated code before it ships? Summarize each company's approach. |
   | Q07 | aggregate | ranked_list | Which tools, frameworks or products do speakers recommend most often for evaluating or observing LLM agents? Rank them by the number of talks that mention them favorably. |
-  | Q08 | multi-hop | talk_set | What do speakers from companies that build coding agents say about the security risks of agent skills, MCP servers or third-party packages? |
+  | Q08 | multi-hop | prose | How do the concerns raised in talks about voice or robotics agents differ from those raised in talks about coding agents? |
   | Q09 | lookup | prose | In Mike Krieger's talk on how Anthropic builds, how does Anthropic decide what to unship? |
   | Q10 | absence | absence | Which talks discuss running LLM inference on FPGAs or neuromorphic chips? |
 
@@ -368,7 +376,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Guardrail | Criteria (pass/fail) | Status | Actual outcome |
 |-----------|----------------------|--------|----------------|
-| Approved | Roman signs off on the 10 questions | 🔲 | |
+| Approved | Roman signs off on the 10 questions | ✅ | Approved by Roman on 2026-09-23 with Q05 and Q08 swapped for pattern-neutral questions (decision #28). |
 | Answerable | Q01–Q09 each have ≥1 relevant talk; Q10 has 0 hits | 🔲 | |
 
 ---
@@ -651,6 +659,8 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 24 | 2026-09-23 | Cost is priced from `ResultMessage.model_usage`, not `usage`; refines #22 | The probe showed `usage` misses part of the session. `model_usage` at OpenRouter prices reproduces the SDK's `total_cost_usd` exactly. | Roman Pronskiy |
 | 25 | 2026-09-23 | Each run gets its own `CLAUDE_CONFIG_DIR` | This keeps the bundled CLI entirely off `~/.claude`: sessions, `.claude.json`, plugins, memory. It adds to `setting_sources=[]`. | Roman Pronskiy |
 | 26 | 2026-09-23 | The CLI's own `…@builtin` plugins are allowed by the isolation check | `telemetry@builtin` ships with CLI 2.1.280 and doesn't come from any user setting. Any other plugin still fails the probe. | Roman Pronskiy |
+| 27 | 2026-09-23 | Both arms run `anthropic/claude-sonnet-5[1m]` (1M context) | Through OpenRouter the CLI assumed 200k, and the markdown arm would compact early. A live probe confirmed `contextWindow: 1000000`, init model `…[1m]`, and cost matching the SDK. OpenRouter prices Sonnet 5 flat across the 1M window. | Roman Pronskiy |
+| 28 | 2026-09-23 | Q05 and Q08 replaced with questions that no graph pattern covers (talks per company and what each focused on; voice/robotics vs coding-agent concerns) | Five of the ten drafts mapped almost one-to-one onto the graph's precomputed patterns (memory layer, agent supply chain, verification gap, harness over model, contradictions). Two neutral aggregations show whether the graph helps beyond its prepared themes. The other three pattern-aligned questions stay and are named in the report's method notes. | Roman Pronskiy |
 
 ---
 
@@ -660,7 +670,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 - [ ] Final caps (`max_turns`, `max_budget_usd`, wall clock) after the pilot. Do they stay the same for both arms?
 - [x] ~~Does the `omnigraph` CLI accept a config path or profile env var?~~ Yes: `OMNIGRAPH_HOME` and `OMNIGRAPH_PROFILE` (decision #18).
 - [x] ~~Does `HookMatcher(matcher=None)` match every tool?~~ Yes: the A2.4 probe saw our reason on every denial across Read, Grep, Glob and Bash.
-- [ ] Context window: through OpenRouter the CLI reports `contextWindow: 200000` for `anthropic/claude-sonnet-5` (the model supports 1M). OpenRouter documents a `[1m]` model suffix. Should both arms run with 1M? This mostly affects when the markdown arm's context gets compacted.
+- [x] ~~Context window: 200k or 1M?~~ 1M for both arms (decision #27). Verified live: `contextWindow: 1000000`.
 - [ ] How does the Claude Code Bash tool handle very large `omnigraph` output (truncate vs spill to file)? Confirm in the pilot.
 - [ ] Commit `runs/` traces for the demo, or only `results/`? Currently runs are gitignored.
 

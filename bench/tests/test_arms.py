@@ -243,7 +243,7 @@ def test_each_run_gets_its_own_claude_home(talks, scratch, tmp_path):
 def test_arms_load_no_settings_mcp_or_preapproved_tools(talks, tmp_path):
     md = md_options(talks, tmp_path)
 
-    assert md.model == "anthropic/claude-sonnet-5"
+    assert md.model == "anthropic/claude-sonnet-5[1m]"
     assert md.setting_sources == []
     assert md.strict_mcp_config is True
     assert md.allowed_tools == []

@@ -75,3 +75,16 @@ def test_session_cost_adds_up_every_model_in_the_session():
     }
 
     assert session_cost(model_usage) == pytest.approx(2.0 + 2.0)
+
+
+def test_the_1m_context_suffix_is_priced_like_the_base_model():
+    model_usage = {"anthropic/claude-sonnet-5[1m]": {"inputTokens": 1_000_000, "outputTokens": 0}}
+
+    assert session_cost(model_usage) == pytest.approx(2.0)
+    assert cost_usd("anthropic/claude-sonnet-5[1m]", {"output_tokens": 1_000_000}) == 10.0
+
+
+def test_agents_run_sonnet_5_with_the_full_1m_context():
+    from bench.provider import AGENT_MODEL
+
+    assert AGENT_MODEL == "anthropic/claude-sonnet-5[1m]"

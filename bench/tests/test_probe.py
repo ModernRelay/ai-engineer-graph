@@ -49,7 +49,8 @@ def session(arm, calls, tools=None, finished=True, plugins=None) -> list[dict]:
                 "tools": tools,
                 "mcp_servers": [],
                 "plugins": [BUILTIN_PLUGIN] if plugins is None else plugins,
-                "model": "anthropic/claude-sonnet-5",
+                # what CLI 2.1.280 reports with the 1M id (assistant messages carry the API id)
+                "model": "anthropic/claude-sonnet-5[1m]",
             },
         )
     ]
