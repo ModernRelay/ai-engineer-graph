@@ -20,6 +20,7 @@
 | 2026-09-23 | B1.1 done: `questions.yaml` + validating loader | Roman Pronskiy |
 | 2026-09-23 | Q05/Q08 swapped; B1.2 done; Epic B guardrails passed | Roman Pronskiy |
 | 2026-09-23 | C1.1 done: `bench run` runner, shared trace helpers, answer-block parser | Roman Pronskiy |
+| 2026-09-23 | C1.2 done: wall-clock cap, retries, spend limit | Roman Pronskiy |
 
 ### Status legend
 
@@ -27,7 +28,7 @@
 
 ### Current focus
 
-**Now on:** Epic C → Phase C1 → step C1.2 — caps, wall-clock timeout, infra retries, and a spend limit per invocation.
+**Now on:** Epic C → Phase C1 → step C1.3 — the pilot. Calibration first: Q01 on both arms (`bench run --pilot --only Q01`).
 
 ---
 
@@ -395,7 +396,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | Step | Description | Status | Notes |
 |------|-------------|--------|-------|
 | C1.1 | `bench run`: resumable runner with metrics capture | ✅ | `run.py`, `trace.py`, `parse.py`; 17 tests with an injected fake agent |
-| C1.2 | Caps, timeouts and failure statuses | 🔲 | |
+| C1.2 | Caps, timeouts and failure statuses | ✅ | 30 min wall clock; 2 retries (30 s, 60 s) on exceptions and 429/5xx/529; `--max-spend`; 6 tests, 4 mutations caught |
 | C1.3 | Pilot: 1 run per question per arm (20 runs) | 🔲 | |
 | C1.4 | Full run: 3 runs per question per arm (60 runs) | 🔲 | |
 
@@ -428,11 +429,25 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
     the corpus, the shim and `/healthz`. `--only` rejects unknown ids before anything runs.
   - **Checked:** graph head `01M37RTNV78NW2BA9M5BKK3G2X`; the pilot plan is 20 runs and the full
     plan 60.
-- **C1.2 — Caps.** Deliverable: caps in `bench.toml`.
-  - Pilot caps: `max_turns=100`, `max_budget_usd=10`, 30 min wall clock.
-  - A run that hits a cap is recorded as `capped` and scored as-is. Capped runs count against
-    that arm in the report.
-  - Infra errors (server down, HTTP 429) are retried up to 2 times, then recorded as `error`.
+- **C1.2 — Caps.** Deliverable: caps and failure handling in `run.py` (constants), plus
+  `bench run --max-spend USD`.
+  - **Caps per run:** `max_turns=300` and `max_budget_usd=10` (SDK-enforced, in `arms.py`), and a
+    30-minute wall clock (`WALL_TIMEOUT_S`). Hitting any cap gives status `capped`
+    (`error_max_turns`, `error_max_budget_usd` or `wall_timeout`), is scored as-is, counts against
+    that arm, and is never retried.
+  - **Timeouts keep the partial trace:** `run_agent` streams into a list the runner owns. The cost
+    of a timed-out session comes from per-message usage, flagged `cost_complete: false` (it
+    undercounts).
+  - **Infrastructure failures** are retried twice (after 30 s, then 60 s), each time in a fresh
+    sandbox. That covers exceptions (CLI or connection errors) and results with
+    `api_error_status` 429/500/502/503/504/529. After the third failure the status is `error`.
+    `result.json` records `attempts`, `retries` (the failure reasons) and `retry_cost_usd`, kept
+    apart from the run's own `cost_usd`.
+  - **`--max-spend`:** no new run starts once finished runs (including retry costs) have spent
+    that much. Runs already going finish, so the total can overshoot by at most
+    concurrency × per-run budget.
+  - The spec's earlier `bench.toml` idea was dropped: the caps are constants next to the code that
+    enforces them (decision #29).
 - **C1.3 — Pilot.** Deliverable: `runs/` for 20 runs and a short pilot note in the Decision Log.
   Read the traces. Set the final caps and concurrency from what the pilot shows.
 - **C1.4 — Full run.** Deliverable: 60 `result.json` files. Record the graph commit head and the
@@ -671,6 +686,8 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 26 | 2026-09-23 | The CLI's own `…@builtin` plugins are allowed by the isolation check | `telemetry@builtin` ships with CLI 2.1.280 and doesn't come from any user setting. Any other plugin still fails the probe. | Roman Pronskiy |
 | 27 | 2026-09-23 | Both arms run `anthropic/claude-sonnet-5[1m]` (1M context) | Through OpenRouter the CLI assumed 200k, and the markdown arm would compact early. A live probe confirmed `contextWindow: 1000000`, init model `…[1m]`, and cost matching the SDK. OpenRouter prices Sonnet 5 flat across the 1M window. | Roman Pronskiy |
 | 28 | 2026-09-23 | Q05 and Q08 replaced with questions that no graph pattern covers (talks per company and what each focused on; voice/robotics vs coding-agent concerns) | Five of the ten drafts mapped almost one-to-one onto the graph's precomputed patterns (memory layer, agent supply chain, verification gap, harness over model, contradictions). Two neutral aggregations show whether the graph helps beyond its prepared themes. The other three pattern-aligned questions stay and are named in the report's method notes. | Roman Pronskiy |
+| 29 | 2026-09-23 | Run caps are code constants (`arms.py`: 100 turns, $10 per run; `run.py`: 30 min, 2 retries); no `bench.toml` | Fewer moving parts; each cap sits next to what enforces it. Final values get revisited after the pilot (C1 guardrail "Caps fixed"). | Roman Pronskiy |
+| 30 | 2026-09-23 | `max_turns` raised from 100 to 300 | 100 was a placeholder. A turn cap that binds on aggregate questions would cut the markdown arm off and distort both quality and cost. At 300 it only guards against a runaway loop, and $10 per run plus 30 minutes are the real limits. Final caps get set after the pilot from the observed maximum turns and cost (about 2× headroom). | Roman Pronskiy |
 
 ---
 

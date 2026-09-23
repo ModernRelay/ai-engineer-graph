@@ -21,7 +21,7 @@ from claude_agent_sdk import ClaudeAgentOptions, HookMatcher, PermissionResultDe
 from bench.provider import AGENT_MODEL
 
 EFFORT = "high"
-MAX_TURNS = 100  # pilot caps; revisit after C1.3
+MAX_TURNS = 300  # a runaway guard only; budget and wall clock are the working caps
 MAX_BUDGET_USD = 10.0
 
 # A gate returns None to allow a tool call, or the reason it is denied.

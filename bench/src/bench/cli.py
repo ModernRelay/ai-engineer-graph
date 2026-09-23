@@ -59,6 +59,7 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--only", help="comma-separated question ids, e.g. Q01,Q09")
     run.add_argument("--arm", choices=["markdown", "omnigraph", "both"], default="both")
     run.add_argument("--concurrency", type=int, default=4)
+    run.add_argument("--max-spend", type=float, help="USD; no new run starts once this is spent")
 
     args = parser.parse_args(argv)
     if args.command == "corpus":
@@ -156,6 +157,7 @@ def _run(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
         print(
             f"  {r['qid']} {r['arm']:<9} #{r['run']}  {r['status']:<6} "
             f"{r.get('wall_s', '-')}s  {cost}  turns={r.get('num_turns', '-')}  tools={tools}"
+            + (f"  attempts={r['attempts']}" if r.get("attempts", 1) > 1 else "")
             + (f"  ({r['stop_reason']})" if r["status"] != "ok" else "")
         )
 
@@ -164,6 +166,7 @@ def _run(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
             plan,
             concurrency=args.concurrency,
             on_done=report,
+            max_spend=args.max_spend,
             bench_dir=BENCH_DIR,
             out_root=BENCH_DIR / "runs",
             work_root=Path(tempfile.gettempdir()).resolve() / "aie-bench" / "runs",
@@ -171,10 +174,12 @@ def _run(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
             meta=meta,
         )
     )
-    skipped = len(plan) - len(results)
-    spent = sum(r.get("cost_usd", 0) for r in results)
+    already = sum((BENCH_DIR / "runs" / p.question.id / p.arm / str(p.run)).exists() for p in plan)
+    spent = sum((r.get("cost_usd") or 0) + r.get("retry_cost_usd", 0) for r in results)
     errors = sum(r["status"] == "error" for r in results)
-    print(f"done: {len(results)} ran, {skipped} already done, {errors} errors, ${spent:.2f} spent")
+    print(f"done: {len(results)} ran, {errors} errors, ${spent:.2f} spent")
+    if (missing := len(plan) - already) > 0:
+        print(f"{missing} runs not started (spend limit); re-run to continue")
     return 1 if errors else 0
 
 

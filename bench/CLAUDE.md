@@ -25,11 +25,12 @@ benchmark reads the seed and the running server; it never writes to either.
   bench/
   ├── SPEC.md, CLAUDE.md
   ├── pyproject.toml        # uv project; console script `bench`
-  ├── bench.toml            # caps, concurrency, model ids, paths
   ├── questions.yaml        # the shortlist (Epic B)
   ├── prompts/              # answer contract, per-arm tool briefs, judge prompts
   ├── bin/omnigraph         # reader-only shim put first on the Omnigraph arm's PATH
-  ├── src/bench/            # cli, corpus, arms, run, parse, verify, judge, score, report
+  ├── scripts/local-graph.sh  # the local file-backed 0.11 graph + server
+  ├── src/bench/            # cli, corpus, arms, omnigraph, prompts, provider, agent, trace,
+  │                         #   probe, questions, run, parse (next: verify, judge, score, report)
   ├── tests/
   ├── corpus/               # generated talk markdown — gitignored
   ├── runs/                 # per-run traces and result.json — gitignored
@@ -54,7 +55,7 @@ printf %s "$TOKEN_ACT_READER" | uv run bench shim   # A2.2 — once; reader-only
 uv run bench probe                  # A2.4 — live isolation probe, both arms (~$0.09; needs the
                                     #   local server: scripts/local-graph.sh serve)
 uv run bench check-questions        # B1.2
-uv run bench run --pilot            # C1.3 — 1 run per question per arm
+uv run bench run --pilot --max-spend 25   # C1.3 — 1 run per question per arm (20 runs)
 uv run bench run                    # C1.4 — 3 runs per question per arm (resumable)
 uv run bench score                  # D — quote checks + judge (cached)
 uv run bench report                 # E — results/results.md

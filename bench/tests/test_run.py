@@ -44,7 +44,7 @@ def bench(tmp_path):
     return root
 
 
-def kwargs(bench, tmp_path, agent):
+def kwargs(bench, tmp_path, agent, **extra):
     return dict(
         bench_dir=bench,
         out_root=bench / "runs",
@@ -52,10 +52,14 @@ def kwargs(bench, tmp_path, agent):
         provider_env=PROVIDER,
         meta=META,
         agent=agent,
+        retry_delays=(0, 0),
+        **extra,
     )
 
 
-def session(workdir: Path, subtype="success", answer=ANSWER, leak="") -> list[dict]:
+def session(
+    workdir: Path, subtype="success", answer=ANSWER, leak="", api_error_status=None
+) -> list[dict]:
     """Two tool calls (one the markdown gate denies), a final answer, the CLI's tallies."""
     messages = [
         SystemMessage(
@@ -82,6 +86,7 @@ def session(workdir: Path, subtype="success", answer=ANSWER, leak="") -> list[di
             session_id="s",
             total_cost_usd=0.0306,
             result=answer,
+            api_error_status=api_error_status,
             model_usage={
                 "anthropic/claude-sonnet-5[1m]": {
                     "inputTokens": 1500,
@@ -102,7 +107,7 @@ class FakeAgent:
         self.calls = []
         self.session_kw = session_kw
 
-    async def __call__(self, prompt, options):
+    async def __call__(self, prompt, options, sink):
         workdir = Path(options.cwd)
         self.calls.append(
             {
@@ -114,7 +119,8 @@ class FakeAgent:
                 "claude_home": options.env["CLAUDE_CONFIG_DIR"],
             }
         )
-        return session(workdir, **self.session_kw), 5.25
+        sink.extend(session(workdir, **self.session_kw))
+        return sink, 5.25
 
 
 def result_of(bench, qid="Q01", arm="markdown", run=1) -> dict:
@@ -210,7 +216,7 @@ def test_hitting_the_turn_cap_is_recorded_as_capped(bench, tmp_path):
 
 
 def test_an_agent_failure_is_recorded_as_an_error(bench, tmp_path):
-    async def broken(prompt, options):
+    async def broken(prompt, options, sink):
         raise RuntimeError("connection reset by peer")
 
     asyncio.run(run_one(Planned(Q1, "markdown", 1), **kwargs(bench, tmp_path, broken)))
@@ -278,3 +284,94 @@ def test_corpus_fingerprint_changes_when_a_talk_changes(tmp_path):
     (tmp_path / "ia-aie-a.md").write_text("two")
 
     assert corpus_sha(tmp_path) != before and len(before) == 64
+
+
+# ── caps, timeouts, retries, spend (C1.2) ───────────────────────────────────
+
+
+class Scripted:
+    """An agent that plays one behaviour per attempt: "ok", "raise", "overloaded", "hang"."""
+
+    def __init__(self, *behaviours):
+        self.behaviours = list(behaviours)
+        self.attempts = 0
+
+    async def __call__(self, prompt, options, sink):
+        behaviour = self.behaviours[min(self.attempts, len(self.behaviours) - 1)]
+        self.attempts += 1
+        workdir = Path(options.cwd)
+        if behaviour == "raise":
+            raise ConnectionError("connection reset by peer")
+        if behaviour == "overloaded":
+            sink.extend(session(workdir, subtype="error_during_execution", api_error_status=529))
+            return sink, 1.0
+        if behaviour == "hang":
+            sink.extend(session(workdir)[:3])  # init + first tool call and result, then nothing
+            await asyncio.sleep(30)
+        sink.extend(session(workdir))
+        return sink, 2.0
+
+
+def test_a_run_that_outlives_the_wall_clock_is_capped_with_its_partial_trace(bench, tmp_path):
+    agent = Scripted("hang")
+
+    asyncio.run(
+        run_one(Planned(Q1, "markdown", 1), **kwargs(bench, tmp_path, agent, wall_timeout=0.05))
+    )
+
+    r = result_of(bench)
+    assert (r["status"], r["stop_reason"], r["cost_complete"]) == ("capped", "wall_timeout", False)
+    trace = (bench / "runs" / "Q01" / "markdown" / "1" / "trace.jsonl").read_text().splitlines()
+    assert len(trace) == 3
+    assert agent.attempts == 1
+
+
+def test_an_infrastructure_failure_is_retried(bench, tmp_path):
+    agent = Scripted("raise", "ok")
+
+    asyncio.run(run_one(Planned(Q1, "markdown", 1), **kwargs(bench, tmp_path, agent)))
+
+    r = result_of(bench)
+    assert (r["status"], r["attempts"]) == ("ok", 2)
+    assert r["retries"] == ["ConnectionError: connection reset by peer"]
+
+
+def test_an_overloaded_api_is_retried_and_the_failed_attempt_cost_kept_apart(bench, tmp_path):
+    agent = Scripted("overloaded", "ok")
+
+    asyncio.run(run_one(Planned(Q1, "markdown", 1), **kwargs(bench, tmp_path, agent)))
+
+    r = result_of(bench)
+    assert (r["status"], r["attempts"]) == ("ok", 2)
+    assert r["cost_usd"] == pytest.approx(0.0303)
+    assert r["retry_cost_usd"] == pytest.approx(0.0303)
+
+
+def test_a_capped_run_is_not_retried(bench, tmp_path):
+    agent = FakeAgent(subtype="error_max_turns")
+
+    asyncio.run(run_one(Planned(Q1, "markdown", 1), **kwargs(bench, tmp_path, agent)))
+
+    assert (result_of(bench)["status"], result_of(bench)["attempts"]) == ("capped", 1)
+    assert len(agent.calls) == 1
+
+
+def test_retries_stop_after_three_attempts(bench, tmp_path):
+    agent = Scripted("raise")
+
+    asyncio.run(run_one(Planned(Q1, "markdown", 1), **kwargs(bench, tmp_path, agent)))
+
+    assert (result_of(bench)["status"], result_of(bench)["attempts"]) == ("error", 3)
+    assert agent.attempts == 3
+
+
+def test_no_new_run_starts_once_the_spend_limit_is_reached(bench, tmp_path):
+    agent = FakeAgent()  # every run costs $0.0303
+    plan = plan_runs([Q1, Q2], ["markdown", "omnigraph"], runs=1)
+
+    results = asyncio.run(
+        run_all(plan, concurrency=1, max_spend=0.05, **kwargs(bench, tmp_path, agent))
+    )
+
+    assert len(results) == 2
+    assert len(agent.calls) == 2
