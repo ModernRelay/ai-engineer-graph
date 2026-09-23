@@ -31,6 +31,7 @@
 | 2026-09-24 | D1.2 done: `verify.Corpus` quote check with a new `spliced` outcome (#37); C1.4 verbatim md 99.2%, og 97.2%; rapidfuzz added | Roman Pronskiy |
 | 2026-09-24 | D1.3 support judge written with stubbed tests (`judge.py`, cached Opus 5.5 requests, `Corpus.context`, `prompts/judge_support.md`); `anthropic` SDK added; real pass pending | Roman Pronskiy |
 | 2026-09-24 | `bench score` runner; D1.3 pilot 10/10 judged for $0.10; full pass about $7.10 | Roman Pronskiy |
+| 2026-09-24 | D1.3 done: 698 claims judged for $7.00; `results/scores.json`; rescoring from cache is byte-identical; open question on the talk title | Roman Pronskiy |
 
 ### Status legend
 
@@ -38,7 +39,7 @@
 
 ### Current focus
 
-**Now on:** Epic D → Phase D1 → step D1.3 — the full support pass (`uv run bench score`, 685 requests, about $7.10) waits for your go; the 10-claim pilot is done. D1.4 (uncited statements) can be written with stubs meanwhile.
+**Now on:** Epic D → Phase D1 → step D1.4 — the uncited-statements judge (`judge.py::uncited`), code with stubbed tests first. Open question first: should the support judge see the talk title (D1.3 blind spot)?
 
 ---
 
@@ -578,7 +579,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 |------|-------------|--------|-------|
 | D1.1 | Parse the contract block and claims | ✅ | `parse.normalise` → `Answer` / `Item` / `Claim`; 13 tests, 6 mutations caught; 60 C1.4 answers: 0 unparseable, 286 items, 710 claims |
 | D1.2 | Mechanical quote check against the corpus | ✅ | `verify.Corpus` + `corpus.talk_labels`; `spliced` added (#37); 20 tests, 14 of 15 mutations caught (the 15th can't change a result); C1.4 verbatim: md 99.2%, og 97.2% |
-| D1.3 | Judge: does the quote support the claim? | 🔄 | Judge + `bench score` runner done (stubbed tests). Pilot: 10/10 judged, $0.10 ($0.0104 a claim), 9 supported / 1 partial. The full pass (685 requests left, about $7.10) waits for your go |
+| D1.3 | Judge: does the quote support the claim? | ✅ | 698 claims judged (695 requests), 0 errors, $7.00 in all. Grounded / partial / hallucinated: md 76.7 / 22.3 / 1.0%, og 82.4 / 13.6 / 4.0%. `results/scores.json` |
 | D1.4 | Judge: uncited factual statements in the prose | 🔲 | |
 | D1.5 | Scorer calibration on planted claims | 🔲 | |
 
@@ -698,6 +699,21 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
     says neither. Opus 5.5 served every call with the schema honoured. Adaptive thinking used 0–277
     tokens, so most claims need none even at `high` effort. Our computed cost matches OpenRouter's
     `upstream_inference_cost` exactly. The full pass is about $7.10 for the 685 requests left.
+  - **Full pass (2026-09-24):** `bench score`: 685 asked, 0 errors, $6.90 ($7.00 with the
+    pilot). It wrote `results/scores.json`.
+
+    | | claims | grounded | partial | hallucinated | from: not_found / wrong_talk / unsupported |
+    |---|---|---|---|---|---|
+    | markdown | 386 | 296 (76.7%) | 86 (22.3%) | 4 (1.0%) | 3 / 0 / 1 |
+    | omnigraph | 324 | 267 (82.4%) | 44 (13.6%) | 13 (4.0%) | 8 / 1 / 4 |
+
+    Q10 has no claims in either arm. All 5 `unsupported` verdicts read as right on inspection,
+    for example a claim credited to the vendor's own internal use when the transcript describes a
+    customer case study, and a cut-off quote fragment that names nothing it claims. Most
+    `partial`s are claims that harden the speaker ("a lot of" → "most") or add a fact the
+    passage doesn't give. One blind spot: the judge doesn't see the talk title, so a claim that
+    correctly names the speaker or company from it can be marked `partial`. About 14 md and 3 og
+    partials give that as at least part of the reason (open question below).
 - **D1.4 — Uncited statements.** Deliverable: `judge.py::uncited`. The judge lists factual
   statements in the prose that no claim covers. The count goes into the report.
 - **D1.5 — Calibration.** Deliverable: `tests/test_scorer_calibration.py`.
@@ -715,7 +731,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | Guardrail | Criteria (pass/fail) | Status | Actual outcome |
 |-----------|----------------------|--------|----------------|
 | Calibrated | ≥ 9/10 planted claims classified correctly | 🔲 | |
-| Deterministic | Rescoring from cache reproduces identical numbers | 🔲 | |
+| Deterministic | Rescoring from cache reproduces identical numbers | 🔄 | D1.3 part verified: a second `bench score` asked nothing and rewrote a byte-identical `scores.json` (sha256 `b658625e…`). Recheck once D1.4 adds its judgments. |
 
 #### Phase D2 — Correctness without a gold set
 
@@ -909,6 +925,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 - [ ] Commit `runs/` traces for the demo, or only `results/`? Currently runs are gitignored.
 - [ ] Follow-up (graph maintainer): re-point Chatterjee's 24 chunks in the production 0.11 graph so it matches the seed (#35), and derive evidence passages for his 5 signals. Then refresh the seed from an export as usual.
 - [ ] Follow-up (graph maintainer): the production 0.11 server still serves the broken `talk_semantic`. `cluster apply` of the fixed `queries/traversals.gq` plus a server restart fixes it (#36). T26 in a later Omnigraph release will catch this shape at lint time.
+- [ ] Should the support judge see the talk title (`# Title (Speaker, Company — …)`)? Both arms know it (the md file header, the og graph), but the judge sees transcript only, so correct attributions can come back `partial` (about 14 md / 3 og in D1.3). Adding it changes every request, so all 695 would be asked again (about $7).
 
 ---
 
