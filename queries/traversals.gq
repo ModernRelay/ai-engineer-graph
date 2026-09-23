@@ -232,14 +232,17 @@ query patternless_elements()
 // (Lance: "Cannot have both nearest and full text search") — but scoping by
 // GRAPH TRAVERSAL works: join chunks to their artifact via PartOfArtifact,
 // then rank. This is the scope-then-rank pattern done graph-natively.
+// The ranked binding ($c) must be declared first in the match: on 0.11 a
+// nearest() over a traversal-reached binding fails at runtime ("produced rows
+// without its 'c._distance' ranking column"); later engines reject it as T26.
 
 query talk_semantic($talk: String, $q: String)
 @description("Semantic search INSIDE one talk: scope chunks via PartOfArtifact edge, rank by nearest")
 {
     match {
-        $a: InformationArtifact { slug: $talk }
         $c: Chunk
         $c partOfArtifact $a
+        $a: InformationArtifact { slug: $talk }
     }
     return { $c.chunk_index, $c.text }
     order { nearest($c.embedding, $q) }
