@@ -27,6 +27,7 @@
 | 2026-09-23 | Sonar fix ported to `seed/chunks/part-03.jsonl`; override emptied; README notes the seed is ahead of the served graph | Roman Pronskiy |
 | 2026-09-23 | C1.4 stopped at 34/60: `talk_semantic` failed on every real talk (0.11 T26 shape); query fixed (#36), og runs redone, md runs kept | Roman Pronskiy |
 | 2026-09-23 | C1.4 done: 60/60 ok, $30.25 (md $12.99, og $17.26); Phase C1 guardrails passed; `results/run-meta.json`; focus moves to Epic D | Roman Pronskiy |
+| 2026-09-23 | D1.1 normalisation rules pinned down from the C1.4 answers and implemented (`parse.normalise`); D1.2 resolves bare chunk labels | Roman Pronskiy |
 
 ### Status legend
 
@@ -34,7 +35,7 @@
 
 ### Current focus
 
-**Now on:** Epic D → Phase D1 → step D1.1 — normalise the claims in each answer (`parse.answer_block` already landed with C1.1). The 60 C1.4 runs are in `runs/Q*/` and ready to score.
+**Now on:** Epic D → Phase D1 → step D1.2 — the mechanical quote check (`verify.py`) over the claims `parse.normalise` produces. The 60 C1.4 runs are in `runs/Q*/`.
 
 ---
 
@@ -572,7 +573,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Step | Description | Status | Notes |
 |------|-------------|--------|-------|
-| D1.1 | Parse the contract block and claims | 🔄 | `parse.answer_block` landed with C1.1 (the C1 contract guardrail needs it); normalising claims is still to do |
+| D1.1 | Parse the contract block and claims | ✅ | `parse.normalise` → `Answer` / `Item` / `Claim`; 13 tests, 6 mutations caught; 60 C1.4 answers: 0 unparseable, 286 items, 710 claims |
 | D1.2 | Mechanical quote check against the corpus | 🔲 | |
 | D1.3 | Judge: does the quote support the claim? | 🔲 | |
 | D1.4 | Judge: uncited factual statements in the prose | 🔲 | |
@@ -580,12 +581,46 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 **Steps (detail):**
 
-- **D1.1 — Parse.** Deliverable: `src/bench/parse.py`.
-  - Takes the last fenced `json` block in the answer.
-  - If there is no block, all claims count as zero and the run gets an `unparseable` flag.
+- **D1.1 — Parse.** Deliverable: `src/bench/parse.py`: `answer_block` (landed with C1.1) and
+  `normalise(answer_json) -> Answer`, which turns a run's `answer_json` into fixed-shape items and
+  claims for D1.2–D2.4. Normalising only fixes form: it never drops a claim for its content, and
+  no flag changes a score by itself. Flags are counted per arm as contract deviations.
+  - **Unparseable.** Takes the last fenced `json` block in the answer. If there is no block, or it
+    isn't valid JSON or a JSON object, the run is `unparseable`: no items and no claims, so all
+    claims count as zero.
+  - **Lists.** A missing or non-list `items` or `claims` counts as empty and flags the answer
+    (`bad_items`, `bad_claims`). List entries that aren't objects are dropped and counted
+    (`dropped_items`, `dropped_claims`).
+  - **Text fields** are trimmed. A number becomes its string; anything else that isn't a string
+    becomes `""`.
+  - **Items** keep their list order as `position` (1-based). `rank` and `talk_count` are kept as
+    given when they are integers, otherwise `None`. Tied ranks (`1, 1, 3`) are fine: 10 of the 60
+    C1.4 answers use them. D2.1's top-5 overlap uses `position`.
+  - **Claims** keep their order and their `index` in the agent's list, which is how later steps
+    refer to a claim (run + index). They are never deduplicated: the same quote backing two items
+    counts as two claims (7 cases in C1.4).
+    - `talk`: brackets around a chunk label are stripped, so `[label]` and `label` both become
+      `label`. `talk_raw` keeps what the agent wrote. All 127 non-`ia-aie-` citations in C1.4 are
+      bare labels, all from the Omnigraph arm (its brief shows them with brackets). An empty
+      `talk` is flagged `missing_talk`.
+    - `claim`: when missing or empty, it falls back to the claim's `item` label and is flagged
+      `claim_from_item`. One C1.4 answer (Q01 markdown #2) wrote all 20 claims as item + talk +
+      quote. With no item either, it is `""` and flagged `missing_claim`.
+    - `item`: `""` means the claim supports no list entry. Otherwise it links to the first item
+      whose label matches exactly after trimming (`item_position`). A label that matches no item
+      keeps its text, gets `item_position: None` and is flagged `unknown_item` (1 case in C1.4:
+      "AWS" against "AWS (Amazon Web Services)"). D2.1's clustering treats it as a label of its
+      own.
+    - `quote`: kept as written apart from trimming, with `quote_words`. Outside the contract's
+      8–40 words it is flagged `short_quote` or `long_quote` (14 and 3 in C1.4) but is still
+      checked. An empty quote is flagged `missing_quote`; D1.2 treats it as `not_found`.
+  - **Checked** on the 60 C1.4 answers: 0 unparseable, nothing dropped, 286 items, 710 claims.
+    Flags: markdown 20 `claim_from_item`, 11 `short_quote`, 3 `long_quote`; omnigraph 1
+    `unknown_item`, 3 `short_quote`, and 127 label citations.
 - **D1.2 — Quote check.** Deliverable: `src/bench/verify.py`.
-  - Resolve `talk` first. It may be a talk id (`ia-aie-…`) or a chunk `[label]`; a label maps to
-    its talk through `PartOfArtifact` plus `CHUNK_TALK_OVERRIDES`. Anything else is `not_found`.
+  - Resolve `talk` first. It may be a talk id (`ia-aie-…`) or a chunk label (D1.1 has stripped
+    any brackets); a label maps to its talk through `PartOfArtifact` plus `CHUNK_TALK_OVERRIDES`.
+    Anything else, including an empty `talk` or `quote`, is `not_found`.
   - Normalizes case, punctuation and whitespace, then looks for the quote in the cited talk's file.
   - Outcomes:
     - `exact`
