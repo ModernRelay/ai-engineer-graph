@@ -84,3 +84,90 @@ def test_the_loader_refuses_a_malformed_question(tmp_path, body, complaint):
 def test_the_loader_refuses_graph_vocabulary(tmp_path, text):
     with pytest.raises(ValueError, match="graph vocabulary"):
         load_questions(write(tmp_path, one(text=text)))
+
+
+# ── check_terms and the corpus check (B1.2) ─────────────────────────────────
+
+
+def with_terms(terms: str, **kw) -> str:
+    return one(**kw) + f"    check_terms: {terms}\n"
+
+
+def test_check_terms_load_as_a_tuple(tmp_path):
+    [q] = load_questions(write(tmp_path, with_terms("[memory, 'voice agent']")))
+
+    assert q.check_terms == ("memory", "voice agent")
+
+
+@pytest.mark.parametrize("terms", ["memory", "[memory, '']", "[]"])
+def test_malformed_check_terms_are_refused(tmp_path, terms):
+    with pytest.raises(ValueError, match="check_terms"):
+        load_questions(write(tmp_path, with_terms(terms)))
+
+
+@pytest.fixture
+def corpus(tmp_path):
+    talks = tmp_path / "talks"
+    talks.mkdir()
+    (talks / "ia-aie-a.md").write_text(
+        "# A (Ann, Acme — AIE)\nWe built persistent Memory for agents.\n"
+    )
+    (talks / "ia-aie-b.md").write_text(
+        "# B (Bo, Beta — AIE)\nOur voice agent handles memory too.\n"
+    )
+    (talks / "ia-aie-c.md").write_text("# C (Cy, Acme — AIE)\nCoding agents need review.\n")
+    return talks
+
+
+def question(shape="talk_set", terms=("memory",), category="aggregate"):
+    from bench.questions import Question
+
+    return Question("Q01", category, shape, "What?", tuple(terms))
+
+
+def test_the_check_counts_talks_per_term_case_insensitively(corpus):
+    from bench.questions import check_questions
+
+    [result] = check_questions([question(terms=("memory", "voice agent"))], corpus)
+
+    assert result["ok"] is True
+    assert result["hits"] == {"memory": 2, "voice agent": 1}
+
+
+def test_a_term_no_talk_mentions_fails_the_question(corpus):
+    from bench.questions import check_questions
+
+    [result] = check_questions([question(terms=("memory", "neuromorphic"))], corpus)
+
+    assert result["ok"] is False
+    assert result["hits"]["neuromorphic"] == 0
+
+
+def test_an_absence_question_passes_only_when_nothing_matches(corpus):
+    from bench.questions import check_questions
+
+    absent = question(shape="absence", category="absence", terms=("fpga", "neuromorphic"))
+    present = question(shape="absence", category="absence", terms=("fpga", "coding agents"))
+
+    assert [r["ok"] for r in check_questions([absent, present], corpus)] == [True, False]
+
+
+def test_a_question_without_check_terms_fails(corpus):
+    from bench.questions import check_questions
+
+    [result] = check_questions([question(terms=())], corpus)
+
+    assert result["ok"] is False
+    assert "no check_terms" in result["detail"]
+
+
+def test_check_questions_command_exits_nonzero_on_a_failing_question(tmp_path, corpus, capsys):
+    from bench.cli import main
+
+    good = write(tmp_path, with_terms("[memory]"))
+    assert main(["check-questions", "--questions", str(good), "--corpus", str(corpus)]) == 0
+
+    bad = tmp_path / "bad.yaml"
+    bad.write_text(with_terms("[neuromorphic]"))
+    assert main(["check-questions", "--questions", str(bad), "--corpus", str(corpus)]) == 1
+    assert "neuromorphic" in capsys.readouterr().out

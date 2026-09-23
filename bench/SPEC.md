@@ -18,6 +18,7 @@
 | 2026-09-23 | A2.4 done: live probe 8/8 on both arms via OpenRouter; Phase A2 guardrails passed; cost now from `model_usage` | Roman Pronskiy |
 | 2026-09-23 | Agents switched to 1M context (`…[1m]`) | Roman Pronskiy |
 | 2026-09-23 | B1.1 done: `questions.yaml` + validating loader | Roman Pronskiy |
+| 2026-09-23 | Q05/Q08 swapped; B1.2 done; Epic B guardrails passed | Roman Pronskiy |
 
 ### Status legend
 
@@ -25,7 +26,7 @@
 
 ### Current focus
 
-**Now on:** Epic B → Phase B1 → step B1.2 — `bench check-questions` (corpus-only answerability check).
+**Now on:** Epic C → Phase C1 → step C1.1 — `bench run`, the resumable runner with metrics capture.
 
 ---
 
@@ -338,7 +339,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | Step | Description | Status | Notes |
 |------|-------------|--------|-------|
 | B1.1 | `questions.yaml` with the 10 questions below | ✅ | Loader + 12 tests; waiting on your approval (B guardrail) |
-| B1.2 | Corpus sanity check per question | 🔲 | |
+| B1.2 | Corpus sanity check per question | ✅ | `bench check-questions`: 10/10 pass on the markdown corpus |
 
 **Steps (detail):**
 
@@ -365,7 +366,9 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
   | Q09 | lookup | prose | In Mike Krieger's talk on how Anthropic builds, how does Anthropic decide what to unship? |
   | Q10 | absence | absence | Which talks discuss running LLM inference on FPGAs or neuromorphic chips? |
 
-- **B1.2 — Sanity check.** Deliverable: `bench check-questions`.
+- **B1.2 — Sanity check.** Deliverable: `bench check-questions` and `questions.py::check_questions`.
+  Each question carries `check_terms` in `questions.yaml`; the agents never see them. A term
+  counts the talks that contain it, case-insensitive.
   - For each non-absence question, it greps the corpus for a few seed terms and confirms at least
     one relevant talk.
   - For Q10, it confirms zero hits for `fpga`, `f p g a`, `field programmable`,
@@ -377,7 +380,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | Guardrail | Criteria (pass/fail) | Status | Actual outcome |
 |-----------|----------------------|--------|----------------|
 | Approved | Roman signs off on the 10 questions | ✅ | Approved by Roman on 2026-09-23 with Q05 and Q08 swapped for pattern-neutral questions (decision #28). |
-| Answerable | Q01–Q09 each have ≥1 relevant talk; Q10 has 0 hits | 🔲 | |
+| Answerable | Q01–Q09 each have ≥1 relevant talk; Q10 has 0 hits | ✅ | Every term hits at least one talk for Q01–Q09 (e.g. Q08: voice agent 6, robot 20, coding agent 110; Q09: `unship` 1, Krieger's talk). Q10's six spellings (fpga, f p g a, field programmable, field-programmable, neuromorphic, spiking neural) hit 0. |
 
 ---
 

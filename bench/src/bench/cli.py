@@ -39,6 +39,12 @@ def main(argv: list[str] | None = None) -> int:
     shim.add_argument("--alias-pack", type=Path, default=REPO_DIR / "omnigraph-config.example.yaml")
     shim.add_argument("--omnigraph", type=Path, help="the real CLI (default: first on PATH)")
 
+    check = commands.add_parser(
+        "check-questions", help="answerability of each question from the markdown corpus alone"
+    )
+    check.add_argument("--questions", type=Path, default=BENCH_DIR / "questions.yaml")
+    check.add_argument("--corpus", type=Path, default=BENCH_DIR / "corpus" / "talks")
+
     probe = commands.add_parser("probe", help="live isolation probe per arm (spends API money)")
     probe.add_argument("--arm", choices=["markdown", "omnigraph", "both"], default="both")
 
@@ -58,6 +64,14 @@ def main(argv: list[str] | None = None) -> int:
         except subprocess.CalledProcessError as e:
             parser.exit(1, f"bench shim: omnigraph login failed: {e.stderr.strip()}\n")
         print(f"reader-only omnigraph config installed in {args.home}")
+    elif args.command == "check-questions":
+        from bench.questions import check_questions, load_questions
+
+        results = check_questions(load_questions(args.questions), args.corpus)
+        for r in results:
+            hits = ", ".join(f"{term!r}: {n}" for term, n in r["hits"].items()) or r["detail"]
+            print(f"{'PASS' if r['ok'] else 'FAIL'}  {r['id']}  {r['shape']:<12} {hits}")
+        return 0 if all(r["ok"] for r in results) else 1
     elif args.command == "probe":
         return _probe(parser, ["markdown", "omnigraph"] if args.arm == "both" else [args.arm])
     return 0
