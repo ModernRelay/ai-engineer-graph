@@ -28,10 +28,13 @@ class QuoteCheck:
 
 
 class Corpus:
-    def __init__(self, texts: dict[str, str], labels: dict[str, str]):
+    def __init__(
+        self, texts: dict[str, str], labels: dict[str, str], titles: dict[str, str] | None = None
+    ):
         # Padded with spaces so an exact match can be required to start and end on a word.
         self.texts = {talk: f" {normalise_text(text)} " for talk, text in texts.items()}
         self.labels = labels
+        self.titles = titles or {}  # the header's title line: title (speakers, company — event)
         # The corpus joins a talk's chunks with a blank line; the judge's context uses them.
         self.chunks = {
             talk: [chunk.strip() for chunk in text.split("\n\n") if chunk.strip()]
@@ -44,12 +47,13 @@ class Corpus:
 
     @classmethod
     def load(cls, talks_dir: Path, labels: dict[str, str]) -> "Corpus":
-        """The corpus transcripts without their headers, so the title can't be quoted."""
-        texts = {
-            path.stem: path.read_text(encoding="utf-8").split("\n\n", 1)[1]
-            for path in sorted(talks_dir.glob("*.md"))
-        }
-        return cls(texts, labels)
+        """The corpus transcripts without their headers, so the title can't be quoted; the
+        title line is kept apart, as context for the judge."""
+        texts, titles = {}, {}
+        for path in sorted(talks_dir.glob("*.md")):
+            header, texts[path.stem] = path.read_text(encoding="utf-8").split("\n\n", 1)
+            titles[path.stem] = header.splitlines()[0].removeprefix("# ").strip()
+        return cls(texts, labels, titles)
 
     def resolve(self, talk: str) -> str | None:
         """A talk id or a chunk label -> the talk id, or None."""

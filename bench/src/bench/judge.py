@@ -30,6 +30,13 @@ SUPPORT_SCHEMA = {
     "additionalProperties": False,
 }
 
+UNCITED_SCHEMA = {
+    "type": "object",
+    "properties": {"uncited": {"type": "array", "items": {"type": "string"}}},
+    "required": ["uncited"],
+    "additionalProperties": False,
+}
+
 # request -> {"output": parsed JSON, "usage": {...}, "model": str, "id": str}
 Ask = Callable[[dict], dict]
 
@@ -44,32 +51,61 @@ class Support:
     reason: str
 
 
-def support_request(claim: str, item: str, quote: str, context: str) -> dict:
-    parts = [f"<claim>{claim}</claim>"]
-    if item:
-        parts.append(f"<list_entry>{item}</list_entry>")
-    parts += [f"<quote>{quote}</quote>", f"<transcript>\n{context}\n</transcript>"]
+def _request(prompt: str, content: str, schema: dict) -> dict:
     return {
         "model": JUDGE_MODEL,
         "max_tokens": MAX_TOKENS,
-        "system": (PROMPTS_DIR / "judge_support.md").read_text(encoding="utf-8"),
-        "messages": [{"role": "user", "content": "\n\n".join(parts)}],
-        "output_config": {
-            "effort": EFFORT,
-            "format": {"type": "json_schema", "schema": SUPPORT_SCHEMA},
-        },
+        "system": (PROMPTS_DIR / prompt).read_text(encoding="utf-8"),
+        "messages": [{"role": "user", "content": content}],
+        "output_config": {"effort": EFFORT, "format": {"type": "json_schema", "schema": schema}},
     }
+
+
+def support_request(title: str, claim: str, item: str, quote: str, context: str) -> dict:
+    parts = [f"<talk>{title}</talk>", f"<claim>{claim}</claim>"]
+    if item:
+        parts.append(f"<list_entry>{item}</list_entry>")
+    parts += [f"<quote>{quote}</quote>", f"<transcript>\n{context}\n</transcript>"]
+    return _request("judge_support.md", "\n\n".join(parts), SUPPORT_SCHEMA)
+
+
+def uncited_request(prose: str, claims: list[tuple[str, str]]) -> dict:
+    """claims: (list entry or "", claim text) for every claim in the answer's contract block."""
+    lines = [f"- [{item}] {claim}" if item else f"- {claim}" for item, claim in claims]
+    listed = "\n".join(lines) or "(none)"
+    content = f"<answer>\n{prose}\n</answer>\n\n<claims>\n{listed}\n</claims>"
+    return _request("judge_uncited.md", content, UNCITED_SCHEMA)
 
 
 def valid_support(output: dict) -> bool:
     return output.get("verdict") in VERDICTS and isinstance(output.get("reason"), str)
 
 
+def valid_uncited(output: dict) -> bool:
+    listed = output.get("uncited")
+    return isinstance(listed, list) and all(isinstance(s, str) for s in listed)
+
+
+def uncited(
+    prose: str, claims: list[tuple[str, str]], *, ask: Ask, cache_dir: Path = CACHE_DIR
+) -> list[str]:
+    """The factual statements in the prose that none of the answer's claims covers."""
+    request = uncited_request(prose, claims)
+    return cached(request, ask, cache_dir, valid_uncited)["output"]["uncited"]
+
+
 def support(
-    claim: str, item: str, quote: str, context: str, *, ask: Ask, cache_dir: Path = CACHE_DIR
+    title: str,
+    claim: str,
+    item: str,
+    quote: str,
+    context: str,
+    *,
+    ask: Ask,
+    cache_dir: Path = CACHE_DIR,
 ) -> Support:
     """Does the quote, read in its transcript context, support the claim?"""
-    request = support_request(claim, item, quote, context)
+    request = support_request(title, claim, item, quote, context)
     output = cached(request, ask, cache_dir, valid_support)["output"]
     return Support(output["verdict"], output["reason"])
 

@@ -52,6 +52,14 @@ def answer_block(text: str) -> dict | None:
     return answer if isinstance(answer, dict) else None
 
 
+def answer_prose(text: str) -> str:
+    """The reply without its contract block (the last fenced json block)."""
+    blocks = list(JSON_BLOCK.finditer(text or ""))
+    if not blocks:
+        return (text or "").strip()
+    return (text[: blocks[-1].start()] + text[blocks[-1].end() :]).strip()
+
+
 def normalise(answer_json: dict | None) -> Answer:
     if answer_json is None:
         return Answer(unparseable=True)

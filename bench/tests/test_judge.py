@@ -6,15 +6,19 @@ from anthropic.types import Usage
 
 from bench.judge import (
     SUPPORT_SCHEMA,
+    UNCITED_SCHEMA,
     JudgeError,
     Support,
     anthropic_ask,
     support,
     support_request,
+    uncited,
+    uncited_request,
 )
 from bench.provider import JUDGE_MODEL
 
 CLAIM = dict(
+    title="Harness Over Model (Ann Lee, Acme — AI Engineer World's Fair)",
     claim="Evals gate every release.",
     item="Evals",
     quote="every eval now runs inside the release pipeline",
@@ -51,11 +55,12 @@ def test_the_request_asks_opus_for_a_schema_bound_verdict_at_high_effort():
     assert "thinking" not in request
 
 
-def test_the_request_carries_the_claim_item_quote_and_transcript():
+def test_the_request_carries_the_title_claim_item_quote_and_transcript():
     content = support_request(**CLAIM)["messages"][0]["content"]
 
     for value in CLAIM.values():
         assert value in content
+    assert content.startswith(f"<talk>{CLAIM['title']}</talk>")
 
 
 def test_the_request_is_blind_to_the_arms():
@@ -164,3 +169,58 @@ def test_anthropic_ask_raises_when_there_is_no_json_text():
         anthropic_ask(StubClient(no_text))(support_request(**CLAIM))
     with pytest.raises(JudgeError, match="not JSON"):
         anthropic_ask(StubClient(response(text="Supported.")))(support_request(**CLAIM))
+
+
+# uncited (D1.4): factual statements in the prose that no claim covers.
+
+PROSE = "Lyft gates launches on offline evals. Etsy found the harness beats the model."
+CLAIMS = [("Evals", "Lyft gates launches on offline evals."), ("", "Etsy says harness > model.")]
+
+
+class FakeUncited(FakeJudge):
+    def __init__(self, output=None):
+        super().__init__(output or {"uncited": ["Etsy found the harness beats the model."]})
+
+
+def test_the_uncited_request_carries_the_prose_and_every_claim():
+    request = uncited_request(PROSE, CLAIMS)
+    content = request["messages"][0]["content"]
+
+    assert request["model"] == JUDGE_MODEL
+    assert request["output_config"] == {
+        "effort": "high",
+        "format": {"type": "json_schema", "schema": UNCITED_SCHEMA},
+    }
+    assert f"<answer>\n{PROSE}\n</answer>" in content
+    assert "- [Evals] Lyft gates launches on offline evals." in content
+    assert "- Etsy says harness > model." in content
+
+
+def test_an_answer_without_claims_says_so():
+    content = uncited_request(PROSE, [])["messages"][0]["content"]
+
+    assert "<claims>\n(none)\n</claims>" in content
+
+
+def test_the_uncited_request_is_blind_to_the_arms():
+    text = json.dumps(uncited_request(PROSE, CLAIMS)).lower()
+
+    for word in ("omnigraph", "markdown", "graph", " arm", "benchmark"):
+        assert word not in text
+
+
+def test_uncited_returns_the_listed_statements_and_caches_them(tmp_path):
+    judge = FakeUncited()
+
+    first = uncited(PROSE, CLAIMS, ask=judge, cache_dir=tmp_path)
+    second = uncited(PROSE, CLAIMS, ask=judge, cache_dir=tmp_path)
+
+    assert first == second == ["Etsy found the harness beats the model."]
+    assert len(judge.requests) == 1
+
+
+def test_an_uncited_output_that_is_not_a_list_of_strings_raises(tmp_path):
+    with pytest.raises(JudgeError):
+        uncited(PROSE, CLAIMS, ask=FakeUncited({"uncited": [1, 2]}), cache_dir=tmp_path)
+
+    assert list(tmp_path.iterdir()) == []

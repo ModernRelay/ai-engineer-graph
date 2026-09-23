@@ -6,8 +6,8 @@ import re
 from dataclasses import asdict
 from pathlib import Path
 
-from bench.judge import cache_path, lookup, support_request
-from bench.parse import normalise
+from bench.judge import cache_path, lookup, support_request, uncited_request
+from bench.parse import answer_prose, normalise
 from bench.verify import Corpus
 
 RUN_DIR = re.compile(r"^Q\d{2}$")
@@ -48,7 +48,8 @@ def _claims(run: dict, corpus: Corpus):
         request = None
         if check.status in JUDGED:
             context = corpus.context(claim.talk, claim.quote)
-            request = support_request(claim.claim, claim.item, claim.quote, context)
+            title = corpus.titles.get(check.talk, "")
+            request = support_request(title, claim.claim, claim.item, claim.quote, context)
         yield claim, check, request
 
 
@@ -60,6 +61,16 @@ def support_requests(runs: list[dict], corpus: Corpus) -> list[tuple[str, dict]]
         for claim, _, request in _claims(run, corpus)
         if request is not None
     ]
+
+
+def _uncited_request(run: dict) -> dict:
+    claims = [(claim.item, claim.claim) for claim in normalise(run.get("answer_json")).claims]
+    return uncited_request(answer_prose(run.get("answer_text", "")), claims)
+
+
+def uncited_requests(runs: list[dict]) -> list[tuple[str, dict]]:
+    """(label, request) for every run: one uncited-statements check per answer."""
+    return [(f"{run['qid']} {run['arm']} #{run['run']}", _uncited_request(run)) for run in runs]
 
 
 def score_runs(runs: list[dict], corpus: Corpus, cache_dir: Path) -> list[dict]:
@@ -91,6 +102,9 @@ def score_runs(runs: list[dict], corpus: Corpus, cache_dir: Path) -> list[dict]:
                 "dropped_claims": answer.dropped_claims,
                 "items": [asdict(item) for item in answer.items],
                 "claims": claims,
+                "uncited": (lookup(_uncited_request(run), cache_dir) or {})
+                .get("output", {})
+                .get("uncited"),
             }
         )
     return scored

@@ -1,4 +1,4 @@
-from bench.parse import answer_block, normalise
+from bench.parse import answer_block, answer_prose, normalise
 
 BLOCK = '```json\n{"items": [{"label": "evals", "rank": 1}], "claims": []}\n```'
 
@@ -21,6 +21,16 @@ def test_a_reply_without_a_block_has_no_answer():
 
 def test_a_block_that_is_not_valid_json_has_no_answer():
     assert answer_block('```json\n{"items": [,]}\n```') is None
+
+
+def test_the_prose_is_the_reply_without_its_contract_block():
+    assert answer_prose(f"Evals came up most.\n\n{BLOCK}\n") == "Evals came up most."
+
+
+def test_a_reply_without_a_block_is_all_prose():
+    assert (
+        answer_prose("  Nothing in the talks covers this.\n") == "Nothing in the talks covers this."
+    )
 
 
 def test_a_block_that_is_not_an_object_has_no_answer():

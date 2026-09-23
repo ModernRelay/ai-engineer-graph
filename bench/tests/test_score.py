@@ -5,7 +5,14 @@ import pytest
 from bench import judge
 from bench.cli import main
 from bench.judge import cached, valid_support
-from bench.score import grounding, load_runs, score_runs, spread, support_requests
+from bench.score import (
+    grounding,
+    load_runs,
+    score_runs,
+    spread,
+    support_requests,
+    uncited_requests,
+)
 from bench.verify import Corpus
 
 TALK = (
@@ -36,13 +43,19 @@ def corpus():
 
 
 class FakeJudge:
+    """Answers support requests with a verdict and uncited requests with one statement."""
+
     def __init__(self):
         self.requests = []
 
     def __call__(self, request):
         self.requests.append(request)
+        schema = request["output_config"]["format"]["schema"]
+        uncited = "uncited" in schema["properties"]
         return {
-            "output": {"verdict": "supported", "reason": "It says so."},
+            "output": {"uncited": ["An uncited fact."]}
+            if uncited
+            else {"verdict": "supported", "reason": "It says so."},
             "usage": {"input_tokens": 1000, "output_tokens": 500},
             "model": "anthropic/claude-opus-5.5",
             "id": f"gen-{len(self.requests)}",
@@ -102,6 +115,7 @@ def test_scores_carry_the_quote_check_the_cached_verdict_and_the_bucket(corpus, 
 
     [scored] = score_runs(runs, corpus, tmp_path)
 
+    assert scored["uncited"] is None  # not asked yet
     judged, elsewhere, unjudged = scored["claims"]
     assert (judged["quote_check"]["status"], judged["support"]["verdict"]) == ("exact", "supported")
     assert judged["grounding"] == "grounded"
@@ -144,6 +158,7 @@ def test_score_dry_run_counts_without_asking(workspace, monkeypatch, capsys):
 
     out = capsys.readouterr().out
     assert "2 runs, 3 claims, 2 to judge: 0 cached, 2 to ask" in out
+    assert "uncited check: 2 runs, 0 cached, 2 to ask" in out
     assert not (tmp_path / "scores.json").exists()
 
 
@@ -166,11 +181,12 @@ def test_score_writes_scores_once_every_claim_is_judged(workspace, monkeypatch):
     assert main(["score", "--limit", "1", *paths]) == 0
     assert main(["score", *paths]) == 0
 
-    assert len(fake.requests) == 2
+    assert len(fake.requests) == 4  # 2 claims + 2 runs' uncited checks
     scores = json.loads((tmp_path / "scores.json").read_text())
     buckets = [c["grounding"] for run in scores["runs"] for c in run["claims"]]
     assert buckets == ["grounded", "hallucinated", "grounded"]
-    assert scores["judge"]["judgments"] == 2
+    assert [run["uncited"] for run in scores["runs"]] == [["An uncited fact."]] * 2
+    assert (scores["judge"]["claims_judged"], scores["judge"]["runs_checked"]) == (2, 2)
 
 
 def test_identical_claims_are_asked_once_and_costed_once(workspace, monkeypatch, capsys):
@@ -184,7 +200,57 @@ def test_identical_claims_are_asked_once_and_costed_once(workspace, monkeypatch,
     assert "4 to judge: 0 cached, 2 to ask" in capsys.readouterr().out
 
     assert main(["score", *paths]) == 0
-    assert len(fake.requests) == 2
+    # 2 distinct claims; 2 distinct uncited checks, since both markdown answers list the same
+    # claim texts with the same (empty) prose
+    assert len(fake.requests) == 2 + 2
     scores = json.loads((tmp_path / "scores.json").read_text())
-    assert scores["judge"]["judgments"] == 4
-    assert scores["judge"]["cost_usd"] == 2 * 0.014  # 1000 in × $4 + 500 out × $20 per Mtok
+    assert scores["judge"]["claims_judged"] == 4
+    assert scores["judge"]["cost_usd"] == 4 * 0.014  # 1000 in × $4 + 500 out × $20 per Mtok
+
+
+def test_the_judge_gets_the_title_of_the_talk_the_citation_resolves_to(workspace):
+    tmp_path, _ = workspace
+    corpus = Corpus.load(tmp_path / "talks", labels={"alpha-talk": "ia-aie-alpha-talk"})
+    runs = [result("Q01", "omnigraph", 1, [claim(REAL, talk="alpha-talk")])]
+
+    [(_, request)] = support_requests(runs, corpus)
+
+    assert request["messages"][0]["content"].startswith("<talk>Alpha</talk>")
+
+
+def test_every_run_gets_one_uncited_check_with_its_prose_and_claims(corpus):
+    runs = [
+        {**result("Q01", "markdown", 1, [claim(REAL)]), "answer_text": "Prose.\n```json\n{}\n```"},
+        {
+            "qid": "Q01",
+            "arm": "omnigraph",
+            "run": 1,
+            "answer_json": None,
+            "answer_text": "Only prose.",
+        },
+    ]
+
+    [(label1, first), (label2, second)] = uncited_requests(runs)
+
+    assert (label1, label2) == ("Q01 markdown #1", "Q01 omnigraph #1")
+    assert "<answer>\nProse.\n</answer>" in first["messages"][0]["content"]
+    assert "- Evals gate releases." in first["messages"][0]["content"]
+    assert "<answer>\nOnly prose.\n</answer>" in second["messages"][0]["content"]
+    assert "(none)" in second["messages"][0]["content"]
+
+
+def test_scores_wait_for_every_uncited_check_too(workspace, monkeypatch, capsys):
+    tmp_path, paths = workspace
+    fake = FakeJudge()
+
+    def support_only(request):
+        if "uncited" in request["output_config"]["format"]["schema"]["properties"]:
+            raise judge.JudgeError("judge stopped with refusal")
+        return fake(request)
+
+    monkeypatch.setattr(judge, "openrouter_ask", lambda env: support_only)
+
+    assert main(["score", *paths]) == 1
+
+    assert "0 claims and 2 runs still unjudged" in capsys.readouterr().out
+    assert not (tmp_path / "scores.json").exists()

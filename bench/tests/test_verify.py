@@ -165,6 +165,9 @@ def test_load_reads_only_the_transcript_not_the_header(tmp_path):
         corpus.check("ia-aie-alpha-talk", "Harness Over Model (Ann Lee, Acme").status == "not_found"
     )
     assert corpus.check("ia-aie-alpha-talk", "it's the harness, not the model").status == "exact"
+    assert corpus.titles == {
+        "ia-aie-alpha-talk": "Harness Over Model (Ann Lee, Acme — AI Engineer World's Fair)"
+    }
 
 
 # Corpus.context (D1.3): the transcript the support judge sees around a quote.

@@ -211,6 +211,7 @@ def _run(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
 
 
 def _score(args: argparse.Namespace) -> int:
+    from collections.abc import Callable
     from concurrent.futures import ThreadPoolExecutor, as_completed
 
     import anthropic
@@ -219,27 +220,37 @@ def _score(args: argparse.Namespace) -> int:
     from bench.corpus import talk_labels
     from bench.parse import normalise
     from bench.provider import JUDGE_MODEL, cost_usd
-    from bench.score import load_runs, score_runs, spread, support_requests
+    from bench.score import load_runs, score_runs, spread, support_requests, uncited_requests
     from bench.verify import Corpus
 
     corpus = Corpus.load(args.corpus, talk_labels(args.seed, CHUNK_TALK_OVERRIDES))
     runs = load_runs(args.runs_dir)
-    todo = support_requests(runs, corpus)
-    unique: dict[Path, tuple[str, dict]] = {}  # identical requests share one judgment
-    for label, request in todo:
-        unique.setdefault(judge.cache_path(request, args.cache), (label, request))
-    records = [judge.lookup(request, args.cache) for _, request in unique.values()]
-    uncached = [item for item, rec in zip(unique.values(), records, strict=True) if rec is None]
+    support_todo, uncited_todo = support_requests(runs, corpus), uncited_requests(runs)
+    # Identical requests share one judgment: one entry per cache file.
+    requests: dict[Path, tuple[str, dict, Callable[[dict], bool]]] = {}
+    for todo, valid in ((support_todo, judge.valid_support), (uncited_todo, judge.valid_uncited)):
+        for label, request in todo:
+            requests.setdefault(judge.cache_path(request, args.cache), (label, request, valid))
+    records = {
+        path: judge.lookup(request, args.cache) for path, (_, request, _) in requests.items()
+    }
+    uncached = [item for path, item in requests.items() if records[path] is None]
+
+    def counts(todo: list[tuple[str, dict]]) -> str:
+        paths = {judge.cache_path(request, args.cache) for _, request in todo}
+        missing = sum(records[path] is None for path in paths)
+        return f"{len(paths) - missing} cached, {missing} to ask"
+
     claims = sum(len(normalise(run.get("answer_json")).claims) for run in runs)
     print(
-        f"{len(runs)} runs, {claims} claims, {len(todo)} to judge: "
-        f"{len(unique) - len(uncached)} cached, {len(uncached)} to ask"
+        f"{len(runs)} runs, {claims} claims, {len(support_todo)} to judge: {counts(support_todo)}"
     )
-    costs = [cost_usd(JUDGE_MODEL, record["usage"]) for record in records if record]
+    print(f"uncited check: {len(uncited_todo)} runs, {counts(uncited_todo)}")
+    costs = [cost_usd(JUDGE_MODEL, record["usage"]) for record in records.values() if record]
     if costs and uncached:
         mean = sum(costs) / len(costs)
         rest = mean * len(uncached)
-        print(f"judged so far ${sum(costs):.2f}, ${mean:.4f} a claim: the rest ≈ ${rest:.2f}")
+        print(f"judged so far ${sum(costs):.2f}, ${mean:.4f} a request: the rest ≈ ${rest:.2f}")
     if args.dry_run:
         return 0
 
@@ -249,8 +260,8 @@ def _score(args: argparse.Namespace) -> int:
         ask = judge.openrouter_ask(BENCH_DIR / ".env")
         with ThreadPoolExecutor(args.concurrency) as pool:
             futures = {
-                pool.submit(judge.cached, request, ask, args.cache, judge.valid_support): label
-                for label, request in batch
+                pool.submit(judge.cached, request, ask, args.cache, valid): label
+                for label, request, valid in batch
             }
             for n, future in enumerate(as_completed(futures), 1):
                 label = futures[future]
@@ -262,39 +273,49 @@ def _score(args: argparse.Namespace) -> int:
                     continue
                 cost = cost_usd(JUDGE_MODEL, record["usage"])
                 spent += cost
+                output = record["output"]
+                result = output.get("verdict") or f"uncited {len(output['uncited'])}"
                 print(
-                    f"  [{n}/{len(batch)}] {label}  {record['output']['verdict']:<11} ${cost:.4f}"
+                    f"  [{n}/{len(batch)}] {label}  {result:<11} ${cost:.4f}"
                     f"  out={record['usage'].get('output_tokens')}",
                     flush=True,
                 )
         done = len(batch) - errors
         print(
             f"asked {len(batch)}: {errors} errors, ${spent:.2f}"
-            + (f", ${spent / done:.4f} a claim" if done else "")
+            + (f", ${spent / done:.4f} a request" if done else "")
         )
 
     scored = score_runs(runs, corpus, args.cache)
-    left = sum(claim["grounding"] is None for run in scored for claim in run["claims"])
-    if left:
-        print(f"{left} claims still unjudged; {args.out} not written")
+    left_claims = sum(claim["grounding"] is None for run in scored for claim in run["claims"])
+    left_runs = sum(run["uncited"] is None for run in scored)
+    if left_claims or left_runs:
+        print(f"{left_claims} claims and {left_runs} runs still unjudged; {args.out} not written")
         return 1 if errors else 0
     total = sum(
         cost_usd(JUDGE_MODEL, judge.lookup(request, args.cache)["usage"])
-        for _, request in unique.values()
+        for _, request, _ in requests.values()
     )
     args.out.parent.mkdir(parents=True, exist_ok=True)
     scores = {
-        "judge": {"model": JUDGE_MODEL, "judgments": len(todo), "cost_usd": round(total, 4)},
+        "judge": {
+            "model": JUDGE_MODEL,
+            "claims_judged": len(support_todo),
+            "runs_checked": len(uncited_todo),
+            "requests": len(requests),
+            "cost_usd": round(total, 4),
+        },
         "runs": scored,
     }
     args.out.write_text(json.dumps(scores, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     for arm in sorted({run["arm"] for run in scored}):
-        buckets = Counter(
-            c["grounding"] for run in scored if run["arm"] == arm for c in run["claims"]
-        )
+        arm_runs = [run for run in scored if run["arm"] == arm]
+        buckets = Counter(c["grounding"] for run in arm_runs for c in run["claims"])
+        uncited = sum(len(run["uncited"]) for run in arm_runs)
         print(
             f"{arm}: "
             + ", ".join(f"{b} {buckets[b]}" for b in ("grounded", "partial", "hallucinated"))
+            + f"; uncited {uncited} in {len(arm_runs)} answers"
         )
     print(f"wrote {args.out}")
     return 1 if errors else 0
