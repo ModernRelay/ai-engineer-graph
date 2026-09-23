@@ -37,6 +37,7 @@
 | 2026-09-24 | D1.5 done: scorer calibration 10/10 (`bench calibrate`, recorded fixture); Phase D1 guardrails passed | Roman Pronskiy |
 | 2026-09-24 | D2.1 built and run (clusters $0.08); finding: recall is the same for every run on fixed-length lists; reporting question opened | Roman Pronskiy |
 | 2026-09-24 | D2.1 done: recall for the open questions, cross-arm agreement for fixed-length lists (#39, `count` in questions.yaml); Q01 and Q03 answers barely overlap between the arms | Roman Pronskiy |
+| 2026-09-24 | D2.3 consistency and D2.4 absence done (no judge); Q10 correct in all 6 runs | Roman Pronskiy |
 
 ### Status legend
 
@@ -44,7 +45,7 @@
 
 ### Current focus
 
-**Now on:** Epic D → Phase D2. D2.1 is done. D2.3 (consistency) and D2.4 (absence, Q10) need no judge and can go next. D2.2 (pairwise) waits on the blindness question.
+**Now on:** Epic D → Phase D2 → step D2.2, the blind pairwise judge. D2.1, D2.3 and D2.4 are done. D2.2 waits on the blindness question (open questions), then code with stubs, then a paid pass (30 pairings × 2 orders = 60 requests).
 
 ---
 
@@ -814,8 +815,8 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 |------|-------------|--------|-------|
 | D2.1 | Pooled recall for list questions | ✅ | Cluster judge (6 requests, $0.08). Recall on the open questions: Q04 md 36 / og 33%, Q06 49 / 46%, Q07 39 / 53%. Fixed-length lists report cross-arm agreement (#39): Q01 10%, Q02 67%, Q03 0%, Q05 80%. 26 test cases, 11 mutations caught |
 | D2.2 | Blind pairwise quality judge | 🔲 | |
-| D2.3 | Run-to-run consistency | 🔲 | |
-| D2.4 | Absence scoring (Q10) | 🔲 | |
+| D2.3 | Run-to-run consistency | ✅ | Mean Jaccard of each arm's 3 runs per list question (`recall[qid].consistency`); no judge. og steadier where the graph holds the answer (Q01 .88, Q03 1.0, Q05 1.0), md steadier on the open searches (Q06 .65 vs .36, Q07 .78 vs .45) |
+| D2.4 | Absence scoring (Q10) | ✅ | Q10: md 3/3 and og 3/3 correct (empty contract block every time); `scores.json` `absence` |
 
 **Steps (detail):**
 
@@ -895,8 +896,29 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
     orders; anything else is a tie.
 - **D2.3 — Consistency.** Deliverable: mean Jaccard similarity of each arm's item sets across
   its 3 runs, per list question.
+  - The item sets are D2.1's groups: the top N for a fixed-length list (as in the agreement), and
+    everything found for an open one. For each arm and list question it's the mean Jaccard over the
+    3 pairs of its runs. It goes in `scores.json` as `recall[qid].consistency` (`{markdown, omnigraph}`).
+    No judge involved.
 - **D2.4 — Absence.** Deliverable: Q10 is correct when the answer says nothing relevant was found
   and makes no grounded claim of a talk. Any claim that a talk covers it is a hallucination.
+  - Read from the contract block, which the answer contract says must be empty when nothing
+    answers the question: a run is correct when it has no items and no claims. Each claim it does
+    make counts as a hallucinated claim on this question, whatever D1 said about its quote.
+    Talks named in the prose as tangential, without claims, are D1.4's uncited statements, not
+    absence failures. It goes in `scores.json` as `absence[qid]`, one row per run (`correct`,
+    `items`, `claims`). No judge involved.
+  - **Consistency (2026-09-24):**
+
+    | | Q01 top 10 | Q02 top 5 | Q03 top 3 | Q04 open | Q05 top 5 | Q06 open | Q07 open |
+    |---|---|---|---|---|---|---|---|
+    | markdown | 0.54 | 0.87 | 0.50 | 0.37 | 0.78 | 0.65 | 0.78 |
+    | omnigraph | 0.88 | 0.56 | 1.00 | 0.28 | 1.00 | 0.36 | 0.45 |
+
+    The omnigraph arm is nearly deterministic where it reads a ready answer out of the graph
+    (patterns for Q01, contradictions for Q03, company counts for Q05) and less stable on open
+    searches. The markdown arm is steadier on those. 4 tests, 4 mutations caught for D2.3 and D2.4.
+  - **Absence (2026-09-24):** all 6 Q10 runs are correct (no items, no claims).
 
 **Exit guardrails — Phase D2 → Epic E**
 

@@ -19674,6 +19674,10 @@
           }
         ],
         "mean": 0.10000000000000002
+      },
+      "consistency": {
+        "markdown": 0.5384615384615384,
+        "omnigraph": 0.8787878787878789
       }
     },
     "Q02": {
@@ -19863,6 +19867,10 @@
           }
         ],
         "mean": 0.6666666666666666
+      },
+      "consistency": {
+        "markdown": 0.8666666666666667,
+        "omnigraph": 0.5555555555555555
       }
     },
     "Q03": {
@@ -20029,6 +20037,10 @@
           }
         ],
         "mean": 0.0
+      },
+      "consistency": {
+        "markdown": 0.5,
+        "omnigraph": 1.0
       }
     },
     "Q04": {
@@ -20347,7 +20359,11 @@
           "recall": 0.34782608695652173,
           "overlap": null
         }
-      ]
+      ],
+      "consistency": {
+        "markdown": 0.36752136752136755,
+        "omnigraph": 0.2833333333333333
+      }
     },
     "Q05": {
       "shape": "ranked_list",
@@ -20518,6 +20534,10 @@
           }
         ],
         "mean": 0.8000000000000002
+      },
+      "consistency": {
+        "markdown": 0.7777777777777777,
+        "omnigraph": 1.0
       }
     },
     "Q06": {
@@ -20718,7 +20738,11 @@
           "recall": 0.5384615384615384,
           "overlap": null
         }
-      ]
+      ],
+      "consistency": {
+        "markdown": 0.6547619047619048,
+        "omnigraph": 0.3606060606060606
+      }
     },
     "Q07": {
       "shape": "ranked_list",
@@ -20918,7 +20942,57 @@
           "recall": 0.4166666666666667,
           "overlap": 0.8
         }
-      ]
+      ],
+      "consistency": {
+        "markdown": 0.7777777777777777,
+        "omnigraph": 0.4515151515151515
+      }
     }
+  },
+  "absence": {
+    "Q10": [
+      {
+        "arm": "markdown",
+        "run": 1,
+        "correct": true,
+        "items": 0,
+        "claims": 0
+      },
+      {
+        "arm": "markdown",
+        "run": 2,
+        "correct": true,
+        "items": 0,
+        "claims": 0
+      },
+      {
+        "arm": "markdown",
+        "run": 3,
+        "correct": true,
+        "items": 0,
+        "claims": 0
+      },
+      {
+        "arm": "omnigraph",
+        "run": 1,
+        "correct": true,
+        "items": 0,
+        "claims": 0
+      },
+      {
+        "arm": "omnigraph",
+        "run": 2,
+        "correct": true,
+        "items": 0,
+        "claims": 0
+      },
+      {
+        "arm": "omnigraph",
+        "run": 3,
+        "correct": true,
+        "items": 0,
+        "claims": 0
+      }
+    ]
   }
 }

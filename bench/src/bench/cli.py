@@ -238,6 +238,7 @@ def _score(args: argparse.Namespace) -> int:
     from bench.provider import JUDGE_MODEL, cost_usd
     from bench.questions import load_questions
     from bench.score import (
+        absence,
         cluster_requests,
         load_runs,
         recall_sections,
@@ -348,6 +349,11 @@ def _score(args: argparse.Namespace) -> int:
         },
         "runs": scored,
         "recall": recall,
+        "absence": {
+            qid: absence([run for run in scored if run["qid"] == qid])
+            for qid, question in sorted(questions.items())
+            if question.shape == "absence" and any(run["qid"] == qid for run in scored)
+        },
     }
     args.out.write_text(json.dumps(scores, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     for arm in sorted({run["arm"] for run in scored}):
@@ -376,6 +382,15 @@ def _score(args: argparse.Namespace) -> int:
             f"{arm} {sum(v) / len(v):.0%}" if v else f"{arm} -" for arm, v in by_arm.items()
         )
         print(f"{qid} recall ({section['shape']}, pool {pool}): {means}")
+    for qid, rows in scores["absence"].items():
+        by_arm = {
+            arm: [r["correct"] for r in rows if r["arm"] == arm]
+            for arm in ("markdown", "omnigraph")
+        }
+        print(
+            f"{qid} absence: "
+            + "  ".join(f"{a} {sum(v)}/{len(v)} correct" for a, v in by_arm.items())
+        )
     print(f"wrote {args.out}")
     return 1 if errors else 0
 

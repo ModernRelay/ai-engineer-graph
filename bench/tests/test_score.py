@@ -7,6 +7,7 @@ from bench.cli import main
 from bench.judge import cached, valid_support
 from bench.questions import Question
 from bench.score import (
+    absence,
     cluster_requests,
     grounding,
     load_runs,
@@ -472,3 +473,55 @@ def test_a_fixed_length_list_reports_how_much_the_arms_agree_on_their_top_n():
 
 def test_an_open_list_has_no_agreement():
     assert "agreement" not in pooled_recall("ranked_list", COMPANIES, GROUPS)
+
+
+# D2.3 consistency and D2.4 absence.
+
+THREE_RUNS = [
+    scored("markdown", 1, ["A", "B"], []),
+    scored("markdown", 2, ["B", "A"], []),
+    scored("markdown", 3, ["A", "C"], []),
+    scored("omnigraph", 1, ["D"], []),
+    scored("omnigraph", 2, ["D"], []),
+    scored("omnigraph", 3, ["D"], []),
+]
+ALONE = {label: label for label in "ABCD"}
+
+
+def test_consistency_is_the_mean_jaccard_over_each_arms_run_pairs():
+    consistency = pooled_recall("company_set", THREE_RUNS, ALONE)["consistency"]
+
+    # md: {A,B}~{A,B} 1, {A,B}~{A,C} 1/3, {A,B}~{A,C} 1/3; og: always {D}
+    assert consistency == {"markdown": pytest.approx(5 / 9), "omnigraph": 1.0}
+
+
+def test_a_fixed_length_lists_consistency_looks_at_the_top_n_only():
+    consistency = pooled_recall("ranked_list", THREE_RUNS, ALONE, count=1)["consistency"]
+
+    assert consistency["markdown"] == pytest.approx(1 / 3)  # top 1: A, B, A
+
+
+def test_an_absence_answer_is_correct_only_with_no_items_and_no_claims():
+    runs = [
+        {"arm": "markdown", "run": 1, "items": [], "claims": []},
+        {"arm": "omnigraph", "run": 1, "items": [], "claims": [{"grounding": "grounded"}]},
+        {"arm": "omnigraph", "run": 2, "items": [{"label": "FPGA talk"}], "claims": []},
+    ]
+
+    assert absence(runs) == [
+        {"arm": "markdown", "run": 1, "correct": True, "items": 0, "claims": 0},
+        {"arm": "omnigraph", "run": 1, "correct": False, "items": 0, "claims": 1},
+        {"arm": "omnigraph", "run": 2, "correct": False, "items": 1, "claims": 0},
+    ]
+
+
+def test_score_writes_the_absence_rows_for_the_absence_question(workspace, monkeypatch):
+    tmp_path, paths = workspace
+    write_run(tmp_path / "runs", result("Q10", "markdown", 1, []))
+    write_run(tmp_path / "runs", result("Q10", "omnigraph", 1, [claim(REAL)]))
+    monkeypatch.setattr(judge, "openrouter_ask", lambda env: FakeJudge())
+
+    assert main(["score", *paths]) == 0
+
+    rows = json.loads((tmp_path / "scores.json").read_text())["absence"]["Q10"]
+    assert [(r["arm"], r["correct"]) for r in rows] == [("markdown", True), ("omnigraph", False)]

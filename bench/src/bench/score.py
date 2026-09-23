@@ -194,14 +194,49 @@ def pooled_recall(
     if count:
         out["count"] = count
         out["agreement"] = _agreement(runs, per_run, count)
+    out["consistency"] = _consistency(runs, per_run, count)
     return out
+
+
+def _top(groups: dict[int, set[str]], count: int | None) -> set[str]:
+    """The groups of a run's first `count` items, or of all of them."""
+    return {n for p, names in groups.items() if count is None or p <= count for n in names}
+
+
+def _consistency(
+    runs: list[dict], per_run: list[dict[int, set[str]]], count: int | None
+) -> dict[str, float | None]:
+    """D2.3: per arm, the mean Jaccard of its runs' group sets over every pair of runs."""
+    sets: dict[str, list[set[str]]] = defaultdict(list)
+    for run, groups in zip(runs, per_run, strict=True):
+        sets[run["arm"]].append(_top(groups, count))
+    out: dict[str, float | None] = {}
+    for arm, found in sorted(sets.items()):
+        pairs = [(a, b) for i, a in enumerate(found) for b in found[i + 1 :]]
+        scores = [len(a & b) / len(a | b) if a | b else 1.0 for a, b in pairs]
+        out[arm] = sum(scores) / len(scores) if scores else None
+    return out
+
+
+def absence(runs: list[dict]) -> list[dict]:
+    """D2.4: an absence answer is correct only with an empty contract block."""
+    return [
+        {
+            "arm": run["arm"],
+            "run": run["run"],
+            "correct": not run["items"] and not run["claims"],
+            "items": len(run["items"]),
+            "claims": len(run["claims"]),
+        }
+        for run in runs
+    ]
 
 
 def _agreement(runs: list[dict], per_run: list[dict[int, set[str]]], count: int) -> dict:
     """Fixed-length lists (#39): for each run number, the share of the N asked for that the
     markdown and omnigraph runs both name in their top N."""
     tops = {
-        (run["arm"], run["run"]): {n for p, names in groups.items() if p <= count for n in names}
+        (run["arm"], run["run"]): _top(groups, count)
         for run, groups in zip(runs, per_run, strict=True)
     }
     pairs = []
