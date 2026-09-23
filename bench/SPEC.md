@@ -33,6 +33,7 @@
 | 2026-09-24 | `bench score` runner; D1.3 pilot 10/10 judged for $0.10; full pass about $7.10 | Roman Pronskiy |
 | 2026-09-24 | D1.3 done: 698 claims judged for $7.00; `results/scores.json`; rescoring from cache is byte-identical; open question on the talk title | Roman Pronskiy |
 | 2026-09-24 | Support judge sees the talk title (#38), all claims re-judged; D1.4 uncited judge written with stubbed tests | Roman Pronskiy |
+| 2026-09-24 | D1.4 done: 60 answers checked for $1.39 (md 6.8, og 5.6 uncited statements per answer, varying a lot by question); Deterministic guardrail passed; D2.2 blindness question opened | Roman Pronskiy |
 
 ### Status legend
 
@@ -40,7 +41,7 @@
 
 ### Current focus
 
-**Now on:** Epic D → Phase D1 → step D1.4 — the uncited-statements judge (`judge.py::uncited`), code with stubbed tests first. Open question first: should the support judge see the talk title (D1.3 blind spot)?
+**Now on:** Epic D → Phase D1 → step D1.5 — scorer calibration on 10 planted claims (the last D1 step; its guardrail needs ≥ 9/10). Then Phase D2, where the pairwise judge's blindness is an open question.
 
 ---
 
@@ -581,7 +582,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | D1.1 | Parse the contract block and claims | ✅ | `parse.normalise` → `Answer` / `Item` / `Claim`; 13 tests, 6 mutations caught; 60 C1.4 answers: 0 unparseable, 286 items, 710 claims |
 | D1.2 | Mechanical quote check against the corpus | ✅ | `verify.Corpus` + `corpus.talk_labels`; `spliced` added (#37); 20 tests, 14 of 15 mutations caught (the 15th can't change a result); C1.4 verbatim: md 99.2%, og 97.2% |
 | D1.3 | Judge: does the quote support the claim? | ✅ | 698 claims judged (695 requests), 0 errors. With the talk title (#38): grounded / partial / hallucinated md 81.9 / 17.4 / 0.8%, og 83.6 / 12.3 / 4.0%. $14.06 over both passes. `results/scores.json` |
-| D1.4 | Judge: uncited factual statements in the prose | 🔄 | Code done with stubbed tests (`judge.uncited`, `parse.answer_prose`, `prompts/judge_uncited.md`, `bench score` asks it per run; 12 tests, 8 mutations caught). The real pass (60 requests, about $1–3) waits for your go |
+| D1.4 | Judge: uncited factual statements in the prose | ✅ | 60 answers checked, 0 errors, $1.39. Uncited statements per answer: md 6.8 (203), og 5.6 (169); per question the arms differ a lot. 12 tests, 8 mutations caught |
 | D1.5 | Scorer calibration on planted claims | 🔲 | |
 
 **Steps (detail):**
@@ -749,6 +750,20 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
     `--limit`, progress and cost), and `scores.json` waits until every claim has a verdict and
     every run has its uncited list. Dry run: 60 requests, about 6k characters at the median and
     9k at most, so about $1–3 depending on output length.
+  - **Pass (2026-09-24):** 60 asked, 0 errors, $1.39 ($0.023 an answer, about 2.3× a support
+    judgment). The dry-run estimate uses one mean for both kinds, so it undershot ($0.61); fix it
+    when D2 adds another kind. Uncited statements: md 203 in 30 answers (6.8 each), og 169 (5.6).
+    As a share of claims plus uncited statements that's 34.5% (md) and 34.3% (og). The match is a
+    coincidence: per question the arms differ a lot (Q01 34 vs 13%, Q03 40 vs 12%, Q05 29 vs 57%)
+    and the differences cancel out. A bootstrap over the 30 answers gives 26–43% for either arm.
+    The share also mixes units: a claim is one quoted statement, an uncited item is a sentence
+    split by the judge. So the report shows the count per answer, by question, and not the share.
+    Samples read as right:
+    specific assertions ("Uber's team-specific AI linters let each team encode its own style
+    guides") with no claim behind them. Outliers: Q01 md #2 has 20, because its claims are only
+    topic labels (`claim_from_item`), so none covers the prose's specifics. Q06 is high in both arms
+    (14–24). Q10 md has 0; Q10 og #1 and #3 have 1 and 3, the "closest tangential" talks they name
+    without claims while still, correctly, answering that nothing covers the topic.
 - **D1.5 — Calibration.** Deliverable: `tests/test_scorer_calibration.py`.
   - Plants 10 claims with known labels: 5 real quotes, 2 real quotes paired with the wrong
     claim, 2 invented quotes, and 1 real quote cited to the wrong talk.
@@ -764,7 +779,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | Guardrail | Criteria (pass/fail) | Status | Actual outcome |
 |-----------|----------------------|--------|----------------|
 | Calibrated | ≥ 9/10 planted claims classified correctly | 🔲 | |
-| Deterministic | Rescoring from cache reproduces identical numbers | 🔄 | D1.3 part verified twice. First pass: a second `bench score` asked nothing and rewrote a byte-identical `scores.json` (sha256 `b658625e…`). With titles: rescoring from the cache reproduces every claim in `scores.json`. Recheck the whole file once D1.4's uncited results are in. |
+| Deterministic | Rescoring from cache reproduces identical numbers | ✅ | With every D1.3 and D1.4 judgment in, a second `bench score` asked nothing and rewrote a byte-identical `scores.json` (sha256 `02f15018…`), as it had after the first support pass (`b658625e…`). |
 
 #### Phase D2 — Correctness without a gold set
 
@@ -960,6 +975,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 - [ ] Follow-up (graph maintainer): re-point Chatterjee's 24 chunks in the production 0.11 graph so it matches the seed (#35), and derive evidence passages for his 5 signals. Then refresh the seed from an export as usual.
 - [ ] Follow-up (graph maintainer): the production 0.11 server still serves the broken `talk_semantic`. `cluster apply` of the fixed `queries/traversals.gq` plus a server restart fixes it (#36). T26 in a later Omnigraph release will catch this shape at lint time.
 - [x] ~~Should the support judge see the talk title (`# Title (Speaker, Company — …)`)?~~ Yes (#38). Both arms know it (the md file header, the og graph), but the judge sees transcript only, so correct attributions can come back `partial` (about 14 md / 3 og in D1.3). Adding it changes every request, so all 695 would be asked again (about $7).
+- [ ] D2.2 blindness: the answers' prose often names its tools. 14 of 30 og answers mention the graph or its searches ("this knowledge graph", "signal search"), and 8 of 30 md answers mention files or grep. A pairwise judge could tell A from B. Options: redact tool mentions before pairwise judging (a documented, symmetric rewrite), or accept it and report it as a limitation.
 
 ---
 

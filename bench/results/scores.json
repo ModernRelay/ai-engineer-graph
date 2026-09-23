@@ -1,8 +1,10 @@
 {
   "judge": {
     "model": "anthropic/claude-opus-5.5",
-    "judgments": 698,
-    "cost_usd": 7.0632
+    "claims_judged": 698,
+    "runs_checked": 60,
+    "requests": 755,
+    "cost_usd": 8.4566
   },
   "runs": [
     {
@@ -536,6 +538,16 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Lyft's eval work used offline simulators, fine-tuned user models, and LLM judges.",
+        "Ryan Dahl's firewall proxy was called \"Claw Patrol.\"",
+        "Aviator's talk was titled \"kill the code review,\" and it and Uber's uReview both tackled AI reviewing AI-written code.",
+        "Ankit Jain said over 30% of changes are merged without any review.",
+        "Aditya Bhargava cited a benchmark where only the harness changed and scores ranged from 52.4% to 76.2%.",
+        "Ali Khial found SWE-Bench Pro prompts average 481 words per instruction.",
+        "Will Brown's post-training stack includes the Verifiers and Prime RL libraries.",
+        "Microsoft's Ace talk said the AI model needs to start talking in about 950 milliseconds."
       ]
     },
     {
@@ -1109,6 +1121,28 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Docker's Tushar Jain said agents have become powerful and will continue being so.",
+        "Figma's Eyal Blum centered his talk on how Figma is adopting agents into its workflow while keeping its code base high quality.",
+        "DataRobot's Elvin Aghammadzada argued that skills might play a huge role in the enterprise AI or enterprise agent world.",
+        "Snyk's talk said an audit of nearly 4,000 skills on Claw Hub found over one in eight had a critical severity issue.",
+        "Mastra's Sam Bhagwat devoted a whole talk to the 'harness era'.",
+        "Docker's Tushar Jain noted you won't just use a single harness from a single provider.",
+        "Lyft's Nick Ung described wanting a rigorous offline evaluation process to ensure sufficient agent performance before launching to live users.",
+        "Surge AI's Nick Heiner argued that the core value is human eval because AI exists to serve humans.",
+        "Shlok Khemani said he spent the past year reverse engineering how ChatGPT, Claude, Gemini, and Poke implement their memory systems.",
+        "Aghammadzada noted the latest agentic systems have memory and can remember things across conversations.",
+        "Figma's Eyal Blum's entire talk was on rolling out coding agents.",
+        "Docker's Jain observed that everyone is focused on coding now but will expand.",
+        "Heiner asked why benchmaxxing happens and why traditional benchmarks are not always accurate reflections of real-world value.",
+        "Lyft's team said they took inspiration from the Taobench paper developed by Sierra AI.",
+        "Randall Degges announced the first all-day security track at the World's Fair.",
+        "Snyk's Ezra Tanzer said it is critical to secure what agents generate, what they use, and what they do.",
+        "Manufact's Pietro Zullo said MCP is important because this is how all software will be used.",
+        "Tanzer called the Model Context Protocol release a really big moment.",
+        "OpenAI's Abhishek Bhardwaj explained a sandbox is an environment for running tool calls and executing code securely on behalf of the model.",
+        "Docker's Jain described a sandbox in which you run the agent and it gets only what it needs."
       ]
     },
     {
@@ -1621,6 +1655,10 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Ido Salomon & Liad Yosef call MCP apps an entirely new way to distribute applications.",
+        "Arize's Jason Lopatecki says the loop moves engineers from responder to reviewer."
       ]
     },
     {
@@ -2150,6 +2188,13 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Uber's context graph has 150 unique node and edge types.",
+        "The Gates Foundation's strategic intelligence platform rolled out to about 4,000 people.",
+        "Cognition's own agent delivered about 150% more headcount-equivalent and about an 82% reduction in delivery timelines internally.",
+        "HubSpot is moving its entire business from a seat-based model to a credits-based model.",
+        "Mythos achieved full control flow hijack on hardened Chrome/V8 targets 73% of the time."
       ]
     },
     {
@@ -2683,6 +2728,10 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Decawork's Aggarwal said the Replit agent misrepresented what happened.",
+        "Kiduna's Levine said Simon Willison came up with the term 'lethal trifecta'."
       ]
     },
     {
@@ -3216,6 +3265,10 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Klein said models are now much better at using interfaces.",
+        "The Local AI Summit panel said enterprises want the ability to switch out models."
       ]
     },
     {
@@ -3558,6 +3611,14 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "Teams building production agents describe synthetic test data that's \"too nice\" compared to how real users behave.",
+        "The OpenAI engineer walked through incidents where an agent's action succeeded but the state around it silently didn't.",
+        "The survey found roughly two-thirds of respondents say hallucination or losing context mid-task frustrates them the most.",
+        "The survey flagged memory/persistent context as an area nobody has figured out yet.",
+        "The context-engineering workshop is still actively experimenting to solve context rot via compaction, summarization, and offloading to memory files.",
+        "The survey noted teams are relying on blunt human-in-the-loop approvals to control agents."
       ]
     },
     {
@@ -3923,6 +3984,13 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Lyft's user simulators trained on real verbatims made their evals harder and more honest.",
+        "Shlok Khemani flags unresolved memory staleness, where facts that are no longer true are still added to the context window.",
+        "Vinoth Govindarajan (OpenAI) argues the failures aren't model failures but harness failures.",
+        "Paola Estefania pushes for scoped, revocable agent identities instead of shared credentials.",
+        "Ishita Daga (Tesla) names ambiguity and staleness, alongside preference, as unsolved structural problems for enterprise agents."
       ]
     },
     {
@@ -4196,6 +4264,14 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "Surge AI's talk walks through price, reward-hacking, and taste failures that make popular benchmarks poor proxies for real-world value.",
+        "Microsoft's talk argues teams should stop chasing bitwise determinism and instead record replayable traces.",
+        "OpenAI's talk cites silent state-loss, race conditions, and unproven 'success' as recurring failure shapes.",
+        "Better Auth's workshop notes agents have no scoped credentials, audit trail, or revocability.",
+        "Deno's 'Security Firewall for Agents' talk notes that ACLs and MCP tool scoping alone are insufficient once an agent can spawn arbitrary subprocesses.",
+        "Multiple talks on this are grouped under an explicit 'continual learning' track."
       ]
     },
     {
@@ -4511,6 +4587,12 @@
           },
           "grounding": "hallucinated"
         }
+      ],
+      "uncited": [
+        "Browserbase's talk argues authentication is \"the next thing to be solved\" for web agents.",
+        "Wandero's talk says you don't know what your agent will do until it is in production.",
+        "Wandero's talk says normal safety nets (unit tests, regexes, simulated conversations) don't catch these post-ship problems.",
+        "Unblocked's talk says restarting sessions is prohibitively expensive."
       ]
     },
     {
@@ -4784,6 +4866,10 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Nobody has solved how much autonomy to grant agents acting on real systems.",
+        "Two-thirds of survey respondents say hallucination or losing context mid-task frustrates them the most."
       ]
     },
     {
@@ -5080,6 +5166,16 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "Talks describe Meta's rogue-agent breach as evidence of agentic security problems.",
+        "Frontier-model exploit-finding demos show agents autonomously exploiting systems.",
+        "Speakers describe skills and MCP servers as a dependency ecosystem worse than software packages.",
+        "Skills and MCP servers are privileged by default.",
+        "Skills and MCP servers are invisible to code scanners.",
+        "Skills and MCP servers can persist in agent memory even after removal.",
+        "Talks show headline '50% success' metrics that overstate real capability.",
+        "Speakers raise authentication/identity for agents (CAPTCHAs, agent-vs-human proof) as a problem."
       ]
     },
     {
@@ -5387,6 +5483,14 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "The loops disagreement is staged as a literal Oxford-style debate.",
+        "Jeff Huntley is the creator of the \"Ralph loop.\"",
+        "Justin Schroeder argues the domain-specific agents are coordinated by a parent agent.",
+        "Rushabh Doshi's factory talk describes 39 agents.",
+        "Dan Bjornn argues fine-tuning locks you into brittle, costly retrain cycles.",
+        "The Local Models panel described a customer that specialized an open model to automate finance within a week or two."
       ]
     },
     {
@@ -5717,6 +5821,17 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "ZS Associates found that splitting reasoning across agents caused context loss and incoherent outputs.",
+        "ZS Associates uses sub-agents only for delegated investigation, never for distributed judgment.",
+        "Navan describes its own architecture as a \"single master\" with sub-skills.",
+        "Schroeder argues monolithic agents loaded with skills and MCP tools break down.",
+        "Schroeder argues the answer is small, portable domain-specific agents coordinated by English-language handoffs.",
+        "Jain argues code review's real value (alignment and knowledge-sharing) can survive while diff-reading is replaced.",
+        "Gupta reports AI-authored PRs are seeing 31% more PRs merged with no review at all.",
+        "Gupta explicitly warns teams not to relax review standards for AI-authored code.",
+        "Kostruba insists architecture and design decisions still require a human and does not see AI taking that over soon."
       ]
     },
     {
@@ -6001,6 +6116,17 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "The Great Loops Debate was staged as an Oxford-style debate, with Huntley and Livingston on one side and Raad and Kostruba on the other.",
+        "Kostruba says agent output is still crap after semantic verification.",
+        "Huntley concedes loops are not a complete silver bullet.",
+        "Huntley predicts a wave of 'how factories fail' talks next year.",
+        "ZS Associates found that distributed reasoning caused context loss between agents.",
+        "Grbic encourages others to give people agency so they can break out of their habits and unlock the speed AI tools can bring.",
+        "Dailey coined the term 'velocity sickness' for what happens when teams get 10x faster.",
+        "Dailey says engineers end up sprinting in all sorts of directions.",
+        "Dailey says that at scale, ceding control to agents means you no longer own the product."
       ]
     },
     {
@@ -6304,6 +6430,9 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Shlok Khemani's memory-systems survey finds there is no single way to do memory across ChatGPT, Claude, and Gemini."
       ]
     },
     {
@@ -6657,7 +6786,8 @@
           },
           "grounding": "partial"
         }
-      ]
+      ],
+      "uncited": []
     },
     {
       "qid": "Q03",
@@ -6941,6 +7071,12 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Anthropic's Bhat and He say a harness must be designed for tomorrow's model capabilities, not today's.",
+        "Cua's professional-grade GUI tasks were built with Snorkel AI.",
+        "Netflix deliberately avoids vector databases for fleet-wide agent memory.",
+        "Shlok Khemani spent a year reverse-engineering the ChatGPT, Claude, Gemini and Poke memory systems."
       ]
     },
     {
@@ -7246,6 +7382,12 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "Aditya Bhargava argues that weaker models benefit more from good harnesses.",
+        "Vinoth Govindarajan says harness failures involve state, ordering, authority and proof, and that a better model helps inside the turn but can't fix cross-turn reliability problems.",
+        "Garry Tan uses his own 400x productivity jump as evidence.",
+        "Rishi Desai's benchmark data shows a cheaper model+harness config beating a pricier one on some axes."
       ]
     },
     {
@@ -7537,6 +7679,10 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Dex Horthy's \"Harness Engineering is not Enough\" argues the opposite, that harness work alone can't fix what's fundamentally a model-training problem.",
+        "Karan Vaidya names the things around the model as infrastructure like centralization, history, context, verification, governance and reversibility."
       ]
     },
     {
@@ -7840,6 +7986,15 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Bhargava cited a \"Harness Bench\" benchmark where the same model scored 52–76% depending only on harness quality.",
+        "Bhargava says a good harness can let a local open-source model match a proprietary frontier one.",
+        "Bhargava spends the talk building up a coding-agent harness (tools, safety, feedback loops, sub-agents, self-optimization) in his \"Agency\" language.",
+        "Govindarajan argues that most production agent failures are harness/state-management failures involving ownership, ordering, authority and receipts.",
+        "Sankar argues intelligence has \"1,000x'd\" while business context \"has barely moved.\"",
+        "Dex Horthy's \"Harness Engineering is not Enough\" argues that codebase-maintainability failures are \"fundamentally a model training issue\" that \"no amount of harness engineering or loops maxing can solve.\"",
+        "The model-routing panel (NVIDIA/Cognition/OpenRouter) says \"there's not going to be a thing as a really great harness that is in absence of a really great model and vice versa.\""
       ]
     },
     {
@@ -8281,6 +8436,14 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Bhargava argues a good harness lets a weak, local, open-source model match a frontier one, which he calls great news.",
+        "Bhargava cites a Harness Bench benchmark where scores swung more than 20 points with only the harness changing.",
+        "Govindarajan's closing line: the agent did not need a better model or a better prompt; the system needed a better harness with complete receipt.",
+        "Allou and Bahidika's two talks are about their voice tutor called Ace.",
+        "Mishra describes guardrails, checkpointing, and human handoff built around the model rather than trusted to it.",
+        "Bhat and He's team builds harnesses designed to be agile enough to keep up with model evolution rather than lock in assumptions."
       ]
     },
     {
@@ -8560,6 +8723,13 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "In Harness Bench, the same model scored between 52.4% and 76.2% depending only on the harness.",
+        "Allou and Bahidika deliberately used a small model (Haiku 4.5) with heavy state-machine scaffolding instead of a frontier model.",
+        "Their rule is to pick the fastest model the latency budget allows.",
+        "Vaidya attributes coding agents' success to the infrastructure around the model: history, context, verification, governance and reversibility.",
+        "Dex Horthy (HumanLayer), in \"Harness Engineering is not Enough: Why Software Factories Fail,\" states that no amount of harness engineering or loops maxing can solve what is fundamentally a model training issue."
       ]
     },
     {
@@ -8834,6 +9004,15 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "Bhargava built a language called Agency to prove the harness matters.",
+        "Bhargava argues this frees engineers from dependence on a handful of frontier-model companies.",
+        "Klein shows a custom harness beating Claude Code on the same model.",
+        "The Microsoft team's harness let them swap in a much smaller model (Haiku) without losing reliability.",
+        "Gupta explicitly separates models and infra: the model proposes, the infra decides.",
+        "Munaf says idempotency, circuit breakers, and tool contracts are what actually keep agents safe.",
+        "Dex Horthy (HumanLayer) argues current codebase-maintainability failures are fundamentally a model training issue that no amount of harness engineering can solve."
       ]
     },
     {
@@ -9667,6 +9846,10 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Anthropic gave a keynote on how it builds products internally.",
+        "A talk reported a median 4.5x productivity improvement (a quote attributed to the AWS talk)."
       ]
     },
     {
@@ -9969,6 +10152,33 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Anthropic gave talks on Claude culture and products (Fable, Tag).",
+        "An Anthropic talk covered giving agents a \"budget, not a token.\"",
+        "An Anthropic talk covered forward-deployed-engineering basics.",
+        "An Anthropic talk covered evolving \"agentic surfaces.\"",
+        "An Anthropic talk covered using LLMs to secure source code.",
+        "Anthropic, jointly with Anterior, gave a talk on enterprise readiness for agents.",
+        "An AWS talk covered reducing agent token waste.",
+        "An AWS talk covered spec-driven development.",
+        "An AWS talk covered building an \"AI-native\" internal dev team.",
+        "An AWS talk covered x402 micropayment apps.",
+        "An AWS talk covered Lean4 formal verification.",
+        "A Microsoft talk covered Foundry's retrieval/optimization stack.",
+        "A Microsoft talk covered FinOps for tracking agent token spend.",
+        "A Microsoft talk covered voice-agent model choices.",
+        "A Microsoft talk covered \"don't let the LLM drive\" guardrail patterns.",
+        "A Microsoft talk covered how the developer role is shifting from writing code to designing systems.",
+        "A Microsoft talk covered reproducing agent failures in production.",
+        "OpenAI's \"Golden Age of AI Engineering\" keynote described Codex's layered architecture (model → harness → app server → app).",
+        "OpenAI gave an agent-sandbox/cloud infrastructure talk (\"From fork() to Fleet\").",
+        "OpenAI gave a full Codex workshop.",
+        "OpenAI gave a talk on why agents fail because of harness design.",
+        "Google DeepMind held a panel on state-of-the-art generative media.",
+        "A Google DeepMind talk covered multimodal collaborative commerce agents.",
+        "A Together AI talk covered an \"Einstein Arena\" for open scientific research with agents.",
+        "Together AI co-presented MiniMax's large-scale model infrastructure."
       ]
     },
     {
@@ -10794,6 +11004,13 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Mike Krieger said Anthropic's internal Claude Tag lands 65% of its product PRs.",
+        "Sachin Malhotra's talk followed an incident in which an agent deleted 200 workloads.",
+        "Cat Wu and Thariq Shihipar held a fireside chat on Claude Code/Claude Tag culture.",
+        "James Zou's Einstein Arena talk cited improving the 11-dimension kissing-number record.",
+        "Philipp Schmid used SkillBench data to argue human-written skills under 500 lines outperform AI-generated ones."
       ]
     },
     {
@@ -11008,6 +11225,21 @@
           "support": null,
           "grounding": "hallucinated"
         }
+      ],
+      "uncited": [
+        "Mike Krieger is a co-founder of Instagram.",
+        "Anthropic also had sessions on securing source code with LLMs, Forward Deployed Engineering, agent budgeting (\"Give the Agent a Budget, Not a Token\"), the evolution of agentic UI/\"surfaces,\" and enterprise-agent readiness.",
+        "AWS's agent payments service is x402-based.",
+        "AWS's other talks covered voice agents that handle interruptions, building AI-native dev teams, reducing agent hallucinations, token-efficiency and spec-driven development, giving robots instructions, and formal verification with Lean4.",
+        "Dominik Kundel walked through the Codex harness's context construction, sandboxing, auto-review, WebSocket speed optimizations and compaction.",
+        "Other OpenAI talks covered agent sandbox cloud infrastructure, harness failure/design, a Codex workshop, and a \"Golden Age of AI Engineering\" panel.",
+        "The Microsoft talk described a voice-tutor agent built as a small state machine.",
+        "Other Microsoft talks covered voice agents not needing frontier models, the changing developer role, knowledge representation in AI, agent cost tracking (\"FinOps for AI Agents\"), and reproducing agent failures in production.",
+        "NVIDIA's talks included panels on \"Local Models: Trust, Control, Optimization,\" \"The State of Model Routing,\" and \"Compression at the Edge.\"",
+        "Benoit Schillings pointed to self-play for code as part of the real frontier.",
+        "DeepMind's other talks covered a generative-media panel, multimodal commerce agents, evals for agent skills, and continual learning.",
+        "Aditya Khandelwal discussed closing the loop on AI-generated \"slop.\"",
+        "Amazon's other talks covered perception agents, reinforcement-to-imitation learning, agent-output rendering/UX, and privacy-preserving personal AI (Bee)."
       ]
     },
     {
@@ -11214,6 +11446,26 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Mike Krieger gave the Anthropic talk \"How Anthropic Builds: Lessons from Labs\" on shipping culture.",
+        "Eugene Yan gave the Anthropic talk \"Using LLMs to Secure Source Code.\"",
+        "Kevin Bai gave the Anthropic talk \"Forward Deployed Engineering 101.\"",
+        "Christopher Lovejoy gave the Anthropic talk \"Why Your Enterprise Tech Stack Isn't Ready for AI Agents.\"",
+        "Cat Wu and Thariq Shihipar gave two Anthropic talks on the Claude Fable/Tag game-culture project.",
+        "Malhotra's talk \"Give the Agent a Budget, Not a Token\" covered agent identity and rate-limit governance.",
+        "AWS gave a payments talk, \"When AI Agents Pay and Sellers Monetize: Building x402 Apps on AWS.\"",
+        "AWS talks covered voice interrupts, an AI-native frontier dev-team playbook, hallucination mitigation, token waste and model routing, spec-driven development, and formal verification with Lean4.",
+        "Sandhya Subramani gave a live robotics demo talk for AWS.",
+        "Microsoft gave \"From Writing Code to Designing Systems\" on the changing developer role.",
+        "Microsoft gave two talks on constraining voice/UX agents with state machines: \"Don't Let the LLM Drive\" and \"Your Voice Agent Doesn't Need a Frontier Model.\"",
+        "Microsoft gave a talk titled \"On AI and Knowledge.\"",
+        "Tisha Chawla and Susheem Koul gave two Microsoft FinOps/reliability talks on token governance and reproducing agent failures.",
+        "OpenAI gave \"From fork() to Fleet\" on agent sandboxing infrastructure.",
+        "OpenAI's keynote \"The Golden Age of AI Engineering\" covered the model/harness/app stack.",
+        "OpenAI gave \"Codex, Behind the Harness,\" \"Setting Yourself Up for Success\" on Codex workflows, and \"Your Agent Didn't Fail. Your Harness Did.\"",
+        "NVIDIA gave talks, mostly panels, titled \"Local Models: Trust, Control, Optimization,\" \"The State of Model Routing,\" \"Compression at the Edge,\" \"Your LLM Stack Is a 2008 Database With Better Marketing,\" and \"State of the Union: Why Local, Why Now.\"",
+        "Amazon gave talks titled \"Agents, codebases, and teams,\" \"Perception Agents,\" \"Agent Output Is Not UX,\" \"From RL to IRL,\" and \"Privacy-Preserving Intelligence.\""
       ]
     },
     {
@@ -11614,6 +11866,16 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "Other Anthropic talks covered forward-deployed engineering, 'agentic surfaces' product design, enterprise-agent readiness, and Anthropic's internal culture/tools (Claude Fable, Claude Tag, Field Guide to Fable).",
+        "Other AWS talks covered voice-agent interrupt handling, hallucination mitigation, spec-driven development, an 'AI-native' dev team retrospective, robotics ('Tell the Robot What You Want'), and formal verification with Lean4.",
+        "Other OpenAI talks covered building an agent sandbox cloud, Codex internals, a Codex workshop, and reverse-engineering AI buyers.",
+        "Chris Noring's talk walked through a CLI-first, guardrail-heavy workflow.",
+        "Other Microsoft talks addressed voice-agent model selection ('Don't Let the LLM Drive,' 'Your Voice Agent Doesn't Need a Frontier Model'), reproducing agent failures in production, and knowledge representation for AI.",
+        "Other NVIDIA-linked sessions covered model routing, compression at the edge, and a 'why local, why now' panel.",
+        "Other DeepMind talks covered multimodal commerce agents and 'software engineering is not about writing code.'",
+        "Other Amazon talks covered reinforcement-to-imitation learning, an agent-output 'rendering layer,' and privacy-preserving intelligence."
       ]
     },
     {
@@ -12060,6 +12322,22 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Uber's uReview routes PRs from GitHub, Fabricator and the agent loop into its review service.",
+        "Uber tracks metrics like comment address rate and developer sentiment to keep tuning uReview.",
+        "Uber shifts static analysis and visual/UI comparison against Figma specs into the inner loop.",
+        "Aviator combines acceptance criteria with an evolving 'AI slop registry' of recurring review comments to build a test plan.",
+        "Aviator's verification system executes the test plan with agent-driven browser actions and screenshots as evidence.",
+        "Qodo's tool posts agent-to-agent comments summarizing fixes already applied.",
+        "Qodo moves toward automatically blocking PRs based on codified semantic rules once enough trust is built from observed PR history.",
+        "Figma encodes useful agent-discovered checks into deterministic tests and lint rules.",
+        "Figma reserves human review for whether something is the right thing to build.",
+        "Corridor gives security teams visibility and guardrails into how coding agents are used rather than blocking agent adoption outright.",
+        "Sonar combines SonarQube with its acquired LLM-driven tool Gitarr across quality, security and maintainability.",
+        "Sonar gates PRs with a pass/fail quality score before merge.",
+        "Anthropic describes its internal review as 'Claude-powered code review, but still human-driven', with humans still in the loop.",
+        "Anthropic handles cosmetic visual changes more with a fix-forward approach."
       ]
     },
     {
@@ -12437,6 +12715,32 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Uber tunes the uReview pipeline using observability like comment addressal rate, sentiment analysis, and agent-trajectory tracing.",
+        "Uber's team-specific AI linters let each team encode its own style guides and anti-patterns.",
+        "Uber's inner loop includes static analysis, backend/frontend integration checks, and a first pass of code review with a smaller/faster model before a draft PR is pushed to CI.",
+        "Aviator co-founder Ankit Jain is building an AI code verification platform.",
+        "Aviator's verification system has an agent browse the live preview app to fulfill the test plan.",
+        "Aviator's human reviewers discuss architecture rather than reading the diff.",
+        "Qodo CEO Itamar Friedman frames the goal as reaching a 'last human code review'.",
+        "Qodo's context engine includes a graph of microservice contracts and past incident root causes.",
+        "Qodo's agents leave PR comments for other reviewing agents about fixes already attempted.",
+        "Figma gives agents Playwright/MCP browser access to explore the app instead of a human.",
+        "Figma encodes useful agent-found checks into deterministic tests, linters, and compiler checks.",
+        "Figma breaks large changes into independently verifiable, reviewable-sized PR chunks as part of an upfront plan.",
+        "Snyk evolved from an MCP server plus rule files telling agents to scan and auto-fix AI-generated code.",
+        "Snyk's hooks run a scan via CLI and log newly introduced issues to a temp file.",
+        "Snyk's hook approach makes the workflow deterministic without adding latency or bloating the context window.",
+        "Snyk audits agent supply-chain components (skills/MCP servers) for malicious payloads.",
+        "Snyk offers a local tool (Snappy) that monitors and can block risky agent actions in real time.",
+        "Corridor CEO Jack Cable argues that within 6–12 months most shipped code will be reviewed by AI rather than humans.",
+        "Corridor advocates systemic fixes like rewriting critical libraries in memory-safe languages rather than one-off patching.",
+        "Eugene Yan described a six-step agentic-harness process Anthropic has helped dozens of organizations adopt.",
+        "Anthropic's process builds a documented threat model and runs in an isolated, reproducible sandbox.",
+        "Anthropic's process runs a discovery agent optimized for recall.",
+        "Anthropic's process triages findings by severity and business context.",
+        "Anthropic's process patches with a fresh discovery agent re-attacking the patched code."
       ]
     },
     {
@@ -12827,6 +13131,23 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Aviator frames review around two separable problems: alignment (capturing human intent and decisions from an agent session) and semantic accuracy (catching recurring bugs).",
+        "Aviator converts captured session decisions into acceptance criteria.",
+        "Aviator generates a test plan that a verification system runs against a live preview, including agent-driven browsing and screenshots as evidence.",
+        "Qodo codifies an organization's tribal knowledge (rules, standards, architecture, microservice contracts, past incidents) into a context engine that humans and reviewing agents can consult.",
+        "In Qodo's flow, a second review pass by an agent checks fixes against the codified rules before approving.",
+        "Uber built uReview because commercial tools didn't support their internal tooling (Fabricator) and they needed team-specific customization at scale.",
+        "uReview uses multiple generators: single-file and multi-file reviewers, deterministic AI linters, and custom team-defined agents tied to a team's knowledge base or past PRs.",
+        "Uber tracks address rate, sentiment and agent trajectories to tune quality versus cost.",
+        "Uber reports about three-quarters of high-severity issues fixed.",
+        "Sonar's ACDC (guide, verify, solve) loop injects guardrails and context before code is written.",
+        "Sonar runs inner-loop verification via a new product, Sonar Vortex.",
+        "Sonar assigns quality, security and maintainability grades.",
+        "Sonar offers a fix agent to remediate flagged issues automatically.",
+        "At Figma, agents review code against encoded architectural standards.",
+        "Figma pairs its approach with detailed up-front plans broken into independently verifiable, reviewable chunks."
       ]
     },
     {
@@ -13152,6 +13473,25 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "In Sonar's inner loop, tools like Cursor call into Sonar Vortex up front for codebase context and constraints.",
+        "Sonar's outer loop includes a fix agent to remediate findings.",
+        "Sonar's automation (auto-fix/auto-merge) is only earned gradually as trust builds.",
+        "Sonar cites customer data of a 92% issue reduction and 44% fewer AI-derived production outages.",
+        "Aviator argues traditional line-by-line review has already stopped scaling.",
+        "Aviator turns the agent session into a test plan and makes evidence like screenshots the new review surface.",
+        "Ironclad invests separately in flaky-test removal and CI speed so review and CI don't become the bottleneck.",
+        "Ironclad tracks value as verified output across three trust buckets: objective checks, human review judgment, and customer perception, rather than raw lines or tokens.",
+        "Maven rewrote its review rules because engineers produce thousands of lines a day and AI review tools only help a little and aren't fully trusted.",
+        "For generative features, Maven runs hundreds of integration tests repeatedly requiring about a 90% pass rate.",
+        "Maven requires multiple models to agree before certain actions like reimbursement amounts, or a human takes over.",
+        "Maven auto-scores every conversation against rubrics, with a dedicated team manually reviewing about a 20% sample at launch.",
+        "Uber built uReview as an in-house multi-agent code review engine because time-to-first-review had tripled to 9 hours.",
+        "Uber's observability included classifying reply sentiment, tracking address rate and profiling agent trajectories.",
+        "Uber teams write review skills themselves from their past PR history.",
+        "About 67% of uReview comments are addressed and only 4% of PRs get negative feedback.",
+        "Uber sees agents owning implementation-level review while engineers move up to architecture and product-level review."
       ]
     },
     {
@@ -13437,6 +13777,24 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "Sonar frames it as a three-stage \"Guide → Verify → Solve\" pipeline.",
+        "SonarQube's computational review also covers security and maintainability.",
+        "Sonar's newly-acquired Gitar does an LLM-driven \"superhuman\" review.",
+        "Sonar's verification runs both in the inner agentic loop (live in tools like Cursor, Claude Code, Codex) and in the outer CI/CD loop.",
+        "A Sonar \"fix agent\" can automatically remediate and even auto-merge once trust is earned.",
+        "Warp's repo is now open source.",
+        "Every incoming Warp PR goes through multiple rounds of agent review, research and triage.",
+        "Warp's human reviewers only see a small, high-signal subset out of thousands of PRs.",
+        "Anthropic's trust-building took six-plus months, proceeding file-area by file-area until \"code review is catching 100% of the issues.\"",
+        "Block's Codex reviewer runs on \"AI-ready\" repos with context/rules files per team.",
+        "Block's engineers stopped getting \"sloppy\" bot PRs to review.",
+        "Ironclad ties AI review to \"trusted throughput,\" judged via objective metrics (test coverage, security checks, canarying), subjective human code/design review, and downstream customer signals (rollbacks, tickets).",
+        "Netflix's canary deployment compares CPU, latency and error rate between old and new code on live traffic.",
+        "Netflix says \"canary gives ground truth.\"",
+        "Wandero's review agent runs focused tests and can request changes or close the PR.",
+        "Wandero's PR and review agents now generate \"10 times more PR[s] than the three of us every day.\""
       ]
     },
     {
@@ -13866,6 +14224,26 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Aviator converts the developer's agent session into acceptance criteria.",
+        "Aviator builds a verification system that spins up a preview and runs the generated test plan end-to-end, including screenshot/browser evidence for UI changes.",
+        "Sonar's multi-layered approach combines computational analysis (data flow, control flow, secrets) with LLM/agentic review of intent and business logic.",
+        "Sonar's products include SonarQube, the acquired 'Gitarr' AI reviewer, and the new 'Sonar Vortex'.",
+        "Sonar's tools run inside the agentic coding loop, flagging issues as code is generated so agents fix them immediately.",
+        "Sonar calls its framework 'guide, verify, solve' (ACDC).",
+        "Anthropic invests heavily in CI/CD verification so Claude can test its own changes in a robust sandboxed environment.",
+        "Anthropic folds incidents back into an eval set so future code-review changes never regress on that failure mode.",
+        "At Block, multi-agent parallelism tripled or quadrupled PR volume, making human review the bottleneck.",
+        "At Block, the AI reviewer was Codex, and another agent automatically committed fixes to the PR.",
+        "Block made repos 'AI-ready' with rules/context files and an enabled AI code reviewer with instructions on what to check.",
+        "Ironclad warns against engineers balling up huge PRs to dodge CI overhead, since that raises human review overhead and reduces review quality.",
+        "Maven Clinic enforces PR-stacking for anything reviewed.",
+        "Maven Clinic uses rigorous multi-run integration testing requiring a consistent ~90% pass rate.",
+        "Maven Clinic does post-launch human spot-checking of a percentage of conversations.",
+        "Cable argues that within 6–12 months the majority of shipped code will be reviewed by AI rather than humans.",
+        "Corridor gives security teams guardrails and assurance mechanisms so they can 'give the blessing' to accelerate.",
+        "On Warp's repo, an agent triages every new issue/PR, does research, and asks clarifying questions."
       ]
     },
     {
@@ -14352,6 +14730,12 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "Langfuse's dedicated talk was given by a Langfuse growth engineer.",
+        "Non-Langfuse speakers wire Langfuse into production systems for cost/latency tracking and for building offline eval flywheels.",
+        "One of Arize's own talks covers on-device SLM evals.",
+        "The Braintrust talk was given by a Braintrust field CTO."
       ]
     },
     {
@@ -14665,6 +15049,11 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Other observability/analytics products that appear (Sentry, PostHog, Grafana, Weights & Biases, Comet) are name-drops unrelated to agent evaluation rather than genuine recommendations.",
+        "Sentry is cited only as an analogy.",
+        "\"Phoenix\" in one talk refers to a Palantir-era database, not the eval tool."
       ]
     },
     {
@@ -14951,6 +15340,16 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "Rachel Lee Nabors is herself now at Arize.",
+        "Rachel Lee Nabors builds her SAGE model evaluation methodology on Phoenix.",
+        "Rachel Lee Nabors says the engineers who work on Phoenix are pretty darn awesome.",
+        "Jason Lopatecki demos Arize's Signal self-improving-agent product.",
+        "Aparna Dhinakaran pitches 'agent as a judge' via Arize's Signal product.",
+        "Rustem Feyzkhanov recommends Arize for recording experiment traces when building simulation benchmarks.",
+        "Datadog's Diane Lin presents a research technique rather than endorsing a named Datadog product.",
+        "The Lyft talk criticized deep eval pre-built metrics as too generic."
       ]
     },
     {
@@ -15301,6 +15700,12 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "The Lyft team moved away from DeepEval after finding its metrics not actionable.",
+        "The Langfuse telemetry used in the RAG chatbot build was free to use.",
+        "Phoenix is open source and free.",
+        "tau-bench was developed by Sierra AI."
       ]
     },
     {
@@ -15692,6 +16097,10 @@
           },
           "grounding": "hallucinated"
         }
+      ],
+      "uncited": [
+        "Lyft explicitly tried DeepEval and then moved away from it because its pre-built metrics were not actionable.",
+        "Lyft says tau-bench was developed by Sierra AI."
       ]
     },
     {
@@ -15942,6 +16351,12 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Most speakers describe custom, in-house eval/observability stacks they built themselves, such as Meta's production-evals talk, Wandero's \"missing layer\" agent, OpenGov's OG Assist, Microsoft's Chronicle and DoorDash's platform.",
+        "Lyft says tau-bench was developed by Sierra AI.",
+        "StarlightSearch describes tau-bench as measuring whether agents have followed a policy well.",
+        "The DeepEval speakers caution that its generic metrics aren't very actionable on their own."
       ]
     },
     {
@@ -16297,6 +16712,12 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Ufonia's team builds massive pre-deployment simulation (Matrix) to catch hazards before any real patient hears the agent.",
+        "The vulnerabilities models introduce are often contextual issues, like authorization bugs, that the model can't know about.",
+        "Jack Cable's concern is adversarial and systemic, with attackers automating whole exploit chains.",
+        "Qodo's fix is building codified organizational context so review, and eventually approval, can be automated with traceable rules rather than blind trust."
       ]
     },
     {
@@ -16694,6 +17115,12 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "The Microsoft team moves all reasoning into a state machine outside the model.",
+        "Snyk's talk frames the concern as agent access risks such as excessive privileges, malicious MCP servers and exfiltration.",
+        "Ankit Jain argues reviewers need new mechanisms such as session intent, acceptance criteria and an \"AI slop registry\" to keep semantic accuracy and team alignment intact.",
+        "Figma's talk raises concerns about burnout and communication overload."
       ]
     },
     {
@@ -16982,6 +17409,12 @@
           },
           "grounding": "partial"
         }
+      ],
+      "uncited": [
+        "The AWS talk notes that at 800ms delay things start to feel off.",
+        "Kill the Code Review proposes shifting review from line-by-line diffs to verifying intent and acceptance criteria.",
+        "The AI Bugpocalypse focuses on attackers automating exploitation.",
+        "Snyk's talk worries about agents being compromised via the supply chain through malicious skills or MCP servers."
       ]
     },
     {
@@ -17381,6 +17814,12 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Clinical voice agents require simulation-based safety gates before any real patient is exposed.",
+        "GPT-4.1 was great at P50 but spiked to 1.7 seconds at P95, and Claude hit over 4 seconds.",
+        "A security researcher warns of a widening 'bug apocalypse' as autonomous coding agents scale attack surface.",
+        "Skills, MCP and plugins are forming a new 'supply chain' risk surface for coding agents."
       ]
     },
     {
@@ -17688,6 +18127,16 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Users hang up around 1.5 seconds of latency.",
+        "Salesforce's re-architected pipeline reaches 755ms, almost 4x slower than human turn-taking.",
+        "The tail (P95) latency of an LLM, not its median, is what actually breaks the voice experience.",
+        "The clinical voice talk flags hallucinated medical answers and missed 'red flag' symptoms.",
+        "The demoed rover repeatedly falls over on stage.",
+        "Edge hardware capability still lags what real-time physical interaction needs.",
+        "Commit volume on GitHub climbed 25% year-over-year while review comments dropped 27% over the same year.",
+        "Replit's agent ignored a code-freeze before deleting a production database."
       ]
     },
     {
@@ -17958,6 +18407,9 @@
           "support": null,
           "grounding": "hallucinated"
         }
+      ],
+      "uncited": [
+        "Another talk notes that multimodal physical data creates an \"explosion\", where 2000 video files could generate millions of objects, which breaks normal data tooling."
       ]
     },
     {
@@ -18087,6 +18539,11 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Mike Krieger describes unshipping as an ongoing, deliberate practice rather than a one-off event.",
+        "At Instagram, a feature might look unimportant individually because it was used by only 4–5% of people.",
+        "Anthropic tries to avoid repeating that bloat problem at scale because it is a \"younger product\" with \"hopefully... less of those things.\""
       ]
     },
     {
@@ -18218,6 +18675,11 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Krieger's usage criterion was features with around four to five percent usage.",
+        "Styles was used by only a small percentage of people.",
+        "Styles was described as too \"prescriptive\" compared to the newer skills approach."
       ]
     },
     {
@@ -18345,6 +18807,9 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "He calls it the classic Microsoft Word problem, where individual features might each have only 4–5% usage but there can be 20 such features."
       ]
     },
     {
@@ -18472,6 +18937,10 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "The core signal they look for is usage that's low and not meaningfully valuable: features used by only a small percentage of people that aren't earning their complexity cost.",
+        "Krieger cites about 20 features, each with 4-5% usage, as the source of bloat."
       ]
     },
     {
@@ -18622,6 +19091,9 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Simplifying or deleting that product complexity lets Claude \"do what it needs to do and do well.\""
       ]
     },
     {
@@ -18772,6 +19244,11 @@
           },
           "grounding": "grounded"
         }
+      ],
+      "uncited": [
+        "Krieger says skills are much better applications of the same underlying idea as styles.",
+        "He argues that deleting complexity simplifies the user's mental model.",
+        "Krieger compares Anthropic to Instagram, saying it hopefully accumulates fewer such features than Instagram did."
       ]
     },
     {
@@ -18783,7 +19260,8 @@
       "dropped_items": 0,
       "dropped_claims": 0,
       "items": [],
-      "claims": []
+      "claims": [],
+      "uncited": []
     },
     {
       "qid": "Q10",
@@ -18794,7 +19272,8 @@
       "dropped_items": 0,
       "dropped_claims": 0,
       "items": [],
-      "claims": []
+      "claims": [],
+      "uncited": []
     },
     {
       "qid": "Q10",
@@ -18805,7 +19284,8 @@
       "dropped_items": 0,
       "dropped_claims": 0,
       "items": [],
-      "claims": []
+      "claims": [],
+      "uncited": []
     },
     {
       "qid": "Q10",
@@ -18816,7 +19296,10 @@
       "dropped_items": 0,
       "dropped_claims": 0,
       "items": [],
-      "claims": []
+      "claims": [],
+      "uncited": [
+        "Daniel Han's kernels talk, the \"Compression at the Edge\" panel, and the AIDA chip-design talk cover GPUs, ASICs (Cerebras, Groq), quantization formats (FP4/NVFP4), and chip-design workflows."
+      ]
     },
     {
       "qid": "Q10",
@@ -18827,7 +19310,8 @@
       "dropped_items": 0,
       "dropped_claims": 0,
       "items": [],
-      "claims": []
+      "claims": [],
+      "uncited": []
     },
     {
       "qid": "Q10",
@@ -18838,7 +19322,12 @@
       "dropped_items": 0,
       "dropped_claims": 0,
       "items": [],
-      "claims": []
+      "claims": [],
+      "uncited": [
+        "Abduallah Mohamed gave a talk on AI-assisted chip design teams, covering custom chip design workflows.",
+        "There were talks about edge/tiny LM compression.",
+        "There were talks about GPU kernel optimization."
+      ]
     }
   ]
 }
