@@ -28,6 +28,7 @@
 | 2026-09-23 | C1.4 stopped at 34/60: `talk_semantic` failed on every real talk (0.11 T26 shape); query fixed (#36), og runs redone, md runs kept | Roman Pronskiy |
 | 2026-09-23 | C1.4 done: 60/60 ok, $30.25 (md $12.99, og $17.26); Phase C1 guardrails passed; `results/run-meta.json`; focus moves to Epic D | Roman Pronskiy |
 | 2026-09-23 | D1.1 normalisation rules pinned down from the C1.4 answers and implemented (`parse.normalise`); D1.2 resolves bare chunk labels | Roman Pronskiy |
+| 2026-09-24 | D1.2 done: `verify.Corpus` quote check with a new `spliced` outcome (#37); C1.4 verbatim md 99.2%, og 97.2%; rapidfuzz added | Roman Pronskiy |
 
 ### Status legend
 
@@ -35,7 +36,7 @@
 
 ### Current focus
 
-**Now on:** Epic D → Phase D1 → step D1.2 — the mechanical quote check (`verify.py`) over the claims `parse.normalise` produces. The 60 C1.4 runs are in `runs/Q*/`.
+**Now on:** Epic D → Phase D1 → step D1.3 — the support judge (`judge.py::support`): code and stubbed tests first; the real Opus 5.5 pass spends money and waits for your go.
 
 ---
 
@@ -574,7 +575,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | Step | Description | Status | Notes |
 |------|-------------|--------|-------|
 | D1.1 | Parse the contract block and claims | ✅ | `parse.normalise` → `Answer` / `Item` / `Claim`; 13 tests, 6 mutations caught; 60 C1.4 answers: 0 unparseable, 286 items, 710 claims |
-| D1.2 | Mechanical quote check against the corpus | 🔲 | |
+| D1.2 | Mechanical quote check against the corpus | ✅ | `verify.Corpus` + `corpus.talk_labels`; `spliced` added (#37); 20 tests, 14 of 15 mutations caught (the 15th can't change a result); C1.4 verbatim: md 99.2%, og 97.2% |
 | D1.3 | Judge: does the quote support the claim? | 🔲 | |
 | D1.4 | Judge: uncited factual statements in the prose | 🔲 | |
 | D1.5 | Scorer calibration on planted claims | 🔲 | |
@@ -617,17 +618,44 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
   - **Checked** on the 60 C1.4 answers: 0 unparseable, nothing dropped, 286 items, 710 claims.
     Flags: markdown 20 `claim_from_item`, 11 `short_quote`, 3 `long_quote`; omnigraph 1
     `unknown_item`, 3 `short_quote`, and 127 label citations.
-- **D1.2 — Quote check.** Deliverable: `src/bench/verify.py`.
+- **D1.2 — Quote check.** Deliverable: `src/bench/verify.py` (`Corpus.load`, `Corpus.check(talk,
+  quote) -> QuoteCheck`), plus `corpus.talk_labels` for the label map.
   - Resolve `talk` first. It may be a talk id (`ia-aie-…`) or a chunk label (D1.1 has stripped
-    any brackets); a label maps to its talk through `PartOfArtifact` plus `CHUNK_TALK_OVERRIDES`.
-    Anything else, including an empty `talk` or `quote`, is `not_found`.
-  - Normalizes case, punctuation and whitespace, then looks for the quote in the cited talk's file.
-  - Outcomes:
-    - `exact`
-    - `fuzzy`: rapidfuzz `partial_ratio ≥ 90`
-    - `wrong_talk`: the quote exists, but in a different talk
+    any brackets); a label maps to its talk through `PartOfArtifact` in `seed/chunks` plus
+    `CHUNK_TALK_OVERRIDES`.
+  - Only the transcript counts: the talk file without its header, so quoting the title matches
+    nothing.
+  - Both sides are normalised the same way: lowercase, apostrophes dropped (`isn’t` = `isnt`),
+    every other non-word character turned into a space, and whitespace collapsed. A quote may run
+    across a chunk boundary.
+  - Outcomes, in order:
+    - `exact`: the normalised quote occurs in the cited talk on word boundaries
+    - `fuzzy`: rapidfuzz `partial_ratio ≥ 90` against the cited talk. Short quotes get less
+      slack: one wrong word in 12 words scores about 87, in 25 words about 96.
+    - `spliced`: the quote joins passages with an ellipsis (`...` or `…`), and every piece of
+      4+ words is `exact` or `fuzzy` in the cited talk. Shorter pieces are ignored, but at least
+      one piece must qualify. `score` is the lowest piece's. Splices are only checked against the
+      cited talk; one that isn't there goes on to the whole-quote search below (#37).
+    - `wrong_talk`: not in the cited talk, but exact or fuzzy in another one (`found_in`: the
+      first exact match by id, else the best fuzzy one)
     - `not_found`
-  - No LLM involved.
+  - A `talk` that resolves to nothing (empty, an invented id or an unknown label) has no text of
+    its own, so its quote can only be `wrong_talk` or `not_found`, with `talk: None`. Both count as
+    hallucinated, so this only makes the label more precise. An empty quote is `not_found`.
+  - `score` is the best `partial_ratio` in the cited talk (100 for `exact`, 0 when unresolved).
+  - No LLM involved. Checking a quote against all 337 talks takes about 0.02 s.
+  - **Checked** on the 710 C1.4 claims (0.2 s for all of them):
+
+    | | exact | fuzzy | spliced | wrong_talk | not_found | verbatim |
+    |---|---|---|---|---|---|---|
+    | markdown (386) | 342 | 16 | 25 | 0 | 3 | 99.2% |
+    | omnigraph (324) | 258 | 15 | 42 | 1 | 8 | 97.2% |
+
+    Before `spliced`, verbatim was 92.7% and 84.3%. What's left is real. Most misses are
+    paraphrases (best score in the cited talk 52–89). The only `wrong_talk` is a real quote cited
+    to an invented id close to the real one. Two omnigraph claims cite a pattern or signal slug
+    (`pat-agent-supply-chain`, `sig-dependency-pr-70kloc`) and quote its brief: the
+    paraphrased-brief risk in §5, seen twice in 324 claims.
 - **D1.3 — Support judge.** Deliverable: `src/bench/judge.py::support`.
   - Opus 5.5 gets the claim, the quote and the transcript around it (±1 chunk).
   - It returns `supported | partial | unsupported` with a one-line reason, via structured output.
@@ -640,7 +668,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
   - Requires the scorer to get ≥ 9/10 right.
   - This checks the scorer, not the arms. It needs no human review of answers.
 
-  A claim counts as **grounded** when its quote is `exact` or `fuzzy` **and** the judge rates it
+  A claim counts as **grounded** when its quote is `exact`, `fuzzy` or `spliced` **and** the judge rates it
   `supported`. It counts as **hallucinated** when its quote is `not_found` or `wrong_talk`, or
   the judge rates it `unsupported`. `partial` gets its own bucket.
 
@@ -828,6 +856,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 34 | 2026-09-23 | The mis-link is fixed in the benchmark's local graph only. `CHUNK_TALK_OVERRIDES` is the single mapping for both the corpus and the graph (`bench relink-chunks` on the embedded parts, run by `local-graph.sh load`). The tracked seed and production graph are a follow-up for the maintainer. | Fixing production needs production access and a delete path for key-less edges, which has no stored mutation. The benchmark only needs its own graph and corpus to agree, and they now share one mapping. Chatterjee's 5 signals still have no evidence passages (that needs the extraction pipeline), and one Shaukat signal keeps a Chatterjee passage as its evidence. | Roman Pronskiy |
 | 35 | 2026-09-23 | The fix is ported to the tracked seed: `bench relink-chunks ../seed/chunks` re-points exactly 24 `PartOfArtifact` rows in `seed/chunks/part-03.jsonl` (same formatting, only `to` changes). `CHUNK_TALK_OVERRIDES` is emptied; README says chunks cover 337 talks and documents the seed being ahead of the served graph. | You asked to port the fix. This departs from the repo's "regenerate the seed from `omnigraph export`, never hand-edit" rule: the served production graph still has the mis-link, so the seed runs ahead of it until the graph maintainer re-points the 24 edges there. The corpus rebuilds byte-identical (same fingerprint), and the one evidence edge from Shaukat's `sig-cmu-velocity-fade` to Chatterjee #1 is left alone because both passages discuss the same Carnegie Mellon study. | Roman Pronskiy |
 | 36 | 2026-09-23 | `talk_semantic` in `queries/traversals.gq` declares `$c: Chunk` first (was `$a: InformationArtifact { slug: $talk }` first), with a comment on why. The local cluster is re-applied and the server restarted. The C1.4 omnigraph runs made before the fix move to `runs/_og-broken-talk-semantic/` and are all re-run. The 18 markdown runs already finished are kept. | On 0.11.0 a `nearest()` whose target is reached by traversal fails at runtime; later engines reject it at compile time as T26. The query had never worked for a real talk id, in the pilot (29 errors) or in the first C1.4 attempt (52 errors in 11/16 runs), and the brief (#31) points agents at it. This fixes a broken tool; it adds no capability. Same results, same description, same brief text. The markdown arm doesn't read the graph and its prompt didn't change, so its runs stay valid. Full detail in the C1.4 incident note. | Roman Pronskiy |
+| 37 | 2026-09-24 | D1.2 adds a `spliced` outcome: a quote that joins real passages of the cited talk with an ellipsis counts like `fuzzy` for grounding. It is reported separately as a contract deviation, and the support judge still checks it. | On the C1.4 answers, most `not_found` quotes were splices whose every piece is in the cited talk: markdown 25 of 28, omnigraph 42 of 50. Scoring them as hallucinations would make that metric mostly measure ellipsis use, and would hit the omnigraph arm harder. The contract asks for exact copies, so splices stay visible as their own status rather than being folded into `exact`. | Roman Pronskiy |
 
 ---
 

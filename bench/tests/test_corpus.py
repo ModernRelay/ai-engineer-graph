@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 from bench.cli import main
-from bench.corpus import build_corpus
+from bench.corpus import build_corpus, talk_labels
 
 
 def artifact(slug, name, link, published, artifact_type="youtube"):
@@ -248,3 +248,19 @@ def test_the_seed_itself_needs_no_relinking():
     assert CHUNK_TALK_OVERRIDES == {}
     assert labels["chatterjee-sonar-guide-verify-solve"] == "ia-aie-chatterjee-guide-verify-solve"
     assert labels["shaukat-sonar-verifiers-are-king"] == "ia-aie-shaukat-verifiers-king"
+
+
+def test_talk_labels_map_each_transcript_label_to_its_talk(seed):
+    assert talk_labels(seed, overrides={}) == {
+        "alpha-talk": "ia-aie-alpha-talk",
+        "beta-talk": "ia-aie-beta-talk",
+    }
+
+
+def test_talk_labels_apply_the_overrides(seed):
+    write_jsonl(seed / "chunks" / "part-03.jsonl", chunk("gamma-talk", 0, "g", "ia-aie-beta-talk"))
+
+    labels = talk_labels(seed, overrides={"gamma-talk": "ia-aie-gamma-talk"})
+
+    assert labels["gamma-talk"] == "ia-aie-gamma-talk"
+    assert labels["beta-talk"] == "ia-aie-beta-talk"

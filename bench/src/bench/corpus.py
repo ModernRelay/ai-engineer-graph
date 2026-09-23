@@ -64,6 +64,21 @@ def build_corpus(seed_dir: Path, out_dir: Path, overrides: dict[str, str]) -> in
     return len(talks)
 
 
+def talk_labels(seed_dir: Path, overrides: dict[str, str]) -> dict[str, str]:
+    """Transcript label -> talk, from the chunks' PartOfArtifact edges plus the overrides.
+
+    Chunk text starts with its transcript's [label], which is how the Omnigraph arm cites a
+    talk; the corpus files drop the label, so the quote check resolves it through this map.
+    """
+    labels = {}
+    for part in sorted((seed_dir / "chunks").glob("part-*.jsonl")):
+        for row in _read_jsonl(part):
+            if row.get("edge") == "PartOfArtifact":
+                prefix = row["from"].rsplit("#", 1)[0]
+                labels[prefix] = overrides.get(prefix, row["to"])
+    return labels
+
+
 def relink_chunk_edges(part: Path, overrides: dict[str, str]) -> int:
     """Re-point PartOfArtifact edges of overridden transcripts in one chunk part file.
 
