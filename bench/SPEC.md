@@ -23,6 +23,7 @@
 | 2026-09-23 | C1.2 done: wall-clock cap, retries, spend limit | Roman Pronskiy |
 | 2026-09-23 | Query docs: `@description` on every read query; brief names the verbatim-text queries; local cluster re-applied (rev 3) | Roman Pronskiy |
 | 2026-09-23 | C1.3 pilot done (20/20 ok, $9.29); saved-output defect fixed; caps final | Roman Pronskiy |
+| 2026-09-23 | Local graph re-linked (`bench relink-chunks`); mis-link guardrail passed for the local graph | Roman Pronskiy |
 
 ### Status legend
 
@@ -30,7 +31,7 @@
 
 ### Current focus
 
-**Now on:** Epic C → Phase C1 → guardrail "Graph mis-link fixed", then C1.4 (the full 60-run benchmark, starting fresh).
+**Now on:** Epic C → Phase C1 → step C1.4 — the full 60-run benchmark, starting fresh (pilot to be archived in `runs/_pilot/`). On hold until you say go.
 
 ---
 
@@ -133,7 +134,8 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
   - `CHUNK_TALK_OVERRIDES` corrects one known mis-link. The graph attaches all 24 chunks of
     Anirban Chatterjee's "Guide, Verify, Solve" (`chatterjee-sonar-guide-verify-solve`) to Tariq
     Shaukat's `ia-aie-shaukat-verifiers-king`. The override sends them to
-    `ia-aie-chatterjee-guide-verify-solve`. Remove the entry once the graph is fixed (C1.4 gate).
+    `ia-aie-chatterjee-guide-verify-solve`. The same mapping re-links the local graph's chunk
+    edges (`bench relink-chunks`, #34); empty it once the production graph and seed are fixed.
   - If any talk ends up with chunks from more than one transcript, the build fails, so a future
     mis-link can't silently merge two talks.
   - Strip the leading `[talk-slug] ` label from each chunk's text. Join chunks with a blank line
@@ -483,7 +485,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | Pilot clean | 20/20 runs `ok` or `capped` with a clear reason; 0 sandbox escapes in the traces | ✅ | 20/20 `ok` (no capped runs, errors or retries). 0 sandbox escapes: replaying the gate against each run's real cwd matched every live result. 35 calls were denied: 22 shell operators and 12 reads of saved tool output (a harness defect, fixed by #32), plus 1 markdown read of saved output. |
 | Contract followed | ≥ 90% of pilot answers carry a parseable JSON block (otherwise fix the prompt, not the scorer) | ✅ | 20/20 answers carry a parseable JSON block. Quick verbatim check: md 112/128 quotes (88%), og 90/109 (83%). Q10 correct on both arms (no claims). |
 | Caps fixed | Final caps logged in §6 before the full run | ✅ | Observed maxima: 124 turns (Q07 og), $1.05 per run, 366 s. Caps kept at 300 turns (2.4×), $10 (9.5×), 30 min (4.9×); decision #33. |
-| Graph mis-link fixed (before C1.4) | Chatterjee's 24 chunks re-linked to `ia-aie-chatterjee-guide-verify-solve` in the graph, the seed re-exported, and `CHUNK_TALK_OVERRIDES` emptied with the corpus build still at 337 files | 🔲 | |
+| Graph mis-link fixed (before C1.4) | The local graph attributes Chatterjee's 24 chunks to `ia-aie-chatterjee-guide-verify-solve` (revised by #34; the tracked seed and production graph are a follow-up) | ✅ | Local graph rebuilt via `local-graph.sh load`, which now runs `bench relink-chunks` on the embedded parts. `talk-chunks` returns 13 for Shaukat and 24 for Chatterjee, each opening with the right speaker. `top-patterns` still returns 18; head `01M37ZANGF3QTZH8WDE3J9ZEN9`. The tracked seed is unchanged. |
 | Full run | 60/60 `result.json` written; no `error` status left unexplained | 🔲 | |
 
 ---
@@ -714,6 +716,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 31 | 2026-09-23 | All 89 stored read queries get an explicit `@description` (49 added in `queries/*.gq`, docs only). The Omnigraph brief lists which queries return verbatim Chunk text. Q01 re-run on the Omnigraph arm. | In the Q01 calibration the graph agent used `signal-evidence` 24 times but also pulled 19 whole transcripts with `talk-chunks` ($0.99, 1.13M cache reads). 42 of 89 catalog entries had no description, `signal-evidence` among them: the queries' `//` comments sit one blank line above and the generator deliberately skips those. This is interface documentation, not a new capability. The first Q01 run is kept in `runs/_before-query-docs/` as a before/after point. A new `pattern-quotes` query (option 3) was deferred as a possible "graph v2" column. | Roman Pronskiy |
 | 32 | 2026-09-23 | Both gates allow Read of the run's own saved tool output (`<claude-home>/…/tool-results/…`, nothing else in claude-home); both briefs carry the same one-line note | The pilot showed the CLI saves oversized output there and the gates blocked it. The og arm hit it 9×, and the md arm 1×. A harness defect, not a tuning of either arm. | Roman Pronskiy |
 | 33 | 2026-09-23 | Final caps: 300 turns, $10 per run, 30 min per run | Pilot maxima were 124 turns, $1.05 and 366 s; every cap has at least 2× headroom, so none of them shaped a result. | Roman Pronskiy |
+| 34 | 2026-09-23 | The mis-link is fixed in the benchmark's local graph only. `CHUNK_TALK_OVERRIDES` is the single mapping for both the corpus and the graph (`bench relink-chunks` on the embedded parts, run by `local-graph.sh load`). The tracked seed and production graph are a follow-up for the maintainer. | Fixing production needs production access and a delete path for key-less edges, which has no stored mutation. The benchmark only needs its own graph and corpus to agree, and they now share one mapping. Chatterjee's 5 signals still have no evidence passages (that needs the extraction pipeline), and one Shaukat signal keeps a Chatterjee passage as its evidence. | Roman Pronskiy |
 
 ---
 
@@ -726,6 +729,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 - [x] ~~Context window: 200k or 1M?~~ 1M for both arms (decision #27). Verified live: `contextWindow: 1000000`.
 - [x] ~~How does the CLI handle very large tool output?~~ It saves it to `<claude-home>/projects/<cwd>/<session>/tool-results/<id>.txt` and tells the agent to Read it (decision #32).
 - [ ] Commit `runs/` traces for the demo, or only `results/`? Currently runs are gitignored.
+- [ ] Follow-up (graph maintainer): re-link Chatterjee's 24 chunks in the production 0.11 graph, derive evidence passages for his 5 signals, re-export the seed, then empty `CHUNK_TALK_OVERRIDES`.
 
 ---
 
