@@ -1,0 +1,17 @@
+{
+  "step": "C1.4",
+  "runs": 60,
+  "runs_per_arm": {
+    "markdown": 30,
+    "omnigraph": 30
+  },
+  "graph_head": "01M37ZANGF3QTZH8WDE3J9ZEN9",
+  "corpus_sha": "63c73703991e966e3123281bcbcd26d4d22e1c11a715be0d4b485d12461fd8b0",
+  "model": "anthropic/claude-sonnet-5[1m]",
+  "cli_version": "2.1.280",
+  "sdk_version": "0.2.158",
+  "started_first": "2026-09-23T22:38:27+0200",
+  "started_last": "2026-09-23T23:39:00+0200",
+  "omnigraph_runs_started_after": "2026-09-23T23:10:33+0200",
+  "note": "18 markdown runs (run 1 of every question, run 2 of Q01-Q06, Q08, Q09) come from the first attempt; every omnigraph run and the other 12 markdown runs are from the resume after the talk_semantic fix (SPEC decision #36)."
+}

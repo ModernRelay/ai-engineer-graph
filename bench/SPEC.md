@@ -25,6 +25,8 @@
 | 2026-09-23 | C1.3 pilot done (20/20 ok, $9.29); saved-output defect fixed; caps final | Roman Pronskiy |
 | 2026-09-23 | Local graph re-linked (`bench relink-chunks`); mis-link guardrail passed for the local graph | Roman Pronskiy |
 | 2026-09-23 | Sonar fix ported to `seed/chunks/part-03.jsonl`; override emptied; README notes the seed is ahead of the served graph | Roman Pronskiy |
+| 2026-09-23 | C1.4 stopped at 34/60: `talk_semantic` failed on every real talk (0.11 T26 shape); query fixed (#36), og runs redone, md runs kept | Roman Pronskiy |
+| 2026-09-23 | C1.4 done: 60/60 ok, $30.25 (md $12.99, og $17.26); Phase C1 guardrails passed; `results/run-meta.json`; focus moves to Epic D | Roman Pronskiy |
 
 ### Status legend
 
@@ -32,7 +34,7 @@
 
 ### Current focus
 
-**Now on:** Epic C → Phase C1 → step C1.4 — the full 60-run benchmark, starting fresh (pilot to be archived in `runs/_pilot/`). On hold until you say go.
+**Now on:** Epic D → Phase D1 → step D1.1 — normalise the claims in each answer (`parse.answer_block` already landed with C1.1). The 60 C1.4 runs are in `runs/Q*/` and ready to score.
 
 ---
 
@@ -404,7 +406,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | C1.1 | `bench run`: resumable runner with metrics capture | ✅ | `run.py`, `trace.py`, `parse.py`; 17 tests with an injected fake agent |
 | C1.2 | Caps, timeouts and failure statuses | ✅ | 30 min wall clock; 2 retries (30 s, 60 s) on exceptions and 429/5xx/529; `--max-spend`; 6 tests, 4 mutations caught |
 | C1.3 | Pilot: 1 run per question per arm (20 runs) | ✅ | 20/20 ok, $9.29; md $4.11 / 21.8 min; og $5.18 / 32.6 min; see outcome below |
-| C1.4 | Full run: 3 runs per question per arm (60 runs) | 🔲 | |
+| C1.4 | Full run: 3 runs per question per arm (60 runs) | ✅ | 60/60 ok, $30.25; md $12.99 / 65.7 min; og $17.26 / 91.6 min. The first attempt was stopped at 34/60 when `talk-semantic` turned out never to have worked (#36); og was redone after the fix |
 
 **Steps (detail):**
 
@@ -477,8 +479,77 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
     the workdir. That cost 9 og reads + 3 `ls` + 1 md read, and probably most of the 22 attempts to
     trim output with `| head`. Fixed by #32. The pilot ran under the defect, so it counts as
     calibration and the full run starts fresh.
+  - **Found later (C1.4):** `talk-semantic` failed on every real talk throughout the pilot
+    (29 errors). The pilot checks counted gate denials, not tool errors. See the C1.4 incident
+    and #36.
 - **C1.4 — Full run.** Deliverable: 60 `result.json` files. Record the graph commit head and the
   corpus hash in `results/run-meta.json`.
+  - **Incident: `talk-semantic` never worked (found and fixed mid-run, #36).** The first launch
+    (`bench run --max-spend 40`, 22:38) was stopped at 34/60: 18 markdown and 16 omnigraph runs,
+    all `ok`, $17.62 recorded, plus 4 runs that were in flight when it was killed (no
+    `result.json`, their spend unrecorded).
+    - *Symptom.* Every `talk-semantic <talk> <q>` call with a real `ia-aie-…` id failed with
+      `search-ordered query produced rows without its 'c._distance' ranking column`. Calls with a
+      wrong id returned 0 rows, which is why a naive count showed some "successes": 24 non-errors
+      vs 52 errors in this run, and 14 vs 29 in the pilot. None of them returned a passage: the
+      non-errors were empty results for a wrong id, `--help` calls or gate denials.
+    - *Root cause.* An Omnigraph 0.11.0 engine limit. A `nearest()` target must be the root scan
+      of its match. `talk_semantic` declared `$a: InformationArtifact { slug: $talk }` first, so
+      the plan scanned the artifact and reached `$c` by traversal. No scan ran the vector search,
+      no `_distance` column existed, and the engine's guard (`exec/query.rs`) refused the rows
+      rather than returning them unranked. Upstream this is rule T26, "search and rank targets
+      must be scan-rooted" (omnigraph `361c2f02`), which turns the shape into a compile error. It
+      sits on the `search-contracts-p0-p1` branch and is not in v0.11.0. That's why `omnigraph
+      lint` passed: 0.11 has no T26 check.
+    - *Why it was missed.* The pilot guardrail counted gate denials, not tool errors, so the
+      pilot's 29 failures went unnoticed. They showed up here as 7 errors in one run
+      (Q06 omnigraph #2).
+    - *Impact.* 52 failed calls in 11 of the 16 omnigraph runs (Q04 18, Q06 12, Q03 10, Q10 5,
+      Q08 3, Q07 2, Q02 1, Q09 1). The brief (#31) names `talk-semantic` as the in-talk source of
+      verbatim text, so agents kept reaching for it and lost those calls and turns. Whole-transcript
+      pulls were about the same with and without the fix (`talk-chunks`: 8.8 vs 8.2 calls per
+      run), so the failure did not visibly push agents to `talk-chunks`. The markdown arm never touches the graph and was not
+      affected. The C1.3 pilot's omnigraph numbers carry the same defect.
+    - *Scope.* All 14 search-ordered stored queries were checked; `talk_semantic` is the only one
+      whose search target is not the first-declared binding.
+    - *Fix.* Declare `$c: Chunk` first (`queries/traversals.gq`). The results are unchanged in
+      meaning. Checked on the local graph, directly and through the reader shim: 5 ranked
+      passages, all from the requested talk, and still 5 from the right talk for a question
+      unrelated to it. So it scopes first and then ranks, rather than taking a global top-k and
+      filtering. The brief's generated catalog is byte-identical (signature and description
+      unchanged), so neither arm's prompt changed. `local-graph.sh setup` re-applied the local
+      cluster (state revision 3, converged) and the server was restarted. The graph head is
+      unchanged at `01M37ZANGF3QTZH8WDE3J9ZEN9`.
+    - *Re-run.* The 16 omnigraph results moved to `runs/_og-broken-talk-semantic/`, and the 18
+      markdown results were kept. The resume (`bench run --max-spend 30`, 23:10) ran 30
+      omnigraph + 12 markdown runs: 42 ok, 0 errors, $22.52.
+    - *After the fix.* In the 30 new omnigraph runs `talk-semantic` returned passages 165 times,
+      with 0 `_distance` errors. All 30 empty results were for ids that don't exist: 26 were
+      bracketed labels (`chatterjee-sonar-…`) passed as-is, and 4 were `ia-aie-` ids the agent built
+      from a label. The other 7 calls were gate denials (`| head`). `talk-chunks` use barely moved: 8.2 calls per run, against 8.8 in the discarded
+      runs.
+    - *Logging note.* `bench run` prints without flushing, so a redirected `runs/full.log` fills
+      only at exit. The first attempt's log is empty because it was killed. Progress was
+      followed through the `result.json` files instead.
+  - **Outcome (2026-09-23):**
+
+    | | markdown | omnigraph |
+    |---|---|---|
+    | runs | 30/30 `ok` | 30/30 `ok` |
+    | cost | $12.99 | $17.26 |
+    | total time | 65.7 min | 91.6 min |
+    | mean / max per run | 131 s / 352 s | 183 s / 419 s |
+    | max cost per run | $1.03 | $1.45 |
+    | turns per run | 2–106 | 8–126 |
+    | parsed answers | 30/30 | 30/30 |
+    | gate denials | 0 | 70 |
+
+    No `capped` or `error` runs and no retries; every cost is complete (`cost_complete`), and the
+    SDK's cost matches ours on both arms. No cap came close: 126 turns (42% of 300), $1.45 (15% of
+    $10), 419 s (23% of 30 min). All 60 runs share graph head `01M37ZANGF3QTZH8WDE3J9ZEN9`, corpus
+    `63c73703…`, CLI 2.1.280 and SDK 0.2.158 (`results/run-meta.json`). C1.4 spent $40.14 as recorded:
+    $30.25 in the kept runs and $9.89 in the 16 discarded omnigraph runs. The 4 runs killed
+    mid-flight add an unrecorded amount on top.
 
 **Exit guardrails — Phase C1 → Epic D**
 
@@ -488,7 +559,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | Contract followed | ≥ 90% of pilot answers carry a parseable JSON block (otherwise fix the prompt, not the scorer) | ✅ | 20/20 answers carry a parseable JSON block. Quick verbatim check: md 112/128 quotes (88%), og 90/109 (83%). Q10 correct on both arms (no claims). |
 | Caps fixed | Final caps logged in §6 before the full run | ✅ | Observed maxima: 124 turns (Q07 og), $1.05 per run, 366 s. Caps kept at 300 turns (2.4×), $10 (9.5×), 30 min (4.9×); decision #33. |
 | Graph mis-link fixed (before C1.4) | The local graph attributes Chatterjee's 24 chunks to `ia-aie-chatterjee-guide-verify-solve` (revised by #34; the tracked seed and production graph are a follow-up) | ✅ | Local graph rebuilt via `local-graph.sh load`, which now runs `bench relink-chunks` on the embedded parts. `talk-chunks` returns 13 for Shaukat and 24 for Chatterjee, each opening with the right speaker. `top-patterns` still returns 18; head `01M37ZANGF3QTZH8WDE3J9ZEN9`. The tracked seed is unchanged. |
-| Full run | 60/60 `result.json` written; no `error` status left unexplained | 🔲 | |
+| Full run | 60/60 `result.json` written; no `error` status left unexplained | ✅ | 60/60 `ok`: no `error` or `capped` runs, no retries, all 30 answers per arm parse. 0 sandbox escapes: in every run the replayed gate's denials match the calls denied live. The 70 og denials are 66 shell operators, 3 non-`omnigraph` commands (2 `grep`, 1 unknown verb) and 1 Read outside the scratch dir; md had none. The og arm was re-run in full after the `talk_semantic` fix (#36), so no counted run used the broken query (0 `_distance` errors across all 60 traces). |
 
 ---
 
@@ -678,6 +749,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | Caption garbles make quotes look wrong | Low | Low | Garbled text is still verbatim; fuzzy matching tolerates punctuation |
 | Graph data defects skew the Omnigraph arm (known: Chatterjee's chunks attached to Shaukat's talk) | Certain (one known) | Med | Fix the known one before C1.4. The corpus build fails on any other talk that mixes two transcripts. Report any others found in the traces. |
 | Sonnet 5 already knows some talks (published Apr–Sep 2026) | Low | Med | Affects both arms equally; the F1.4 no-tools floor measures it |
+| A stored query the brief recommends fails at runtime although it lints (happened: `talk_semantic`, #36) | Occurred | High | Check the traces for tool errors, not only gate denials. Call every query the brief names once with a real id before a paid run. The one found is fixed; the other 13 search queries have the safe shape. |
 
 ---
 
@@ -720,6 +792,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 33 | 2026-09-23 | Final caps: 300 turns, $10 per run, 30 min per run | Pilot maxima were 124 turns, $1.05 and 366 s; every cap has at least 2× headroom, so none of them shaped a result. | Roman Pronskiy |
 | 34 | 2026-09-23 | The mis-link is fixed in the benchmark's local graph only. `CHUNK_TALK_OVERRIDES` is the single mapping for both the corpus and the graph (`bench relink-chunks` on the embedded parts, run by `local-graph.sh load`). The tracked seed and production graph are a follow-up for the maintainer. | Fixing production needs production access and a delete path for key-less edges, which has no stored mutation. The benchmark only needs its own graph and corpus to agree, and they now share one mapping. Chatterjee's 5 signals still have no evidence passages (that needs the extraction pipeline), and one Shaukat signal keeps a Chatterjee passage as its evidence. | Roman Pronskiy |
 | 35 | 2026-09-23 | The fix is ported to the tracked seed: `bench relink-chunks ../seed/chunks` re-points exactly 24 `PartOfArtifact` rows in `seed/chunks/part-03.jsonl` (same formatting, only `to` changes). `CHUNK_TALK_OVERRIDES` is emptied; README says chunks cover 337 talks and documents the seed being ahead of the served graph. | You asked to port the fix. This departs from the repo's "regenerate the seed from `omnigraph export`, never hand-edit" rule: the served production graph still has the mis-link, so the seed runs ahead of it until the graph maintainer re-points the 24 edges there. The corpus rebuilds byte-identical (same fingerprint), and the one evidence edge from Shaukat's `sig-cmu-velocity-fade` to Chatterjee #1 is left alone because both passages discuss the same Carnegie Mellon study. | Roman Pronskiy |
+| 36 | 2026-09-23 | `talk_semantic` in `queries/traversals.gq` declares `$c: Chunk` first (was `$a: InformationArtifact { slug: $talk }` first), with a comment on why. The local cluster is re-applied and the server restarted. The C1.4 omnigraph runs made before the fix move to `runs/_og-broken-talk-semantic/` and are all re-run. The 18 markdown runs already finished are kept. | On 0.11.0 a `nearest()` whose target is reached by traversal fails at runtime; later engines reject it at compile time as T26. The query had never worked for a real talk id, in the pilot (29 errors) or in the first C1.4 attempt (52 errors in 11/16 runs), and the brief (#31) points agents at it. This fixes a broken tool; it adds no capability. Same results, same description, same brief text. The markdown arm doesn't read the graph and its prompt didn't change, so its runs stay valid. Full detail in the C1.4 incident note. | Roman Pronskiy |
 
 ---
 
@@ -733,6 +806,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 - [x] ~~How does the CLI handle very large tool output?~~ It saves it to `<claude-home>/projects/<cwd>/<session>/tool-results/<id>.txt` and tells the agent to Read it (decision #32).
 - [ ] Commit `runs/` traces for the demo, or only `results/`? Currently runs are gitignored.
 - [ ] Follow-up (graph maintainer): re-point Chatterjee's 24 chunks in the production 0.11 graph so it matches the seed (#35), and derive evidence passages for his 5 signals. Then refresh the seed from an export as usual.
+- [ ] Follow-up (graph maintainer): the production 0.11 server still serves the broken `talk_semantic`. `cluster apply` of the fixed `queries/traversals.gq` plus a server restart fixes it (#36). T26 in a later Omnigraph release will catch this shape at lint time.
 
 ---
 
