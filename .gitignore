@@ -27,3 +27,6 @@ bench/.omnigraph-home/
 
 __pycache__/
 .DS_Store
+
+# bench: local file-backed graph (config copy, cluster state, tokens, embedded chunks)
+bench/.graph/
