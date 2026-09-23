@@ -110,9 +110,13 @@ def support(
     return Support(output["verdict"], output["reason"])
 
 
+def request_key(request: dict) -> str:
+    """SHA-256 of the request's canonical JSON: the cache key, and the calibration fixture's."""
+    return hashlib.sha256(json.dumps(request, sort_keys=True).encode("utf-8")).hexdigest()
+
+
 def cache_path(request: dict, cache_dir: Path) -> Path:
-    key = hashlib.sha256(json.dumps(request, sort_keys=True).encode("utf-8")).hexdigest()
-    return cache_dir / f"{key}.json"
+    return cache_dir / f"{request_key(request)}.json"
 
 
 def lookup(request: dict, cache_dir: Path) -> dict | None:

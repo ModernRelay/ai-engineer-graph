@@ -80,6 +80,19 @@ def main(argv: list[str] | None = None) -> int:
     score.add_argument("--cache", type=Path, default=BENCH_DIR / "runs" / "_judge")
     score.add_argument("--out", type=Path, default=BENCH_DIR / "results" / "scores.json")
 
+    calibrate = commands.add_parser(
+        "calibrate",
+        help="D1.5: ask the real judge about the planted claims, save its verdicts (about $0.07)",
+    )
+    calibrate.add_argument("--corpus", type=Path, default=BENCH_DIR / "corpus" / "talks")
+    calibrate.add_argument("--seed", type=Path, default=REPO_DIR / "seed")
+    calibrate.add_argument("--cache", type=Path, default=BENCH_DIR / "runs" / "_judge")
+    calibrate.add_argument(
+        "--fixture",
+        type=Path,
+        default=BENCH_DIR / "tests" / "fixtures" / "calibration_judgments.json",
+    )
+
     args = parser.parse_args(argv)
     if args.command == "corpus":
         written = build_corpus(args.seed, args.out, CHUNK_TALK_OVERRIDES)
@@ -116,6 +129,8 @@ def main(argv: list[str] | None = None) -> int:
         return _run(parser, args)
     elif args.command == "score":
         return _score(args)
+    elif args.command == "calibrate":
+        return _calibrate(args)
     return 0
 
 
@@ -319,6 +334,41 @@ def _score(args: argparse.Namespace) -> int:
         )
     print(f"wrote {args.out}")
     return 1 if errors else 0
+
+
+def _calibrate(args: argparse.Namespace) -> int:
+    from bench import judge
+    from bench.calibration import PLANTED, planted_run
+    from bench.corpus import talk_labels
+    from bench.score import score_runs, support_requests
+    from bench.verify import Corpus
+
+    corpus = Corpus.load(args.corpus, talk_labels(args.seed, CHUNK_TALK_OVERRIDES))
+    run = planted_run()
+    ask = None
+    recorded = {}
+    for _, request in support_requests([run], corpus):
+        if judge.lookup(request, args.cache) is None and ask is None:
+            ask = judge.openrouter_ask(BENCH_DIR / ".env")
+        record = judge.cached(request, ask, args.cache, judge.valid_support)
+        recorded[judge.request_key(request)] = record["output"]
+    args.fixture.parent.mkdir(parents=True, exist_ok=True)
+    args.fixture.write_text(
+        json.dumps(recorded, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+
+    [scored] = score_runs([run], corpus, args.cache)
+    right = 0
+    for plant, claim in zip(PLANTED, scored["claims"], strict=True):
+        ok = claim["grounding"] == plant.expected
+        right += ok
+        verdict = (claim["support"] or {}).get("verdict", "-")
+        print(
+            f"  {'ok  ' if ok else 'MISS'} {plant.kind:<11} {claim['quote_check']['status']:<10} "
+            f"{verdict:<11} -> {claim['grounding']}  ({plant.claim[:60]})"
+        )
+    print(f"{right}/{len(PLANTED)} right; verdicts saved to {args.fixture}")
+    return 0 if right >= 9 else 1
 
 
 def _probe(parser: argparse.ArgumentParser, arms: list[str]) -> int:

@@ -34,6 +34,7 @@
 | 2026-09-24 | D1.3 done: 698 claims judged for $7.00; `results/scores.json`; rescoring from cache is byte-identical; open question on the talk title | Roman Pronskiy |
 | 2026-09-24 | Support judge sees the talk title (#38), all claims re-judged; D1.4 uncited judge written with stubbed tests | Roman Pronskiy |
 | 2026-09-24 | D1.4 done: 60 answers checked for $1.39 (md 6.8, og 5.6 uncited statements per answer, varying a lot by question); Deterministic guardrail passed; D2.2 blindness question opened | Roman Pronskiy |
+| 2026-09-24 | D1.5 done: scorer calibration 10/10 (`bench calibrate`, recorded fixture); Phase D1 guardrails passed | Roman Pronskiy |
 
 ### Status legend
 
@@ -41,7 +42,7 @@
 
 ### Current focus
 
-**Now on:** Epic D → Phase D1 → step D1.5 — scorer calibration on 10 planted claims (the last D1 step; its guardrail needs ≥ 9/10). Then Phase D2, where the pairwise judge's blindness is an open question.
+**Now on:** Phase D1 → D2 boundary. Both D1 guardrails pass (Calibrated 10/10, Deterministic); waiting for your confirmation before Phase D2 (D2.1 pooled recall). The D2.2 blindness question needs an answer before D2.2.
 
 ---
 
@@ -535,6 +536,10 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
       bracketed labels (`chatterjee-sonar-…`) passed as-is, and 4 were `ia-aie-` ids the agent built
       from a label. The other 7 calls were gate denials (`| head`). `talk-chunks` use barely moved: 8.2 calls per run, against 8.8 in the discarded
       runs.
+    - *Found later (D1.5):* `corpus/talks/` held an empty `.claude/.cc-writes` directory, made by
+      a Claude Code session when the corpus was built. It was copied into every markdown workdir.
+      It's empty and no markdown trace mentions it, so no run was affected. It was removed on
+      2026-09-24.
     - *Logging note.* `bench run` prints without flushing, so a redirected `runs/full.log` fills
       only at exit. The first attempt's log is empty because it was killed. Progress was
       followed through the `result.json` files instead.
@@ -583,7 +588,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | D1.2 | Mechanical quote check against the corpus | ✅ | `verify.Corpus` + `corpus.talk_labels`; `spliced` added (#37); 20 tests, 14 of 15 mutations caught (the 15th can't change a result); C1.4 verbatim: md 99.2%, og 97.2% |
 | D1.3 | Judge: does the quote support the claim? | ✅ | 698 claims judged (695 requests), 0 errors. With the talk title (#38): grounded / partial / hallucinated md 81.9 / 17.4 / 0.8%, og 83.6 / 12.3 / 4.0%. $14.06 over both passes. `results/scores.json` |
 | D1.4 | Judge: uncited factual statements in the prose | ✅ | 60 answers checked, 0 errors, $1.39. Uncited statements per answer: md 6.8 (203), og 5.6 (169); per question the arms differ a lot. 12 tests, 8 mutations caught |
-| D1.5 | Scorer calibration on planted claims | 🔲 | |
+| D1.5 | Scorer calibration on planted claims | ✅ | 10/10 right with the real judge (7 calls, $0.06); verdicts recorded in `tests/fixtures/calibration_judgments.json` and replayed offline; 5 tests, 2 scorer mutations caught |
 
 **Steps (detail):**
 
@@ -769,6 +774,26 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
     claim, 2 invented quotes, and 1 real quote cited to the wrong talk.
   - Requires the scorer to get ≥ 9/10 right.
   - This checks the scorer, not the arms. It needs no human review of answers.
+  - **The plants.** `src/bench/calibration.py` holds the 10 claims, taken straight from five
+    transcripts (Klein, Dahl, Ung, Govindarajan, Krieger) rather than from any agent's answer.
+    Expected buckets: the 5 real quotes are `grounded`. The other 5 are `hallucinated`: the 2
+    wrong claims contradict their real quotes (`unsupported`; a `partial` counts as a miss), the
+    2 invented quotes are `not_found`, and the misattributed quote is `wrong_talk`. One plant
+    cites by chunk label and one supports a list entry, so both paths are covered.
+  - **Real judge, no API in tests.** `bench calibrate` asks the real judge about the 7 plants
+    whose quotes are found (about $0.07, cached in `runs/_judge/`) and saves each verdict in
+    `tests/fixtures/calibration_judgments.json`, keyed by the request's hash. The test rebuilds the
+    corpus from `../seed` (0.1 s, identical to `corpus/talks`), replays those verdicts through the
+    real scoring path (`score_runs`) and needs ≥ 9/10. A request that isn't in the fixture fails
+    the test with "run `bench calibrate`", so any change to a prompt or request shape forces a
+    recalibration.
+  - **Result (2026-09-24):** 10/10. The 5 real claims are `supported`, so `grounded`. Both
+    contradicting claims are `unsupported`, not just `partial`, for example "Klein says the
+    models were the bottleneck only until recently … largely been solved". The invented quotes
+    are `not_found` (best match about 50%) and the misattributed one is `wrong_talk`. Cost: $0.063.
+    Mutation checks: scoring `unsupported` as `partial` drops it to 8/10, and a quote check lax
+    enough to pass the invented quotes (fuzzy ≥ 45) leaves them without verdicts. Both fail the
+    test.
 
   A claim counts as **grounded** when its quote is `exact`, `fuzzy` or `spliced` **and** the judge rates it
   `supported`. It counts as **hallucinated** when its quote is `not_found` or `wrong_talk`, or
@@ -778,7 +803,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Guardrail | Criteria (pass/fail) | Status | Actual outcome |
 |-----------|----------------------|--------|----------------|
-| Calibrated | ≥ 9/10 planted claims classified correctly | 🔲 | |
+| Calibrated | ≥ 9/10 planted claims classified correctly | ✅ | 10/10 with the real Opus 5.5 judge (`bench calibrate`), replayed offline by `tests/test_scorer_calibration.py`. |
 | Deterministic | Rescoring from cache reproduces identical numbers | ✅ | With every D1.3 and D1.4 judgment in, a second `bench score` asked nothing and rewrote a byte-identical `scores.json` (sha256 `02f15018…`), as it had after the first support pass (`b658625e…`). |
 
 #### Phase D2 — Correctness without a gold set

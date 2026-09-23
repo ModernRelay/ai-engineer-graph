@@ -62,6 +62,8 @@ uv run bench run                    # C1.4 — 3 runs per question per arm (resu
 uv run bench score --dry-run        # D — claims to judge, cost estimate; no API calls
 uv run bench score --limit 10       # D — judge 10 claims (pilot); scores.json waits for all
 uv run bench score                  # D — quote checks + judge (cached), results/scores.json
+uv run bench calibrate              # D1.5 — real judge on the planted claims (~$0.06); re-run
+                                    #   after any judge prompt change, it rewrites the test fixture
 uv run bench report                 # E — results/results.md
 ```
 
