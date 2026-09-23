@@ -5,10 +5,11 @@ import os
 import shutil
 import subprocess
 import sys
+import urllib.request
 from pathlib import Path
 
 from bench.corpus import CHUNK_TALK_OVERRIDES, build_corpus
-from bench.omnigraph import install_shim
+from bench.omnigraph import graph_secrets_in, install_shim
 
 BENCH_DIR = Path(__file__).resolve().parents[2]
 REPO_DIR = BENCH_DIR.parent
@@ -38,6 +39,9 @@ def main(argv: list[str] | None = None) -> int:
     shim.add_argument("--alias-pack", type=Path, default=REPO_DIR / "omnigraph-config.example.yaml")
     shim.add_argument("--omnigraph", type=Path, help="the real CLI (default: first on PATH)")
 
+    probe = commands.add_parser("probe", help="live isolation probe per arm (spends API money)")
+    probe.add_argument("--arm", choices=["markdown", "omnigraph", "both"], default="both")
+
     args = parser.parse_args(argv)
     if args.command == "corpus":
         written = build_corpus(args.seed, args.out, CHUNK_TALK_OVERRIDES)
@@ -54,4 +58,36 @@ def main(argv: list[str] | None = None) -> int:
         except subprocess.CalledProcessError as e:
             parser.exit(1, f"bench shim: omnigraph login failed: {e.stderr.strip()}\n")
         print(f"reader-only omnigraph config installed in {args.home}")
+    elif args.command == "probe":
+        return _probe(parser, ["markdown", "omnigraph"] if args.arm == "both" else [args.arm])
     return 0
+
+
+def _probe(parser: argparse.ArgumentParser, arms: list[str]) -> int:
+    if secrets := graph_secrets_in(os.environ):
+        parser.exit(2, f"bench probe: unset graph credentials first: {', '.join(secrets)}\n")
+    from bench.probe import run_probe
+    from bench.provider import openrouter_env
+
+    provider_env = openrouter_env(BENCH_DIR / ".env")
+    if "markdown" in arms and not any((BENCH_DIR / "corpus" / "talks").glob("*.md")):
+        parser.exit(2, "bench probe: no corpus; run `uv run bench corpus`\n")
+    if "omnigraph" in arms:
+        if not (BENCH_DIR / ".omnigraph-home" / "omnigraph-bin").exists():
+            parser.exit(2, "bench probe: reader shim not installed; see `bench shim`\n")
+        try:
+            urllib.request.urlopen("http://127.0.0.1:8081/healthz", timeout=3)
+        except OSError:
+            parser.exit(2, "bench probe: graph server is down; run scripts/local-graph.sh serve\n")
+
+    failed = 0
+    for arm in arms:
+        summary = run_probe(arm, BENCH_DIR, REPO_DIR, provider_env, BENCH_DIR / "runs" / "_probe")
+        print(
+            f"\n{arm}: {summary['num_turns']} turns, {summary['wall_s']}s, ${summary['cost_usd']}"
+        )
+        for c in summary["checks"]:
+            print(f"  {'PASS' if c['ok'] else 'FAIL'}  {c['check']:<20} {c['detail']}")
+        print(f"  trace: {summary['out']}")
+        failed += sum(not c["ok"] for c in summary["checks"])
+    return 1 if failed else 0

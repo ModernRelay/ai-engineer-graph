@@ -9,7 +9,8 @@ subagents) on a 10-question shortlist about the AI Engineer World's Fair 2026
 talks. It runs twice: once with only Omnigraph read queries, once with only the
 raw transcripts as markdown files. It measures quality, time, cost and
 grounding/hallucination, and produces a two-column table in
-`results/results.md`. The project is at the start: nothing is built yet.
+`results/results.md`. Epic A is done: the corpus, both sandboxed arms, the prompts,
+a local 0.11 graph and a passing live isolation probe. Epic B (the question file) is next.
 
 **`SPEC.md` is the task list and source of truth.** Start at the **Current focus** pointer near the top of the spec; it names the next actionable step so you don't have to scan the whole file. Work the spec: implement that step's deliverable, update its status (🔲 → 🔄 → ✅) in the phase tracker, and advance the Current focus pointer. Don't skip ahead past a phase's exit guardrails. When you reach a phase boundary, verify the guardrail criteria, fill in the **Actual outcome** column, and only then move on.
 
@@ -37,7 +38,7 @@ benchmark reads the seed and the running server; it never writes to either.
   ```
 - **Style:** `uv run ruff check . && uv run ruff format .`
 - **Testing:** `uv run pytest`. Every step with a code deliverable ships a test. The sandbox
-  gates (`gate_paths`, `gate_omnigraph`) and the quote verifier need both allowed and
+  gates (`markdown_gate`, `omnigraph_gate`) and the quote verifier need both allowed and
   denied/negative cases. Tests never call the Claude API. Judge and agent calls are
   stubbed; the real calls happen only in `bench probe | run | score`.
 - **Commits:** short, plain, human-sounding messages (e.g. "bench: build markdown corpus from
@@ -50,7 +51,8 @@ cd bench
 uv sync
 uv run bench corpus                 # A1 — build corpus/talks/*.md from ../seed
 printf %s "$TOKEN_ACT_READER" | uv run bench shim   # A2.2 — once; reader-only omnigraph config
-uv run bench probe                  # A2.4 — isolation probe, both arms
+uv run bench probe                  # A2.4 — live isolation probe, both arms (~$0.09; needs the
+                                    #   local server: scripts/local-graph.sh serve)
 uv run bench check-questions        # B1.2
 uv run bench run --pilot            # C1.3 — 1 run per question per arm
 uv run bench run                    # C1.4 — 3 runs per question per arm (resumable)
@@ -58,10 +60,13 @@ uv run bench score                  # D — quote checks + judge (cached)
 uv run bench report                 # E — results/results.md
 ```
 
-The Omnigraph arm needs the server up (`curl -s http://127.0.0.1:8081/healthz`).
-Start it per the root README ("Serve"), with `.env.omni` and `.env.embedding`
-sourced. Agent and judge credentials come from the environment and are never
-written into `bench/`.
+The Omnigraph arm needs the local graph server up:
+`scripts/local-graph.sh status | serve | stop`. It is file-backed under
+`bench/.graph/` (gitignored), with its own bearer tokens in `bench/.graph/tokens.env`.
+The first build is `scripts/local-graph.sh setup && scripts/local-graph.sh load`.
+Models (agents, judge, chunk embeddings) go through OpenRouter using `OPENROUTER_KEY`
+in `bench/.env` (gitignored). Never print it or write it into a trace; `bench probe`
+redacts it.
 
 ## Rules that protect the measurement
 

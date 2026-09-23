@@ -18,7 +18,8 @@ from pathlib import Path
 
 from claude_agent_sdk import ClaudeAgentOptions, HookMatcher, PermissionResultDeny
 
-MODEL = "claude-sonnet-5"
+from bench.provider import AGENT_MODEL
+
 EFFORT = "high"
 MAX_TURNS = 100  # pilot caps; revisit after C1.3
 MAX_BUDGET_USD = 10.0
@@ -129,7 +130,7 @@ def _options(
     tools: list[str], workdir: Path, system_prompt: str, gate: Gate, env: dict[str, str]
 ) -> ClaudeAgentOptions:
     return ClaudeAgentOptions(
-        model=MODEL,
+        model=AGENT_MODEL,
         effort=EFFORT,
         max_turns=MAX_TURNS,
         max_budget_usd=MAX_BUDGET_USD,
@@ -144,14 +145,27 @@ def _options(
     )
 
 
-def markdown_options(talks_dir: Path, system_prompt: str) -> ClaudeAgentOptions:
-    return _options(
-        ["Read", "Grep", "Glob"], talks_dir, system_prompt, markdown_gate(talks_dir), {}
-    )
+def _env(provider_env: dict[str, str], claude_home: Path) -> dict[str, str]:
+    # A per-run Claude home keeps the CLI off the operator's ~/.claude entirely.
+    return {**provider_env, "CLAUDE_CONFIG_DIR": str(claude_home)}
 
 
-def omnigraph_options(scratch_dir: Path, system_prompt: str, shim_bin: Path) -> ClaudeAgentOptions:
-    path = os.pathsep.join([str(shim_bin), os.environ.get("PATH", "")])
-    return _options(
-        ["Bash", "Read"], scratch_dir, system_prompt, omnigraph_gate(scratch_dir), {"PATH": path}
-    )
+def markdown_options(
+    talks_dir: Path, system_prompt: str, provider_env: dict[str, str], claude_home: Path
+) -> ClaudeAgentOptions:
+    gate = markdown_gate(talks_dir)
+    env = _env(provider_env, claude_home)
+    return _options(["Read", "Grep", "Glob"], talks_dir, system_prompt, gate, env)
+
+
+def omnigraph_options(
+    scratch_dir: Path,
+    system_prompt: str,
+    shim_bin: Path,
+    provider_env: dict[str, str],
+    claude_home: Path,
+) -> ClaudeAgentOptions:
+    gate = omnigraph_gate(scratch_dir)
+    env = _env(provider_env, claude_home)
+    env["PATH"] = os.pathsep.join([str(shim_bin), os.environ.get("PATH", "")])
+    return _options(["Bash", "Read"], scratch_dir, system_prompt, gate, env)

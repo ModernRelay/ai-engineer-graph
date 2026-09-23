@@ -203,19 +203,47 @@ SHARED = [
 ]
 
 
-def test_arms_differ_only_in_tools_workdir_and_prompt(talks, scratch, tmp_path):
-    md = markdown_options(talks, "MD")
-    og = omnigraph_options(scratch, "OG", shim_bin=tmp_path / "bin")
+PROVIDER = {
+    "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
+    "ANTHROPIC_AUTH_TOKEN": "sk-or-test",
+    "ANTHROPIC_API_KEY": "",
+}
+
+
+def md_options(talks, tmp_path):
+    return markdown_options(talks, "MD", PROVIDER, claude_home=tmp_path / "md-home")
+
+
+def og_options(scratch, tmp_path):
+    return omnigraph_options(
+        scratch, "OG", tmp_path / "bin", PROVIDER, claude_home=tmp_path / "og-home"
+    )
+
+
+def shared_env(options):
+    return {k: v for k, v in options.env.items() if k not in ("PATH", "CLAUDE_CONFIG_DIR")}
+
+
+def test_arms_differ_only_in_tools_workdir_prompt_and_home(talks, scratch, tmp_path):
+    md, og = md_options(talks, tmp_path), og_options(scratch, tmp_path)
 
     assert {f: getattr(md, f) for f in SHARED} == {f: getattr(og, f) for f in SHARED}
     assert (md.tools, md.cwd, md.system_prompt) == (["Read", "Grep", "Glob"], talks, "MD")
     assert (og.tools, og.cwd, og.system_prompt) == (["Bash", "Read"], scratch, "OG")
+    assert shared_env(md) == shared_env(og) == PROVIDER
 
 
-def test_arms_load_no_settings_mcp_or_preapproved_tools(talks):
-    md = markdown_options(talks, "MD")
+def test_each_run_gets_its_own_claude_home(talks, scratch, tmp_path):
+    md, og = md_options(talks, tmp_path), og_options(scratch, tmp_path)
 
-    assert md.model == "claude-sonnet-5"
+    assert md.env["CLAUDE_CONFIG_DIR"] == str(tmp_path / "md-home")
+    assert og.env["CLAUDE_CONFIG_DIR"] == str(tmp_path / "og-home")
+
+
+def test_arms_load_no_settings_mcp_or_preapproved_tools(talks, tmp_path):
+    md = md_options(talks, tmp_path)
+
+    assert md.model == "anthropic/claude-sonnet-5"
     assert md.setting_sources == []
     assert md.strict_mcp_config is True
     assert md.allowed_tools == []
@@ -225,13 +253,13 @@ def test_arms_load_no_settings_mcp_or_preapproved_tools(talks):
 
 
 def test_omnigraph_arm_finds_the_shim_first_on_path(scratch, tmp_path):
-    og = omnigraph_options(scratch, "OG", shim_bin=tmp_path / "bin")
+    og = og_options(scratch, tmp_path)
 
     assert og.env["PATH"].split(os.pathsep)[0] == str(tmp_path / "bin")
 
 
-def test_anything_reaching_the_permission_prompt_is_denied(talks):
-    md = markdown_options(talks, "MD")
+def test_anything_reaching_the_permission_prompt_is_denied(talks, tmp_path):
+    md = md_options(talks, tmp_path)
 
     result = asyncio.run(md.can_use_tool("Read", {"file_path": "x"}, None))
 

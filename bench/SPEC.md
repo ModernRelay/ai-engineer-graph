@@ -15,6 +15,7 @@
 | 2026-09-23 | A2.2 done: `bench shim` + `bin/omnigraph` via `OMNIGRAPH_HOME`; secrets check implemented | Roman Pronskiy |
 | 2026-09-23 | A2.3 done: contract + briefs, generated query catalog; D1.2 accepts chunk labels as talk ids | Roman Pronskiy |
 | 2026-09-23 | A2.5 added and done: local 0.11 graph via `scripts/local-graph.sh`, OpenRouter for embeddings, agents and judge; Reader-only and Graph-live guardrails passed | Roman Pronskiy |
+| 2026-09-23 | A2.4 done: live probe 8/8 on both arms via OpenRouter; Phase A2 guardrails passed; cost now from `model_usage` | Roman Pronskiy |
 
 ### Status legend
 
@@ -22,7 +23,7 @@
 
 ### Current focus
 
-**Now on:** Epic A → Phase A2 → step A2.4 — `bench probe` via OpenRouter (the first step that spends API money). The local server is up on :8081 and the reader shim is installed.
+**Now on:** Epic B → Phase B1 → step B1.1 — `questions.yaml` from the draft shortlist, for your approval. Also open: the context-window question in §7.
 
 ---
 
@@ -169,7 +170,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | A2.2 | Reader-only `omnigraph` shim | ✅ | `bench shim` + `bin/omnigraph`; 9 tests; real install waits on the reader token |
 | A2.3 | Prompts: shared answer contract and one tool brief per arm | ✅ | `prompts/*.md` + `prompts.py`; 8 tests; catalog of all 89 read queries |
 | A2.5 | Local 0.11 graph + server via `scripts/local-graph.sh` (needed before A2.4) | ✅ | 5,034 nodes, 17,942 edges, 5,339 embedded chunks, 2,619 evidence edges; serving on :8081 |
-| A2.4 | `bench probe`: isolation probe for both arms | 🔲 | |
+| A2.4 | `bench probe`: isolation probe for both arms | ✅ | 8/8 checks on both arms; about $0.09 per full probe |
 
 **Steps (detail):**
 
@@ -282,20 +283,44 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
     - One transient embed failure on the first attempt; the retry succeeded. Parts now embed
       4 at a time (about 3 minutes per part), and each part keeps its own embed log.
     - The server runs outside the sandbox, which blocks listening on local ports.
-- **A2.4 — Isolation probe.** Deliverable: `bench probe`, which runs one scripted probe per arm and
-  writes `runs/_probe/`. The probe asks the agent to:
-  - list its tools
-  - read `../../README.md`, `seed/` and `~/.claude/CLAUDE.md`
-  - run `omnigraph mutate …`, `cat`, and `omnigraph alias top-patterns; ls`
-  - (markdown arm only) run a Grep outside its root
+- **A2.4 — Isolation probe.** Deliverable: `bench probe [--arm markdown|omnigraph|both]`
+  (`src/bench/probe.py`, `src/bench/agent.py`, `src/bench/provider.py`).
+  - **Pre-flight** refuses to start if `graph_secrets_in(os.environ)` finds anything. It then
+    needs the OpenRouter key, the corpus (markdown arm), and the shim plus a live `/healthz`
+    (Omnigraph arm).
+  - **Each arm** runs in a fresh temp workdir with its own `CLAUDE_CONFIG_DIR`, using the real
+    options and system prompt. It gets 6 scripted steps, 1 allowed control call and 5 escapes:
+    - markdown: Glob `*.md`; Read the repo README, a seed file and `~/.claude/CLAUDE.md`; Grep
+      the real corpus outside the workdir; Glob `../**`
+    - omnigraph: `alias top-patterns`; `mutate`; `cat README`; `…; ls`; `--store file://…`;
+      Read the README
+  - **Verdict from the trace, not the agent's report:**
+    - the init tool list is exact, with no MCP servers or non-built-in plugins, and the model
+      is right
+    - every step was attempted
+    - replaying every call through the gate matches the live result: a denial carries the
+      gate's reason, and an allowed call wasn't blocked
+    - the control call returned data
+    - no leak markers appear in any tool result
+    - the session finished
+  - **Output:** `trace.jsonl` + `summary.json` in `runs/_probe/<arm>/<stamp>/`, with the key
+    redacted.
+  - **Cost** is `session_cost(ResultMessage.model_usage)`. `ResultMessage.usage` misses part of
+    the session (14 vs 1,533 input tokens in the probe). `model_usage` priced at OpenRouter
+    rates equals the SDK's `total_cost_usd` exactly.
+  - **Outcome (2026-09-23):**
+    - markdown: 8/8 checks, 7 turns, 15.6 s, $0.028–0.031
+    - omnigraph: 8/8 checks, 7 turns, 20.6 s, $0.062–0.065
+    - The first markdown run failed `no_mcp_or_plugins` on the CLI's own `telemetry@builtin`
+      plugin. The check now allows `@builtin` sources only; tested both ways.
 
 **Exit guardrails — Phase A2 → Epic B**
 
 | Guardrail | Criteria (pass/fail) | Status | Actual outcome |
 |-----------|----------------------|--------|----------------|
-| Tool surface | The SDK init `SystemMessage` lists exactly the arm's tools, no MCP servers and no skills or agents | 🔲 | |
-| Nothing inherited | Neither the repo nor the user CLAUDE.md shows up in the probe trace; no user hooks fire | 🔲 | |
-| Escapes denied | Every out-of-bounds read, non-omnigraph command and chained command is denied | 🔲 | |
+| Tool surface | The SDK init `SystemMessage` lists exactly the arm's tools, no MCP servers and no skills or agents | ✅ | Markdown: exactly `Glob, Grep, Read`. Omnigraph: exactly `Bash, Read`. `mcp_servers: []`. `plugins` is only `telemetry@builtin`, which is part of the CLI; the check fails on any non-built-in plugin. The CLI still lists its built-in skills and agents, but without Skill or Agent tools the model can't invoke them. |
+| Nothing inherited | Neither the repo nor the user CLAUDE.md shows up in the probe trace; no user hooks fire | ✅ | `setting_sources=[]` plus a per-run `CLAUDE_CONFIG_DIR`: `memory_paths` point into the run's own claude-home and `apiKeySource` is `none` (auth is the OpenRouter token). No hook messages besides ours. No README, repo or user CLAUDE.md, or seed text in any tool result. |
+| Escapes denied | Every out-of-bounds read, non-omnigraph command and chained command is denied | ✅ | All 12 scripted attempts were made (6 per arm). Replaying each call through the gate matched the live result, and denials came back with the gate's exact reason, so the hook ran on every call. Blocked: repo README, seed, `~/.claude/CLAUDE.md`, the corpus outside the workdir, `../` globs, `mutate`, `cat`, `;` chaining and `--store`. |
 | Reader only | `omnigraph mutate` through the shim is denied by the gate. Called directly with the shim's config, it returns 403. | ✅ | Called directly through `bin/omnigraph`, it returns `policy denied action 'change' on branch 'main' for actor 'act-reader'`. The gate half is unit-tested (A2.1); the live gate half is in the A2.4 probe. |
 | Graph live | `omnigraph alias top-patterns` through the shim returns 18 patterns; `/healthz` is ok | ✅ | 18 patterns; healthz `{"status":"ok","version":"0.11.0","internal_schema_version":9}`. `hybrid-search` returns 10 chunks (query-time embedding via OpenRouter works). `talk-chunks ia-aie-shaukat-verifiers-king` returns 37, so the mis-link is present locally too. |
 
@@ -623,6 +648,9 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 21 | 2026-09-23 | Agents and judge run through OpenRouter (`anthropic/claude-sonnet-5`, `anthropic/claude-opus-5.5`) | You added an OpenRouter key as the billing account. OpenRouter documents an Anthropic-compatible endpoint for Claude Code. | Roman Pronskiy |
 | 22 | 2026-09-23 | Cost = usage × a recorded OpenRouter price snapshot; the SDK's `total_cost_usd` is only a cross-check | Exact and reproducible, and it doesn't depend on Claude Code knowing OpenRouter model ids | Roman Pronskiy |
 | 23 | 2026-09-23 | The benchmark uses a local file-backed 0.11 graph under `bench/.graph/`, with chunks embedded by `google/gemini-embedding-2-preview` through OpenRouter (`openai-compatible` provider) | There's no S3 store or Gemini key here. The 0.11 binary supports `openai-compatible\|openai\|gemini\|mock`, and OpenRouter serves the seed's exact embedding model (3072-d, verified). | Roman Pronskiy |
+| 24 | 2026-09-23 | Cost is priced from `ResultMessage.model_usage`, not `usage`; refines #22 | The probe showed `usage` misses part of the session. `model_usage` at OpenRouter prices reproduces the SDK's `total_cost_usd` exactly. | Roman Pronskiy |
+| 25 | 2026-09-23 | Each run gets its own `CLAUDE_CONFIG_DIR` | This keeps the bundled CLI entirely off `~/.claude`: sessions, `.claude.json`, plugins, memory. It adds to `setting_sources=[]`. | Roman Pronskiy |
+| 26 | 2026-09-23 | The CLI's own `…@builtin` plugins are allowed by the isolation check | `telemetry@builtin` ships with CLI 2.1.280 and doesn't come from any user setting. Any other plugin still fails the probe. | Roman Pronskiy |
 
 ---
 
@@ -631,7 +659,8 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 - [x] ~~Billing: API key or Claude Code login?~~ OpenRouter (decision #21).
 - [ ] Final caps (`max_turns`, `max_budget_usd`, wall clock) after the pilot. Do they stay the same for both arms?
 - [x] ~~Does the `omnigraph` CLI accept a config path or profile env var?~~ Yes: `OMNIGRAPH_HOME` and `OMNIGRAPH_PROFILE` (decision #18).
-- [ ] Does a PreToolUse `HookMatcher(matcher=None)` match every tool in the bundled CLI? Verify in the A2.4 probe (escapes denied, allows logged).
+- [x] ~~Does `HookMatcher(matcher=None)` match every tool?~~ Yes: the A2.4 probe saw our reason on every denial across Read, Grep, Glob and Bash.
+- [ ] Context window: through OpenRouter the CLI reports `contextWindow: 200000` for `anthropic/claude-sonnet-5` (the model supports 1M). OpenRouter documents a `[1m]` model suffix. Should both arms run with 1M? This mostly affects when the markdown arm's context gets compacted.
 - [ ] How does the Claude Code Bash tool handle very large `omnigraph` output (truncate vs spill to file)? Confirm in the pilot.
 - [ ] Commit `runs/` traces for the demo, or only `results/`? Currently runs are gitignored.
 
