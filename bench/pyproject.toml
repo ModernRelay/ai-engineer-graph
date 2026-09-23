@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Agent benchmark: Omnigraph vs raw markdown transcripts"
 requires-python = ">=3.12"
 dependencies = [
+    "anthropic>=1.8.0",
     "claude-agent-sdk>=0.2.158",
     "pyyaml>=6.0.3",
     "rapidfuzz>=3.14.6",

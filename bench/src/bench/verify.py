@@ -32,6 +32,15 @@ class Corpus:
         # Padded with spaces so an exact match can be required to start and end on a word.
         self.texts = {talk: f" {normalise_text(text)} " for talk, text in texts.items()}
         self.labels = labels
+        # The corpus joins a talk's chunks with a blank line; the judge's context uses them.
+        self.chunks = {
+            talk: [chunk.strip() for chunk in text.split("\n\n") if chunk.strip()]
+            for talk, text in texts.items()
+        }
+        self._chunk_texts = {
+            talk: [f" {normalise_text(chunk)} " for chunk in chunks]
+            for talk, chunks in self.chunks.items()
+        }
 
     @classmethod
     def load(cls, talks_dir: Path, labels: dict[str, str]) -> "Corpus":
@@ -65,6 +74,30 @@ class Corpus:
                 return QuoteCheck("spliced", cited, score=spliced)
         return QuoteCheck(*self._elsewhere(needle, cited), score=score)
 
+    def context(self, talk: str, quote: str, around: int = 1) -> str:
+        """For each quoted piece, its best-matching chunk and `around` chunks either side, in
+        talk order; runs that don't touch are separated by [...]. The support judge reads this."""
+        cited = self.resolve(talk.strip())
+        if cited is None:
+            raise ValueError(f"no talk for {talk!r}")
+        chunks, texts = self.chunks[cited], self._chunk_texts[cited]
+        keep: set[int] = set()
+        for piece in _splice_pieces(quote) or [normalise_text(quote)]:
+            best = max(
+                range(len(texts)),
+                key=lambda i: (
+                    101 if f" {piece} " in texts[i] else fuzz.partial_ratio(piece, texts[i])
+                ),
+            )
+            keep.update(range(max(0, best - around), min(len(chunks), best + around + 1)))
+        runs: list[list[int]] = []
+        for i in sorted(keep):
+            if runs and i == runs[-1][-1] + 1:
+                runs[-1].append(i)
+            else:
+                runs.append([i])
+        return "\n\n[…]\n\n".join("\n\n".join(chunks[i] for i in run) for run in runs)
+
     def _elsewhere(self, needle: str, cited: str | None) -> tuple[str, str | None, str | None]:
         others = {talk: text for talk, text in self.texts.items() if talk != cited}
         found = next((t for t in sorted(others) if f" {needle} " in others[t]), None)
@@ -76,12 +109,17 @@ class Corpus:
         return ("wrong_talk" if found else "not_found"), cited, found
 
 
+def _splice_pieces(quote: str) -> list[str]:
+    """The normalised 4+ word pieces of a quote joined by ellipses; [] if it isn't a splice."""
+    if not ELLIPSIS.search(quote):
+        return []
+    pieces = [normalise_text(piece) for piece in ELLIPSIS.split(quote)]
+    return [piece for piece in pieces if len(piece.split()) >= SPLICE_PIECE_MIN]
+
+
 def _splice_score(quote: str, text: str) -> float | None:
     """The weakest piece's score when every 4+ word piece between ellipses is in the text."""
-    if not ELLIPSIS.search(quote):
-        return None
-    pieces = [normalise_text(piece) for piece in ELLIPSIS.split(quote)]
-    pieces = [piece for piece in pieces if len(piece.split()) >= SPLICE_PIECE_MIN]
+    pieces = _splice_pieces(quote)
     if not pieces:
         return None
     scores = [

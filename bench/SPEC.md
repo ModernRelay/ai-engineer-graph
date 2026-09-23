@@ -29,6 +29,7 @@
 | 2026-09-23 | C1.4 done: 60/60 ok, $30.25 (md $12.99, og $17.26); Phase C1 guardrails passed; `results/run-meta.json`; focus moves to Epic D | Roman Pronskiy |
 | 2026-09-23 | D1.1 normalisation rules pinned down from the C1.4 answers and implemented (`parse.normalise`); D1.2 resolves bare chunk labels | Roman Pronskiy |
 | 2026-09-24 | D1.2 done: `verify.Corpus` quote check with a new `spliced` outcome (#37); C1.4 verbatim md 99.2%, og 97.2%; rapidfuzz added | Roman Pronskiy |
+| 2026-09-24 | D1.3 support judge written with stubbed tests (`judge.py`, cached Opus 5.5 requests, `Corpus.context`, `prompts/judge_support.md`); `anthropic` SDK added; real pass pending | Roman Pronskiy |
 
 ### Status legend
 
@@ -36,7 +37,7 @@
 
 ### Current focus
 
-**Now on:** Epic D → Phase D1 → step D1.3 — the support judge (`judge.py::support`): code and stubbed tests first; the real Opus 5.5 pass spends money and waits for your go.
+**Now on:** Epic D → Phase D1 → step D1.3 — the support judge's code is done; next is a runner for the real Opus 5.5 pass (a 10-claim pilot to measure cost, then all 698), which spends money and waits for your go. D1.4 (uncited statements) can be written with stubs meanwhile.
 
 ---
 
@@ -576,7 +577,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 |------|-------------|--------|-------|
 | D1.1 | Parse the contract block and claims | ✅ | `parse.normalise` → `Answer` / `Item` / `Claim`; 13 tests, 6 mutations caught; 60 C1.4 answers: 0 unparseable, 286 items, 710 claims |
 | D1.2 | Mechanical quote check against the corpus | ✅ | `verify.Corpus` + `corpus.talk_labels`; `spliced` added (#37); 20 tests, 14 of 15 mutations caught (the 15th can't change a result); C1.4 verbatim: md 99.2%, og 97.2% |
-| D1.3 | Judge: does the quote support the claim? | 🔲 | |
+| D1.3 | Judge: does the quote support the claim? | 🔄 | Code done with stubbed tests (`judge.py`, `Corpus.context`, `prompts/judge_support.md`; 16 tests, 13 mutations caught). The real Opus pass over 698 claims waits for your go |
 | D1.4 | Judge: uncited factual statements in the prose | 🔲 | |
 | D1.5 | Scorer calibration on planted claims | 🔲 | |
 
@@ -656,10 +657,33 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
     to an invented id close to the real one. Two omnigraph claims cite a pattern or signal slug
     (`pat-agent-supply-chain`, `sig-dependency-pr-70kloc`) and quote its brief: the
     paraphrased-brief risk in §5, seen twice in 324 claims.
-- **D1.3 — Support judge.** Deliverable: `src/bench/judge.py::support`.
+- **D1.3 — Support judge.** Deliverable: `src/bench/judge.py::support` (plus the shared judge
+  cache and OpenRouter client), `prompts/judge_support.md` and `verify.Corpus.context`.
   - Opus 5.5 gets the claim, the quote and the transcript around it (±1 chunk).
   - It returns `supported | partial | unsupported` with a one-line reason, via structured output.
   - Judgments are cached by hash of the inputs, so rescoring costs nothing.
+  - **Which claims.** Only claims whose quote is `exact`, `fuzzy` or `spliced` in the cited talk.
+    A `wrong_talk` or `not_found` claim is hallucinated whatever the judge says, so it isn't sent.
+  - **What the judge sees.** The claim, the list entry it supports (if any), the quote, and the
+    transcript around it: for each quoted piece (the whole quote, or each 4+ word piece of a
+    splice), the chunk that matches it best plus one chunk either side, in talk order, with `[…]`
+    between runs that don't touch. It never sees the arm, the run or the question, so it judges
+    blind. A claim that is only a topic label (`claim_from_item`) is read as "the talk discusses
+    this topic".
+  - **Request.** `anthropic/claude-opus-5.5` through OpenRouter with the `anthropic` SDK:
+    `output_config` with `effort: high` and a JSON schema (`verdict` enum, `reason`), no
+    `thinking` parameter (Opus 5.5 always thinks adaptively), `max_tokens` 16000.
+  - **Cache.** Each request is hashed (SHA-256 of its canonical JSON, prompt included) and saved
+    with its response and token usage as `runs/_judge/<hash>.json`. A cached request is never sent
+    again, and any change to the prompt changes every hash. Cost is usage × `provider.PRICES`.
+  - **Failures.** A refusal, a `max_tokens` stop, or output outside the schema raises and is not
+    cached. The SDK retries 429 and 5xx itself.
+  - **Dry run** on the C1.4 claims (no API calls): 698 to judge (markdown 383, omnigraph 315).
+    Requests are about 4.9k characters at the median, 9.5k at most. Contexts are 3 chunks at the
+    median and 6 at most, and no splice needed a `[…]` gap. Graph words ("pattern", "signal",
+    "graph") appear in the claims of both arms (18 md, 10 og), so they don't reveal the arm.
+    Estimated cost is $7.5–31 depending on thinking length (300–2,000 output tokens per claim);
+    a 10-claim pilot measures it first.
 - **D1.4 — Uncited statements.** Deliverable: `judge.py::uncited`. The judge lists factual
   statements in the prose that no claim covers. The count goes into the report.
 - **D1.5 — Calibration.** Deliverable: `tests/test_scorer_calibration.py`.

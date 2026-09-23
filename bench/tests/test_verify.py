@@ -165,3 +165,51 @@ def test_load_reads_only_the_transcript_not_the_header(tmp_path):
         corpus.check("ia-aie-alpha-talk", "Harness Over Model (Ann Lee, Acme").status == "not_found"
     )
     assert corpus.check("ia-aie-alpha-talk", "it's the harness, not the model").status == "exact"
+
+
+# Corpus.context (D1.3): the transcript the support judge sees around a quote.
+
+CHUNKS = [
+    "Chunk zero opens the talk with a joke about the sleepy crowd.",
+    "Chunk one says every eval now runs inside the release pipeline.",
+    "Chunk two explains why the harness matters more than the model.",
+    "Chunk three covers voice agents that must handle interruptions well.",
+    "Chunk four closes with a call to hire more platform engineers.",
+]
+
+
+@pytest.fixture
+def chunked():
+    return Corpus(texts={"ia-aie-t": "\n\n".join(CHUNKS)}, labels={"t-label": "ia-aie-t"})
+
+
+def test_context_is_the_matching_chunk_and_one_either_side(chunked):
+    context = chunked.context("ia-aie-t", "why the harness matters more than the model")
+
+    assert context == "\n\n".join(CHUNKS[1:4])
+
+
+def test_context_finds_a_garbled_quote_through_a_chunk_label(chunked):
+    context = chunked.context("t-label", "voice agents that must handel interruptions well")
+
+    assert context == "\n\n".join(CHUNKS[2:5])
+
+
+def test_context_stops_at_the_start_of_the_talk(chunked):
+    context = chunked.context("ia-aie-t", "opens the talk with a joke about the sleepy crowd")
+
+    assert context == "\n\n".join(CHUNKS[0:2])
+
+
+def test_context_covers_each_piece_of_a_splice_with_a_gap_marker(chunked):
+    quote = "opens the talk with a joke ... a call to hire more platform engineers"
+
+    context = chunked.context("ia-aie-t", quote)
+
+    assert context == "\n\n".join(CHUNKS[0:2]) + "\n\n[…]\n\n" + "\n\n".join(CHUNKS[3:5])
+
+
+def test_context_merges_windows_that_touch(chunked):
+    quote = "every eval now runs inside the release pipeline ... voice agents that must handle"
+
+    assert chunked.context("ia-aie-t", quote) == "\n\n".join(CHUNKS)
