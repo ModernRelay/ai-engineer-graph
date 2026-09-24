@@ -381,17 +381,15 @@
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G28813T3HFTZ2MGAA", "from": "sig-agentic-search-displaces-hybrid-and-graphs", "to": "pat-context-graphs", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G5MXBK6K3C68FRYRQ", "from": "sig-agents-all-reach-production-and-fail-on-roi", "to": "pat-ai-native-org", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GXN4KGW27Z5J777CQ", "from": "sig-agents-need-million-token-context-and-native-vision", "to": "pat-model-not-bottleneck", "data": {"polarity": "contradiction"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9G4NKPGPY60DFKCH7W", "from": "sig-ai-converted-zlib-to-lean-with-32k-lines-of-proof", "to": "pat-verification-gap", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GMWJ2T3VHP2CZDQSV", "from": "sig-ai-pilots-fail-on-broken-process", "to": "pat-ai-native-org", "data": {"polarity": "contradiction"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9GHBCK6T9N2ZK8KCXH", "from": "sig-anthropic-invests-in-verification-to-take-humans-out-of-the-loop", "to": "pat-verification-gap", "data": {"polarity": "contradiction"}}
+{"edge": "ContradictsPattern", "id": "01M2DM9J9GHBCK6T9N2ZK8KCXH", "from": "sig-anthropic-invests-in-verification-to-take-humans-out-of-the-loop", "to": "pat-verification-gap", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GN84QZ09VFJ87FC56", "from": "sig-benchmark-on-your-own-codebase", "to": "pat-benchmark-trust-crisis", "data": {"polarity": "boundary"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9GT5Y7KG2R2EQPSQGE", "from": "sig-blind-loop-outcomes-critique", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
+{"edge": "ContradictsPattern", "id": "01M2DM9J9GT5Y7KG2R2EQPSQGE", "from": "sig-blind-loop-outcomes-critique", "to": "pat-harness-over-model", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GTZQM89Z8ZFVMR8SN", "from": "sig-broad-taste-is-trainable-narrow-judgement-is-not", "to": "pat-value-of-judgement", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GX96J99KE1G0KATXN", "from": "sig-caas-limited-to-what-it-holds", "to": "pat-agent-memory-layer", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GBBR26BD4CWS64FXZ", "from": "sig-churn-breaks-graphrag", "to": "pat-context-graphs", "data": {"polarity": "boundary"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9GJ78HM9Q9NZD4QNHQ", "from": "sig-claude-code-rl-in-harness-moat", "to": "pat-harness-over-model", "data": {"polarity": "boundary"}}
+{"edge": "ContradictsPattern", "id": "01M2DM9J9GJ78HM9Q9NZD4QNHQ", "from": "sig-claude-code-rl-in-harness-moat", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G0QW0TWBXAFRXJ267", "from": "sig-cmu-velocity-fade", "to": "pat-ai-native-org", "data": {"polarity": "boundary"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9GQHMX16YB00GJ88YX", "from": "sig-coding-agents-are-still-the-assistance-era", "to": "pat-harness-over-model", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G02SCMWKSJ2A0EFPV", "from": "sig-coding-agents-work-because-the-work-checks-itself", "to": "pat-verification-gap", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G4N3GYMKX3RZTKCWG", "from": "sig-coding-skill-insufficient-for-cua", "to": "pat-model-not-bottleneck", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G96EN2MV79AQSZF1H", "from": "sig-collaboration-moves-into-the-weights", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
@@ -409,16 +407,16 @@
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GASN07EBMAR09K26Q", "from": "sig-figma-engineers-lose-flow-in-the-prompt-cycle", "to": "pat-ai-native-org", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GZX9AG9JH1080A0PR", "from": "sig-finance-and-pharma-are-ai-in-the-loop", "to": "pat-accelerated-research", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GMWB9JYK3PB70K2FN", "from": "sig-fixed-harness-obsolescence", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
+{"edge": "ContradictsPattern", "id": "01M3A3N03024F9V54CHYVQSKPM", "from": "sig-frontier-intelligence-price-speed", "to": "pat-harness-over-model", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G5NZ3QJDR7ZYVG5PR", "from": "sig-frontier-models-cannot-write-fast-multi-gpu-kernels", "to": "pat-accelerated-research", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GZ8C0BSQH7GM3C5YT", "from": "sig-graphrag-ties-rag-costs-more", "to": "pat-context-graphs", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GAZ14DR0ZCFYSAMP3", "from": "sig-harness-fixes-become-dead-weight", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GP2HJQK046A69AQAT", "from": "sig-harness-thins-as-model-improves", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GEAB0954FK0F9XRRZ", "from": "sig-heygen-thinnest-wrapper-won", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9GSN7E9ZZQ4908Q2MY", "from": "sig-humanlayer-lights-off-postmortem", "to": "pat-harness-over-model", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G2JFK7RCAW5PP9MRK", "from": "sig-infra-reasoning-is-a-data-gap", "to": "pat-model-not-bottleneck", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GC7S6YYH5KM4SA8X7", "from": "sig-keep-everything-beats-compaction", "to": "pat-harness-over-model", "data": {"polarity": "boundary"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9G1EAEA15NGDPFG9ZC", "from": "sig-lights-off-model-training-limit", "to": "pat-harness-over-model", "data": {"polarity": "boundary"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9GBZHQH3B95K4A0X0G", "from": "sig-lights-off-model-training-limit", "to": "pat-model-not-bottleneck", "data": {"polarity": "boundary"}}
+{"edge": "ContradictsPattern", "id": "01M2DM9J9G1EAEA15NGDPFG9ZC", "from": "sig-lights-off-model-training-limit", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
+{"edge": "ContradictsPattern", "id": "01M2DM9J9GBZHQH3B95K4A0X0G", "from": "sig-lights-off-model-training-limit", "to": "pat-model-not-bottleneck", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GA1FY2NSPK37JCJH3", "from": "sig-little-real-continual-learning", "to": "pat-continual-learning-turn", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GZK9K85M90DJ5M2RP", "from": "sig-long-tail-will-never-publish-apis", "to": "pat-agent-economy", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GZ298ZEHFVPA7V970", "from": "sig-mcp-tasks-zero-client-adoption", "to": "pat-durable-execution", "data": {"polarity": "contradiction"}}
@@ -428,26 +426,25 @@
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G6VKGRE02YH4C1PTM", "from": "sig-models-trained-into-their-harness", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GSFGXASGRS55T6Y93", "from": "sig-netflix-pattern-catalog-memory", "to": "pat-agent-memory-layer", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GBA0KZHSQRBM2G6DN", "from": "sig-nubank-vetted-two-thousand-skills-before-developers-saw-them", "to": "pat-agent-supply-chain", "data": {"polarity": "boundary"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9G0WDW9XVT177CH2NT", "from": "sig-opus-45-began-the-agent-model-epoch", "to": "pat-model-not-bottleneck", "data": {"polarity": "contradiction"}}
+{"edge": "ContradictsPattern", "id": "01M2DM9J9G0WDW9XVT177CH2NT", "from": "sig-opus-45-began-the-agent-model-epoch", "to": "pat-model-not-bottleneck", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GPW55P0DKRQC37CHZ", "from": "sig-private-task-reruns-over-leaderboards", "to": "pat-benchmark-trust-crisis", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GZM9XJBEETBP9YSQY", "from": "sig-professional-gui-work-unsolved", "to": "pat-model-not-bottleneck", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GC1BTHZ8YXEFANHYT", "from": "sig-prompts-shrink-per-model-generation", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G0DFR6QWQ3MZEYMTB", "from": "sig-ray-open-clusters-2023", "to": "pat-new-cyber-threats", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G9BKXKE27PAJ9GSPF", "from": "sig-reasoning-models-absorbed-pipeline", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9GS7ZJ33S707PDS5MS", "from": "sig-recovery-must-be-a-trained-action", "to": "pat-harness-over-model", "data": {"polarity": "boundary"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9GV5GRT0C7A3AS419X", "from": "sig-review-surface-becomes-intent", "to": "pat-verification-gap", "data": {"polarity": "contradiction"}}
+{"edge": "ContradictsPattern", "id": "01M2DM9J9GS7ZJ33S707PDS5MS", "from": "sig-recovery-must-be-a-trained-action", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GPKMQKAPA0MHW3NN3", "from": "sig-rl-environments-decoupled-from-reality", "to": "pat-environments-economy", "data": {"polarity": "boundary"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9GQ40PM53Y7ENDNTDY", "from": "sig-rlhf-universal-and-limiting", "to": "pat-model-not-bottleneck", "data": {"polarity": "boundary"}}
+{"edge": "ContradictsPattern", "id": "01M2DM9J9GQ40PM53Y7ENDNTDY", "from": "sig-rlhf-universal-and-limiting", "to": "pat-model-not-bottleneck", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GVD2CJHW83KREFRZ9", "from": "sig-saas-structurally-unchanged", "to": "pat-saaspocalypse", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GN6KTQCH7QS9X2DFV", "from": "sig-scaffolds-dont-generalize-pixels-do", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GTFWKEP8B0PHMDX12", "from": "sig-sft-still-carries-agent-gains", "to": "pat-continual-learning-turn", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GP4C1KAPYVV1944RM", "from": "sig-sft-still-carries-agent-gains", "to": "pat-environments-economy", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GMR8B6BTTC7C3FWCQ", "from": "sig-simulated-patients-pass-as-real-and-the-judge-matches-clinicians", "to": "pat-value-of-judgement", "data": {"polarity": "contradiction"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9GPCH1WR0ZTSN0Y9SG", "from": "sig-simulated-patients-pass-as-real-and-the-judge-matches-clinicians", "to": "pat-verification-gap", "data": {"polarity": "contradiction"}}
+{"edge": "ContradictsPattern", "id": "01M2DM9J9GPCH1WR0ZTSN0Y9SG", "from": "sig-simulated-patients-pass-as-real-and-the-judge-matches-clinicians", "to": "pat-verification-gap", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G0GQSAZKPAX2871JC", "from": "sig-skill-curation-is-the-basis-of-the-agentic-workforce", "to": "pat-agent-supply-chain", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G46D4DF3Q0BFMNGS1", "from": "sig-sla-budget-caps-agent-design", "to": "pat-agent-memory-layer", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GW2RPVHFEDJQDP90D", "from": "sig-small-models-thrash-out-of-distribution", "to": "pat-model-not-bottleneck", "data": {"polarity": "boundary"}}
-{"edge": "ContradictsPattern", "id": "01M2DM9J9GS6VRPM5971T8DSP5", "from": "sig-swe-marathon-26pct-ceiling", "to": "pat-model-not-bottleneck", "data": {"polarity": "contradiction"}}
+{"edge": "ContradictsPattern", "id": "01M2DM9J9GS6VRPM5971T8DSP5", "from": "sig-swe-marathon-26pct-ceiling", "to": "pat-model-not-bottleneck", "data": {"polarity": "boundary"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GQ701R5S0SGH68ZP2", "from": "sig-system-prompt-cut-80pct", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9G2M1SS9PW7KBXKZAT", "from": "sig-system-prompt-era-arc", "to": "pat-harness-over-model", "data": {"polarity": "contradiction"}}
 {"edge": "ContradictsPattern", "id": "01M2DM9J9GPT7XA4TBP765ZAFN", "from": "sig-taste-labs-turns-taste-into-measurable-verification", "to": "pat-value-of-judgement", "data": {"polarity": "boundary"}}
@@ -2542,7 +2539,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HJ63G50J6K7PF28CJ", "from": "sig-70pct-engineering-time-is-ops", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H3ZWGYD2QMK4VFTDK", "from": "sig-830b-software-selloff", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HX9TS8PJGGBYMM73F", "from": "sig-93pct-repatriation", "to": "pat-sovereign-ai", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HC1GN5YG4F8H5ZVVW", "from": "sig-94pct-context-cut-benchmark", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H74W7PZ3YFQNMVG85", "from": "sig-a-background-agent-recommended-re-enabling-the-setting-that-caused-an-outage", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5G9T62N3BGG377V5", "from": "sig-a-background-agent-recommended-re-enabling-the-setting-that-caused-an-outage", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HC8BZAQSD71FZMGGW", "from": "sig-a-better-model-is-not-better-for-your-system-until-revalidated", "to": "pat-benchmark-trust-crisis", "data": {}}
@@ -2556,7 +2552,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HQXSSH6DZ0ETJEEDT", "from": "sig-a-nightly-cron-agent-scaled-a-team", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDPE3NP634TCNGB84", "from": "sig-a-purpose-built-open-routing-model-beats-frontier-models-at-routing", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HCK67Y3D115C1KRAW", "from": "sig-a-purpose-built-open-routing-model-beats-frontier-models-at-routing", "to": "pat-sovereign-ai", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HA31E5G3FNJSBNT2Q", "from": "sig-a-reasoning-models-normal-is-a-chat-models-outage", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZ2WA11DVEQA65FB4", "from": "sig-a-router-cut-a-coding-session-to-a-third-of-the-cost", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H095NAXRKPRSDWF57", "from": "sig-a-router-cut-a-coding-session-to-a-third-of-the-cost", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7VGJBE1DPQG18ZDP", "from": "sig-a-skill-that-forbids-the-slop-tells-hit-10000-users-in-six-weeks", "to": "pat-harness-over-model", "data": {}}
@@ -2564,7 +2559,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HZGCDJG7486G2NTQA", "from": "sig-a-sweeper-ai-moves-silo-knowledge-into-shared-spaces", "to": "pat-agent-memory-layer", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HVEB9ENYAPW4PM71J", "from": "sig-a-sweeper-ai-moves-silo-knowledge-into-shared-spaces", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HT51XSWZDVD3Y00MA", "from": "sig-a-trusted-tester-found-wedding-rings-on-every-generated-hand", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HAVZVQZVNK7HPP1SE", "from": "sig-a2a-as-internal-contract", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZ9VANQ674KX01H4S", "from": "sig-a2ui-open-spec", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFD049QCD1AGFM6RB", "from": "sig-abstract-spec-agent-failure", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWNV2TK7N5Q9XDCBR", "from": "sig-acceleration-whiplash-survey", "to": "pat-verification-gap", "data": {}}
@@ -2575,13 +2569,10 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H23ZH5RX944Z1SHWN", "from": "sig-ace-state-machine-reliability", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HE8MJWCQYJGQW1VFN", "from": "sig-acp-forty-clients", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H632HAFMN8QH1MPP5", "from": "sig-activegraph-lab-self-research", "to": "pat-accelerated-research", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HVJQ9QE366P38XZ72", "from": "sig-activegraph-longrun-resume", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HK5D55H9QEXF5FE9Y", "from": "sig-adaptive-accessibility-dials", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFZMAZA5DXNQNS67X", "from": "sig-adopt-coding-agents-lowest-risk-first-then-mandate", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HCEN369K2V5XWE01Y", "from": "sig-adopt-coding-agents-lowest-risk-first-then-mandate", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HW61X3HXP40F2Q35P", "from": "sig-adoption-arc-fear-then-slop", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPDCNMWGY3DY0AHMP", "from": "sig-adoption-is-a-three-act-story", "to": "pat-ai-native-org", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HZ8JJ08R5NKVHPRM7", "from": "sig-agency-language-level-harness", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4HCQ5SQ6BVZM49WT", "from": "sig-agent-api-key-status-quo", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HG8FA0WFW554NZJEF", "from": "sig-agent-api-traffic-breaks-human-assumptions", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0N80F0YY4637DQVF", "from": "sig-agent-architecture-churn-6mo", "to": "pat-harness-over-model", "data": {}}
@@ -2597,7 +2588,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H2VC10X5M4FWNM08H", "from": "sig-agent-code-speed-compute-cost", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HH88CZFFAFS7S4EJT", "from": "sig-agent-code-speed-compute-cost", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFV4E2VKGW5CMKG8R", "from": "sig-agent-commit-attribution-gap", "to": "pat-agent-supply-chain", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HG2AZZFCKCMYF22M5", "from": "sig-agent-control-becomes-procurement-and-law", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJW9T0PTWAQK5V0FC", "from": "sig-agent-demos-hide-unhappy-path", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HAJZ00AZWGFZFXKXJ", "from": "sig-agent-design-is-swe", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQQ6QK79CATXVPRBC", "from": "sig-agent-designed-kernels-run-in-production-at-together", "to": "pat-accelerated-research", "data": {}}
@@ -2609,10 +2599,8 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HZHEBS58RQPPH9E7M", "from": "sig-agent-full-gh-access-premature-pr", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTHWSDZV0GSGV94WY", "from": "sig-agent-gap-what-to-focus", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDYH40MZNJH13M4Q3", "from": "sig-agent-groupthink-breaks-critics", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HPC1TKHM892J5EC4A", "from": "sig-agent-harness-lifts-kernel-solves-then-plateaus", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HEF87QBPKK5H3R5KC", "from": "sig-agent-highest-h-index", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HC1FFC2PY2WJ2JJEP", "from": "sig-agent-ideas-human-sourced", "to": "pat-accelerated-research", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HFHSS4NSYJ894D625", "from": "sig-agent-incidents-no-control-plane", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4CEYN45K5M5DGYPP", "from": "sig-agent-infra-great-mismatch", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HVBBRQW8DJMHD657Y", "from": "sig-agent-infra-half-life-measured-in-months", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HX2XDWZGCWVE6Y41X", "from": "sig-agent-is-a-security-boundary-problem", "to": "pat-new-cyber-threats", "data": {}}
@@ -2623,7 +2611,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H57AGF3JYY9XQEJTW", "from": "sig-agent-memory-markdown-monoculture", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNFMWJ0BAFP03K47T", "from": "sig-agent-native-terminal-tooling", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDTDJJ5NFHC28XE6S", "from": "sig-agent-on-behalf-of-blurs-authorization", "to": "pat-new-cyber-threats", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HY25MT1PNZRYT6GN5", "from": "sig-agent-on-top-until-vlas-are-as-big-as-llms", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0GBF0SBS4CHFNMNC", "from": "sig-agent-on-top-until-vlas-are-as-big-as-llms", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHXKKVYS563QVQ19Z", "from": "sig-agent-overpermissioning-default", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0WCF6K41FP8ECKPR", "from": "sig-agent-readiness-gates-autonomy", "to": "pat-verification-gap", "data": {}}
@@ -2637,20 +2624,17 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H16EN6ZN1BY1ZEP7H", "from": "sig-agent-sessions-as-team-surface", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H3BWEJDD5XEWEEZGS", "from": "sig-agent-to-agent-is-a-search-problem-not-a-protocol", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1D8MXCESX28BDVAC", "from": "sig-agent-tool-substitution-violation", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HECNM24S1A2ZSSYEH", "from": "sig-agent-traces-drive-language-design", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJ8TMNSKQ1J0P9407", "from": "sig-agent-usage-dominates-cursor-revenue", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMSPF0748GQYCTCX9", "from": "sig-agent-variance-needs-pass-at-k-and-pass-hat-k", "to": "pat-benchmark-trust-crisis", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHKHCZ73ZHWQ7R2YG", "from": "sig-agent-variance-needs-pass-at-k-and-pass-hat-k", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HN6EWPT25VEXW3STB", "from": "sig-agent-walled-gardens-aol-era", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQE0MC3T6HN7CKBXQ", "from": "sig-agentic-delegation-abstraction", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HEX8P1D7XWQC4KJF9", "from": "sig-agentic-era-has-no-cost-control-plane", "to": "pat-durable-execution", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H83J0E4E6ACZE84W5", "from": "sig-agentic-era-has-no-cost-control-plane", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1ENEK5A4N07Y8TQJ", "from": "sig-agentic-payments-explode-when-token-subsidies-end", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6QFWKDRH4S1D8P5E", "from": "sig-agentic-platforms-force-fde", "to": "pat-fde-rise", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6RXWMQK3HRAD0P50", "from": "sig-agentic-platforms-force-fde", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H8K97DZ0HHH13RE5Y", "from": "sig-agentic-stack-nondeterminism", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HCEKXH0B03NFGC74X", "from": "sig-agentic-vs-rl-games", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H3FBB2T8G9ZEC4KTK", "from": "sig-agentic-workloads-break-classic-serving-assumptions", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRB3AWDTMQH5B835Q", "from": "sig-agentic-workloads-break-classic-serving-assumptions", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFX0ZRR5KJ06DNMJW", "from": "sig-agentic-workloads-reshape-inference", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HE3E26YTGJ71AYMAR", "from": "sig-agents-100x-the-entitlements-problem", "to": "pat-new-cyber-threats", "data": {}}
@@ -2669,7 +2653,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H4D1XC87W11AK35NH", "from": "sig-agents-investigate-they-dont-detect", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4MJJMEDGY5WN32GT", "from": "sig-agents-invoke-humans-now", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPVRN7T54NT71XXTN", "from": "sig-agents-leave-laptops", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HR9X5BP3R270KRQHP", "from": "sig-agents-move-from-one-user-to-groups", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHMQXWJ9ZNTRYN9FR", "from": "sig-agents-need-a-web-access-layer", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTMSPF7QPGWBZWV4D", "from": "sig-agents-need-a-web-access-layer", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HKKM5RW6P6MPQF2VD", "from": "sig-agents-need-wallets-not-just-meters", "to": "pat-agent-economy", "data": {}}
@@ -2684,14 +2667,10 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H180TJDSZSYY9RTT9", "from": "sig-agents-reset-knowledge-every-task", "to": "pat-agent-memory-layer", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HG4X0S1K248KERKTM", "from": "sig-agents-reset-knowledge-every-task", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HYTTQS2NXRBZ7VQPW", "from": "sig-agents-saturate-research-taste", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HPACGX169KT2W034E", "from": "sig-agents-scoped-to-the-gray-zone", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H10NHAVCTB43X0JZ3", "from": "sig-agents-script-their-own-computer-use", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H2YRMVSKFEFNJ8KY0", "from": "sig-agents-ship-like-2008-web", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HAN0MY0NDYJ8WNKTG", "from": "sig-agents-space-time-constrained", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HY2AEEQT855F0H56P", "from": "sig-agents-squirrel-pii", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HN2VWBN1N2HZNEAJ1", "from": "sig-agents-use-human-credentials-risk", "to": "pat-new-cyber-threats", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HSNPPMHH06X6G0N5G", "from": "sig-agents-write-caveman-queries", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HGY1F3X89RBKGXVRM", "from": "sig-agents-write-cypher-now", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HYXR1VNYQ0GSQGEV7", "from": "sig-agents-write-their-own-deploy-checks", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H28ADMEF9WMTQDN50", "from": "sig-ai-chatbot-misuse-is-the-top-health-technology-hazard-of-2026", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0VKCH8N05EK7TTWE", "from": "sig-ai-chatbot-misuse-is-the-top-health-technology-hazard-of-2026", "to": "pat-verification-gap", "data": {}}
@@ -2723,7 +2702,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HW15TF7G1RAT1GZWX", "from": "sig-amazon-pilot-median-4-5x-from-changed-way-of-working", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H2NCV7CT2H8XP8BMP", "from": "sig-an-agent-barred-from-the-spec-used-bash-then-set-then-cat", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HP2DJTY10KJDZ2X9V", "from": "sig-an-agent-barred-from-the-spec-used-bash-then-set-then-cat", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HM82191QXVVAXDJ5F", "from": "sig-an-agent-header-gives-full-provenance-like-a-trace-id", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNCA7DV2338AYCYP5", "from": "sig-an-agent-header-gives-full-provenance-like-a-trace-id", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMGPZTDHA62R2ZECJ", "from": "sig-an-audience-could-not-tell-glm-5-2-from-opus-4-8-on-landing-pages", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H73N1Z3RV4AVSN8XN", "from": "sig-an-intern-designed-the-attention-architecture", "to": "pat-ai-native-org", "data": {}}
@@ -2738,11 +2716,9 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H2CV8MJ5A0GG8K3QP", "from": "sig-anthropic-removing-humans-from-review", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HS5FWE65C4RRVHMWW", "from": "sig-anthropic-rsi-review-bottleneck", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HAAGB3JPJTJP3TT68", "from": "sig-anthropic-writes-sixty-percent-of-code-via-tag", "to": "pat-ai-native-org", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HSBQBJ8PK81S6K0W9", "from": "sig-anthropic-writes-sixty-percent-of-code-via-tag", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HC1S82KJDKYNDN7R3", "from": "sig-any-action-an-agent-takes-a-human-can-take", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPPYA8AKDBHFR5F1P", "from": "sig-any-action-an-agent-takes-a-human-can-take", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNXV3AX7TAD4P57XS", "from": "sig-api-first-lets-operators-vibe-code-their-tools", "to": "pat-ai-native-org", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HDGS6YNGFJ9YT3KTD", "from": "sig-api-first-lets-operators-vibe-code-their-tools", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4025YVNT3WAE8ZR5", "from": "sig-apify-put-20000-tools-on-x402-in-a-day", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHG3S1DEEMGHHHKX0", "from": "sig-apify-put-20000-tools-on-x402-in-a-day", "to": "pat-agent-supply-chain", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HB8190M870FBDJM5B", "from": "sig-approval-gates-and-sandboxes", "to": "pat-verification-gap", "data": {}}
@@ -2758,14 +2734,12 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HF3267S9MGDM53K1A", "from": "sig-arguments-in-slack-threads-produce-the-best-context", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNYPWD7424GQGAND0", "from": "sig-arize-eval-volume-2026", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZ15XZ691XHC7JQ07", "from": "sig-arize-signal-launch", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H094K5PQ9D4EY02BT", "from": "sig-ask-the-one-question-with-maximal-information-gain", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9YPGGMJA8MZ8HEVR", "from": "sig-assistant-checkout-is-human-in-the-loop-by-design", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5N84D89WYCB870EB", "from": "sig-assistant-checkout-is-human-in-the-loop-by-design", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HX7YSD7HBC69RK5GK", "from": "sig-assistants-became-a-librarys-number-one-inbound-source", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H8QACXMFG9AWSN3FK", "from": "sig-assistants-want-your-feed-not-your-search-api", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7CQHZEJMGE985D4J", "from": "sig-asymmetric-verbs-loud-and-silent-failures", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HV2Q4B2CJA3K6R0DQ", "from": "sig-asymmetric-verbs-loud-and-silent-failures", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HKEF8VPA5R0VH501B", "from": "sig-async-agent-architectures-emerging", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9824ADF5BP39RK9S", "from": "sig-atlan-agent-stack-churn", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPHB1Z6D53CAA4TK2", "from": "sig-atlan-bootstrapped-agent-limits", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNP9KAP72R2JJ5C79", "from": "sig-atlan-skill-sprawl", "to": "pat-agent-supply-chain", "data": {}}
@@ -2779,23 +2753,18 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HEQHK2ENY9CK7M8ZS", "from": "sig-auto-evolving-skills-need-governance-first", "to": "pat-continual-learning-turn", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HCNX5PJP0CFZPX2FY", "from": "sig-auto-mode-mitigation-claim", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HAA25AYFR9F8S5A9E", "from": "sig-auto-research-crossed-in-dec-2025", "to": "pat-accelerated-research", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HJCJ5QVXQA9XXV860", "from": "sig-auto-research-crossed-in-dec-2025", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHXQH8MF071QCYYBT", "from": "sig-auto-scientist-outperforms-research-staff", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFCSKE2EMH12MQDJJ", "from": "sig-autoagent-eval-selfimprovement", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H2BPZPG147YXP9GN9", "from": "sig-automatic-skill-capture", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNZ4PE0VFG52NJVBV", "from": "sig-automattic-radical-speed-month", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6VHBVTMYMHNN4XMW", "from": "sig-autonomy-unevenly-distributed", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0NJ0G8X3C6BNY5MJ", "from": "sig-autoresearch-beats-community-records", "to": "pat-accelerated-research", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HNHQ74277W0D9P59J", "from": "sig-aws-productizes-agent-reliability", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HF6GCHSG0TVHZMXX4", "from": "sig-aws-productizes-agent-reliability", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HH120RSSEGBXFT48H", "from": "sig-aws-productizes-spec-driven", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1XGBNPHMTYNV6FT0", "from": "sig-aws-ships-agentcore-payments-with-coinbase-and-stripe-wallets", "to": "pat-agent-economy", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HGZYV1NEXHTG617JE", "from": "sig-aws-ships-agentcore-payments-with-coinbase-and-stripe-wallets", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HW7RG2A7STX3062CJ", "from": "sig-babyagi4-activegraph-runtime", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1G9C9HARW3H1KMYW", "from": "sig-background-agents-absorb-ops-long-tail", "to": "pat-durable-execution", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWZFMVNMEMG9XZPB2", "from": "sig-background-automation-is-the-ballgame", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1N379NF3QAF1ZWC3", "from": "sig-bad-memory-is-expensive", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H4KR2BR5Q8ZDBM7FM", "from": "sig-baml-adoption-without-rewrite", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HD1S1NPDFVEYA7BR4", "from": "sig-be-unreasonable-the-product-was-the-box", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H14NR42RAM7DPRNDQ", "from": "sig-becoming-ai-native-is-sixty-percent-not-ai", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5SW27P0NV07ZQ0K6", "from": "sig-becoming-ai-native-is-sixty-percent-not-ai", "to": "pat-model-not-bottleneck", "data": {}}
@@ -2820,7 +2789,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HR8A7093XAZSQH5KP", "from": "sig-bio-refusals-miscalibrated", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HGDFPB36VH860HMNR", "from": "sig-block-90pct-adoption-no-impact", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWWMF3WVRJ06A1JBV", "from": "sig-block-autonomy-then-layoffs", "to": "pat-ai-native-org", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HZ0S0X5SDCHAJ1XK3", "from": "sig-block-champions-metrics", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H2MRWEG7MQHQ98SYB", "from": "sig-block-review-bottleneck", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0SR90N1E9D51ZC5V", "from": "sig-block-world-model-autonomy", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZS7R0JXZQTVY64TZ", "from": "sig-borrowed-confidence-wharton", "to": "pat-verification-gap", "data": {}}
@@ -2840,19 +2808,15 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HZCBFPWMN9F3PM03K", "from": "sig-brand-as-verifiable-ground-truth", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HK8YREADG05DJDQQP", "from": "sig-brand-loss-blocked-mcp-servers", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5S8ZET1JTBMJRY69", "from": "sig-breadth-viable-for-small-teams", "to": "pat-saaspocalypse", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HKKH389SHB4711WT0", "from": "sig-bring-your-own-harness-is-the-current-rung", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HMF8Q8GJZWPGV1NJ0", "from": "sig-bring-your-own-harness-training", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQ4TSV5DMMC76215G", "from": "sig-broad-taste-is-trainable-narrow-judgement-is-not", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7YJH5Q83F1MW9R87", "from": "sig-broken-gpu-silent-corruption", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HED56VTAH4H6152P8", "from": "sig-broken-tasks-distort-rankings", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5RJ8K09A4NYX9ZYR", "from": "sig-browser-agents-adoption-gap", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4VSHQCYQQZDCSECV", "from": "sig-browser-automation-shopping-failed-checkout-apis-won", "to": "pat-agent-economy", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HY9AHC03PV0440RKP", "from": "sig-browser-automation-shopping-failed-checkout-apis-won", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5NY6VEE4N71BJ4E3", "from": "sig-browser-testing-matured", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HEBYB0DFH4S0FDPY9", "from": "sig-budget-driven-model-mixing", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQQ2DSZ60TGAHY889", "from": "sig-build-the-gtm-machine-before-hiring-the-team", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H3XF7E445HQGGCC0Z", "from": "sig-building-an-agent-went-from-a-quarter-to-five-decisions", "to": "pat-durable-execution", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H9V86RH1J00BDWJAX", "from": "sig-building-an-agent-went-from-a-quarter-to-five-decisions", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HM0MVWRWS3NY87QPC", "from": "sig-buy-vs-build-is-a-false-dichotomy-customizability-is-the-bit", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0T96FF6EQS2ZBG2Q", "from": "sig-buyers-genai-primary-research", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HGZXECFMDXN2HNQX1", "from": "sig-buyers-genai-primary-research", "to": "pat-saaspocalypse", "data": {}}
@@ -2871,8 +2835,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HYNJQVZMM4KDE0AX1", "from": "sig-chat-citations-insufficient", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HBCS5Z19TSE5PTZ6N", "from": "sig-chat-hosts-reach-app-store-scale", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H61328R829YD9S2DG", "from": "sig-cheap-gates-decide-when-heavy-models-run", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HK9F7BFKRHJNZ1M2P", "from": "sig-checkpoint-is-wrong-sync-unit", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HX5AACN13MQVT9MQ8", "from": "sig-chess-holy-grail-already-automated", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HK6BVP76R8XK934RR", "from": "sig-chip-designers-spend-70-percent-of-their-time-on-coordination", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFR1WY31KACDJD38A", "from": "sig-chip-designers-spend-70-percent-of-their-time-on-coordination", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0DD6CEYVD78EF75P", "from": "sig-chronicle-replay-ci", "to": "pat-harness-over-model", "data": {}}
@@ -2880,25 +2842,21 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HVF8NYAT693M882BJ", "from": "sig-ciso-resumes-laptop-backups", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H3V5R3XNS6JTGNV2P", "from": "sig-cl-failures-split-stability-plasticity", "to": "pat-continual-learning-turn", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HK54D8XXQJEM3HDVT", "from": "sig-classical-ml-discipline-returns-to-agents", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HPWRE69D0Q4J4R3FQ", "from": "sig-classified-drift-automated-remediation", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDA8PSDNVANXY8KAK", "from": "sig-classified-logs-generate-battle-cards-in-minutes", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7YH5BWNGW1E7TCRA", "from": "sig-classified-logs-generate-battle-cards-in-minutes", "to": "pat-continual-learning-turn", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HF3V07YFMBG2HBCR2", "from": "sig-classify-acceptable-failures-and-run-tests-many-times", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HCP6TRN3JQQX0CN6H", "from": "sig-claude-code-becomes-rlm", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNPSQ2HEYVCKMMKPG", "from": "sig-claude-collapses-graph-barrier", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HP9303XTMW2HEZJS2", "from": "sig-claude-dynamic-connector-discovery", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6XPSD39XWG2WEGXA", "from": "sig-claude-multipart-requirement-drop", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQEC6FJ51KXRQ6B9X", "from": "sig-claude-tag-65pct-product-prs", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HH62XA8KD0E8A62XN", "from": "sig-claw-shakeout-prediction", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPMJWYAWDJ0F017AR", "from": "sig-clean-200-wrong-trade", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HMNQARF0H5JVS9Q3M", "from": "sig-clean-code-agent-economics", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H48F6EYWMQX496P6K", "from": "sig-cli-beats-mcp-for-browser-control", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTWPAKQ9E7R1P7W09", "from": "sig-cli-displaces-editor", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTNZVYP3ABT7J5DXS", "from": "sig-climb-only-as-high-as-forced", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZZ7HNP1PA7W5JDTM", "from": "sig-clinician-owns-definition-of-correct", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFEF2T2HJ7N8CYA1V", "from": "sig-closed-loop-agent-self-tuning-prod", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6ZDQS1ER8VMFFK8P", "from": "sig-cloud-agent-platform-must-be-harness-agnostic", "to": "pat-durable-execution", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H8FZEQR03FPMA2ZJ0", "from": "sig-cloud-agent-platform-must-be-harness-agnostic", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HVAKE1RC94F7481X5", "from": "sig-cluster-production-to-find-unknown-failures", "to": "pat-continual-learning-turn", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJND7ZWAGXPZPKSPD", "from": "sig-cluster-production-to-find-unknown-failures", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HBCBJSF59JG3D149R", "from": "sig-clusters-are-not-issues", "to": "pat-verification-gap", "data": {}}
@@ -2912,7 +2870,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H1TA30XMR0RCJH00T", "from": "sig-code-review-will-vanish", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4J9VBHK120TTBP76", "from": "sig-code-review-will-vanish", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQBJB1A4QHW5TRMPZ", "from": "sig-code-velocity-to-idea-velocity", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H2E2TGNT0EP1CR75T", "from": "sig-codex-open-at-every-layer", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H8D1PXYE4EAEB899X", "from": "sig-coding-agent-rubber-stamp-uis", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDJ9Q753TFZB6BJRA", "from": "sig-coding-agents-default-typescript", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZY63SZXDGWET4R2H", "from": "sig-coding-agents-read-node-modules-not-your-website", "to": "pat-agent-economy", "data": {}}
@@ -2936,12 +2893,9 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H52BEFMT57XZNHK74", "from": "sig-compliance-not-rails-gates-enterprise-agent-payments", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HYRRPV0VSDKH41W84", "from": "sig-compliance-reactive-to-predictive", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H73QQTMPC1N447WM8", "from": "sig-composite-overwrites-record", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HPCW53G37V68QD81J", "from": "sig-compound-plugin-used-by-hundreds-of-thousands-daily", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HBA4GMPVRH30GRMFB", "from": "sig-comprehension-moves-to-traces", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZZVFYJ7NDFPSSVCY", "from": "sig-compressed-page-token-math", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDJX59YH501HCSHHN", "from": "sig-compute-scarcity-rations-frontier-tokens", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRYGXP2F8NM7Q6BZ8", "from": "sig-compute-shape-shifts-who-competes", "to": "pat-sovereign-ai", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HSNEFF6PF6JXC55NV", "from": "sig-computer-use-goes-background", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HXFMWBYN872X5AEKR", "from": "sig-conference-assets-all-typescript", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HYRK0AD1ZEJFFGQ21", "from": "sig-confinement-neutralizes-vibe-code-bugs", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HSTVPW8DZF0SYZC9B", "from": "sig-confinement-neutralizes-vibe-code-bugs", "to": "pat-verification-gap", "data": {}}
@@ -3000,13 +2954,11 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HYMRSXF0ZDYVMX80S", "from": "sig-dec-2025-trendline-break", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HF72Y8MENM5VG599S", "from": "sig-decagon-fde-equals-product-eng", "to": "pat-fde-rise", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5G1S2KKZ8JRF2RJX", "from": "sig-decagon-hypergrowth-role-split", "to": "pat-saaspocalypse", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HRXPE4XM4CZ1MYB0E", "from": "sig-decentralize-the-gateway-centralize-governance", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HM5M9MAG0VCWYNNB4", "from": "sig-decentralize-the-gateway-centralize-governance", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9X59Q32ETZH1YS84", "from": "sig-decision-markets-govern-agent-organizations", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HYDPNKFF8KR86B54K", "from": "sig-decision-markets-govern-agent-organizations", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H3TX7QRRGRHC62FBH", "from": "sig-decision-speed-is-the-new-bottleneck", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HR8TD56H2FMNB5EW0", "from": "sig-decision-speed-is-the-new-bottleneck", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HZTS9K127648Z9D3H", "from": "sig-declarative-ui-protocols-are-the-middle-path", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HXS0A45224EBMTM8E", "from": "sig-deep-research-aimed-inward", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWSESTXGW7ZECCTZ2", "from": "sig-deepgemm-fp8-race-condition", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9KRMK51D7MAAB2ZH", "from": "sig-deepmind-calls-video-the-missing-foundation-model-for-agi", "to": "pat-accelerated-research", "data": {}}
@@ -3032,7 +2984,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HNBDR6H15J11T50ZR", "from": "sig-designers-ship-ios-chat-6-days", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWADJEZ159CEH6220", "from": "sig-deterministic-doc-graph", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HERSDN27X325CB5YX", "from": "sig-deterministic-workflows-brittle", "to": "pat-context-graphs", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H08P3C7NFFTDVG91G", "from": "sig-dev-loop-is-the-bottleneck", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HYCCBFVQTDHR0KBBP", "from": "sig-devrole-shifted-2026", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HY3CNVQJ4Y27JNBE6", "from": "sig-diff-sae-40x", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HSHYBBSRT9XDQ8GWR", "from": "sig-differ-per-user-divergence-bet", "to": "pat-saaspocalypse", "data": {}}
@@ -3054,16 +3005,12 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HFW55EK9JSRMBKF35", "from": "sig-driver-swap-lifts-pass-rate", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0JHGCCT2EXF9QD94", "from": "sig-driver-swap-lifts-pass-rate", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHVF5XCHXDYGPY3EX", "from": "sig-drug-development-declining", "to": "pat-accelerated-research", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HBNN7FAJM9T8M143Z", "from": "sig-dsa-prediction-h2-2026", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H7NFN62RRP90M5PC7", "from": "sig-dspy-fixed-contract-agility", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HY47HKFPGGTWRK06W", "from": "sig-dspy-optimization-ladder", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRFQTKWZA3PZNMDWH", "from": "sig-dst-agent-designs", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HKKDS6Y1TDJ1CF9PV", "from": "sig-dual-engine-convergence", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMJPRSN79WNM39F2Y", "from": "sig-duolingo-guideline-copy-fix", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZDAZTYGYDC6DCDK1", "from": "sig-duolingo-proctor-rubber-stamp", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HEE2GHVVHFEZGCKAB", "from": "sig-durable-record-for-agents", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5BSPNSQH4NMW6B9D", "from": "sig-durable-runtime-category-emerging", "to": "pat-durable-execution", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HJ16QWJB46B1DGQH9", "from": "sig-durable-runtime-category-emerging", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRYVBWH7RR29ZXWP8", "from": "sig-each-seller-gets-a-persistent-agent-workspace", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJJ53DXKN3WM66XAF", "from": "sig-earn-the-right-to-more-autonomy", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HSTEQ49ZX9A1BR63N", "from": "sig-edra-30m-series-a", "to": "pat-context-graphs", "data": {}}
@@ -3080,7 +3027,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HN6GTAZ6Q6VW0D4WS", "from": "sig-engineers-ignore-leaderboards", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6PSEQW7KV3BG9N10", "from": "sig-engineers-mourn-handcrafting-and-review-slop", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HV7R8Q7EREPNJBWS6", "from": "sig-enterprise-agent-risk-is-a-sharpe-ratio", "to": "pat-ai-native-org", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HMM3B6DN17X9HHV7M", "from": "sig-enterprise-agent-risk-is-a-sharpe-ratio", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNQ265KC3Z3Y5G5HH", "from": "sig-enterprise-ai-spend-shock", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7DYR7M4WAGN8K0H1", "from": "sig-enterprise-context-staleness", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRWQHMDCJ942GHBGQ", "from": "sig-enterprise-hallucination-retractions", "to": "pat-verification-gap", "data": {}}
@@ -3104,16 +3050,13 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HRTVK1BFK0PNDGV4E", "from": "sig-environments-are-the-enterprise-moat", "to": "pat-environments-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HH052FFW5GHDPH1HM", "from": "sig-environments-are-the-enterprise-moat", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJ4HVCJDGKGAQJES1", "from": "sig-environments-become-the-unit", "to": "pat-environments-economy", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H178KY0JD6B3V4YZ8", "from": "sig-environments-become-the-unit", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H48TJ2RQ66P108XZ9", "from": "sig-environments-market-multibillion", "to": "pat-environments-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1KZT4J598DJF261W", "from": "sig-environments-not-scale-drive-long-horizon-rl", "to": "pat-environments-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H37JCSR6DPR8S1711", "from": "sig-environments-not-scale-drive-long-horizon-rl", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H06C7024MJSDP2SJA", "from": "sig-environments-not-workflows-unlock-agent-creativity", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HR7607T9M14DPNQ50", "from": "sig-environments-not-workflows-unlock-agent-creativity", "to": "pat-environments-economy", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HP61P320DYC9C6KMC", "from": "sig-environments-not-workflows-unlock-agent-creativity", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H3AZQRBYXRWVG3AVE", "from": "sig-escalation-as-capability", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFVJ6AM6X4M5K0XG9", "from": "sig-estate-questions-beat-vector", "to": "pat-context-graphs", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HFCSC0TNDPEQYNYQF", "from": "sig-etl-remediation-minutes-vs-days", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWR851CS1M07H7CM9", "from": "sig-eu-ai-act-agent-oversight", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJVP68DCRXX297YEE", "from": "sig-eureka-machine-program", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMBRS2Q745THMZ171", "from": "sig-eval-data-is-the-bottleneck", "to": "pat-verification-gap", "data": {}}
@@ -3135,12 +3078,10 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HJZVG19W8YZ9P6KPN", "from": "sig-evals-should-be-tests-in-code", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZTX4C5F3PJ7Y95DR", "from": "sig-event-store-is-the-agent-context-layer", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H78DC7NKYJKNRYFH3", "from": "sig-events-not-graphs", "to": "pat-ai-native-org", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HEWX450PV0K6HSN64", "from": "sig-events-not-graphs", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H160WVGF8VV2SZYBZ", "from": "sig-every-code-style-check-would-have-passed-the-outreach-disaster", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HKTJSQ8D2J122TKH2", "from": "sig-every-company-needs-evals", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HGDH4BG51C9JSBFHS", "from": "sig-every-company-needs-evals", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HX7YXG1ET2B0C1VQE", "from": "sig-every-gtm-trigger-becomes-a-durable-temporal-thread", "to": "pat-durable-execution", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H84YPEYVQHWXGFYDH", "from": "sig-every-gtm-trigger-becomes-a-durable-temporal-thread", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H8D9N6W6SCQJYD2E2", "from": "sig-every-hack-goes-to-prod", "to": "pat-fde-rise", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HE6QNRGRW2SWNVQWA", "from": "sig-every-hack-goes-to-prod", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HY3NDMKEF0H4F5W7E", "from": "sig-everyone-builds-custom-agents", "to": "pat-model-not-bottleneck", "data": {}}
@@ -3175,7 +3116,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H9P9K6NWST6XK6AE9", "from": "sig-fde-hiring-wave-2026", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJ0KJDCAKJ1NMKRTF", "from": "sig-fde-is-product-not-gtm", "to": "pat-fde-rise", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HN3JP5KYVJ82CHZC6", "from": "sig-fde-lifecycle-agentified", "to": "pat-fde-rise", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HJNZF74JG1YJB5CQZ", "from": "sig-fde-lifecycle-agentified", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTE1AWYEXEVWWB336", "from": "sig-fde-quadrant-origin", "to": "pat-fde-rise", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDSBE7HBR339G5K26", "from": "sig-fde-quadrant-origin", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H48X9MN4G8CS5SCEM", "from": "sig-fde-track-frontier-labs", "to": "pat-fde-rise", "data": {}}
@@ -3187,13 +3127,10 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HJG3PG3HMK0RMFXN8", "from": "sig-fifteen-agent-payment-protocols-in-a-year", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0C80ATK9BMTPW8XK", "from": "sig-fifty-claim-steps-force-a-balance-of-agentic-and-hard-coded", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZVAZ9YFZBJBX9M2B", "from": "sig-fifty-claim-steps-force-a-balance-of-agentic-and-hard-coded", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HYNG24XB3S89RZTYW", "from": "sig-fifty-parallel-worktrees", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJE0JR49P89BV51WM", "from": "sig-fifty-parallel-worktrees", "to": "pat-value-of-judgement", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HGNCDZ4PMZG1C2M1P", "from": "sig-fifty-x-roi-fine-tune-was-quietly-tech-debt", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HASY8XY76NP9HN61V", "from": "sig-fifty-x-roi-fine-tune-was-quietly-tech-debt", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HACPFSW8P8NWY2WA4", "from": "sig-figma-demoted-to-fine-tuning", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HVEGP9N373ANV3XM7", "from": "sig-figma-mcp-became-a-fastest-growing-product", "to": "pat-agent-economy", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HA6D2JTE1N1WG5RFH", "from": "sig-figma-mcp-became-a-fastest-growing-product", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDSV7WTZJXD18G7TK", "from": "sig-file-memory-fails-enterprise-provenance", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HEPS8DRRABGA0842M", "from": "sig-filed-revenue-inflection", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6063W2MKF5H1YARE", "from": "sig-files-over-retrieval-infra", "to": "pat-context-graphs", "data": {}}
@@ -3206,7 +3143,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H2B5CAEKCBGSZKJ7P", "from": "sig-first-legally-registered-agent-organization", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HBA3C3GQXTFH0DQDR", "from": "sig-five-eyes-months-not-years", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZAF3TVS4G3J872Q0", "from": "sig-five-eyes-months-not-years", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HVW4CQ2ZN4BTH5H4R", "from": "sig-five-lines-give-a-robot-a-brain", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HXXW52K3T0TEPZAWX", "from": "sig-fix-belongs-in-the-right-layer", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HW8MHMJX7X45RZMXX", "from": "sig-fix-cycle-from-a-week-to-under-an-hour", "to": "pat-continual-learning-turn", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H96ST3T1JG2PWY0TQ", "from": "sig-fix-cycle-from-a-week-to-under-an-hour", "to": "pat-harness-over-model", "data": {}}
@@ -3218,7 +3154,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HR6FNZZ53P5DR5PDB", "from": "sig-flowmaxxing-and-review-load-hit-early-career-engineers", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPWBTHZ6V0CP40GJB", "from": "sig-flowmaxxing-and-review-load-hit-early-career-engineers", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H2FNSDFAAKM9T7Q8G", "from": "sig-forbes-context-graphs", "to": "pat-context-graphs", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H7KX5P4BNFRS1HZVS", "from": "sig-forestwalk-incall-action-agent", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4Q3E92V7W6Z2SBCH", "from": "sig-forty-hand-written-lines-beat-a-thousand-generated", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HC6TXQH49FK5P0HSE", "from": "sig-founder-clone-drafts-decisions-from-eval-calibrated-judgement", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTWGF2FC0DY6ABE1K", "from": "sig-founder-clone-drafts-decisions-from-eval-calibrated-judgement", "to": "pat-value-of-judgement", "data": {}}
@@ -3276,14 +3211,12 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HFGKCEPYKBJ6DKZFG", "from": "sig-github-mcp-exploit", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTRRWN1XW05PM8XDJ", "from": "sig-give-the-agent-a-budget-not-a-token", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H84R4W7BT70XCC7M2", "from": "sig-give-the-agent-a-budget-not-a-token", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H54ZCWCK3ZFQM88WW", "from": "sig-glm-5-2-on-h200-runs-three-prefill-workers-per-decode", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H3R49SAGMHQXZGZCC", "from": "sig-glm-5-2-on-h200-runs-three-prefill-workers-per-decode", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMQ0Z02532MR9KXZB", "from": "sig-glm52-desktop-frontier", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHQ9PS93WT15K4TGB", "from": "sig-goal-expansion-is-the-new-trust-problem", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9ACCQ9SJ6DPD40MP", "from": "sig-goal-seeking-agents-outrun-alignment", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTWVFEPJ7Y7FFH6H9", "from": "sig-goal-seeking-agents-outrun-alignment", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQ2EJFKA33KZBRH2J", "from": "sig-goal-verifier-loops", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HA94BADNZSY2MY7E1", "from": "sig-goals-loops-and-dreaming", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HKVD5RVQJ0VYWTWQ9", "from": "sig-golden-session-capture", "to": "pat-agent-memory-layer", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H54QD8YZ6JBH9ZQ19", "from": "sig-golden-session-capture", "to": "pat-continual-learning-turn", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HETXTDQ6VZ50B4MA2", "from": "sig-governance-moves-from-prs-to-a-software-graph", "to": "pat-context-graphs", "data": {}}
@@ -3303,7 +3236,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HX3XC7SFHESW8PVSH", "from": "sig-gtm-teams-become-builders", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHNNHBF4VE5E3Z3NV", "from": "sig-gtm-teams-now-ship-every-two-weeks-like-engineering", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPJSMJNYS35X6EBWE", "from": "sig-guard-at-the-action-surface", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HPXV154FKNQ82WRR0", "from": "sig-guardrail-stack-convergence", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HVA88K83TTGET30HM", "from": "sig-guardrails-downshift-models", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H78XE2KBTRHAZT8MQ", "from": "sig-guardrails-in-code-not-prompts", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1XAPJX9C1VRT2QQM", "from": "sig-guardrails-must-be-deterministic", "to": "pat-harness-over-model", "data": {}}
@@ -3319,7 +3251,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H4TZQEGAB2PBA64NV", "from": "sig-harness-bugs-masquerade-as-model-failures", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5RNAW5ZJ3ZAF7JB5", "from": "sig-harness-bugs-move-benchmarks", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQCE6B7N5MWB0H5ZV", "from": "sig-harness-bugs-move-benchmarks", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HR20V749BHQKV9B1V", "from": "sig-harness-churn-spec-portability", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMQYBBE6KJ4P9YTC0", "from": "sig-harness-engineering-is-a-leadership-job", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWTTN67HV15WSF07X", "from": "sig-harness-engineering-precondition", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4V8G43KD4HSW8CJ6", "from": "sig-harness-era-durability-doggedness", "to": "pat-harness-over-model", "data": {}}
@@ -3331,8 +3262,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HP2V2C1S28MSBVKAZ", "from": "sig-harness-makes-dumb-mistakes-impossible", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7HJ3GFRK3R52A5NS", "from": "sig-harness-makes-dumb-mistakes-impossible", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9K22SAXWQQP7GBDC", "from": "sig-harness-state-is-an-afterthought", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H99HA1A8S7KJ3EVZS", "from": "sig-harness-to-claw-initiative-learning", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HV467F5740JEAVH2Z", "from": "sig-harness-unaware-rl", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJJCH13GR2QNHHBV7", "from": "sig-harnessbench-20pt-spread", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H8GQ8NC36CH1Q4659", "from": "sig-heygen-thinnest-wrapper-won", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJ8PKW41W5M5FQ6F1", "from": "sig-hf-dataset-growth-curve", "to": "pat-sovereign-ai", "data": {}}
@@ -3341,7 +3270,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HJ1HMY5QKPS1E07Y8", "from": "sig-hf-search-regex-to-lucene", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H07S9SKS71S13ZKSY", "from": "sig-hierarchy-unlocks-radical-hypotheses", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5SF8CEE93QZHFWQZ", "from": "sig-hint-leakage-is-the-new-reward-hacking", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H19D4MY82WPSDJFZM", "from": "sig-hint-provenance-is-the-second-axis", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPYAGJ2BY2E7JGJG3", "from": "sig-hire-the-user-to-iterate", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H81WQ68TX5MWCYHC3", "from": "sig-hire-the-user-to-iterate", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNY2EKA5JWT3ETHXV", "from": "sig-host-owns-the-user-journey", "to": "pat-agent-supply-chain", "data": {}}
@@ -3377,13 +3305,10 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H2VA8YSDDVC5FTQ9J", "from": "sig-improving-your-claude-tag-improves-anthropic-not-you", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HGM3QGZ22TKJT9DFR", "from": "sig-improving-your-claude-tag-improves-anthropic-not-you", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWN3YJ18SQC7VWWP7", "from": "sig-in-house-standard-abandoned-for-skills", "to": "pat-agent-supply-chain", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HQP9A8PTNKD6ZH47E", "from": "sig-individual-agent-setups-dont-survive-teams", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HDS2K086AXZPP38BK", "from": "sig-inference-providers-accuracy-gap", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HY1MW4PHH48VR4F21", "from": "sig-infra-turns-mistakes-into-outages", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6CT4RWB6NQ7PG6FY", "from": "sig-ingestion-determines-answer-quality", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HSEEE3K5ACN9W0X83", "from": "sig-inner-loop-review-needs-higher-accuracy-than-humans", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRZH9PH8KWKQY7VJE", "from": "sig-inngest-durable-execution-vendor", "to": "pat-durable-execution", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H7VD2QF1GYAZQ15W6", "from": "sig-inngest-durable-execution-vendor", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HE0J2VAZSP9ZF9KW3", "from": "sig-input-90-output-10", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPH1ARF5VBYQ51EN4", "from": "sig-instrument-10x-for-agents", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HBAK5C5HTVVHR1BG4", "from": "sig-intelligence-context-divergence", "to": "pat-context-graphs", "data": {}}
@@ -3422,10 +3347,7 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H8ZR23S7F9GBZMBB5", "from": "sig-labs-absorb-compression-into-releases", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H37X6DX3PRNR0E835", "from": "sig-labs-run-two-week-persevere-or-pivot", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H8HXSH1FM6Q16A0Y5", "from": "sig-langfuse-self-optimization-experiment", "to": "pat-accelerated-research", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HZX2RE5DKFDF3QEN5", "from": "sig-language-substrate-carries-slop", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7EQHFFVRX56SFEQA", "from": "sig-laptop-agents-are-a-credential-hazard", "to": "pat-new-cyber-threats", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H9GWGZYSKVQ17TVA0", "from": "sig-latency-gates-agentic-retrieval", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HMB6JFSJGPZQTWYXK", "from": "sig-launched-to-6000-with-a-google-doc-then-rearchitected-every-sprint", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HETX865XWZ1PJ327Q", "from": "sig-leaders-ship-prs-on-a-manager-schedule", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPPE7GDYVH83Y2JE4", "from": "sig-lean-vc-frenzy", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H45Q5JE2K962VT6Y9", "from": "sig-learning-loops-productized", "to": "pat-context-graphs", "data": {}}
@@ -3454,7 +3376,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HY1W9H9AJ5QZQZBHM", "from": "sig-local-models-displace-subscriptions", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HE7ZM98X3RQ4PS43K", "from": "sig-local-models-in-claude-code", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HCSKKBZAMRQHA853M", "from": "sig-local-structured-parsing-50x-cheaper", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H0BCD98JAJ21F2M45", "from": "sig-local-to-cloud-harness-shift", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFPEGBTTWT5DRTAWN", "from": "sig-lod-context-assembly", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HBR8HPPHM933Z37N8", "from": "sig-log-as-memory-longmemeval", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJ9Z0BY468GTJNAHN", "from": "sig-log-is-agent-thesis", "to": "pat-model-not-bottleneck", "data": {}}
@@ -3463,7 +3384,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HVJ60XYM9Q3R8VZES", "from": "sig-logs-are-not-learning-environments", "to": "pat-environments-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPR3SHGBCCKY2P1ND", "from": "sig-logs-are-not-learning-environments", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6A3NCYGJMNZPTJ6B", "from": "sig-long-horizon-bio-still-unsolved", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HV5BXQ22MKKFYBX5A", "from": "sig-long-horizon-breaks-distillation", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HW9J1Z0PK0RVC5443", "from": "sig-long-horizon-is-a-scalar", "to": "pat-benchmark-trust-crisis", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HK8RF1CK78PCBD002", "from": "sig-long-horizon-rl-optimization-wall", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H66JPR66EHPC1K97N", "from": "sig-long-tail-exceptions-are-the-expensive-part", "to": "pat-model-not-bottleneck", "data": {}}
@@ -3474,9 +3394,7 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HEBN0J5ZVRJB5PNW0", "from": "sig-loops-zeitgeist-aie26", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H2X9JH0MNCZBM018Z", "from": "sig-loops-zeitgeist-june-2026", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H071ZZR61ZVCAEBVG", "from": "sig-loose-abstraction-leaks-eval", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HNC37CCYP7PX72S3W", "from": "sig-lyft-eval-harness-investment", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HW3PNZVJ61YQZEMRR", "from": "sig-lyft-frontier-user-sims-too-nice", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H6A8AYXGN4YHPDHHM", "from": "sig-lyft-post-training-next", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4VRHDZBB9V3PNZCS", "from": "sig-machine-identities-per-agent-collapsed-so-agents-run-as-the-user", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HESR6V4QAJVPGC807", "from": "sig-machine-identities-per-agent-collapsed-so-agents-run-as-the-user", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHAR9WAPMWBXJ8STJ", "from": "sig-maersk-rejects-mcp-for-tuned-function-calling", "to": "pat-harness-over-model", "data": {}}
@@ -3500,7 +3418,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H0BZ89PJR2VS1S1QP", "from": "sig-mcp-v2-stateless-core-extensions", "to": "pat-agent-supply-chain", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJF72GHQK1ADJ9FWM", "from": "sig-measure-dont-assume-context-tricks", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HR4KQQ0KAXHNMBHZ5", "from": "sig-media-agent-needs-verification-layer", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HA9T5PSAC9ZZ7CHYV", "from": "sig-media-agents-mirror-coding-agents", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4HHMTW2K13FSN9E2", "from": "sig-medical-necessity-graph", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HBYCYMRA27YC7D8Y9", "from": "sig-meetings-compile-to-prs", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HB3JK4PQMEEY001TB", "from": "sig-memo-test-vs-demo-test", "to": "pat-verification-gap", "data": {}}
@@ -3511,18 +3428,14 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HKWWRQE6FTV4GFX1K", "from": "sig-memory-products-store-preferences-not-outcomes", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HAV6S8TETS1RKPQMQ", "from": "sig-merchants-must-publish-a-manifest-and-a-catalog-agents-can-read", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H10DTYV902ANFX4W2", "from": "sig-merchants-must-publish-a-manifest-and-a-catalog-agents-can-read", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HQ1S5SBT8CJHCH3BK", "from": "sig-meta-harness-optimization-in-prod", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HVDVQJXY0J5GBRQTK", "from": "sig-meta-rogue-agent-breach", "to": "pat-new-cyber-threats", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HQKDD2QM91ZJ38EYN", "from": "sig-meta-turn-paper-87", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HXAF3RYQSQ9PESSH8", "from": "sig-metr-50pct-headline-inflates-capability", "to": "pat-benchmark-trust-crisis", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HAT93DD2X8T035DHY", "from": "sig-metr-horizon-accuracy-collapse", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0V7DB60460P2XHS3", "from": "sig-metrics-as-images-bounded-tokens", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5FP3A59SXVJS2FP9", "from": "sig-midsize-grounded-beats-frontier", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJR0HZSBBSQBZBPEC", "from": "sig-midtrain-multiplies-posttraining", "to": "pat-sovereign-ai", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HSYM0QDQCNYPX31M6", "from": "sig-minimal-agent-live-bootstrap", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H64W8J1Q2495M0ZEQ", "from": "sig-minimax-m3-open-multimodal", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1C56RE46XEXNMX9B", "from": "sig-mismanaged-geniuses", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HS1TFYJQHYHQJTC65", "from": "sig-mobile-agent-supervision-demand", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWH8SHBWC5ZD5QJWR", "from": "sig-model-access-geopolitics", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HAW1RQEP9WBMY8D8H", "from": "sig-model-eras-to-orchestration", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HKHRF09A5M1ACK12X", "from": "sig-model-eras-to-orchestration", "to": "pat-model-not-bottleneck", "data": {}}
@@ -3553,12 +3466,9 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HM2653FQ6PG3KM60T", "from": "sig-morgan-stanley-open-sources-alphalab", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJR0038XY9MVHB87X", "from": "sig-most-jobs-below-frontier", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H8RZK3WH3GXWAX475", "from": "sig-most-reasoning-failures-were-mishearing", "to": "pat-benchmark-trust-crisis", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H1FQ6RNQF35XGVNF5", "from": "sig-most-reasoning-failures-were-mishearing", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H036WDN6NSRKFSGAS", "from": "sig-most-teams-run-static-evals", "to": "pat-benchmark-trust-crisis", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HP4805M0DZXP94B1Q", "from": "sig-mozilla-bugfix-20x", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNQCRHRFGRBDTKQDR", "from": "sig-mozilla-bugfix-20x", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HCGMHKA3DJY7HPA29", "from": "sig-multi-agent-verdict-beats-threshold", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H58E4FZ08H35KZDRW", "from": "sig-multi-machine-five-failures", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HAVZ202H8YGAZNWZR", "from": "sig-multi-source-evidence-confidence", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7BDJF2XQZ13WWJ83", "from": "sig-multilayer-verification-outages-44pct", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HV7ZP7RBCBHR3QR36", "from": "sig-multimodal-tax-structure-first", "to": "pat-model-not-bottleneck", "data": {}}
@@ -3578,10 +3488,8 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H1J9619HSVS8B2XEN", "from": "sig-nearform-trace-clustering-loop", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMAVCWY4HBYEBD5NC", "from": "sig-nemotron-nvfp4-training", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6WWPDRACV063DT5Q", "from": "sig-neo4j-lakehouse-shapes-workshop", "to": "pat-context-graphs", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HMTPWDMEVD4NEQTMV", "from": "sig-netflix-antipattern-fleet-fanout", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HS7NK0D1HK19GJH6X", "from": "sig-netflix-level-two-autonomy-ceiling", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1X8YPFFX7R28A72J", "from": "sig-netflix-pattern-catalog-memory", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HM73W1W3YN1R5M2Y4", "from": "sig-netflix-profiling-agent-first-fix", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRV5ARGTMA9MK04CY", "from": "sig-network-is-the-new-agent-bottleneck", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HE2SDXW8123K216YX", "from": "sig-ninety-percent-synthetic-and-clinicians-cant-tell", "to": "pat-benchmark-trust-crisis", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHAMK0006X0Z5X9CK", "from": "sig-ninety-percent-synthetic-and-clinicians-cant-tell", "to": "pat-verification-gap", "data": {}}
@@ -3608,7 +3516,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HRVJ1DGYB15PYX366", "from": "sig-observed-behavior-beats-stated-preference", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HP0GWCQ06KDPX67SK", "from": "sig-offline-distillation-shifts-behaviour", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H2Y7RWD7BM3A8RY4Q", "from": "sig-omni-flash-ships-at-veo-3-1-fast-prices-with-a-three-second-image-model", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HG6M9JSWDD5ZWY7NN", "from": "sig-on-device-agent-constraint-budget", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HP5M6QG4NRZEE1M57", "from": "sig-on-device-agentic-games-thesis", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJAW61A1CGY3QPDH8", "from": "sig-on-device-models-preinstalled", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRMWNMP1QWMEHTEEA", "from": "sig-one-engineer-with-a-compounding-system-beats-teams", "to": "pat-ai-native-org", "data": {}}
@@ -3617,8 +3524,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HJ1B5Z4K8A0ZYJ3ZV", "from": "sig-one-persistent-agent-per-account-woken-by-heartbeats", "to": "pat-agent-memory-layer", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HB077Q9ZFQK4X40E9", "from": "sig-one-persistent-agent-per-account-woken-by-heartbeats", "to": "pat-durable-execution", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HXVWCWJC4AN2QS57H", "from": "sig-one-reply-in-a-hundred-makes-agent-execution-errors-expensive", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HVVWY4JSACGCTCT0A", "from": "sig-one-trusted-skill-converts-skeptics", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HNB8EY8J9J9JGN5BR", "from": "sig-online-hinting-beats-offline-on-ood", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HST9NGC153V8ZWMAX", "from": "sig-only-a-fifth-tried-it-so-activation-became-the-job", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMFE43KD7G57WN6NP", "from": "sig-only-proofs-scale-to-agent-throughput", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H3YN37E9Y8P0K8CDH", "from": "sig-ontology-goes-mainstream", "to": "pat-context-graphs", "data": {}}
@@ -3649,7 +3554,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H4HKZE23KFSXXW0RX", "from": "sig-openclaw-issue-velocity", "to": "pat-agent-supply-chain", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWP89DT008D7VPKKG", "from": "sig-openclaw-issues-as-harness-evidence", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1CFXW5TPBB29MFV4", "from": "sig-openclaw-unvetted-access", "to": "pat-new-cyber-threats", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HQ8FK61F7WZAZ72M6", "from": "sig-opengov-owns-agent-loop", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTKY09BM9NADYRP68", "from": "sig-openweight-negotiation-leverage", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HXCD6HXVNJ35S3WFE", "from": "sig-ops-agent-value-is-learned-context", "to": "pat-agent-memory-layer", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRMXCR0H8VM9D16R1", "from": "sig-ops-loop-is-differentiator", "to": "pat-model-not-bottleneck", "data": {}}
@@ -3669,7 +3573,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HXF3QTY75V8X5Q0BS", "from": "sig-oss-frontier-gap-6mo", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHP113CT6GN3RER2S", "from": "sig-oss-frontier-gap-6mo", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H44W90H2534KV6TG2", "from": "sig-out-of-band-annotation-governs-any-framework", "to": "pat-continual-learning-turn", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HG1BCD8R1W2N1F489", "from": "sig-out-of-band-annotation-governs-any-framework", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HH8DD7E1YZPN5R4H1", "from": "sig-outcome-driven-ai-era", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQYB79CW3AGB38D8M", "from": "sig-outcome-weighted-memory-lifts-benchmarks", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HK3GEWM0PCVFY36FS", "from": "sig-overconfident-evals-cost-real-money", "to": "pat-verification-gap", "data": {}}
@@ -3695,7 +3598,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H0DPV8BYAQMQCEHD5", "from": "sig-payments-run-on-a-deterministic-path-outside-the-agent", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0C1FDTA6ABQQ4PHD", "from": "sig-paypal-approval-token-makes-agent-checkout-asynchronous", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HKB2ECND0C1PKB15B", "from": "sig-paypal-backs-verifiable-intents-and-ap2-for-open-payments", "to": "pat-agent-economy", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HM82FH0QFY0VTNHWH", "from": "sig-pd-disaggregation-cuts-p99-inter-token-latency-nine-times", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHS6R1E17X70W4ZMZ", "from": "sig-pd-disaggregation-cuts-p99-inter-token-latency-nine-times", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H37T06EA7G22Y53TD", "from": "sig-pelican-svg-vs-html", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H93159KM9B801HXZE", "from": "sig-people-spot-ai-slop-in-two-seconds-but-cannot-say-why", "to": "pat-value-of-judgement", "data": {}}
@@ -3706,7 +3608,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HJVY78QQZN4GF33PY", "from": "sig-persona-is-configuration", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HGK3VZTFYD1CW5HC3", "from": "sig-persona-is-elicitation-not-knowledge", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H2PWGQ60J1JRWMXYY", "from": "sig-persona-sensitivity-and-behavior-blindness", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HBQGG0ATQZ9VPE673", "from": "sig-personal-agent-org-70pct", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HD8WV1M76G1JKTZWX", "from": "sig-personal-codegen-breaks-cloud-infra", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HAMG6V0RWRRBWK8NJ", "from": "sig-personal-knowledge-base-as-agent-output", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HYD7Z0V57MKKYAXNH", "from": "sig-personal-software-from-phone", "to": "pat-saaspocalypse", "data": {}}
@@ -3715,11 +3616,9 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HMJ6KHMMPS9M1S191", "from": "sig-personaplex-full-duplex", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HBC2N7V4WA086EYYB", "from": "sig-personas-invent-confounders", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTKR9K9E4709P4X3R", "from": "sig-phaidra-flat-cost-100pct", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HQWRE9Z6C3788B4SJ", "from": "sig-phi-is-stripped-before-it-reaches-the-data-lake", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HKGPA0XCBYJCDVD9K", "from": "sig-phoenix-isolation-failure", "to": "pat-fde-rise", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HGDH2ZVX3J4RWH5F6", "from": "sig-physical-data-metadata-explosion", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRPPFP2WRSYES95XZ", "from": "sig-pinterest-spark-medic-arc", "to": "pat-context-graphs", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HQ1RJ8R2ZZ140DMYB", "from": "sig-pipecat-neutral-voice-layer", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HCAZ22DT27Q3ZR47G", "from": "sig-plan-mode-eager-planning", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HED1P63HH56H6FQW1", "from": "sig-planetscale-founder-account", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HYQGKQZBKK581ZX5H", "from": "sig-plans-restore-developer-agency", "to": "pat-ai-native-org", "data": {}}
@@ -3733,7 +3632,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H2VB8KY4W6KRTK9P1", "from": "sig-polished-artifact-fails-gates", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HW3X9D6P08KKZZGJM", "from": "sig-poolside-open-weights-shift", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRPBWTJ3Q3SGGB96N", "from": "sig-position2-gtm-agent-fleet", "to": "pat-context-graphs", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H1BZWKZTT472TA5K3", "from": "sig-post-train-open-on-your-harness", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HG0545DV2WGXR9D0J", "from": "sig-post-train-small-models-per-note-section", "to": "pat-continual-learning-turn", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H447WEPXCAVAXNZRS", "from": "sig-post-train-small-models-per-note-section", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7GPN3EJ5QAKAP871", "from": "sig-posttraining-algorithm-wave", "to": "pat-accelerated-research", "data": {}}
@@ -3741,17 +3639,14 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HRTFA94GBQNYAJVED", "from": "sig-pr-flood-rejected-by-humans", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H8K2QSDRJAJWB9DGF", "from": "sig-preference-data-averaging-destroys-signal", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HM4T0DM7JJNZ55DBD", "from": "sig-preference-routing-unsolved", "to": "pat-context-graphs", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HWJRMMWHX8R8Z1C3M", "from": "sig-prefix-routing-cuts-a-turn-from-three-seconds-to-one", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H3K2PDZSTVHE9KZ56", "from": "sig-premature-scaled-evals-hinder", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H85XFDCFXD41JMV6P", "from": "sig-pretraining-scale-exhausted", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HY109CN50AK1D47MK", "from": "sig-pricing-moves-to-outcomes", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HC42ATQD42KM77PFK", "from": "sig-princeton-500-day-bankruptcy-sim", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H89FYRBET9E847JJH", "from": "sig-princeton-500-day-bankruptcy-sim", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HHC3B11ZZZ9T7JRC5", "from": "sig-principles-first-then-primitives-beat-llm-first", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHRKC2XTWYYDB6F1H", "from": "sig-principles-first-then-primitives-beat-llm-first", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HX95QXG5VYZRQSCPA", "from": "sig-prism-environments-resist-replay", "to": "pat-benchmark-trust-crisis", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9SRFT77G4M3VM76N", "from": "sig-prism-environments-resist-replay", "to": "pat-environments-economy", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H3DD8DRM038PKY6FG", "from": "sig-privacy-will-get-an-auto-mode", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HBKYFPNNXA98HRWHT", "from": "sig-privacy-will-get-an-auto-mode", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H3NSAS61RX01W5XQ3", "from": "sig-private-corpus-methods-all-saturate", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMWPXEPB9NVJHYB36", "from": "sig-private-microworlds-next-data-frontier", "to": "pat-sovereign-ai", "data": {}}
@@ -3764,9 +3659,7 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HXKYEYWZAMQ30CVXG", "from": "sig-production-traces-are-the-environment-source", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0VTPMESRG2YCYNAE", "from": "sig-productivity-drops-before-it-hockey-sticks", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTC27E9G55GKMT7M5", "from": "sig-progressive-disclosure-is-measurable", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HKEW234PHY9WZWW6R", "from": "sig-prompt-line-suppresses-self-testing", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H68SFHMZ486XNHJGN", "from": "sig-prompt-optimizers-replace-hand-tuning-under-a-clinical-cost-matrix", "to": "pat-continual-learning-turn", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HZVBHF4ADC0RCTEVX", "from": "sig-prompt-optimizers-replace-hand-tuning-under-a-clinical-cost-matrix", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HBNCC16BJECX3DQQK", "from": "sig-prompt-rules-not-constraints", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZF04MDFK73VTAK9W", "from": "sig-prompts-get-compacted-away-so-governance-lives-outside-the-agent", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6BJP6AWCNEGSM0N0", "from": "sig-prompts-get-compacted-away-so-governance-lives-outside-the-agent", "to": "pat-new-cyber-threats", "data": {}}
@@ -3797,7 +3690,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HXGMXDNCJ4WBAX6Y7", "from": "sig-real-work-traces-become-regression-tests", "to": "pat-continual-learning-turn", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HG7TKNHSSP3HVSY0G", "from": "sig-real-work-traces-become-regression-tests", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HG5E5E2Z3MC7P1C28", "from": "sig-realtime-media-infra-is-the-hard-part", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HSCSQR6Q5WHRBQJCH", "from": "sig-realtime-media-needs-a-harness", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HD3CGC38QP3ZFVJK8", "from": "sig-rebuild-every-layer-for-agents", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWRQB7NG30T0GJXP1", "from": "sig-receipt-over-transcript", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6RRBAQQXKSWGVH44", "from": "sig-recursive-harness-self-improvement", "to": "pat-harness-over-model", "data": {}}
@@ -3809,7 +3701,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HN35ECMEF4WZVN810", "from": "sig-relationship-ai-must-know-when-not-to-coach", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HXRJBVQ1T8BB9WHM2", "from": "sig-relationship-ai-must-know-when-not-to-coach", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HSPVE144587MTWSM0", "from": "sig-reliability-plasticity-tension", "to": "pat-continual-learning-turn", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HHZTJ3Y9WWQQHBEC3", "from": "sig-remobi-attach-not-replace", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPTPRRZFCESM1GX2R", "from": "sig-replay-agent-beats-frontier-models", "to": "pat-benchmark-trust-crisis", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HB01BSDFJR6YPE1ZS", "from": "sig-replit-db-deletion", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9VHWW0VR72849GZ1", "from": "sig-replit-db-deletion", "to": "pat-verification-gap", "data": {}}
@@ -3819,7 +3710,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H8XH22WDWFESC0H4W", "from": "sig-request-response-to-stateful-agents", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTRXDP9ST37B13Z8Y", "from": "sig-requirements-gathering-returns", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHFM095FZHA67BMNC", "from": "sig-research-harnesses-let-m3-build-m3-1", "to": "pat-accelerated-research", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HY55DGXC4BC5YXGV0", "from": "sig-research-harnesses-let-m3-build-m3-1", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HD7GGX3KKKQJR7VWA", "from": "sig-research-work-automated-via-agents", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZ1Y096SG5053JBJE", "from": "sig-researchers-dont-think-about-gpus", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H94JAK0HDS1MS1ZRB", "from": "sig-reset-over-compact", "to": "pat-durable-execution", "data": {}}
@@ -3857,7 +3747,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H5ZASVSCKX243K0HF", "from": "sig-rl-reward-blind-to-maintainability", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4JTYHG52RTFDFJ75", "from": "sig-rlm-reimplementation-wave", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDAC4KQXRXNY44B1N", "from": "sig-rlm-small-beats-frontier", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HA5M0V9JY6BDQ8X71", "from": "sig-rlm-spreads-to-production", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7T1VGE4BFP2SF049", "from": "sig-rlvr-doesnt-cover-real-work", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4GWPN1V2P3R3PXCA", "from": "sig-rna-seq-scale-vs-quality", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFSRMT6WFWXHJ7HBH", "from": "sig-roles-rebundling", "to": "pat-value-of-judgement", "data": {}}
@@ -3878,10 +3767,7 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HRF6AZDYWAQKZKJDT", "from": "sig-safety-not-intelligence-is-the-next-blocker", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMPRTWTWVWQP2BZFA", "from": "sig-safety-runtime-below-every-model-and-harness", "to": "pat-durable-execution", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HGE7BYZYRC89639MR", "from": "sig-safety-runtime-below-every-model-and-harness", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HS5PN9Y6SA97R8HPR", "from": "sig-salesforce-755ms", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HQQ46AXNV0X2CEV3K", "from": "sig-sample-traces-from-symbolic-policies-then-generate-backwards", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNWWXZ1E5JAMY2V8D", "from": "sig-sample-traces-from-symbolic-policies-then-generate-backwards", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HN8SX8GWYM2BYHV1J", "from": "sig-sandbox-consensus-state-antipattern", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9VHXA9309012SCYS", "from": "sig-sandbox-vm-convergence", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7975375MJF7SZZSZ", "from": "sig-sap-consumption-pricing", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HW8BBBY6NS74C6PYG", "from": "sig-satisfaction-of-search-agents-stop-early", "to": "pat-context-graphs", "data": {}}
@@ -3907,14 +3793,11 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HDFX0R3D9A4S4Y2XP", "from": "sig-security-control-overhead", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H2F11N6DWRZ9Z636W", "from": "sig-self-confirmation-defeats-hitl", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HD16QQ7AFCWTGB3TW", "from": "sig-self-confirmation-defeats-hitl", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H0VR3DSD1WX23WH1D", "from": "sig-self-healing-rpa", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HA36W78BKY0QWYME0", "from": "sig-self-hosted-agents-as-control", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H23ANSPAMZ505J2PC", "from": "sig-self-improvement-is-the-missing-ingredient", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFP64Q2P5TTQNACC5", "from": "sig-self-improving-deployment-vision", "to": "pat-accelerated-research", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HC3P7R4J3G1WPZEEJ", "from": "sig-self-improving-team-skills", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRPYVDQGK500W84XA", "from": "sig-self-serve-cannibalized-chatgpt-enterprise", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H2FPXFNSG7BYSTQPW", "from": "sig-self-serve-judge-calibration-with-gepa", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HB01EMET313K8THGB", "from": "sig-semantic-blindness-at-scale", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQSN2JZ6MAQEP1M1Z", "from": "sig-semantic-layer-not-etl", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HV10NJ31ZBXSZZEPV", "from": "sig-semantic-router-holds-83", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HB8HYW4C6PDSB01DY", "from": "sig-seniors-stopped-delegating-implementation", "to": "pat-ai-native-org", "data": {}}
@@ -3924,7 +3807,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HTXK9VFT1MFTYXZWD", "from": "sig-seventy-percent-of-tokens-wasted-on-invalid-pages", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7ZB0GGHBTKY9EH58", "from": "sig-seventy-percent-of-uber-prs-by-agents", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMY46KZDTP8WZKV5S", "from": "sig-shared-agent-social-contract", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H9NTS0K451JEG55SA", "from": "sig-shared-agents-escalate-privilege-so-tools-run-as-the-user", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H8HSSSEKM0DY3HWXQ", "from": "sig-shared-agents-escalate-privilege-so-tools-run-as-the-user", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HBH8FZ6X5XYCV9VB8", "from": "sig-shared-payment-token-keeps-the-card-away-from-the-agent", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H96YCZQP8J6EJAZVJ", "from": "sig-shared-payment-token-keeps-the-card-away-from-the-agent", "to": "pat-new-cyber-threats", "data": {}}
@@ -3933,7 +3815,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H7KC93A9CDPV3600H", "from": "sig-shopping-agent-captchad-into-oblivion", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HARXC14F7JG965T1D", "from": "sig-shopping-agent-captchad-into-oblivion", "to": "pat-new-cyber-threats", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWNQ9SCJGD0B40F60", "from": "sig-shopping-agents-must-accept-vibes", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H94BZWY690HXWCB7V", "from": "sig-show-and-ask-visual-boards-reveal-preferences-faster", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HEN2HT136V2CM3WBM", "from": "sig-silent-success-state-hole", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9957PJG0K4ZMY2PB", "from": "sig-silent-success-state-hole", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HSEVK15MFK4DXGGF9", "from": "sig-sim-data-matches-production-signal", "to": "pat-verification-gap", "data": {}}
@@ -3967,14 +3848,12 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H3VAB1HBDR9G6XJMW", "from": "sig-skills-ecosystem-scale", "to": "pat-agent-supply-chain", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HY7RSHMNDEB48HAPY", "from": "sig-skills-ecosystem-scale", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HYD3D0NBA0B3KGPVS", "from": "sig-skills-marketplace-2500-with-continuous-evals", "to": "pat-agent-supply-chain", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HWQDHKXSJH32SBTXB", "from": "sig-skills-marketplace-2500-with-continuous-evals", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7RDSN2C3MXEN6PCS", "from": "sig-skills-need-fixed-vocabularies", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H81KMQTVNSQ7CH1JV", "from": "sig-skills-registry-is-the-new-internal-developer-portal", "to": "pat-agent-supply-chain", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HASJKQP3QQDZR5D5H", "from": "sig-skills-registry-is-the-new-internal-developer-portal", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H2NG4QG4N8R2SCKEF", "from": "sig-skills-shipped-untested", "to": "pat-agent-supply-chain", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HAHMVE4H7ZK4JVTEH", "from": "sig-skills-shipped-untested", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HTNC5RB9MHS9QVEJM", "from": "sig-skills-standard-adopted-in-eight-months", "to": "pat-agent-supply-chain", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HVQSPDE7Q7HRRV84V", "from": "sig-skills-standard-adopted-in-eight-months", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDNXWF9DA4M0QZ0KK", "from": "sig-skillsbench-15pct-lift", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HVVV7PE1X2YC48S20", "from": "sig-sla-budget-caps-agent-design", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H95M6D2BWX7ZZV582", "from": "sig-sleeper-backdoors-defeat-evals", "to": "pat-new-cyber-threats", "data": {}}
@@ -3983,15 +3862,12 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HSQ3EZGPT41CN1PD1", "from": "sig-slop-registry-compounds", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HYYZMP0BS0WFHBDXM", "from": "sig-slop-saturated-channels", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H59HQCZ4TSGN88DN2", "from": "sig-slopsquatting-observed", "to": "pat-agent-supply-chain", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HBT2XWBK5WR43Q53M", "from": "sig-small-model-rl-search-wins", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H0W1KQJVPFTH4K0EB", "from": "sig-smallest-model-vetted-data", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H7FEN7GY0P24RGDTA", "from": "sig-smart-turn-v3-recall", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HC07KX2XCAHN55TA0", "from": "sig-smarter-models-cannot-eliminate-network-failures", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H6P78PWFAKR2DZVD5", "from": "sig-smarter-models-cannot-eliminate-network-failures", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HP3ATNJJRACTAV4EN", "from": "sig-smartest-people-upstream", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H889TN08FRRFDCQCC", "from": "sig-snorkel-benchmarks-as-product", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9DMX6GX78YTCGMGK", "from": "sig-snyk-backlog-108pct", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H0X9FTGZCTJ0N260K", "from": "sig-software-factory-built-not-bought", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HZ325G60Q4KMEP06E", "from": "sig-software-that-improves-every-use", "to": "pat-continual-learning-turn", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H43J54W4EE97SS3XG", "from": "sig-solo-builders-reinvent-cicd", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRQ16Y843J43E4G6N", "from": "sig-solve-one-team-then-scale-with-skills-and-integrations", "to": "pat-ai-native-org", "data": {}}
@@ -4012,18 +3888,14 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H8E0SW3NW0HRJ947S", "from": "sig-start-with-the-clinician-write-hundreds-of-evals", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HGXNATGW5HQFXPSA4", "from": "sig-startup-tier-collapse", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HPD07DGHQ2XDJX31P", "from": "sig-steering-beats-throttling-78-percent", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HYBR5827GM0Y58H8N", "from": "sig-steering-files-thin-as-models-improve", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H53C0E86671NFD93E", "from": "sig-steinberger-attention-bottleneck", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HAHDWDABF2V4ZRTGD", "from": "sig-stolen-api-key-drain", "to": "pat-new-cyber-threats", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H5SGXXPRQ7DNNK5VA", "from": "sig-storage-next-unlock", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HEDSNNMPDRBHWT823", "from": "sig-structure-displaces-skill", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HMPPATB6Y20CYYBH6", "from": "sig-subjective-domains-lag-measurability", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H2KZRWP3DM8SJ6CSX", "from": "sig-subscription-ai-cant-reason", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HD08HSBKS71R3CEX8", "from": "sig-subsidize-lockin-then-gouge", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1GSJT8MK7B2BEPAH", "from": "sig-supplier-is-competitor", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HRBHT7TBQ61EEPJZJ", "from": "sig-swe-bench-pro-verifier-error-rates", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HP58HJ041SB6FR4JS", "from": "sig-swe-bench-verified-memorized-undisclosed", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HGNRMEZZYQWPBDTHQ", "from": "sig-sycophancy-is-a-clinical-failure-mode", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HW215VWB12WAK5PRX", "from": "sig-sycophancy-is-a-clinical-failure-mode", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HVMEZ6ZFSE8B9QYQ0", "from": "sig-synthetic-data-is-sticky", "to": "pat-benchmark-trust-crisis", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHRKNF29YJVF74HW1", "from": "sig-synthetic-personas-become-a-category", "to": "pat-accelerated-research", "data": {}}
@@ -4034,8 +3906,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HYJ0H8NZ7RRDTYH3P", "from": "sig-tao-erdos-728", "to": "pat-accelerated-research", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H75EKWZXDTZMTNMCR", "from": "sig-techno-feudalism-explains-the-consumer-ai-backlash", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5WY5ZTB4KKVPCDWB", "from": "sig-techno-feudalism-explains-the-consumer-ai-backlash", "to": "pat-sovereign-ai", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HYX2FXS0H3KM0QH69", "from": "sig-temperature-zero-myth", "to": "pat-harness-over-model", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HK2RDS9X2544ZZP29", "from": "sig-terminal-multiagent-control-plane", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HB5AV49ZZ5C3F2H5F", "from": "sig-terminals-sold-for-culpability", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDM6V91C0BYSS76GN", "from": "sig-tesla-agent-failures-structural", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HATKSEPHNWGKCGQTN", "from": "sig-the-agent-is-the-new-developer-user", "to": "pat-agent-economy", "data": {}}
@@ -4045,7 +3915,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HR12W78A793JKS2Y1", "from": "sig-the-critical-facts-live-in-notes-not-crm-fields", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HF1A1401CKA4PZZZP", "from": "sig-the-eval-data-you-need-most-is-the-data-you-may-not-keep", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H1XYKSHX1S78FX9AE", "from": "sig-the-gateway-is-a-four-way-fight", "to": "pat-durable-execution", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HY0YPPC88WD95HDP3", "from": "sig-the-gateway-is-a-four-way-fight", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HDW760ZCAXFZZDJ3S", "from": "sig-the-generator-verifier-gap-is-small-in-clinical-decision-support", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HS2B5BNMFJ310584J", "from": "sig-the-gtm-bottleneck-is-everything-after-the-idea", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HE3111TEYVMBVH7X6", "from": "sig-the-gtm-bottleneck-is-everything-after-the-idea", "to": "pat-context-graphs", "data": {}}
@@ -4060,7 +3929,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HZKK60NYWWP19DAD1", "from": "sig-the-revenge-of-the-steak-dinner", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HCY69T110TYY69AVR", "from": "sig-the-revenge-of-the-steak-dinner", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJ9K6QBXXP15BK685", "from": "sig-the-robot-generates-its-own-training-episodes", "to": "pat-continual-learning-turn", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HN685X8XK9WFKBX6K", "from": "sig-the-system-prompt-is-the-commerce-agents-ethics-policy", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H8YNFXDPRXEK4Z90Y", "from": "sig-the-wow-factor-collapses-in-months", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H42C7BXFCGYZ0WCQ9", "from": "sig-the-wow-factor-collapses-in-months", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HHGND095BZ1MRYJKN", "from": "sig-theta-finance-env-metrics", "to": "pat-environments-economy", "data": {}}
@@ -4077,10 +3945,8 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H4A6E6DHDE08E2FYS", "from": "sig-token-leaderboards-invert-the-incentive", "to": "pat-ai-native-org", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HFS6AYQRZQETFC762", "from": "sig-token-maxing-to-cost-optimization", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7XCX725P20JZT8WR", "from": "sig-token-maxing-to-measured-outcomes", "to": "pat-saaspocalypse", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HR314HBQG9Y593NA7", "from": "sig-token-tax-fixed-at-the-gateway", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7GX4KMX76AB2FRG1", "from": "sig-tone-prompt-fails-turn-21", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQBSWXDP02QP0D4P4", "from": "sig-tool-calls-weaponized-safety-debate", "to": "pat-new-cyber-threats", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HQ5PRBSRCPEHHGZE0", "from": "sig-tool-friction-costs-agents-whole-turns", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HG5BKZ56KP9CG0FKP", "from": "sig-tool-friction-costs-agents-whole-turns", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HBEWXKYHYKFXQEYEJ", "from": "sig-tool-schema-context-tax", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HQ1FH4ABMJQ3DJFPA", "from": "sig-trace-volume-outgrows-reading", "to": "pat-model-not-bottleneck", "data": {}}
@@ -4092,7 +3958,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H5T99VGJRYCHB7EZN", "from": "sig-trinity-open-frontier-recipe", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HVXPZMZ1Z2QJQG8K1", "from": "sig-tripwires-and-refilling-limits-over-allowlists", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HJWYRXTCH4VGQCKDB", "from": "sig-tripwires-and-refilling-limits-over-allowlists", "to": "pat-verification-gap", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HYG11YMPG8X4PKCFY", "from": "sig-trust-boundary-agents-are-new-silos-that-dont-improve-with-models", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HKM3ZGG5HWXQMQJMX", "from": "sig-trust-is-decided-in-the-first-five-questions", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H2M69VCN97HCVKK5G", "from": "sig-trust-is-the-one-thing-without-a-grader", "to": "pat-value-of-judgement", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HCN8AE01NY7ENFDQB", "from": "sig-trusted-event-boundary-defeated", "to": "pat-new-cyber-threats", "data": {}}
@@ -4134,7 +3999,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9H104ZAFWD26WV4N28", "from": "sig-vending-arena-emergent-misconduct", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H7FH5SVWMMSV43NPR", "from": "sig-vending-bench-leaderboard-2026", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HG0GBAEN29ZGVSCVH", "from": "sig-vending-bench-leaderboard-2026", "to": "pat-benchmark-trust-crisis", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HRV7V035WA68HCY1T", "from": "sig-vendors-ship-skills-files-as-developer-experience", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H89BN7EN7CE9WZX49", "from": "sig-vercel-ai-sdk-10x", "to": "pat-model-not-bottleneck", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H66KPFPK7VDY2PMQV", "from": "sig-verification-affordances-required", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HKC2YH8YDMD5RFBGF", "from": "sig-verification-is-the-highest-value-investment", "to": "pat-harness-over-model", "data": {}}
@@ -4160,9 +4024,7 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HAP8ACFKBEAJW9JGT", "from": "sig-vocabulary-capture-as-lock-in", "to": "pat-context-graphs", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWRZ4JMYJ22EDMDK3", "from": "sig-voice-950ms-budget", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HG2HKGVGG17VZWPT2", "from": "sig-voice-first-agent-input", "to": "pat-value-of-judgement", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H6BA0DHH91FATF3V9", "from": "sig-voice-llm-latency-june26", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H5XA11AXRD618X0YB", "from": "sig-voice-mode-one-slot", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9HD6R16PZCVKYFTTDV", "from": "sig-voice-pipeline-latency-budget", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H9WR5VPX60N9VR7BQ", "from": "sig-voice-to-function-calling-onboard", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HEK45H00M11MCGFHK", "from": "sig-vpc-sandbox-boundary", "to": "pat-sovereign-ai", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HYA58JWD7AJACSFPN", "from": "sig-vscode-extension-exfil", "to": "pat-agent-supply-chain", "data": {}}
@@ -4170,7 +4032,6 @@
 {"edge": "FormsPattern", "id": "01M2DM9J9HSYCX0SFE62HJK85W", "from": "sig-w25-batch-95pct-ai-code", "to": "pat-saaspocalypse", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HNE6Z9X6C9A36RQ4M", "from": "sig-wallet-equipped-agent-does-what-vanilla-cannot", "to": "pat-agent-economy", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9H4HTYWB0B9CKBJDXA", "from": "sig-wallet-equipped-agent-does-what-vanilla-cannot", "to": "pat-model-not-bottleneck", "data": {}}
-{"edge": "FormsPattern", "id": "01M2DM9J9H2NPWT8C9XZBWH7X8", "from": "sig-wandero-agents-operate-agents", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HB3WX361QRA1Y1J8S", "from": "sig-warm-voice-invented-dates", "to": "pat-verification-gap", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HCR98BDSJHVSSM0ZP", "from": "sig-watchdogs-above-harnesses", "to": "pat-harness-over-model", "data": {}}
 {"edge": "FormsPattern", "id": "01M2DM9J9HWCER3QJJ3S0TDD9H", "from": "sig-watershed-agent-misbehavior", "to": "pat-verification-gap", "data": {}}
