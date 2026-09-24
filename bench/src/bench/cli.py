@@ -238,9 +238,12 @@ def _score(args: argparse.Namespace) -> int:
     from bench.provider import JUDGE_MODEL, cost_usd
     from bench.questions import load_questions
     from bench.score import (
+        ARMS,
         absence,
         cluster_requests,
         load_runs,
+        pairwise_requests,
+        pairwise_sections,
         recall_sections,
         score_runs,
         spread,
@@ -249,48 +252,83 @@ def _score(args: argparse.Namespace) -> int:
     )
     from bench.verify import Corpus
 
-    corpus = Corpus.load(args.corpus, talk_labels(args.seed, CHUNK_TALK_OVERRIDES))
+    Item = tuple[str, dict, Callable[[dict], bool]]  # label, request, output check
+    labels = talk_labels(args.seed, CHUNK_TALK_OVERRIDES)
+    corpus = Corpus.load(args.corpus, labels)
     runs = load_runs(args.runs_dir)
     questions = {q.id: q for q in load_questions(args.questions)}
     support_todo, uncited_todo = support_requests(runs, corpus), uncited_requests(runs)
     cluster_todo = cluster_requests(runs, questions)
-    # Identical requests share one judgment: one entry per cache file.
-    requests: dict[Path, tuple[str, dict, Callable[[dict], bool]]] = {}
-    for label, request, valid in (
+    pairings = {
+        (run["qid"], run["run"])
+        for run in runs
+        if run["qid"] in questions
+        and all(
+            any((r["qid"], r["arm"], r["run"]) == (run["qid"], arm, run["run"]) for r in runs)
+            for arm in ARMS
+        )
+    }
+
+    def distinct(items: list[Item]) -> dict[Path, Item]:
+        """Identical requests share one judgment: one entry per cache file."""
+        out: dict[Path, Item] = {}
+        for item in items:
+            out.setdefault(judge.cache_path(item[1], args.cache), item)
+        return out
+
+    def uncached(items: list[Item]) -> list[Item]:
+        return [item for path, item in distinct(items).items() if not path.exists()]
+
+    def counts(items: list[Item]) -> str:
+        unique, missing = distinct(items), len(uncached(items))
+        return f"{len(unique) - missing} cached, {missing} to ask"
+
+    first_round: list[Item] = (
         [(label, request, judge.valid_support) for label, request in support_todo]
         + [(label, request, judge.valid_uncited) for label, request in uncited_todo]
         + [(label, request, judge.valid_clusters(n)) for label, request, n in cluster_todo]
-    ):
-        requests.setdefault(judge.cache_path(request, args.cache), (label, request, valid))
-    records = {
-        path: judge.lookup(request, args.cache) for path, (_, request, _) in requests.items()
-    }
-    uncached = [item for path, item in requests.items() if records[path] is None]
+    )
 
-    def counts(todo: list[tuple[str, dict]]) -> str:
-        paths = {judge.cache_path(request, args.cache) for _, request in todo}
-        missing = sum(records[path] is None for path in paths)
-        return f"{len(paths) - missing} cached, {missing} to ask"
+    def second_round() -> list[Item] | None:
+        """The pairwise requests, once every claim and run of the first round is judged."""
+        scored = score_runs(runs, corpus, args.cache)
+        if any(c["grounding"] is None for run in scored for c in run["claims"]) or any(
+            run["uncited"] is None for run in scored
+        ):
+            return None
+        todo = pairwise_requests(runs, scored, corpus, labels, questions)
+        return [(label, request, judge.valid_pairwise) for label, request, _ in todo]
 
     claims = sum(len(normalise(run.get("answer_json")).claims) for run in runs)
+    support_items = first_round[: len(support_todo)]
+    uncited_items = first_round[len(support_todo) : len(support_todo) + len(uncited_todo)]
+    cluster_items = first_round[len(support_todo) + len(uncited_todo) :]
     print(
-        f"{len(runs)} runs, {claims} claims, {len(support_todo)} to judge: {counts(support_todo)}"
+        f"{len(runs)} runs, {claims} claims, {len(support_todo)} to judge: {counts(support_items)}"
     )
-    print(f"uncited check: {len(uncited_todo)} runs, {counts(uncited_todo)}")
-    clustered = [(label, request) for label, request, _ in cluster_todo]
-    print(f"clusters: {len(cluster_todo)} questions, {counts(clustered)}")
-    costs = [cost_usd(JUDGE_MODEL, record["usage"]) for record in records.values() if record]
-    if costs and uncached:
-        mean = sum(costs) / len(costs)
-        rest = mean * len(uncached)
-        print(f"judged so far ${sum(costs):.2f}, ${mean:.4f} a request: the rest ≈ ${rest:.2f}")
+    print(f"uncited check: {len(uncited_todo)} runs, {counts(uncited_items)}")
+    print(f"clusters: {len(cluster_todo)} questions, {counts(cluster_items)}")
+    pairwise_items = second_round()
+    if pairwise_items is None:
+        print("pairwise: waits for the claims and uncited checks")
+    else:
+        print(f"pairwise: {len(pairings)} pairings × 2 orders, {counts(pairwise_items)}")
     if args.dry_run:
         return 0
 
-    batch = spread(uncached, args.limit) if args.limit is not None else uncached
-    errors, spent = 0, 0.0
-    if batch:
-        ask = judge.openrouter_ask(BENCH_DIR / ".env")
+    ask = None
+    errors, spent, budget = 0, 0.0, args.limit
+
+    def ask_all(items: list[Item]) -> None:
+        nonlocal ask, errors, spent, budget
+        batch = uncached(items)
+        batch = spread(batch, budget) if budget is not None else batch
+        if not batch:
+            return
+        if budget is not None:
+            budget -= len(batch)
+        ask = ask or judge.openrouter_ask(BENCH_DIR / ".env")
+        failed, cost_before = errors, spent
         with ThreadPoolExecutor(args.concurrency) as pool:
             futures = {
                 pool.submit(judge.cached, request, ask, args.cache, valid): label
@@ -307,7 +345,9 @@ def _score(args: argparse.Namespace) -> int:
                 cost = cost_usd(JUDGE_MODEL, record["usage"])
                 spent += cost
                 output = record["output"]
-                if "groups" in output:
+                if "winner" in output:
+                    result = f"winner {output['winner']}"
+                elif "groups" in output:
                     result = f"{len(output['groups'])} groups"
                 else:
                     result = output.get("verdict") or f"uncited {len(output['uncited'])}"
@@ -316,26 +356,33 @@ def _score(args: argparse.Namespace) -> int:
                     f"  out={record['usage'].get('output_tokens')}",
                     flush=True,
                 )
-        done = len(batch) - errors
+        done = len(batch) - (errors - failed)
         print(
-            f"asked {len(batch)}: {errors} errors, ${spent:.2f}"
-            + (f", ${spent / done:.4f} a request" if done else "")
+            f"asked {len(batch)}: {errors - failed} errors, ${spent - cost_before:.2f}"
+            + (f", ${(spent - cost_before) / done:.4f} a request" if done else "")
         )
+
+    ask_all(first_round)
+    pairwise_items = second_round()
+    if pairwise_items is not None:
+        ask_all(pairwise_items)
 
     scored = score_runs(runs, corpus, args.cache)
     left_claims = sum(claim["grounding"] is None for run in scored for claim in run["claims"])
     left_runs = sum(run["uncited"] is None for run in scored)
     recall = recall_sections(scored, questions, args.cache)
     left_questions = sum(section is None for section in recall.values())
-    if left_claims or left_runs or left_questions:
+    pairwise = pairwise_sections(runs, scored, corpus, labels, questions, args.cache)
+    left_pairs = len(pairings) - sum(len(rows) for rows in pairwise.values() if rows)
+    if left_claims or left_runs or left_questions or left_pairs:
         print(
-            f"{left_claims} claims, {left_runs} runs and {left_questions} questions still "
-            f"unjudged; {args.out} not written"
+            f"still unjudged: {left_claims} claims, {left_runs} runs, {left_questions} cluster "
+            f"questions, {left_pairs} pairings; {args.out} not written"
         )
         return 1 if errors else 0
+    every = list(distinct(first_round + (pairwise_items or [])).values())
     total = sum(
-        cost_usd(JUDGE_MODEL, judge.lookup(request, args.cache)["usage"])
-        for _, request, _ in requests.values()
+        cost_usd(JUDGE_MODEL, judge.lookup(request, args.cache)["usage"]) for _, request, _ in every
     )
     args.out.parent.mkdir(parents=True, exist_ok=True)
     scores = {
@@ -344,7 +391,8 @@ def _score(args: argparse.Namespace) -> int:
             "claims_judged": len(support_todo),
             "runs_checked": len(uncited_todo),
             "questions_clustered": len(cluster_todo),
-            "requests": len(requests),
+            "pairings": len(pairings),
+            "requests": len(every),
             "cost_usd": round(total, 4),
         },
         "runs": scored,
@@ -354,10 +402,18 @@ def _score(args: argparse.Namespace) -> int:
             for qid, question in sorted(questions.items())
             if question.shape == "absence" and any(run["qid"] == qid for run in scored)
         },
+        "pairwise": pairwise,
     }
     args.out.write_text(json.dumps(scores, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    for arm in sorted({run["arm"] for run in scored}):
-        arm_runs = [run for run in scored if run["arm"] == arm]
+    _print_scores(scores)
+    print(f"wrote {args.out}")
+    return 1 if errors else 0
+
+
+def _print_scores(scores: dict) -> None:
+    arms = ("markdown", "omnigraph")
+    for arm in sorted({run["arm"] for run in scores["runs"]}):
+        arm_runs = [run for run in scores["runs"] if run["arm"] == arm]
         buckets = Counter(c["grounding"] for run in arm_runs for c in run["claims"])
         uncited = sum(len(run["uncited"]) for run in arm_runs)
         print(
@@ -365,7 +421,7 @@ def _score(args: argparse.Namespace) -> int:
             + ", ".join(f"{b} {buckets[b]}" for b in ("grounded", "partial", "hallucinated"))
             + f"; uncited {uncited} in {len(arm_runs)} answers"
         )
-    for qid, section in recall.items():
+    for qid, section in scores["recall"].items():
         pool = sum(g["pooled"] for g in section["groups"])
         if "agreement" in section:  # a fixed-length list: agreement, not recall (#39)
             mean = section["agreement"]["mean"]
@@ -376,23 +432,30 @@ def _score(args: argparse.Namespace) -> int:
             arm: [
                 r["recall"] for r in section["runs"] if r["arm"] == arm and r["recall"] is not None
             ]
-            for arm in ("markdown", "omnigraph")
+            for arm in arms
         }
         means = "  ".join(
             f"{arm} {sum(v) / len(v):.0%}" if v else f"{arm} -" for arm, v in by_arm.items()
         )
         print(f"{qid} recall ({section['shape']}, pool {pool}): {means}")
     for qid, rows in scores["absence"].items():
-        by_arm = {
-            arm: [r["correct"] for r in rows if r["arm"] == arm]
-            for arm in ("markdown", "omnigraph")
-        }
+        by_arm = {arm: [r["correct"] for r in rows if r["arm"] == arm] for arm in arms}
         print(
             f"{qid} absence: "
             + "  ".join(f"{a} {sum(v)}/{len(v)} correct" for a, v in by_arm.items())
         )
-    print(f"wrote {args.out}")
-    return 1 if errors else 0
+    results, agree = Counter(), []
+    for qid, rows in scores["pairwise"].items():
+        tally = Counter(row["result"] for row in rows)
+        results.update(tally)
+        agree += [row["agree"] for row in rows]
+        print(f"{qid} pairwise: " + "  ".join(f"{k} {tally[k]}" for k in (*arms, "tie")))
+    if agree:
+        print(
+            "pairwise overall: "
+            + "  ".join(f"{k} {results[k]}" for k in (*arms, "tie"))
+            + f"; the two orders agree in {sum(agree)}/{len(agree)} pairings"
+        )
 
 
 def _calibrate(args: argparse.Namespace) -> int:

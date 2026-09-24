@@ -11,7 +11,10 @@ from bench.score import (
     cluster_requests,
     grounding,
     load_runs,
+    pairwise_requests,
+    pairwise_sections,
     pooled_recall,
+    render_answer,
     score_runs,
     spread,
     support_requests,
@@ -55,7 +58,10 @@ class FakeJudge:
     def __call__(self, request):
         self.requests.append(request)
         schema = request["output_config"]["format"]["schema"]
-        if "groups" in schema["properties"]:  # each label its own group
+        if "winner" in schema["properties"]:  # always prefers answer A
+            output = {r: "A" for r in ("coverage", "specificity", "correctness", "winner")}
+            output["reason"] = "A is better."
+        elif "groups" in schema["properties"]:  # each label its own group
             listed = (
                 request["messages"][0]["content"].split("<labels>\n")[1].split("\n</labels>")[0]
             )
@@ -192,7 +198,7 @@ def test_score_writes_scores_once_every_claim_is_judged(workspace, monkeypatch):
     assert main(["score", "--limit", "1", *paths]) == 0
     assert main(["score", *paths]) == 0
 
-    assert len(fake.requests) == 4  # 2 claims + 2 runs' uncited checks
+    assert len(fake.requests) == 6  # 2 claims, 2 runs' uncited checks, 1 pairing in 2 orders
     scores = json.loads((tmp_path / "scores.json").read_text())
     buckets = [c["grounding"] for run in scores["runs"] for c in run["claims"]]
     assert buckets == ["grounded", "hallucinated", "grounded"]
@@ -212,11 +218,11 @@ def test_identical_claims_are_asked_once_and_costed_once(workspace, monkeypatch,
 
     assert main(["score", *paths]) == 0
     # 2 distinct claims; 2 distinct uncited checks, since both markdown answers list the same
-    # claim texts with the same (empty) prose
-    assert len(fake.requests) == 2 + 2
+    # claim texts with the same (empty) prose; Q01's pairing in 2 orders (Q02 has no omnigraph run)
+    assert len(fake.requests) == 2 + 2 + 2
     scores = json.loads((tmp_path / "scores.json").read_text())
     assert scores["judge"]["claims_judged"] == 4
-    assert scores["judge"]["cost_usd"] == 4 * 0.014  # 1000 in × $4 + 500 out × $20 per Mtok
+    assert scores["judge"]["cost_usd"] == 6 * 0.014  # 1000 in × $4 + 500 out × $20 per Mtok
 
 
 def test_the_judge_gets_the_title_of_the_talk_the_citation_resolves_to(workspace):
@@ -263,7 +269,10 @@ def test_scores_wait_for_every_uncited_check_too(workspace, monkeypatch, capsys)
 
     assert main(["score", *paths]) == 1
 
-    assert "0 claims, 2 runs and 0 questions still unjudged" in capsys.readouterr().out
+    assert (
+        "still unjudged: 0 claims, 2 runs, 0 cluster questions, 1 pairings"
+        in capsys.readouterr().out
+    )
     assert not (tmp_path / "scores.json").exists()
 
 
@@ -443,7 +452,10 @@ def test_scores_wait_for_the_clusters_too(workspace, monkeypatch, capsys):
 
     assert main(["score", *paths]) == 1
 
-    assert "0 claims, 0 runs and 1 questions still unjudged" in capsys.readouterr().out
+    assert (
+        "still unjudged: 0 claims, 0 runs, 1 cluster questions, 0 pairings"
+        in capsys.readouterr().out
+    )
     assert not (tmp_path / "scores.json").exists()
 
 
@@ -525,3 +537,125 @@ def test_score_writes_the_absence_rows_for_the_absence_question(workspace, monke
 
     rows = json.loads((tmp_path / "scores.json").read_text())["absence"]["Q10"]
     assert [(r["arm"], r["correct"]) for r in rows] == [("markdown", True), ("omnigraph", False)]
+
+
+# D2.2 pairwise: redacted, annotated answers; both orders; an arm wins only if it wins both.
+
+QUESTION_Q01 = {"Q01": Question("Q01", "aggregate", "ranked_list", "Most discussed topics?")}
+
+
+def scored_claim(claim_text, status, verdict, bucket, talk="ia-aie-alpha-talk"):
+    return {
+        "claim": claim_text,
+        "quote_check": {"status": status, "talk": talk},
+        "support": {"verdict": verdict} if verdict else None,
+        "grounding": bucket,
+    }
+
+
+def test_an_answer_is_rendered_redacted_with_its_claims_graded_and_its_uncited_statements():
+    corpus = Corpus(
+        texts={"ia-aie-alpha-talk": TALK}, labels={}, titles={"ia-aie-alpha-talk": "Alpha (Ann)"}
+    )
+    record = {"answer_text": "I searched this knowledge graph.\n```json\n{}\n```"}
+    run = {
+        "claims": [
+            scored_claim("Evals gate releases.", "exact", "supported", "grounded"),
+            scored_claim("Most teams skip evals.", "exact", "partial", "partial"),
+            scored_claim("Invented.", "not_found", None, "hallucinated"),
+            scored_claim("Misattributed.", "wrong_talk", None, "hallucinated", talk=None),
+            scored_claim("Unsupported.", "exact", "unsupported", "hallucinated"),
+        ],
+        "uncited": ["Lyft gates launches."],
+    }
+
+    assert render_answer(record, run, corpus, {}) == (
+        "I searched the sources.\n\n"
+        "Claims:\n"
+        "- grounded: Evals gate releases. (Alpha (Ann))\n"
+        "- partial, the quote supports only part of it: Most teams skip evals. (Alpha (Ann))\n"
+        "- hallucinated, the quote isn't in the cited talk: Invented. (Alpha (Ann))\n"
+        "- hallucinated, the quote is from a different talk: Misattributed. (an unknown talk)\n"
+        "- hallucinated, the quote doesn't support it: Unsupported. (Alpha (Ann))\n\n"
+        "Statements with no cited quote:\n"
+        "- Lyft gates launches."
+    )
+
+
+def test_an_answer_without_claims_or_uncited_statements_says_none():
+    corpus = Corpus(texts={}, labels={})
+    text = render_answer(
+        {"answer_text": "Nothing covers it."}, {"claims": [], "uncited": []}, corpus, {}
+    )
+
+    assert text.endswith("Claims:\n(none)\n\nStatements with no cited quote:\n(none)")
+
+
+def pairing_runs():
+    records = [
+        {"qid": "Q01", "arm": arm, "run": n, "answer_text": f"{arm[0].upper()} answer {n}."}
+        for arm, n in (("markdown", 1), ("omnigraph", 1), ("markdown", 2))
+    ]
+    scored_runs = [{**r, "claims": [], "uncited": []} for r in records]
+    return records, scored_runs
+
+
+def test_each_run_pairing_is_asked_in_both_orders():
+    records, scored_runs = pairing_runs()
+
+    todo = pairwise_requests(records, scored_runs, Corpus({}, {}), {}, QUESTION_Q01)
+
+    assert [(label, arm_a) for label, _, arm_a in todo] == [
+        ("Q01 #1 markdown first", "markdown"),
+        ("Q01 #1 omnigraph first", "omnigraph"),
+    ]  # run 2 has no omnigraph answer to pair with
+    first, second = (request["messages"][0]["content"] for _, request, _ in todo)
+    assert first.index("M answer 1") < first.index("O answer 1")
+    assert second.index("O answer 1") < second.index("M answer 1")
+
+
+@pytest.mark.parametrize(
+    "first, second, result, agree",
+    [
+        ("A", "A", "tie", False),  # each order prefers whichever answer came first
+        ("A", "B", "markdown", True),
+        ("B", "A", "omnigraph", True),
+        ("tie", "tie", "tie", True),
+        ("A", "tie", "tie", False),
+    ],
+)
+def test_an_arm_wins_a_pairing_only_by_winning_both_orders(tmp_path, first, second, result, agree):
+    records, scored_runs = pairing_runs()
+    todo = pairwise_requests(records, scored_runs, Corpus({}, {}), {}, QUESTION_Q01)
+    for (_, request, _), pick in zip(todo, (first, second), strict=True):
+        ratings = {r: pick for r in ("coverage", "specificity", "correctness", "winner")}
+        cached(request, lambda _, o=ratings: {"output": o | {"reason": "r"}, "usage": {}}, tmp_path)
+
+    [pairing] = pairwise_sections(records, scored_runs, Corpus({}, {}), {}, QUESTION_Q01, tmp_path)[
+        "Q01"
+    ]
+
+    assert (pairing["run"], pairing["result"], pairing["agree"]) == (1, result, agree)
+    assert [o["a"] for o in pairing["orders"]] == ["markdown", "omnigraph"]
+
+
+def test_pairwise_is_none_while_a_pairing_is_unjudged(tmp_path):
+    records, scored_runs = pairing_runs()
+
+    sections = pairwise_sections(records, scored_runs, Corpus({}, {}), {}, QUESTION_Q01, tmp_path)
+
+    assert sections == {"Q01": None}
+
+
+def test_score_asks_the_pairings_once_the_first_round_is_judged(workspace, monkeypatch, capsys):
+    tmp_path, paths = workspace
+    monkeypatch.setattr(judge, "openrouter_ask", lambda env: FakeJudge())
+
+    main(["score", "--dry-run", *paths])
+    assert "pairwise: waits for the claims and uncited checks" in capsys.readouterr().out
+
+    assert main(["score", *paths]) == 0
+    main(["score", "--dry-run", *paths])
+    assert "pairwise: 1 pairings × 2 orders, 2 cached, 0 to ask" in capsys.readouterr().out
+    [pairing] = json.loads((tmp_path / "scores.json").read_text())["pairwise"]["Q01"]
+    assert (pairing["result"], pairing["agree"]) == ("tie", False)  # the fake always picks A

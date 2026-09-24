@@ -38,6 +38,7 @@
 | 2026-09-24 | D2.1 built and run (clusters $0.08); finding: recall is the same for every run on fixed-length lists; reporting question opened | Roman Pronskiy |
 | 2026-09-24 | D2.1 done: recall for the open questions, cross-arm agreement for fixed-length lists (#39, `count` in questions.yaml); Q01 and Q03 answers barely overlap between the arms | Roman Pronskiy |
 | 2026-09-24 | D2.3 consistency and D2.4 absence done (no judge); Q10 correct in all 6 runs | Roman Pronskiy |
+| 2026-09-24 | D2.2 pairwise judge written with stubbed tests; blind redaction (#40); paid pass pending | Roman Pronskiy |
 
 ### Status legend
 
@@ -814,7 +815,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | Step | Description | Status | Notes |
 |------|-------------|--------|-------|
 | D2.1 | Pooled recall for list questions | ✅ | Cluster judge (6 requests, $0.08). Recall on the open questions: Q04 md 36 / og 33%, Q06 49 / 46%, Q07 39 / 53%. Fixed-length lists report cross-arm agreement (#39): Q01 10%, Q02 67%, Q03 0%, Q05 80%. 26 test cases, 11 mutations caught |
-| D2.2 | Blind pairwise quality judge | 🔲 | |
+| D2.2 | Blind pairwise quality judge | 🔄 | Code done with stubbed tests: `blind.redact` (#40), `score.render_answer` / `pairwise_requests` / `pairwise_sections`, the second round in `bench score`, `prompts/judge_pairwise.md`. The paid pass (60 requests, about $2–5) waits for your go |
 | D2.3 | Run-to-run consistency | ✅ | Mean Jaccard of each arm's 3 runs per list question (`recall[qid].consistency`); no judge. og steadier where the graph holds the answer (Q01 .88, Q03 1.0, Q05 1.0), md steadier on the open searches (Q06 .65 vs .36, Q07 .78 vs .45) |
 | D2.4 | Absence scoring (Q10) | ✅ | Q10: md 3/3 and og 3/3 correct (empty contract block every time); `scores.json` `absence` |
 
@@ -894,6 +895,32 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
   - It rates coverage, specificity and correctness, and returns A, B or tie.
   - Each pairing is judged twice with the order swapped. An arm wins only if it wins both
     orders; anything else is a tie.
+  - **Redaction (#40).** Before judging, both arms' text goes through the same fixed list
+    (`blind.redact`): graph self-references ("this knowledge graph", "the graph's") and tool words
+    ("signal search", "hybrid searches", backticked query or alias names, "transcript files",
+    ".md", grep) become neutral words ("the sources", "search", "a lookup", "transcripts"). The
+    graph's evidence vocabulary does too ("supporting signals" → "supporting evidence",
+    "counter-signals" → "counter-evidence", "signal volume" → "evidence volume"). Chunk labels
+    become their `ia-aie-…` talk ids. Talk ids and ordinary words stay: "Signal" the product,
+    "co-founder", "a graph of". Style differences remain (the omnigraph arm's thesis-shaped answers
+    to Q01 and Q03), and the report says so.
+  - **What the judge sees.** The question, then answer A and answer B, each as redacted prose
+    followed by its claims annotated with their D1 bucket (grounded, partial, hallucinated, and
+    why) and the cited talk's title, then its D1.4 uncited statements. Nothing names an arm.
+  - **Output.** `coverage`, `specificity`, `correctness` and `winner`, each `A | B | tie`, plus
+    a one-sentence reason. 30 pairings × 2 orders = 60 requests, cached like the other judgments
+    (`prompts/judge_pairwise.md`). `scores.json` gets `pairwise[qid]`: per pairing, both orders
+    mapped to arms, the result (an arm only if it wins both orders) and whether the two orders
+    agree. The agreement rate feeds the position-bias guardrail.
+  - **Second round.** A pairwise request carries D1's grades and uncited statements, so `bench
+    score` asks it only after every claim and uncited check is judged (clusters needn't be).
+    `--limit` counts across both rounds.
+  - **Redaction check** on the 60 C1.4 answers: explicit tool vocabulary is in 21 og and 4 md
+    answers before, and 0 in each after. 47 redaction tests cover it, including ordinary words
+    that must survive. Method descriptions remain (md: "keyword matches across the corpus"),
+    as does og's thesis-shaped answers.
+  - **Dry run:** 30 pairings × 2 orders = 60 requests, about 14k characters at the median and
+    23k at most, so about $2–5 depending on output length.
 - **D2.3 — Consistency.** Deliverable: mean Jaccard similarity of each arm's item sets across
   its 3 runs, per list question.
   - The item sets are D2.1's groups: the top N for a fixed-length list (as in the agreement), and
@@ -1068,6 +1095,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 37 | 2026-09-24 | D1.2 adds a `spliced` outcome: a quote that joins real passages of the cited talk with an ellipsis counts like `fuzzy` for grounding. It is reported separately as a contract deviation, and the support judge still checks it. | On the C1.4 answers, most `not_found` quotes were splices whose every piece is in the cited talk: markdown 25 of 28, omnigraph 42 of 50. Scoring them as hallucinations would make that metric mostly measure ellipsis use, and would hit the omnigraph arm harder. The contract asks for exact copies, so splices stay visible as their own status rather than being folded into `exact`. | Roman Pronskiy |
 | 38 | 2026-09-24 | The support judge also sees the cited talk's title line (title, speakers, company). All 695 requests are asked again; the first pass's judgments move to `runs/_judge-before-title/`. | Both arms know each talk's title, speakers and company: md from the file header, og from the graph. The judge saw transcript only, so a correct attribution such as "Deno's CEO built …" could come back `partial` (about 14 md and 3 og partials in the first pass). Metadata the agents legitimately had shouldn't count against them. The title is context for the judge, not quotable: the quote check still reads the transcript only. | Roman Pronskiy |
 | 39 | 2026-09-24 | D2.1 is reported by question type. Pooled recall only for the open questions (Q04, Q06, Q07). For the fixed-length lists (Q01, Q02, Q03, Q05, now marked with `count` in `questions.yaml`), cross-arm agreement (shared share of the top N per run pairing) plus D2.3 consistency, with quality left to D2.2. | On a fixed-length list every run names N grounded items, so recall is N / pool for every run (Q01: 40% for all six) and can't separate the arms. The consensus top-5 overlap is a majority vote of six runs, so it rewards the more consistent arm and falls to tie-breaks when the arms disagree (Q03: disjoint answers, all tied at 3 votes). `count` is scorer metadata; the question `text` is unchanged. | Roman Pronskiy |
+| 40 | 2026-09-24 | The pairwise judge (D2.2) sees both answers after a symmetric redaction of tool and source mentions (`blind.redact`, a fixed documented list), and chunk labels are mapped to talk ids. | 14 of 30 og answers name the graph or its searches and 8 of 30 md answers name files or grep, so an unredacted judge could often tell the arms apart. The list is phrase-level so ordinary words (the Arize Signal product, "co-founder", "a graph of") survive. Residual style differences are reported, not hidden. | Roman Pronskiy |
 
 ---
 
@@ -1083,7 +1111,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 - [ ] Follow-up (graph maintainer): re-point Chatterjee's 24 chunks in the production 0.11 graph so it matches the seed (#35), and derive evidence passages for his 5 signals. Then refresh the seed from an export as usual.
 - [ ] Follow-up (graph maintainer): the production 0.11 server still serves the broken `talk_semantic`. `cluster apply` of the fixed `queries/traversals.gq` plus a server restart fixes it (#36). T26 in a later Omnigraph release will catch this shape at lint time.
 - [x] ~~Should the support judge see the talk title (`# Title (Speaker, Company — …)`)?~~ Yes (#38). Both arms know it (the md file header, the og graph), but the judge sees transcript only, so correct attributions can come back `partial` (about 14 md / 3 og in D1.3). Adding it changes every request, so all 695 would be asked again (about $7).
-- [ ] D2.2 blindness: the answers' prose often names its tools. 14 of 30 og answers mention the graph or its searches ("this knowledge graph", "signal search"), and 8 of 30 md answers mention files or grep. A pairwise judge could tell A from B. Options: redact tool mentions before pairwise judging (a documented, symmetric rewrite), or accept it and report it as a limitation.
+- [x] ~~D2.2 blindness~~: redact tool mentions symmetrically (#40).
 - [x] ~~D2.1 reporting~~: split by question type (#39).
 
 ---

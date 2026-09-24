@@ -7,11 +7,13 @@ from collections import Counter, defaultdict
 from dataclasses import asdict
 from pathlib import Path
 
+from bench.blind import redact
 from bench.judge import (
     cache_path,
     cluster_request,
     label_groups,
     lookup,
+    pairwise_request,
     support_request,
     uncited_request,
 )
@@ -289,3 +291,113 @@ def recall_sections(
                 label_group = label_groups(labels, record["output"]["groups"])
         out[qid] = pooled_recall(question.shape, runs, label_group, question.count)
     return out
+
+
+# D2.2: the blind pairwise judge's view of an answer, and its verdicts per pairing.
+
+WHY = {
+    "not_found": "hallucinated, the quote isn't in the cited talk",
+    "wrong_talk": "hallucinated, the quote is from a different talk",
+}
+
+
+def _graded(claim: dict) -> str:
+    if claim["grounding"] == "partial":
+        return "partial, the quote supports only part of it"
+    if claim["grounding"] == "hallucinated":
+        return WHY.get(claim["quote_check"]["status"], "hallucinated, the quote doesn't support it")
+    return "grounded"
+
+
+def render_answer(record: dict, run: dict, corpus: Corpus, labels: dict[str, str]) -> str:
+    """Redacted prose (#40), then the claims with their D1 grade and talk, then the uncited
+    statements: what the pairwise judge reads for one answer."""
+    claims = [
+        f"- {_graded(c)}: {redact(c['claim'], labels)} "
+        f"({corpus.titles.get(c['quote_check']['talk'] or '', 'an unknown talk')})"
+        for c in run["claims"]
+    ]
+    uncited = [f"- {redact(statement, labels)}" for statement in run["uncited"] or []]
+    return (
+        f"{redact(answer_prose(record.get('answer_text', '')), labels)}\n\n"
+        f"Claims:\n{chr(10).join(claims) or '(none)'}\n\n"
+        f"Statements with no cited quote:\n{chr(10).join(uncited) or '(none)'}"
+    )
+
+
+ARMS = ("markdown", "omnigraph")
+
+
+def _pairings(records: list[dict], scored: list[dict], questions: dict[str, Question]):
+    """(qid, run, {arm: (record, scored run)}) for every run number both arms answered."""
+    by_key = {(r["qid"], r["arm"], r["run"]): r for r in records}
+    scored_by_key = {(r["qid"], r["arm"], r["run"]): r for r in scored}
+    for qid in sorted(questions):
+        runs = sorted({n for (q, _, n) in by_key if q == qid})
+        for n in runs:
+            if all((qid, arm, n) in by_key for arm in ARMS):
+                yield (
+                    qid,
+                    n,
+                    {arm: (by_key[qid, arm, n], scored_by_key[qid, arm, n]) for arm in ARMS},
+                )
+
+
+def pairwise_requests(
+    records: list[dict],
+    scored: list[dict],
+    corpus: Corpus,
+    labels: dict[str, str],
+    questions: dict[str, Question],
+) -> list[tuple[str, dict, str]]:
+    """(label, request, the arm shown as A): each pairing twice, with the order swapped."""
+    out = []
+    for qid, n, pair in _pairings(records, scored, questions):
+        text = {arm: render_answer(*pair[arm], corpus, labels) for arm in ARMS}
+        for first, second in (ARMS, ARMS[::-1]):
+            request = pairwise_request(questions[qid].text, text[first], text[second])
+            out.append((f"{qid} #{n} {first} first", request, first))
+    return out
+
+
+def pairwise_sections(
+    records: list[dict],
+    scored: list[dict],
+    corpus: Corpus,
+    labels: dict[str, str],
+    questions: dict[str, Question],
+    cache_dir: Path,
+) -> dict[str, list[dict] | None]:
+    """D2.2 per question: each pairing's two orders mapped to arms, the result (an arm only if it
+    wins both orders) and whether the orders agree. None while a pairing is unjudged."""
+    todo = pairwise_requests(records, scored, corpus, labels, questions)
+    out: dict[str, list[dict] | None] = {}
+    for i in range(0, len(todo), 2):
+        (label, first, arm_a), (_, second, arm_b) = todo[i], todo[i + 1]
+        qid, n = label.split()[0], int(label.split()[1][1:])
+        records_ = [lookup(first, cache_dir), lookup(second, cache_dir)]
+        if any(record is None for record in records_) or out.get(qid, []) is None:
+            out[qid] = None
+            continue
+        orders = []
+        for record, a in zip(records_, (arm_a, arm_b), strict=True):
+            b = ARMS[1] if a == ARMS[0] else ARMS[0]
+            pick = {"A": a, "B": b, "tie": "tie"}
+            output = record["output"]
+            orders.append(
+                {"a": a, **{k: pick[output[k]] for k in RATING_KEYS}, "reason": output["reason"]}
+            )
+        winners = {order["winner"] for order in orders}
+        result = winners.pop() if len(winners) == 1 else "tie"
+        out.setdefault(qid, []).append(
+            {
+                "run": n,
+                "orders": orders,
+                "result": result,
+                "agree": len({o["winner"] for o in orders}) == 1,
+            }
+        )
+    return out
+
+
+RATING_KEYS = ("coverage", "specificity", "correctness", "winner")

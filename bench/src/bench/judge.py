@@ -58,6 +58,18 @@ CLUSTER_SCHEMA = {
     "additionalProperties": False,
 }
 
+PICKS = ["A", "B", "tie"]
+RATINGS = ["coverage", "specificity", "correctness", "winner"]
+PAIRWISE_SCHEMA = {
+    "type": "object",
+    "properties": {
+        **{rating: {"type": "string", "enum": PICKS} for rating in RATINGS},
+        "reason": {"type": "string"},
+    },
+    "required": [*RATINGS, "reason"],
+    "additionalProperties": False,
+}
+
 # request -> {"output": parsed JSON, "usage": {...}, "model": str, "id": str}
 Ask = Callable[[dict], dict]
 
@@ -141,6 +153,20 @@ def clusters(
     request = cluster_request(question, labels)
     record = cached(request, ask, cache_dir, valid_clusters(len(set(labels))))
     return label_groups(labels, record["output"]["groups"])
+
+
+def pairwise_request(question: str, answer_a: str, answer_b: str) -> dict:
+    """answer_a / answer_b: each answer already redacted and annotated (score.render_answer)."""
+    content = (
+        f"<question>{question}</question>\n\n"
+        f"<answer_a>\n{answer_a}\n</answer_a>\n\n<answer_b>\n{answer_b}\n</answer_b>"
+    )
+    return _request("judge_pairwise.md", content, PAIRWISE_SCHEMA)
+
+
+def valid_pairwise(output: dict) -> bool:
+    ratings_ok = all(output.get(rating) in PICKS for rating in RATINGS)
+    return ratings_ok and isinstance(output.get("reason"), str)
 
 
 def valid_support(output: dict) -> bool:

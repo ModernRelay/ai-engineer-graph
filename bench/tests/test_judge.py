@@ -6,6 +6,7 @@ from anthropic.types import Usage
 
 from bench.judge import (
     CLUSTER_SCHEMA,
+    PAIRWISE_SCHEMA,
     SUPPORT_SCHEMA,
     UNCITED_SCHEMA,
     JudgeError,
@@ -13,10 +14,12 @@ from bench.judge import (
     anthropic_ask,
     cluster_request,
     clusters,
+    pairwise_request,
     support,
     support_request,
     uncited,
     uncited_request,
+    valid_pairwise,
 )
 from bench.provider import JUDGE_MODEL
 
@@ -287,3 +290,54 @@ def test_clusters_keep_two_groups_with_the_same_name_apart(tmp_path):
     groups = clusters(QUESTION, LABELS, ask=judge, cache_dir=tmp_path)
 
     assert groups["AWS"] != groups["Anthropic"]
+
+
+# pairwise (D2.2): two answers to one question, A and B.
+
+
+def test_the_pairwise_request_shows_the_question_and_both_answers():
+    request = pairwise_request("Which talks argue X?", "Answer one.", "Answer two.")
+    content = request["messages"][0]["content"]
+
+    assert request["output_config"]["format"]["schema"] == PAIRWISE_SCHEMA
+    assert content == (
+        "<question>Which talks argue X?</question>\n\n"
+        "<answer_a>\nAnswer one.\n</answer_a>\n\n<answer_b>\nAnswer two.\n</answer_b>"
+    )
+
+
+def test_the_pairwise_prompt_is_blind_to_the_arms():
+    text = json.dumps(pairwise_request("Q?", "a", "b")).lower()
+
+    for word in ("omnigraph", "markdown", "graph", " arm", "benchmark"):
+        assert word not in text
+
+
+@pytest.mark.parametrize(
+    "output, ok",
+    [
+        (
+            {
+                "coverage": "A",
+                "specificity": "tie",
+                "correctness": "B",
+                "winner": "A",
+                "reason": "r",
+            },
+            True,
+        ),
+        (
+            {
+                "coverage": "A",
+                "specificity": "tie",
+                "correctness": "B",
+                "winner": "C",
+                "reason": "r",
+            },
+            False,
+        ),
+        ({"coverage": "A", "specificity": "tie", "winner": "A", "reason": "r"}, False),
+    ],
+)
+def test_a_pairwise_verdict_needs_every_rating(output, ok):
+    assert valid_pairwise(output) is ok
