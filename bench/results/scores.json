@@ -4,8 +4,9 @@
     "claims_judged": 698,
     "runs_checked": 60,
     "questions_clustered": 6,
-    "requests": 761,
-    "cost_usd": 8.5353
+    "pairings": 30,
+    "requests": 821,
+    "cost_usd": 10.2937
   },
   "runs": [
     {
@@ -20992,6 +20993,718 @@
         "correct": true,
         "items": 0,
         "claims": 0
+      }
+    ]
+  },
+  "pairwise": {
+    "Q01": [
+      {
+        "run": 1,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "tie",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Both answers give ten ranked items with approximate counts and two talks each, but A's items are actual topics rather than theses, and its claims are much better grounded (17 grounded, 3 partial, 0 hallucinated versus B's 2 hallucinated, including the Cognition and Chrome/V8 figures)."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "tie",
+            "specificity": "tie",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Both answers give ten ranked topics with approximate counts and two cited talks each, but B has no hallucinated claims (17 grounded, 3 partial), while A has two hallucinated claims (Cognition and Brumley) plus several uncited figures."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 2,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "omnigraph",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer A ranks concrete topics by an actual per-talk count (files containing the terms), which matches the question directly, and it has slightly better grounding (18 grounded, 2 partial vs 17 grounded, 3 partial); Answer B cites a wider range of speakers and companies, but its talk counts are loose estimates inferred from evidence volume."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "tie",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Both answers give 10 topics with two named talks each, but B wins because it ranks topics by an actual count of talks (a keyword sweep of 337 transcripts), which is what the question asks, and it has slightly more fully grounded claims (18 vs 17). A instead estimates talk counts indirectly from evidence volume."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 3,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "tie",
+            "correctness": "tie",
+            "winner": "markdown",
+            "reason": "Both answers cite two well-grounded talks per topic, but A's topics (evals, harnesses, memory, MCP, tool calling, security, RL) better capture what was most discussed, whereas B ranks narrower theses, omits major topics like evals, MCP and memory, and pairs an off-topic AWS quote with SaaS disruption; A's evals ranking above harnesses despite a lower count is only a minor flaw."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "omnigraph",
+            "specificity": "tie",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Both answers are well grounded with no hallucinated claims, but A cites two talks for every topic as the question requires, while B cites only one for topic 9, ranks evals (~130) above harnesses (~140), and backs its top topic with weak partial citations."
+          }
+        ],
+        "result": "tie",
+        "agree": false
+      }
+    ],
+    "Q02": [
+      {
+        "run": 1,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "tie",
+            "specificity": "omnigraph",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Both answers give five ranked problems with multiple supporting talks each. B names more companies and gives concrete incidents, but it has two hallucinated claims (Scalekit, Unblocked), which weaken its categories 3 and 5. A's claims are all grounded or partial, so A wins on reliability."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "tie",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Both answers give five ranked problems backed by multiple talks, but B has no hallucinated claims and denser support for each problem, while A has two hallucinated citations (Scalekit, Unblocked) that weaken its authentication and durability items."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 2,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer A backs each of its five ranked problems with two or three named speakers and talks, and all 14 of its cited claims are grounded. Answer B relies on fewer talks per item, does not name speakers in its text, and has one partially supported claim."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer B backs each of its five problems with two or three named speakers and companies. All 14 of its claims are grounded, while Answer A has 10 claims, one only partially supported, and generally one or two talks per problem."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 3,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "markdown",
+            "reason": "Answer A gives five distinct, well-supported problem areas (evals, reliability/harness, memory, security/identity, continual learning), each tied to named talks; Answer B has slightly more grounded claims and concrete numbers but splits evaluation across ranks 1 and 4 and leaves more of its supply-chain and security points uncited."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "omnigraph",
+            "winner": "markdown",
+            "reason": "Answer B gives five more distinct problems (evaluation, reliability, memory, security/identity, continual learning), each backed by named talks from several companies, while Answer A's list overlaps (evals vs. benchmarks, security vs. supply chain). Answer A is slightly better grounded (9 of 11 claims grounded vs. 7 of 10), but the gap is small and does not outweigh B's advantage."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      }
+    ],
+    "Q03": [
+      {
+        "run": 1,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "tie",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Both name three contested claims with speakers on each side, but A's disputes are more directly opposed (a staged debate, single- versus multi-agent design, fine-tuning) and it has no hallucinated claims, while B includes one hallucinated citation and some weaker pushback pairings."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "tie",
+            "specificity": "tie",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Both answers name three contested claims with specific talks on each side. B has no hallucinated claims, only a few partials. A includes a hallucinated citation to the continual-learning talk, which weakens one of its key pieces of pushback."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 2,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "tie",
+            "specificity": "tie",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Both answers name three contested claims with talks for and against, at similar levels of detail. B's claims are almost all grounded with no uncited statements. A has four partial claims and nine uncited statements, including the 31% figure."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "tie",
+            "specificity": "tie",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Both answers name three contested claims with talks on each side and give comparable concrete detail. A's claims are almost all grounded (13 of 14, one partial) with no uncited statements, while B has four partial claims and nine uncited statements, including the 31% figure, so A holds up better."
+          }
+        ],
+        "result": "omnigraph",
+        "agree": true
+      },
+      {
+        "run": 3,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "tie",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Both answers name three contested claims with talks on each side, but B's claims are better grounded (10 grounded, 1 partial, against A's 8 grounded, 3 partial), carry concrete figures such as 6/25 tasks and a 26% resolution rate, and rest less on uncited statements."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "tie",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Both answers name three contested claims with talks on each side. A's citations hold up better (10 grounded, 1 partial, versus B's 8 grounded, 3 partial), and A adds concrete figures such as 6 of 25 tasks and a 26% resolution rate. B leans more on uncited statements, though its contests, including the staged debate, are more directly oppositional."
+          }
+        ],
+        "result": "omnigraph",
+        "agree": true
+      }
+    ],
+    "Q04": [
+      {
+        "run": 1,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "tie",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Both list about ten talks: A adds the context-engineering talks (Ng, Towards AI, Menkes), while B covers eleven talks across ten entries, including both Microsoft talks and Anthropic. B wins because it backs its entries with more concrete quotes, and 14 of its 16 claims are grounded against 7 of A's 10."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "tie",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Both answers list about ten entries with four talks in common, and B usefully adds the context angle. A backs its eleven talks with more quoted evidence: 14 grounded and 2 partial claims, against B's 7 grounded and 3 partial."
+          }
+        ],
+        "result": "omnigraph",
+        "agree": true
+      },
+      {
+        "run": 2,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "markdown",
+            "reason": "The question asks for every talk: A lists eight, nearly all backed by grounded claims, including strong fits like Govindarajan's 'Your Harness Did', while B lists six. B is fully grounded and slightly more concrete (benchmark percentages, Haiku 4.5), but that does not offset its narrower coverage, even though a couple of A's entries are weaker fits."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "markdown",
+            "reason": "B finds eight well-grounded talks against A's six, including strong matches such as Govindarajan's 'Your Agent Didn't Fail. Your Harness Did.', so it answers the 'list every talk' request more fully; A's slightly cleaner grounding and extra detail don't make up for the missing talks."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 3,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "tie",
+            "winner": "markdown",
+            "reason": "Both answers are almost entirely grounded, but A lists more talks that argue the thesis directly (Govindarajan, Khandelwal, Sankar and others), while several of B's picks, such as the oncology deterministic checks and the voice-agent audio engineering talk, fit the harness-over-model question less well."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "tie",
+            "winner": "markdown",
+            "reason": "Both answers are well grounded (A: 8 grounded and 1 partial; B: 9 grounded and 1 partial). B wins because it lists more talks that argue directly that the harness or context matters more than the model (Govindarajan, Khandelwal, Sankar, Towards AI) and adds concrete figures such as the 52–76% Harness Bench spread, whereas several of A's entries (AWS voice, Risa oncology) fit the question less closely."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      }
+    ],
+    "Q05": [
+      {
+        "run": 1,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer A grounds nearly every talk it describes (33 grounded, 1 partial) with concrete quotes for each company's sessions. Answer B names more companies, including NVIDIA, but backs most of its content with uncited statements. It also has a hallucinated claim and misreads 'RL to IRL' as 'reinforcement-to-imitation learning'."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer B backs nearly every talk it describes with a grounded, quoted claim across all five companies and states its Amazon/AWS and Google grouping choice openly. Answer A rests on few grounded claims, has one hallucinated claim and leaves most talk descriptions uncited."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 2,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "omnigraph",
+            "specificity": "omnigraph",
+            "correctness": "markdown",
+            "winner": "omnigraph",
+            "reason": "B names the talks and speakers for every company, and it identifies Amazon's five separate talks (backed by a grounded claim) that A's ranking omits. A has the cleaner citation record, while B's NVIDIA supporting quote is hallucinated, but B remains the more complete and concrete answer to the question."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "tie",
+            "specificity": "omnigraph",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Both answers identify six leading companies and describe their talk themes, and A lists more titles and speakers. B's claims are almost all grounded (10 grounded, 1 partial), while A has a hallucinated NVIDIA quote that weakens its questionable NVIDIA and Amazon entries, so B is the more reliable answer."
+          }
+        ],
+        "result": "tie",
+        "agree": false
+      },
+      {
+        "run": 3,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "omnigraph",
+            "winner": "markdown",
+            "reason": "Answer A describes nearly every talk for each company, with speakers and concrete details, and has far more grounded claims overall; this outweighs its two hallucinated claims, while Answer B, though cleaner (no hallucinations, one partial), leaves most talks as uncited one-line summaries."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer B names and describes nearly every talk from each of the five companies with speakers, while Answer A gives only 2–3 grounded examples per company and leaves the rest to uncited lists, and it answers with seven companies rather than five. B has two hallucinated claims, but its much larger base of grounded claims still makes it the stronger answer."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      }
+    ],
+    "Q06": [
+      {
+        "run": 1,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "omnigraph",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer A covers seven companies with 13 grounded claims, 4 partial and none hallucinated. Answer B offers more concrete numbers, but many of them are uncited, and it misnames speakers (Osmani for Sonar, Annie for Ironclad's Mingsheng Hong), so it holds up less well overall."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "markdown",
+            "reason": "Answer B covers more companies (Uber from two talks, Aviator, Qodo, Figma, Corridor, Sonar and Anthropic) with mostly grounded claims, while Answer A covers six companies and is slightly better grounded, with only one partial claim against B's four, and denser in numbers; B's broader coverage outweighs that edge."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 2,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "tie",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Both answers cover seven companies with substantive summaries, but A is more detailed and better grounded: 12 of its 14 claims are grounded and 2 partial. B has only 6 grounded claims out of 10, with 4 partial."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "tie",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Both answers cover seven companies in comparable depth, but B's claims are more solidly grounded (12 of 14 grounded, 2 partial, versus A's 6 grounded and 4 partial) and it gives equally or more concrete mechanisms such as uReview's comment filtering, Aviator's evidence-based review and Snyk's async hooks."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 3,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "omnigraph",
+            "specificity": "tie",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "B covers eight companies to A's five, including Anthropic, Block, Ironclad, Maven, Corridor and Warp alongside the Aviator and Sonar overlap, and backs most of them with grounded claims (13 grounded, 3 partial versus A's 12 grounded, 3 partial), though A gives deeper detail on Uber and Qodo and B's Maven multi-model check concerns product outputs rather than code."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "omnigraph",
+            "specificity": "tie",
+            "correctness": "tie",
+            "winner": "omnigraph",
+            "reason": "Both answers are well grounded with only a few partial claims each. A covers eight relevant companies against B's five, so it wins on breadth, though B includes strong code-review talks (Qodo, Uber, Figma) that A misses."
+          }
+        ],
+        "result": "omnigraph",
+        "agree": true
+      }
+    ],
+    "Q07": [
+      {
+        "run": 1,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "tie",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer A covers more talks per tool, including Langfuse at Pinterest and Mutagent, Arize via the Snorkel engineer, and Snorkel and Harbor, and nearly all of its claims are grounded. Answer B gives an explicit numeric ranking and adds tau-bench and Promptfoo, but it has one hallucinated claim, mislabels the Ogilvy talk as Adobe, and misses several Langfuse mentions."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "B identifies more talks per tool (Langfuse across Pinterest, Mutagent and others; Arize recommended by Snorkel; Snorkel and Harbor) and has more grounded claims with no hallucinations, whereas A's Braintrust claim is hallucinated and it misses several mentions."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 2,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "omnigraph",
+            "specificity": "omnigraph",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer A's ranking is better supported: it has no hallucinated claims and finds more talks for the top tools (Langfuse in 4, Arize in 4 including an independent recommendation), while Answer B covers more tools but undercounts Langfuse and Arize and includes a hallucinated Chronicle claim."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "tie",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "B finds more favorable mentions of the leading tools (Arize/Phoenix in 4 talks, Langfuse in 4, LangSmith in 2), which makes its ranking more complete, and it has no hallucinated claims. A undercounts Arize and Langfuse and includes a hallucinated Chronicle claim, though it does add tau-bench, which B misses."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 3,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Answer A covers more talks and products, including Rustem's Arize mention, Abed's Langfuse telemetry and Braintrust, but it has one hallucinated claim (the Niels Rogge Langfuse quote) and four partial ones that weaken its 4-and-4 ranking. Answer B's ranking rests almost entirely on grounded claims, so it is the more reliable answer."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "omnigraph",
+            "winner": "markdown",
+            "reason": "B finds more favorable mentions, adding the Snorkel and Ogilvy talks, Braintrust and a second LangSmith mention, so its ranking of Arize and Langfuse is better supported and names specific speakers; A is more cleanly grounded, but it undercounts the main tools, and B's single hallucinated Langfuse quote is backed by its other grounded Langfuse claims."
+          }
+        ],
+        "result": "tie",
+        "agree": false
+      }
+    ],
+    "Q08": [
+      {
+        "run": 1,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "omnigraph",
+            "specificity": "omnigraph",
+            "correctness": "tie",
+            "winner": "omnigraph",
+            "reason": "B covers voice, robotics and coding across more talks (Deno, Docker, Hippocratic, AWS robotics stopgap framing) with richer concrete numbers and nearly all grounded claims; its one hallucinated claim roughly offsets A's two partial claims, so B's broader, more specific answer comes out ahead."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "tie",
+            "specificity": "omnigraph",
+            "correctness": "markdown",
+            "winner": "omnigraph",
+            "reason": "Both answers cover voice, robotics and coding concerns with similar breadth and a clear contrast. A edges ahead on overall value through more grounded claims and more concrete numbers (200ms/800ms/755ms latency, 200 million calls, the multimillion-dollar exploit). This outweighs B's cleaner record, because A's one hallucinated robotics claim is minor and B has two partial claims."
+          }
+        ],
+        "result": "omnigraph",
+        "agree": true
+      },
+      {
+        "run": 2,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer A draws on more voice, robotics and coding talks with concrete, well-grounded numbers and has no hallucinated claims, whereas Answer B has one hallucinated robotics claim and leans more on uncited statements."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer B draws on more voice, robotics, avatar and coding-agent talks (Microsoft, Pike, LemonSlice, Snyk, Aviator, Linkov, Figma) with concrete numbers, and its claims hold up better: 13 grounded, 3 partial and none hallucinated, against Answer A's hallucinated robotics bodily-harm claim and several uncited figures."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 3,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "omnigraph",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer A covers more coding-agent talks (code review, security, destructive actions, harness failures) and draws an explicit verifiability contrast, all with mostly grounded claims. Answer B offers somewhat more concrete details (the Hippocratic safety bar, MCU limits, escalation rates), but its supply-chain claims are hallucinated and misattributed to Steve Yegge."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "tie",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer B covers more talks on both sides (Microsoft voice talks, Perception Agents, Kill the Code Review, Snyk, the harness talk) and draws a sharp verifiability contrast, with nearly all claims grounded; Answer A has two hallucinated supply-chain claims."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      }
+    ],
+    "Q09": [
+      {
+        "run": 1,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "tie",
+            "specificity": "omnigraph",
+            "correctness": "tie",
+            "winner": "omnigraph",
+            "reason": "Both answers cover the same three criteria with fully grounded claims: the 'project unship' channel with its low-usage/Microsoft Word heuristic, Styles superseded by Skills, and cutting confusing product distinctions. B edges ahead on specificity with the question context, the 'four to five percent' and ~20-feature detail, and direct quotes of the generational principle."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "tie",
+            "specificity": "tie",
+            "correctness": "tie",
+            "winner": "tie",
+            "reason": "Both answers make the same five grounded points: the 'project unship' channel, the Microsoft Word/Instagram low-usage heuristic, Styles being replaced by Skills, generational primitives, and the code/co-work/chat complexity. Each adds only minor uncited details of its own, so neither is meaningfully better."
+          }
+        ],
+        "result": "tie",
+        "agree": false
+      },
+      {
+        "run": 2,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "omnigraph",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Answer B covers the same grounded points as A — the project unship channel, the usage heuristic, the generational Styles/Skills example and removing product complexity — and puts more of its specifics (the 4-5% figure, Styles being prescriptive) into grounded claims; it also adds the grounded two-week persevere-or-pivot review cadence."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "omnigraph",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Both answers cover the same grounded core: the 'project unship' channel, the usage and Microsoft Word heuristic, generational unshipping with the Styles example, and simplifying surfaces; A also adds the grounded two-week 'persevere or pivot' review cadence and the Instagram origin of the heuristic, so it has more grounded claims and more concrete detail."
+          }
+        ],
+        "result": "omnigraph",
+        "agree": true
+      },
+      {
+        "run": 3,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "omnigraph",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Both answers cover the same core points: the project-unship channel, the Word problem, Styles giving way to Skills, and the generational principle. B adds the younger-product point and more direct quotes, and it has six grounded claims to A's five, with no hallucinations in either."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "omnigraph",
+            "specificity": "omnigraph",
+            "correctness": "omnigraph",
+            "winner": "omnigraph",
+            "reason": "Both answers are well grounded and cover the Slack channel, the Word problem, the Styles→Skills example and the generational-primitives principle, but A adds a sixth grounded point (the younger-product observation) and more concrete quoted detail, while B mainly adds interpretive framing."
+          }
+        ],
+        "result": "omnigraph",
+        "agree": true
+      }
+    ],
+    "Q10": [
+      {
+        "run": 1,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "omnigraph",
+            "specificity": "omnigraph",
+            "correctness": "tie",
+            "winner": "omnigraph",
+            "reason": "Both correctly report that no talk covers FPGAs or neuromorphic chips, but B adds specific adjacent talks (Daniel Han's kernels talk, the Compression at the Edge panel, the AIDA chip-design talk). That context is uncited and slightly inconsistent, since B reports no 'ASIC' matches yet mentions ASICs, so it counts for little."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "omnigraph",
+            "specificity": "omnigraph",
+            "correctness": "tie",
+            "winner": "omnigraph",
+            "reason": "Both answers conclude that no talk covers FPGA or neuromorphic inference, and neither cites any quotes, so they tie on correctness. A adds useful context by naming the nearest hardware-related talks and the specific hardware they cover, though these statements are uncited and carry little weight."
+          }
+        ],
+        "result": "omnigraph",
+        "agree": true
+      },
+      {
+        "run": 2,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "tie",
+            "specificity": "tie",
+            "correctness": "tie",
+            "winner": "tie",
+            "reason": "Both answers reach the same conclusion, that no talk covers LLM inference on FPGAs or neuromorphic chips, and neither cites any evidence; B's brief, unsourced mention of adjacent topics adds nothing verifiable, so neither answer comes out ahead."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "tie",
+            "specificity": "tie",
+            "correctness": "tie",
+            "winner": "tie",
+            "reason": "Both answers say no talk covers FPGA or neuromorphic LLM inference and make no claims; they differ only in how they describe their research, which doesn't count, so neither is better on any criterion."
+          }
+        ],
+        "result": "tie",
+        "agree": true
+      },
+      {
+        "run": 3,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "omnigraph",
+            "specificity": "omnigraph",
+            "correctness": "tie",
+            "winner": "omnigraph",
+            "reason": "Both answers correctly report that no talk covers FPGA or neuromorphic inference, but B also points to the nearest related talks, naming Abduallah Mohamed on chip design along with edge compression and GPU kernel work, which makes it slightly more useful, although those mentions are uncited."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "tie",
+            "specificity": "omnigraph",
+            "correctness": "tie",
+            "winner": "tie",
+            "reason": "Both answers conclude that no talks cover FPGA or neuromorphic LLM inference, and neither cites any evidence; A names some tangentially related talks (e.g., Abduallah Mohamed) without citations, while B reports broader search terms, so neither clearly outperforms the other."
+          }
+        ],
+        "result": "tie",
+        "agree": false
       }
     ]
   }

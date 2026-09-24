@@ -39,6 +39,7 @@
 | 2026-09-24 | D2.1 done: recall for the open questions, cross-arm agreement for fixed-length lists (#39, `count` in questions.yaml); Q01 and Q03 answers barely overlap between the arms | Roman Pronskiy |
 | 2026-09-24 | D2.3 consistency and D2.4 absence done (no judge); Q10 correct in all 6 runs | Roman Pronskiy |
 | 2026-09-24 | D2.2 pairwise judge written with stubbed tests; blind redaction (#40); paid pass pending | Roman Pronskiy |
+| 2026-09-24 | D2.2 done: md 16, og 8, tie 6 (orders agree 83%); Phase D2 guardrails passed; Epic D done | Roman Pronskiy |
 
 ### Status legend
 
@@ -46,7 +47,7 @@
 
 ### Current focus
 
-**Now on:** Epic D → Phase D2 → step D2.2, the blind pairwise judge. D2.1, D2.3 and D2.4 are done. D2.2 waits on the blindness question (open questions), then code with stubs, then a paid pass (30 pairings × 2 orders = 60 requests).
+**Now on:** Epic D is done; both Phase D2 guardrails pass. Next: Epic E, the report (`bench report` → `results/results.md`). Waiting for your confirmation at the D → E boundary.
 
 ---
 
@@ -815,7 +816,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | Step | Description | Status | Notes |
 |------|-------------|--------|-------|
 | D2.1 | Pooled recall for list questions | ✅ | Cluster judge (6 requests, $0.08). Recall on the open questions: Q04 md 36 / og 33%, Q06 49 / 46%, Q07 39 / 53%. Fixed-length lists report cross-arm agreement (#39): Q01 10%, Q02 67%, Q03 0%, Q05 80%. 26 test cases, 11 mutations caught |
-| D2.2 | Blind pairwise quality judge | 🔄 | Code done with stubbed tests: `blind.redact` (#40), `score.render_answer` / `pairwise_requests` / `pairwise_sections`, the second round in `bench score`, `prompts/judge_pairwise.md`. The paid pass (60 requests, about $2–5) waits for your go |
+| D2.2 | Blind pairwise quality judge | ✅ | 30 pairings × 2 orders, 0 errors, $1.76. markdown 16, omnigraph 8, tie 6; the two orders agree in 25/30 (83%) |
 | D2.3 | Run-to-run consistency | ✅ | Mean Jaccard of each arm's 3 runs per list question (`recall[qid].consistency`); no judge. og steadier where the graph holds the answer (Q01 .88, Q03 1.0, Q05 1.0), md steadier on the open searches (Q06 .65 vs .36, Q07 .78 vs .45) |
 | D2.4 | Absence scoring (Q10) | ✅ | Q10: md 3/3 and og 3/3 correct (empty contract block every time); `scores.json` `absence` |
 
@@ -921,6 +922,27 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
     as does og's thesis-shaped answers.
   - **Dry run:** 30 pairings × 2 orders = 60 requests, about 14k characters at the median and
     23k at most, so about $2–5 depending on output length.
+  - **Pass (2026-09-24):** 60 asked, 0 errors, $1.76.
+
+    | | Q01 | Q02 | Q03 | Q04 | Q05 | Q06 | Q07 | Q08 | Q09 | Q10 | all |
+    |---|---|---|---|---|---|---|---|---|---|---|---|
+    | markdown wins | 2 | 3 | 1 | 2 | 2 | 2 | 2 | 2 | 0 | 0 | 16 |
+    | omnigraph wins | 0 | 0 | 2 | 1 | 0 | 1 | 0 | 1 | 2 | 1 | 8 |
+    | tie | 1 | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 1 | 2 | 6 |
+
+    Per order (60): coverage md 29 / og 13 / tie 18; specificity og 26 / md 16 / tie 18;
+    correctness md 27 / og 20 / tie 13. The markdown arm wins on coverage and correctness, the
+    omnigraph arm on specificity. The 5 pairings where the orders disagree (Q01 #3, Q05 #2,
+    Q07 #3, Q09 #1, Q10 #3) count as ties. The reasons read as grounded in the answers:
+    - Q01: md "ranks concrete topics … which matches the question directly" and is better
+      grounded; og's items read to the judge as theses, not topics.
+    - Q03: split; md's disputes are "more directly opposed", og's claims are almost all grounded.
+    - Q09: og wins on specificity with the same grounded points.
+    - One call to question: Q10 #1 goes to og for naming adjacent, uncited talks ("Daniel Han's
+      kernels talk, the Compression at the Edge panel") in an absence answer. The report should
+      note it.
+
+    Rescoring from the cache is byte-identical.
 - **D2.3 — Consistency.** Deliverable: mean Jaccard similarity of each arm's item sets across
   its 3 runs, per list question.
   - The item sets are D2.1's groups: the top N for a fixed-length list (as in the agreement), and
@@ -951,8 +973,8 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Guardrail | Criteria (pass/fail) | Status | Actual outcome |
 |-----------|----------------------|--------|----------------|
-| Position bias checked | Swapped-order agreement ≥ 80% (if lower, report it and treat those pairings as ties) | 🔲 | |
-| All scored | Every run has grounding, recall (where applicable) and pairwise results | 🔲 | |
+| Position bias checked | Swapped-order agreement ≥ 80% (if lower, report it and treat those pairings as ties) | ✅ | 25/30 pairings (83%) get the same result in both orders; the other 5 are ties by rule. |
+| All scored | Every run has grounding, recall (where applicable) and pairwise results | ✅ | `results/scores.json` has all 60 runs graded (710 claims, 60 uncited checks), recall or agreement for the 7 list questions, Q10's absence rows and all 30 pairings. Judge cost for these results: $10.29 (plus the discarded first support pass, $7.00). |
 
 ---
 
