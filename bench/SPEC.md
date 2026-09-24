@@ -40,6 +40,7 @@
 | 2026-09-24 | D2.3 consistency and D2.4 absence done (no judge); Q10 correct in all 6 runs | Roman Pronskiy |
 | 2026-09-24 | D2.2 pairwise judge written with stubbed tests; blind redaction (#40); paid pass pending | Roman Pronskiy |
 | 2026-09-24 | D2.2 done: md 16, og 8, tie 6 (orders agree 83%); Phase D2 guardrails passed; Epic D done | Roman Pronskiy |
+| 2026-09-24 | E1.1–E1.2 done: `bench report` writes the headline and per-question tables to `results/results.md` | Roman Pronskiy |
 
 ### Status legend
 
@@ -47,7 +48,7 @@
 
 ### Current focus
 
-**Now on:** Epic D is done; both Phase D2 guardrails pass. Next: Epic E, the report (`bench report` → `results/results.md`). Waiting for your confirmation at the D → E boundary.
+**Now on:** Epic E → Phase E1 → step E1.3, three showcase traces. Proposed: Q03 #3 (aggregate win), Q09 #3 (lookup), Q01 #1 (loss); the pick is yours. Then E1.4 footnotes.
 
 ---
 
@@ -987,8 +988,8 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Step | Description | Status | Notes |
 |------|-------------|--------|-------|
-| E1.1 | Headline two-column table | 🔲 | |
-| E1.2 | Per-question table | 🔲 | |
+| E1.1 | Headline two-column table | ✅ | `report.py` + `bench report` → `results/results.md`; 5 tests, 6 mutations caught |
+| E1.2 | Per-question table | ✅ | One row per question, omnigraph / markdown in every cell; recall or cross-arm agreement per #39 |
 | E1.3 | Three side-by-side showcase traces | 🔲 | |
 | E1.4 | Method notes and footnotes | 🔲 | |
 
@@ -1013,8 +1014,26 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
   | Turns / tool calls per question — mean | | |
   | Capped or failed runs | | |
 
+  - **Definitions (numbers from `scores.json`, the 60 `result.json` files and `run-meta.json`;
+    nothing typed by hand):**
+    - pairwise: the arm's wins / ties / losses over the 30 pairings (D2.2);
+    - recall: the mean over the arm's 9 runs of the open list questions Q04, Q06 and Q07 (#39).
+      The fixed-length lists aren't averaged in; their cross-arm agreement is a single number per
+      question and goes in the per-question table;
+    - consistency: the mean over the 7 list questions (D2.3);
+    - claims: per answer; grounded, partial and hallucinated as counts and shares of the arm's
+      claims (D1);
+    - uncited statements: per answer (D1.4); Q10: correct runs out of 3 (D2.4);
+    - time: median and p90 (nearest rank) of `wall_s` over the arm's 30 runs; cost: mean
+      `cost_usd` and the total; tokens: mean input (input + cache reads + cache writes) and output;
+      turns and tool calls: means; capped or failed: runs with a status other than `ok`.
+  - The page is deterministic (no generation timestamp; dates come from `run-meta.json`), so the
+    Reproducible guardrail can compare bytes.
 - **E1.2 — Per-question table.** Deliverable: one row per question with the winner, recall,
   grounded %, hallucinated %, median time and mean cost for each arm.
+  - Each cell shows omnigraph / markdown. The pairwise cell is og–md–ties. The recall column
+    shows recall for the open questions and "agree N%" for the fixed-length ones, and prose and
+    absence questions show a dash.
 - **E1.3 — Showcase traces.** Deliverable: pick 3 questions (one aggregate win, one lookup, one
   loss or tie). Show them side by side: the tool calls in order (collapsed), an excerpt of the
   answer, and the metrics.
@@ -1023,7 +1042,8 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
   - the judge model and its cost, listed separately from the arms' cost
   - correctness is relative, with no gold set
   - graph build cost is excluded
-  - `total_cost_usd` is the SDK's estimate
+  - cost is token usage × a recorded OpenRouter price snapshot (the SDK's `total_cost_usd`
+    matched it exactly as a cross-check)
   - the graph commit and corpus hash
   - the run date
 
@@ -1031,7 +1051,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Guardrail | Criteria (pass/fail) | Status | Actual outcome |
 |-----------|----------------------|--------|----------------|
-| Reproducible | `uv run bench score && uv run bench report` rebuilds results.md byte-identical from cache | 🔲 | |
+| Reproducible | `uv run bench score && uv run bench report` rebuilds results.md byte-identical from cache | 🔄 | Holds for E1.1–E1.2: rebuilding gives the same `results.md` and `scores.json` bytes. Recheck after E1.3 and E1.4. |
 | Honest | Footnotes state n, the relative-correctness caveat and the build-cost exclusion | 🔲 | |
 
 ---

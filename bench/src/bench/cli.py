@@ -94,6 +94,13 @@ def main(argv: list[str] | None = None) -> int:
         default=BENCH_DIR / "tests" / "fixtures" / "calibration_judgments.json",
     )
 
+    report = commands.add_parser(
+        "report", help="E: results/results.md from scores.json and the runs"
+    )
+    report.add_argument("--results", type=Path, default=BENCH_DIR / "results")
+    report.add_argument("--runs-dir", type=Path, default=BENCH_DIR / "runs")
+    report.add_argument("--questions", type=Path, default=BENCH_DIR / "questions.yaml")
+
     args = parser.parse_args(argv)
     if args.command == "corpus":
         written = build_corpus(args.seed, args.out, CHUNK_TALK_OVERRIDES)
@@ -132,6 +139,18 @@ def main(argv: list[str] | None = None) -> int:
         return _score(args)
     elif args.command == "calibrate":
         return _calibrate(args)
+    elif args.command == "report":
+        from bench.questions import load_questions
+        from bench.report import render
+        from bench.score import load_runs
+
+        scores = json.loads((args.results / "scores.json").read_text(encoding="utf-8"))
+        meta_path = args.results / "run-meta.json"
+        meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
+        questions = {q.id: q for q in load_questions(args.questions)}
+        page = render(scores, load_runs(args.runs_dir), questions, meta)
+        (args.results / "results.md").write_text(page, encoding="utf-8")
+        print(f"wrote {args.results / 'results.md'}")
     return 0
 
 
