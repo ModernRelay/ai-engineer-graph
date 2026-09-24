@@ -7,6 +7,8 @@ from pathlib import Path
 
 from rapidfuzz import fuzz, process
 
+from bench.corpus import PASSAGE_WORDS, passages
+
 FUZZY_MIN = 90  # rapidfuzz partial_ratio
 SPLICE_PIECE_MIN = 4  # words; shorter pieces between ellipses carry no evidence
 ELLIPSIS = re.compile(r"\.{3,}|…")
@@ -29,17 +31,18 @@ class QuoteCheck:
 
 class Corpus:
     def __init__(
-        self, texts: dict[str, str], labels: dict[str, str], titles: dict[str, str] | None = None
+        self,
+        texts: dict[str, str],
+        labels: dict[str, str],
+        titles: dict[str, str] | None = None,
+        passage_words: int = PASSAGE_WORDS,
     ):
         # Padded with spaces so an exact match can be required to start and end on a word.
         self.texts = {talk: f" {normalise_text(text)} " for talk, text in texts.items()}
         self.labels = labels
         self.titles = titles or {}  # the header's title line: title (speakers, company — event)
-        # The corpus joins a talk's chunks with a blank line; the judge's context uses them.
-        self.chunks = {
-            talk: [chunk.strip() for chunk in text.split("\n\n") if chunk.strip()]
-            for talk, text in texts.items()
-        }
+        # Chunk-sized passages, cut the way the seed's chunks were; the judge's context uses them.
+        self.chunks = {talk: passages(text, passage_words) for talk, text in texts.items()}
         self._chunk_texts = {
             talk: [f" {normalise_text(chunk)} " for chunk in chunks]
             for talk, chunks in self.chunks.items()

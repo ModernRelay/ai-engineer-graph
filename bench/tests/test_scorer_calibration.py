@@ -18,13 +18,17 @@ from bench.score import score_runs, support_requests
 from bench.verify import Corpus
 
 SEED = Path(__file__).resolve().parents[2] / "seed"
+TRANSCRIPTS = Path(__file__).resolve().parents[2] / "transcripts"
+pytestmark = pytest.mark.skipif(
+    not TRANSCRIPTS.is_dir(), reason="needs the local transcripts/ directory"
+)
 FIXTURE = Path(__file__).parent / "fixtures" / "calibration_judgments.json"
 
 
 @pytest.fixture(scope="module")
 def corpus(tmp_path_factory):
     talks = tmp_path_factory.mktemp("talks")
-    build_corpus(SEED, talks, CHUNK_TALK_OVERRIDES)
+    build_corpus(SEED, TRANSCRIPTS, talks, CHUNK_TALK_OVERRIDES)
     return Corpus.load(talks, talk_labels(SEED, CHUNK_TALK_OVERRIDES))
 
 
@@ -80,7 +84,7 @@ def test_calibrate_records_the_judges_verdicts_for_the_judged_plants(corpus, tmp
 
     monkeypatch.setattr(judge, "openrouter_ask", lambda env: fake)
     talks = tmp_path / "talks"
-    build_corpus(SEED, talks, CHUNK_TALK_OVERRIDES)
+    build_corpus(SEED, TRANSCRIPTS, talks, CHUNK_TALK_OVERRIDES)
     out = tmp_path / "fixture.json"
 
     code = main(

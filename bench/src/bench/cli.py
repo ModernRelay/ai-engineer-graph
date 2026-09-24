@@ -33,8 +33,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="bench")
     commands = parser.add_subparsers(dest="command", required=True)
 
-    corpus = commands.add_parser("corpus", help="build corpus/talks/*.md from the seed's chunks")
+    corpus = commands.add_parser(
+        "corpus", help="build corpus/talks/*.md from the source transcripts"
+    )
     corpus.add_argument("--seed", type=Path, default=REPO_DIR / "seed")
+    corpus.add_argument("--transcripts", type=Path, default=REPO_DIR / "transcripts")
     corpus.add_argument("--out", type=Path, default=BENCH_DIR / "corpus" / "talks")
 
     relink = commands.add_parser(
@@ -103,7 +106,7 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
     if args.command == "corpus":
-        written = build_corpus(args.seed, args.out, CHUNK_TALK_OVERRIDES)
+        written = build_corpus(args.seed, args.transcripts, args.out, CHUNK_TALK_OVERRIDES)
         print(f"wrote {written} talks to {args.out}")
     elif args.command == "relink-chunks":
         moved = sum(

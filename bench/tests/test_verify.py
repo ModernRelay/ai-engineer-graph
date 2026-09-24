@@ -183,7 +183,10 @@ CHUNKS = [
 
 @pytest.fixture
 def chunked():
-    return Corpus(texts={"ia-aie-t": "\n\n".join(CHUNKS)}, labels={"t-label": "ia-aie-t"})
+    # a passage budget of 12 words makes each one-sentence chunk its own passage
+    return Corpus(
+        texts={"ia-aie-t": "\n".join(CHUNKS)}, labels={"t-label": "ia-aie-t"}, passage_words=12
+    )
 
 
 def test_context_is_the_matching_chunk_and_one_either_side(chunked):

@@ -54,7 +54,7 @@ reads the seed and the running server; it never writes data to either.
 ```bash
 cd bench
 uv sync
-uv run bench corpus                 # A1 — build corpus/talks/*.md from ../seed
+uv run bench corpus                 # A1 — build corpus/talks/*.md from ../transcripts (+ ../seed for talk ids)
 printf %s "$TOKEN_ACT_READER" | uv run bench shim   # A2.2 — once; reader-only omnigraph config
 uv run bench probe                  # A2.4 — live isolation probe, both arms (~$0.09; needs the
                                     #   local server: scripts/local-graph.sh serve)

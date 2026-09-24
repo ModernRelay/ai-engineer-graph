@@ -43,6 +43,7 @@
 | 2026-09-24 | E1.1–E1.2 done: `bench report` writes the headline and per-question tables to `results/results.md` | Roman Pronskiy |
 | 2026-09-24 | E1.3 showcases and E1.4 method notes done; Epic E guardrails passed; MVP complete | Roman Pronskiy |
 | 2026-09-24 | F1.6 started: the report published as a private page (by hand) | Roman Pronskiy |
+| 2026-09-24 | Corpus rebuilt from the source transcripts (`../transcripts/*.txt`) instead of the seed's chunks (#41); the MVP numbers predate it | Andrew Altshuler |
 
 ### Status legend
 
@@ -95,7 +96,8 @@ few side-by-side traces for a demo.
 ## 3. Architecture overview
 
 ```
- seed/chunks/*.jsonl ──build_corpus──▶ bench/corpus/talks/<ia-aie-slug>.md  (337 files, gitignored)
+ transcripts/<label>.txt ─build_corpus─▶ bench/corpus/talks/<ia-aie-slug>.md  (337 files, gitignored)
+ seed/chunks/*.jsonl ─(label → talk, via PartOfArtifact)─┘
  seed/04-artifacts.jsonl ─(title, link, date header)─┘
 
  questions.yaml ──┐
@@ -1151,6 +1153,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | 38 | 2026-09-24 | The support judge also sees the cited talk's title line (title, speakers, company). All 695 requests are asked again; the first pass's judgments move to `runs/_judge-before-title/`. | Both arms know each talk's title, speakers and company: md from the file header, og from the graph. The judge saw transcript only, so a correct attribution such as "Deno's CEO built …" could come back `partial` (about 14 md and 3 og partials in the first pass). Metadata the agents legitimately had shouldn't count against them. The title is context for the judge, not quotable: the quote check still reads the transcript only. | Roman Pronskiy |
 | 39 | 2026-09-24 | D2.1 is reported by question type. Pooled recall only for the open questions (Q04, Q06, Q07). For the fixed-length lists (Q01, Q02, Q03, Q05, now marked with `count` in `questions.yaml`), cross-arm agreement (shared share of the top N per run pairing) plus D2.3 consistency, with quality left to D2.2. | On a fixed-length list every run names N grounded items, so recall is N / pool for every run (Q01: 40% for all six) and can't separate the arms. The consensus top-5 overlap is a majority vote of six runs, so it rewards the more consistent arm and falls to tie-breaks when the arms disagree (Q03: disjoint answers, all tied at 3 votes). `count` is scorer metadata; the question `text` is unchanged. | Roman Pronskiy |
 | 40 | 2026-09-24 | The pairwise judge (D2.2) sees both answers after a symmetric redaction of tool and source mentions (`blind.redact`, a fixed documented list), and chunk labels are mapped to talk ids. | 14 of 30 og answers name the graph or its searches and 8 of 30 md answers name files or grep, so an unredacted judge could often tell the arms apart. The list is phrase-level so ordinary words (the Arize Signal product, "co-founder", "a graph of") survive. Residual style differences are reported, not hidden. | Roman Pronskiy |
+| 41 | 2026-09-24 | `bench corpus` builds each talk file from its source transcript, `../transcripts/<label>.txt` (the label is the transcript prefix of the talk's chunk ids; the talk is where their PartOfArtifact edges point), instead of re-joining the seed's chunks. The body has one paragraph per speaker turn (the captions' `>>` marker, dropped) and one sentence per line. The quote check's judge context is cut into ~220-word passages on sentence boundaries, the way the seed's chunks were, since the files no longer carry chunk boundaries. The corpus tests and scorer calibration need `../transcripts` and skip without it. | The transcripts are the source the chunks were cut from, so the markdown arm reads what a person reading the talks would: whole transcripts with speaker turns, not 220-word blocks broken at arbitrary points with `>>` left inside. The words are the same (5,339 chunks found in order) except Shaw & Marten's talk, whose chunks keep 7 words of rolling-caption repeats the transcript was later cleaned of. A sentence per line keeps phrases off the captions' fixed-width line breaks, so Grep finds them. The results in `results/` come from the chunk-built corpus; the markdown arm has to be re-run on this one, and the calibration fixture re-recorded (`bench calibrate`), before any new numbers are reported. | Andrew Altshuler |
 
 ---
 

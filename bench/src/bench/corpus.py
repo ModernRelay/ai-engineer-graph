@@ -1,11 +1,18 @@
-"""Rebuild the talk transcripts as markdown files from the seed's chunks.
+"""Build the talk transcripts as markdown files from the source transcripts.
 
-Each talk's chunks are found through their PartOfArtifact edges and joined in
-chunk_index order. The header carries only what someone browsing the talks
-would see: title, video link and publish date. Nothing else from the graph.
+Each talk's text comes from `transcripts/<label>.txt`, the cleaned captions the seed's
+chunks were cut from; the label is the transcript prefix of the talk's chunk ids, and the
+talk is where the chunks' PartOfArtifact edges point. The header carries only what
+someone browsing the talks would see: title, video link and publish date. Nothing else
+from the graph.
+
+The body keeps the transcript's words in order and only changes the layout: one
+paragraph per speaker turn (the captions' `>>` marker, dropped) and one sentence per
+line, so a phrase is never split across lines by the captions' fixed-width wrapping.
 """
 
 import json
+import re
 from collections import defaultdict
 from pathlib import Path
 
@@ -15,6 +22,10 @@ from pathlib import Path
 # by the 2026-09-08 audit backfill, was fixed in seed/chunks/part-03.jsonl on 2026-09-23.
 CHUNK_TALK_OVERRIDES: dict[str, str] = {}
 
+TURN = re.compile(r"\s*>>\s*")
+SENTENCE_END = re.compile(r"(?<=[.!?])\s+")
+PASSAGE_WORDS = 220  # the seed's chunk size (seed-work/chunk_talks.py)
+
 
 def _read_jsonl(path: Path):
     with path.open(encoding="utf-8") as f:
@@ -22,36 +33,54 @@ def _read_jsonl(path: Path):
             yield json.loads(line)
 
 
-def build_corpus(seed_dir: Path, out_dir: Path, overrides: dict[str, str]) -> int:
+def transcript_body(raw: str) -> str:
+    """A caption transcript as markdown: a paragraph per speaker turn, a sentence per line."""
+    turns = [" ".join(turn.split()) for turn in TURN.split(raw)]
+    return "\n\n".join("\n".join(SENTENCE_END.split(turn)) for turn in turns if turn)
+
+
+def passages(text: str, words: int = PASSAGE_WORDS) -> list[str]:
+    """A transcript packed into ~`words`-word passages on sentence boundaries, the way the
+    seed's chunks were cut, so the support judge sees chunk-sized context."""
+    out, buf, n = [], [], 0
+    for sentence in SENTENCE_END.split(" ".join(text.split())):
+        w = len(sentence.split())
+        if n + w > words and buf:
+            out.append(" ".join(buf))
+            buf, n = [], 0
+        buf.append(sentence)
+        n += w
+    if buf:
+        out.append(" ".join(buf))
+    return out
+
+
+def build_corpus(
+    seed_dir: Path, transcripts_dir: Path, out_dir: Path, overrides: dict[str, str]
+) -> int:
     artifacts = {r["id"]: r["data"] for r in _read_jsonl(seed_dir / "04-artifacts.jsonl")}
 
-    chunks = {}  # chunk id -> Chunk data
-    talk_of = {}  # chunk id -> artifact id, from PartOfArtifact
-    for part in sorted((seed_dir / "chunks").glob("part-*.jsonl")):
-        for row in _read_jsonl(part):
-            if row.get("type") == "Chunk":
-                chunks[row["id"]] = row["data"]
-            elif row.get("edge") == "PartOfArtifact":
-                talk_of[row["from"]] = row["to"]
-
-    talks = defaultdict(list)  # artifact id -> [(prefix, chunk_index, text)]
-    for chunk_id, data in chunks.items():
-        prefix = chunk_id.rsplit("#", 1)[0]
-        talk = overrides.get(prefix, talk_of[chunk_id])
-        text = data["text"].removeprefix(f"[{prefix}] ")
-        talks[talk].append((prefix, data["chunk_index"], text))
-
-    for talk, rows in talks.items():
-        prefixes = sorted({prefix for prefix, _, _ in rows})
-        if len(prefixes) > 1:
+    labels_of = defaultdict(set)  # talk -> transcript labels
+    for label, talk in talk_labels(seed_dir, overrides).items():
+        labels_of[talk].add(label)
+    for talk, labels in labels_of.items():
+        if len(labels) > 1:
             raise ValueError(
-                f"{talk} has chunks from more than one transcript: {', '.join(prefixes)}"
+                f"{talk} has chunks from more than one transcript: {', '.join(sorted(labels))}"
             )
+    missing = sorted(
+        label
+        for labels in labels_of.values()
+        for label in labels
+        if not (transcripts_dir / f"{label}.txt").is_file()
+    )
+    if missing:
+        raise FileNotFoundError(f"no transcript in {transcripts_dir} for: {', '.join(missing)}")
 
     out_dir.mkdir(parents=True, exist_ok=True)
     for stale in out_dir.glob("*.md"):
         stale.unlink()
-    for talk, rows in talks.items():
+    for talk, (label,) in labels_of.items():
         meta = artifacts[talk]
         header = (
             f"# {meta['name']}\n"
@@ -59,9 +88,9 @@ def build_corpus(seed_dir: Path, out_dir: Path, overrides: dict[str, str]) -> in
             f"- video: {meta['link']}\n"
             f"- published: {meta['stagingTimestamp'][:10]}\n"
         )
-        body = "\n\n".join(text for _, _, text in sorted(rows, key=lambda r: r[1]))
+        body = transcript_body((transcripts_dir / f"{label}.txt").read_text(encoding="utf-8"))
         (out_dir / f"{talk}.md").write_text(header + "\n" + body + "\n", encoding="utf-8")
-    return len(talks)
+    return len(labels_of)
 
 
 def talk_labels(seed_dir: Path, overrides: dict[str, str]) -> dict[str, str]:
