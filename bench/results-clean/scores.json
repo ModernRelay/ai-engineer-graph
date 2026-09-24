@@ -1,0 +1,2249 @@
+{
+  "judge": {
+    "model": "anthropic/claude-opus-5.5",
+    "claims_judged": 78,
+    "runs_checked": 6,
+    "questions_clustered": 1,
+    "pairings": 3,
+    "requests": 91,
+    "cost_usd": 1.1651
+  },
+  "runs": [
+    {
+      "qid": "Q03",
+      "arm": "markdown",
+      "run": 1,
+      "unparseable": false,
+      "flags": [],
+      "dropped_items": 0,
+      "dropped_claims": 0,
+      "items": [
+        {
+          "position": 1,
+          "label": "Multi-agent orchestration vs. single-agent architecture",
+          "rank": 1,
+          "talk_count": 5
+        },
+        {
+          "position": 2,
+          "label": "Do coding agents produce durable productivity gains, or 'velocity sickness'/tech debt?",
+          "rank": 2,
+          "talk_count": 3
+        },
+        {
+          "position": 3,
+          "label": "Frontier model intelligence vs. harness/context/cost efficiency as the real driver of agent performance",
+          "rank": 3,
+          "talk_count": 3
+        }
+      ],
+      "claims": [
+        {
+          "index": 0,
+          "item": "Multi-agent orchestration vs. single-agent architecture",
+          "item_position": 1,
+          "claim": "Pinterest moved from single-agent to multi-agent and found it far more effective",
+          "talk": "ia-aie-profirovic-spark-medic",
+          "talk_raw": "ia-aie-profirovic-spark-medic",
+          "quote": "The multi-agent architecture proved very effective offering us the greatest control over the system's behavior",
+          "quote_words": 15,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-profirovic-spark-medic",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The transcript confirms the move from a single ReAct agent to a multi-agent architecture and calls it 'very effective' with the greatest control, but it never directly compares effectiveness or says it was 'far more' effective than the single-agent setup.",
+            "judgment": "7b3724a05781561ee47791b2111f3ac51e76cb2fc72f96d6196ea1fbedc6ae14"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 1,
+          "item": "Multi-agent orchestration vs. single-agent architecture",
+          "item_position": 1,
+          "claim": "Uber's code review engine is built as multiple specialized generator agents",
+          "talk": "ia-aie-bond-ketkar-uber-ureview-code-review",
+          "talk_raw": "ia-aie-bond-ketkar-uber-ureview-code-review",
+          "quote": "We have a number of different generators. Now, these generators are tuned for different performance and cost avenues",
+          "quote_words": 18,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-bond-ketkar-uber-ureview-code-review",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker describes the uReview service routing requests to a number of different generators, each tuned for different performance and cost trade-offs, which matches the claim of multiple specialized generator agents.",
+            "judgment": "899749e35e1499ec927d68257d02d22ef94b144effa5014bba10665f40bfc3d4"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 2,
+          "item": "Multi-agent orchestration vs. single-agent architecture",
+          "item_position": 1,
+          "claim": "Prediction that multi-agent orchestration will dominate",
+          "talk": "ia-aie-schroeder-domain-specific-agents",
+          "talk_raw": "ia-aie-schroeder-domain-specific-agents",
+          "quote": "2027, I would say, is basically the year of multi-agent orchestration",
+          "quote_words": 11,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-schroeder-domain-specific-agents",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker explicitly predicts that 2027 will be \"the year of multi-agent orchestration\" and a term people will hear a lot, which reasonably conveys the claimed prediction of its prominence.",
+            "judgment": "be365235dcd8eea09c9cc924089710c7928f720f8678bd1a44b49581e0d7a25b"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 3,
+          "item": "Multi-agent orchestration vs. single-agent architecture",
+          "item_position": 1,
+          "claim": "ZS Associates killed their multi-agent pipeline because no agent owned the end-to-end picture",
+          "talk": "ia-aie-sethuraman-asokan-killed-multiagent",
+          "talk_raw": "ia-aie-sethuraman-asokan-killed-multiagent",
+          "quote": "there is no single agent which is owning which understands the end to-end picture basically",
+          "quote_words": 15,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-sethuraman-asokan-killed-multiagent",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote says no single agent understood the end-to-end picture, but the speakers present this as a symptom and attribute the failure to three causes: using an LLM for signal detection, context lost at handoffs, and no shared domain knowledge, so the claim's single cause oversimplifies.",
+            "judgment": "4419f155fd0344a7f9348cb14213e4f21e86847e6c7de8cb122efc2a8796e3fe"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 4,
+          "item": "Multi-agent orchestration vs. single-agent architecture",
+          "item_position": 1,
+          "claim": "ZS consolidated distributed reasoning into a single agent",
+          "talk": "ia-aie-sethuraman-asokan-killed-multiagent",
+          "talk_raw": "ia-aie-sethuraman-asokan-killed-multiagent",
+          "quote": "We didn't by the judgment to be distributed between agents that we wanted to consolidate to a single agent",
+          "quote_words": 19,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-sethuraman-asokan-killed-multiagent",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says they removed distributed reasoning because they did not want judgment spread across agents, and consolidated the process into a single agent, with sub-agents used only for investigation while the main agent keeps the judgment.",
+            "judgment": "b08b420ac17f9ea8a34790a22decdac7ac732ed6fd010288f4113255f69a378b"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 5,
+          "item": "Multi-agent orchestration vs. single-agent architecture",
+          "item_position": 1,
+          "claim": "Navan argues you shouldn't attempt multi-agent before mastering single-agent loops",
+          "talk": "ia-aie-milev-kanagala-navan-agents-microservices",
+          "talk_raw": "ia-aie-milev-kanagala-navan-agents-microservices",
+          "quote": "if you can't build a single agentic loop, why go in and try to build a multi-agent orchestrated system",
+          "quote_words": 19,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-milev-kanagala-navan-agents-microservices",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The Navan chief architect draws an analogy to the monolith-before-microservices lesson and says that if you can't build a single agentic loop, you shouldn't try to build a multi-agent orchestrated system, which matches the claim.",
+            "judgment": "4af795aef6b4e4819d78e9c57d77d192b9fb78018585e52a47658ae4a9228045"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 6,
+          "item": "Multi-agent orchestration vs. single-agent architecture",
+          "item_position": 1,
+          "claim": "Navan repeats the single-agent-first principle for multi-agent orchestration",
+          "talk": "ia-aie-milev-kanagala-navan-agents-microservices",
+          "talk_raw": "ia-aie-milev-kanagala-navan-agents-microservices",
+          "quote": "if you can't perfect and build a single agent, why go towards multi-agent, right",
+          "quote_words": 14,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-milev-kanagala-navan-agents-microservices",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says \"as Roberto briefly hinted,\" which makes it a repeated point, then asks why go multi-agent if you can't perfect a single agent, and describes Navan's single-master approach.",
+            "judgment": "b81ea2ed5a88bea17b59d660063ee54dbb93db9eb1ec61175ddb8c29dd722f91"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 7,
+          "item": "Do coding agents produce durable productivity gains, or 'velocity sickness'/tech debt?",
+          "item_position": 2,
+          "claim": "AWS reports median 4.5x and sometimes 10x sustained productivity gains",
+          "talk": "ia-aie-liguori-aws-ai-native-frontier-dev-team",
+          "talk_raw": "ia-aie-liguori-aws-ai-native-frontier-dev-team",
+          "quote": "we've been seeing a median of 4.5x productivity improvement and sometimes more than 10x",
+          "quote_words": 14,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-liguori-aws-ai-native-frontier-dev-team",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The transcript gives a median 4.5x and sometimes more than 10x productivity improvement from pilots inside Amazon, but it never says these gains were sustained or durable.",
+            "judgment": "3e10cc9a039175606bff1f4b76c8247a05ce098e68a4ab40c3c3a8dfa6d66d69"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 8,
+          "item": "Do coding agents produce durable productivity gains, or 'velocity sickness'/tech debt?",
+          "item_position": 2,
+          "claim": "AWS's pathfinder team reached 20x improvement",
+          "talk": "ia-aie-liguori-aws-ai-native-frontier-dev-team",
+          "talk_raw": "ia-aie-liguori-aws-ai-native-frontier-dev-team",
+          "quote": "this was truly the pathfinder team that proved that it was possible to get up to 20X improvement",
+          "quote_words": 18,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-liguori-aws-ai-native-frontier-dev-team",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker calls the Bedrock Mantle team the pathfinder team that proved it was possible to get up to a 20X improvement, which matches the claim, though the \"up to\" qualifier is softened.",
+            "judgment": "8bc4f69ec43e8f42686dd495ad7a3dd77465629b6913f47114a6ee343d1d50d7"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 9,
+          "item": "Do coding agents produce durable productivity gains, or 'velocity sickness'/tech debt?",
+          "item_position": 2,
+          "claim": "CMU study cited: 3-5x productivity boost dissipates within three months due to tech debt",
+          "talk": "ia-aie-shaukat-verifiers-king",
+          "talk_raw": "ia-aie-shaukat-verifiers-king",
+          "quote": "you're building the technical debt as quickly as you are generating the code or maybe even more quickly",
+          "quote_words": 18,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-shaukat-verifiers-king",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The transcript describes a Carnegie Mellon study showing a 3-5x velocity boost that dissipates within three months. The speaker attributes this to rising security, maintainability, reliability and complexity issues, i.e. technical debt building as fast as the code.",
+            "judgment": "2af70bb688e5c41aff6ba9fe46388c81e96b300dbb5287ec9ead21ec28c90044"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 10,
+          "item": "Do coding agents produce durable productivity gains, or 'velocity sickness'/tech debt?",
+          "item_position": 2,
+          "claim": "'Velocity sickness' defined as stress and output-without-impact from sudden AI-driven speedups",
+          "talk": "ia-aie-dailey-velocity-sickness",
+          "talk_raw": "ia-aie-dailey-velocity-sickness",
+          "quote": "the stress caused by sudden output increases thanks to AI. Um it affects individuals or teams. Um and the result is output without impact",
+          "quote_words": 24,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-dailey-velocity-sickness",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker explicitly defines velocity sickness as the stress caused by sudden output increases thanks to AI, affecting individuals or teams, with the result being output without impact.",
+            "judgment": "1306578615441d3aecccd585ba96ad3fbff62900aa1919f048622ebe57e66ce4"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 11,
+          "item": "Frontier model intelligence vs. harness/context/cost efficiency as the real driver of agent performance",
+          "item_position": 3,
+          "claim": "OpenAI asserts everyone wants and should want the frontier/best model",
+          "talk": "ia-aie-openai-golden-age",
+          "talk_raw": "ia-aie-openai-golden-age",
+          "quote": "Everyone wants frontier intelligence. Pick your favorite eval, you want the best model",
+          "quote_words": 13,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-openai-golden-age",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The speaker says everyone wants frontier intelligence and the best model, but he says nothing normative about what people should want, and he uses the point to pivot straight to cost efficiency.",
+            "judgment": "53d37c172f157f071971f248be14edee33d087d4f4741d09fc3abbf331a37da7"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 12,
+          "item": "Frontier model intelligence vs. harness/context/cost efficiency as the real driver of agent performance",
+          "item_position": 3,
+          "claim": "OpenAI frames intelligence as the primary want, efficiency as secondary",
+          "talk": "ia-aie-openai-golden-age",
+          "talk_raw": "ia-aie-openai-golden-age",
+          "quote": "you also want as much intelligence as you can get, and that's where efficiency comes in",
+          "quote_words": 16,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-openai-golden-age",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The context shows the speaker saying everyone wants frontier intelligence and presenting efficiency as the way to get as much intelligence as possible, but it never ranks efficiency as secondary; cost efficiency is in fact introduced as the first 'value maxing' theme.",
+            "judgment": "bc35df81c8e3b0175cfeee23f63866dfdae377f8a4c51fcbdfc0a3f733083b84"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 13,
+          "item": "Frontier model intelligence vs. harness/context/cost efficiency as the real driver of agent performance",
+          "item_position": 3,
+          "claim": "Cline's founder argues raw model intelligence lead matters less now",
+          "talk": "ia-aie-rizwan-open-source-dead",
+          "talk_raw": "ia-aie-rizwan-open-source-dead",
+          "quote": "we're at an inflection point where raw intelligence lead doesn't matter as much anymore",
+          "quote_words": 14,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-rizwan-open-source-dead",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker from Cline says outright that \"we're at an inflection point where raw intelligence lead doesn't matter as much anymore,\" and then argues that context, tools and cost matter more.",
+            "judgment": "38c334140ebee9778aaae93bbb3c1ec189feee2c17b880928f12b6ddeb28735f"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 14,
+          "item": "Frontier model intelligence vs. harness/context/cost efficiency as the real driver of agent performance",
+          "item_position": 3,
+          "claim": "Good tooling/context lets a mediocre model match a smarter one",
+          "talk": "ia-aie-rizwan-open-source-dead",
+          "talk_raw": "ia-aie-rizwan-open-source-dead",
+          "quote": "even a mediocre model can produce similar results as a more intelligent model",
+          "quote_words": 13,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-rizwan-open-source-dead",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says that with the right infrastructure (skills, rules, verification and quality gates), even a mediocre model can produce results similar to a more intelligent one, because output depends more on context and tools than raw intelligence.",
+            "judgment": "d3d7f412d7041ed5c1d59cd9b895c853de333a574b488bafa4e2bcb297945028"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 15,
+          "item": "Frontier model intelligence vs. harness/context/cost efficiency as the real driver of agent performance",
+          "item_position": 3,
+          "claim": "Trusting the model over the harness makes teams dependent on proprietary, non-local models",
+          "talk": "ia-aie-bhargava-harness-over-model",
+          "talk_raw": "ia-aie-bhargava-harness-over-model",
+          "quote": "that is making us reliant on fancy proprietary models that can't be run locally",
+          "quote_words": 14,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-bhargava-harness-over-model",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says that the prevailing view that good models let you keep the harness simple is \"making us reliant on fancy proprietary models that can't be run locally,\" which matches the claim.",
+            "judgment": "0e831907c7ed6b8b5a329a64b9fcadac6c5a26dedce4d800bf9ad09559c6eb0e"
+          },
+          "grounding": "grounded"
+        }
+      ],
+      "uncited": [
+        "AWS's productivity gains only hold if teams deliberately change how they work.",
+        "Uber's uReview generators are tuned for different performance and cost avenues."
+      ]
+    },
+    {
+      "qid": "Q03",
+      "arm": "markdown",
+      "run": 2,
+      "unparseable": false,
+      "flags": [],
+      "dropped_items": 0,
+      "dropped_claims": 0,
+      "items": [
+        {
+          "position": 1,
+          "label": "Loops/software-factory hype matches reality",
+          "rank": 1,
+          "talk_count": 1
+        },
+        {
+          "position": 2,
+          "label": "Multi-agent decomposition vs. single agent owning reasoning",
+          "rank": 2,
+          "talk_count": 3
+        },
+        {
+          "position": 3,
+          "label": "Harness matters more than the model",
+          "rank": 3,
+          "talk_count": 2
+        }
+      ],
+      "claims": [
+        {
+          "index": 0,
+          "item": "Loops/software-factory hype matches reality",
+          "item_position": 1,
+          "claim": "Jeff Huntley argues loops/agents already outperform hireable developers",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "These LLMs generate code better than you can hire you can actually hire for.",
+          "quote_words": 14,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "Answering a question addressed to Jeff, the speaker says LLMs generate code better than the mass-market developers most founders can hire, and that running them in a loop costs about $10.42 an hour, which matches the claim.",
+            "judgment": "02bc8e2716d2f142052a9d2472c2304957dbaa4d85f479f92024af825544ef46"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 1,
+          "item": "Loops/software-factory hype matches reality",
+          "item_position": 1,
+          "claim": "Ian Livingston argues the productivity gains are real and inevitable",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "the train's left the station. This stuff works, um and there is a real productivity increment, right?",
+          "quote_words": 17,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "Ian says the train has left the station, that there is a real productivity increment, and that the question is not whether it will happen but when, which supports both the 'real' and 'inevitable' parts of the claim.",
+            "judgment": "03d716df6779c557523cf5aa3b5c1ace1b59fb79205d932f454c6f588678afe6"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 2,
+          "item": "Loops/software-factory hype matches reality",
+          "item_position": 1,
+          "claim": "Dax Raad argues the hype outruns what actually works",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "the hype is is making us feel like there's a magic answer to this and it requires a lot more thought and care",
+          "quote_words": 23,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote, in context, does argue that the hype is outrunning the discipline and that there is no magic answer, but the transcript identifies the speaker as Dex (Horthy, per the title line), not Dax Raad, who is not among the listed speakers.",
+            "judgment": "b334695d20bfafacd0c5159446153ac547a2a5bb13c4a99d4b8a26a2fc26b3ee"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 3,
+          "item": "Loops/software-factory hype matches reality",
+          "item_position": 1,
+          "claim": "Greg Kostruba says loops are economically unsustainable at scale",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "I don't believe that this is sustainable. I don't believe that like you when you are at the company, especially a larger company",
+          "quote_words": 23,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "Right after criticizing the idea of stacking loops and throwing more tokens at quality problems, the speaker says the current way of using agents is not economically sustainable, citing per-engineer token budgets at larger companies. That matches the claim, though he adds that some loops still work for specific tasks.",
+            "judgment": "4e44647a24fdcfc4794081f7a78da646f39212dc065823f9192c512d9c9017a9"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 4,
+          "item": "Loops/software-factory hype matches reality",
+          "item_position": 1,
+          "claim": "Greg Kostruba frames the core disagreement as hype vs. discipline",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "the hype is what I have a problem with. The hype is outrunning the discipline, as he said.",
+          "quote_words": 18,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The speaker does say the hype is outrunning the discipline, but he explicitly borrows that framing from Dex while agreeing that loops have their place, so calling it his framing of the core disagreement goes beyond the quote.",
+            "judgment": "5091f57a01a91112d62c35a94737118d664e6c260a1678984f9e4f2431ca3464"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 5,
+          "item": "Multi-agent decomposition vs. single agent owning reasoning",
+          "item_position": 2,
+          "claim": "ZS Associates concludes one agent must own reasoning end-to-end",
+          "talk": "ia-aie-sethuraman-asokan-killed-multiagent",
+          "talk_raw": "ia-aie-sethuraman-asokan-killed-multiagent",
+          "quote": "you need one agent right which owns the reasoning end to end right this agent can actually take the call to use sub agents tools skills",
+          "quote_words": 26,
+          "flags": [],
+          "quote_check": {
+            "status": "fuzzy",
+            "talk": "ia-aie-sethuraman-asokan-killed-multiagent",
+            "found_in": null,
+            "score": 96.3
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "In the key takeaways, the speakers state that you need one agent that owns the reasoning end to end, which can call sub-agents, tools and skills.",
+            "judgment": "5eec4a57fd971386f47603de30295027b8431cb09fd8d903c05213214bbcf94c"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 6,
+          "item": "Multi-agent decomposition vs. single agent owning reasoning",
+          "item_position": 2,
+          "claim": "Navan argues you shouldn't attempt multi-agent orchestration until single-agent works",
+          "talk": "ia-aie-milev-kanagala-navan-agents-microservices",
+          "talk_raw": "ia-aie-milev-kanagala-navan-agents-microservices",
+          "quote": "if you can't build a single agentic loop, why go in and try to build a multi-agent orchestrated system?",
+          "quote_words": 19,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-milev-kanagala-navan-agents-microservices",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "Navan's chief architect adapts the monolith-before-microservices quote to argue that if you can't build a single agentic loop, you shouldn't try a multi-agent orchestrated system, which matches the claim.",
+            "judgment": "b09fb69178b7bf4528a74e0a00c1a90d8105d2e6d4ad6cdaba5bec65e49dc90b"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 7,
+          "item": "Multi-agent decomposition vs. single agent owning reasoning",
+          "item_position": 2,
+          "claim": "Coyle argues a single overloaded agent is the anti-pattern; specialize into multiple agents",
+          "talk": "ia-aie-coyle-cca-field-guide",
+          "talk_raw": "ia-aie-coyle-cca-field-guide",
+          "quote": "The anti-pattern you have one agent and you load it up with tools, all right?",
+          "quote_words": 15,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-coyle-cca-field-guide",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "Coyle calls loading one agent with many tools the anti-pattern and, in a multi-agent research context, advises agents that each do one thing with one or two tools: \"specialize, don't overload.\"",
+            "judgment": "488b4eefa73133049f4e5a88d991f60e0b45227c3b67c8157d8bd0f485d472e7"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 8,
+          "item": "Harness matters more than the model",
+          "item_position": 3,
+          "claim": "Bhargava shows harness changes alone shift benchmark scores over 20 points",
+          "talk": "ia-aie-bhargava-harness-over-model",
+          "talk_raw": "ia-aie-bhargava-harness-over-model",
+          "quote": "scores range from 52.4% to 76.2%. So, more than a 20-point difference, and only the harness changed.",
+          "quote_words": 17,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-bhargava-harness-over-model",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "Bhargava cites Harness Bench results where, with the same model and evaluation, scores range from 52.4% to 76.2%, over 20 points, with only the harness changed.",
+            "judgment": "f89dc1225e27c08234f2c65f000341075fd7a64a39866b8cfd7c6b3b7b66521f"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 9,
+          "item": "Harness matters more than the model",
+          "item_position": 3,
+          "claim": "Bhargava concludes better harness equals better performance",
+          "talk": "ia-aie-bhargava-harness-over-model",
+          "talk_raw": "ia-aie-bhargava-harness-over-model",
+          "quote": "better harness equals better performance, especially for weaker models.",
+          "quote_words": 9,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-bhargava-harness-over-model",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "In his main takeaways at the end of the talk, the speaker states verbatim that a better harness equals better performance, which matches the claim.",
+            "judgment": "33b23b7c72b81fc734bd282fb9373d06f48fa3939ade5174045bfc63b8e75264"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 10,
+          "item": "Harness matters more than the model",
+          "item_position": 3,
+          "claim": "Dax Raad argues autonomous software-factory quality can only be solved at the model level, not the harness",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "I think this is actually a problem we can only solve at the model level right now. I don't think the harness can do it",
+          "quote_words": 25,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote does say software-factory quality can currently only be solved at the model level and not by the harness, but neither the title line (Horthy, Huntley, Livingstone, Pstrucha) nor the transcript identifies the speaker as Dax Raad.",
+            "judgment": "e6c3d899af3ceaff82dc8f9dad7836e2587a77b4a35e34fd0b8c6c63ac6ecd04"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 11,
+          "item": "Harness matters more than the model",
+          "item_position": 3,
+          "claim": "Ian Livingston argues alignment/guarantees come from the surrounding infrastructure, not the model itself",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "It's about the infrastructure you build around it and how you enable that infrastructure to actually enable you to take advantage of these loops.",
+          "quote_words": 24,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "Ian says alignment and safety do not come from the model or the loop but from the infrastructure built around it, which will give better guarantees, and that matches the claim.",
+            "judgment": "87f2edc738923a1dfba06f0727333ab721b1eb60403e770002cdb080b6e97d9c"
+          },
+          "grounding": "grounded"
+        }
+      ],
+      "uncited": [
+        "Jeff Huntley is the creator of the \"Ralph loop.\"",
+        "The Great Loops Debate is an Oxford-style debate staged specifically around whether loop-driven autonomous coding already works."
+      ]
+    },
+    {
+      "qid": "Q03",
+      "arm": "markdown",
+      "run": 3,
+      "unparseable": false,
+      "flags": [],
+      "dropped_items": 0,
+      "dropped_claims": 0,
+      "items": [
+        {
+          "position": 1,
+          "label": "Loop-driven autonomous software factories already work in practice",
+          "rank": 1,
+          "talk_count": 1
+        },
+        {
+          "position": 2,
+          "label": "Complex agent systems should be decomposed into many specialized sub-agents rather than one consolidated agent",
+          "rank": 2,
+          "talk_count": 3
+        },
+        {
+          "position": 3,
+          "label": "Engineers no longer need to read agent-written code line by line",
+          "rank": 3,
+          "talk_count": 2
+        }
+      ],
+      "claims": [
+        {
+          "index": 0,
+          "item": "Loop-driven autonomous software factories already work in practice",
+          "item_position": 1,
+          "claim": "Huntley argues loop-based coding already outperforms hiring",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "These LLMs generate code better than you can hire you can actually hire for.",
+          "quote_words": 14,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "Answering the question put to Jeff about loops, the speaker says these LLMs generate code better than most founders can hire for, then ties this to running them in loops at about $10.42 an hour, which clearly implies loop-based coding already beats hiring.",
+            "judgment": "05376b6a91c5a70351c200de0482553c7aa406dedbf2276e16e7c2759fd6e8e9"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 1,
+          "item": "Loop-driven autonomous software factories already work in practice",
+          "item_position": 1,
+          "claim": "Livingston argues the productivity gains are already real and unstoppable",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "the train's left the station. This stuff works, um and there is a real productivity increment",
+          "quote_words": 16,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "Ian (Livingstone) says the train has left the station, the approach works with a real productivity increment, and competitive dynamics mean companies can no longer opt out, which supports the claim that the gains are real and unstoppable.",
+            "judgment": "b6b01fecdeaeb6e81a12cbf96b7ba23109eeb30dec8753e525c0fd8269c0f38a"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 2,
+          "item": "Loop-driven autonomous software factories already work in practice",
+          "item_position": 1,
+          "claim": "Raad pushes back that no one has shown fully autonomous review actually works",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "it doesn't seem it doesn't feel to me like it's working",
+          "quote_words": 11,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The passage does say the speaker hasn't seen proof that AI review bots let us skip reading code, but the next speaker replies \"I'm coming for you Dex,\" which suggests Dex (Horthy) was speaking, not Raad.",
+            "judgment": "2f5c622765d8334680c335a34e8991081834283cf50e2441be287e8c87813a77"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 3,
+          "item": "Loop-driven autonomous software factories already work in practice",
+          "item_position": 1,
+          "claim": "Kostruba says code post-verification is still low quality and the economics don't work",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "I still have to do a lot of iteration on that uh on my own and still have to steer it towards the right architecture",
+          "quote_words": 25,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote, with the adjacent 'it's still crap' line, supports the claim that post-verification code is still low quality and needs human steering, but the economic-viability argument comes from a later part of the transcript, not from the quote.",
+            "judgment": "3798e5f9121b258616c7720875ec01551726eee1e3e66693eb63d6a6d6624c60"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 4,
+          "item": "Complex agent systems should be decomposed into many specialized sub-agents rather than one consolidated agent",
+          "item_position": 2,
+          "claim": "Doshi argues one agent doing everything fails and specialization works",
+          "talk": "ia-aie-doshi-39-agents-factory",
+          "talk_raw": "ia-aie-doshi-39-agents-factory",
+          "quote": "one prompt that's supposed to do everything ends up doing everything badly",
+          "quote_words": 12,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-doshi-39-agents-factory",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "Doshi says a single prompt meant to do everything does everything badly, and he describes his system as many specialists with \"one agent, one job,\" which covers both halves of the claim.",
+            "judgment": "bb03058bbea31f8087fe733088c4f60d6ccfa569d76e5d290be60508daa692f5"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 5,
+          "item": "Complex agent systems should be decomposed into many specialized sub-agents rather than one consolidated agent",
+          "item_position": 2,
+          "claim": "ZS Associates says multi-agent handoffs lost context and they consolidated to a single agent owning reasoning",
+          "talk": "ia-aie-sethuraman-asokan-killed-multiagent",
+          "talk_raw": "ia-aie-sethuraman-asokan-killed-multiagent",
+          "quote": "you need to have one agent right which owns the reasoning end to end",
+          "quote_words": 14,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-sethuraman-asokan-killed-multiagent",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote supports the takeaway that one agent should own the reasoning end to end (while still being able to spawn sub-agents), but this excerpt does not say that multi-agent handoffs lost context or describe consolidating from a multi-agent pipeline.",
+            "judgment": "5f9b93eaead9996d9cfd314037111e7fb1330b179b664832c20c8622c260acc4"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 6,
+          "item": "Complex agent systems should be decomposed into many specialized sub-agents rather than one consolidated agent",
+          "item_position": 2,
+          "claim": "Navan reaches the same anti-multi-agent conclusion from their production experience",
+          "talk": "ia-aie-milev-kanagala-navan-agents-microservices",
+          "talk_raw": "ia-aie-milev-kanagala-navan-agents-microservices",
+          "quote": "if you can't build a single agentic loop, why go in and try to build a multi-agent orchestrated system?",
+          "quote_words": 19,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-milev-kanagala-navan-agents-microservices",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote cautions against jumping to multi-agent systems before mastering a single agentic loop, which is a sequencing caution borrowed from a microservices saying, not an outright anti-multi-agent conclusion, and the transcript does not tie this line specifically to their production experience.",
+            "judgment": "3de73186bba728f29aede3e7a5dbc1ffcb141f61a6ef65a099777def8c011972"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 7,
+          "item": "Engineers no longer need to read agent-written code line by line",
+          "item_position": 3,
+          "claim": "Huntley says he stopped manually writing/reading code and questions whether code needs to be readable",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "I'm not sure even code needs to be readable these days, but this is frontier frontier thinking",
+          "quote_words": 17,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote supports Huntley questioning whether code needs to be readable, but nothing in it or the surrounding transcript says he personally stopped writing or reading code by hand.",
+            "judgment": "bdd0283149cb038e462f80251feeed81d607b4f7d0286fcf1791c92d4893252c"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 8,
+          "item": "Engineers no longer need to read agent-written code line by line",
+          "item_position": 3,
+          "claim": "Raad insists the discipline required is still to read the output",
+          "talk": "ia-aie-horthy-loops-debate",
+          "talk_raw": "ia-aie-horthy-loops-debate",
+          "quote": "the way to not loop slop together and make more slop is to like read the thing that's coming out the other end and make sure it's not slop",
+          "quote_words": 29,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-horthy-loops-debate",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says plainly that the way to avoid looping slop together is to read what comes out the other end and check it isn't slop, which is the claim; the transcript does not name the speaker, though, so attributing it to Raad can't be confirmed beyond it being neither Jeff nor Greg.",
+            "judgment": "7d9cb592c7159eee70311aaafc5a68cfe361a9c2211c441a72896758e27e758e"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 9,
+          "item": "Engineers no longer need to read agent-written code line by line",
+          "item_position": 3,
+          "claim": "Agrawal gives leaders an explicit rule that code must still be read before being shared",
+          "talk": "ia-aie-agrawal-browser-company-prototyping-as-leadership",
+          "talk_raw": "ia-aie-agrawal-browser-company-prototyping-as-leadership",
+          "quote": "Read the code, review it properly before you add anybody else to it.",
+          "quote_words": 13,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-agrawal-browser-company-prototyping-as-leadership",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "Among his tactical hygiene tips, he explicitly tells leaders not to put other reviewers on code they haven't read, and to read and properly review it before adding anyone else.",
+            "judgment": "a9bf2af52e9305611ace0aad620d48434601ca36c28ff952a59bfe9724b8d448"
+          },
+          "grounding": "grounded"
+        }
+      ],
+      "uncited": [
+        "Greg Kostruba said he still has to do a lot of iteration on his own and steer the agent towards the right architecture.",
+        "The loops question was the subject of an actual staged debate, \"The Great Loops Debate\"."
+      ]
+    },
+    {
+      "qid": "Q03",
+      "arm": "omnigraph",
+      "run": 1,
+      "unparseable": false,
+      "flags": [],
+      "dropped_items": 0,
+      "dropped_claims": 0,
+      "items": [
+        {
+          "position": 1,
+          "label": "The Harness Over the Model",
+          "rank": 1,
+          "talk_count": 16
+        },
+        {
+          "position": 2,
+          "label": "The Model Is Not the Bottleneck",
+          "rank": 2,
+          "talk_count": 4
+        },
+        {
+          "position": 3,
+          "label": "The Verification Gap",
+          "rank": 3,
+          "talk_count": 2
+        }
+      ],
+      "claims": [
+        {
+          "index": 0,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Anthropic found harness fixes for context anxiety became dead weight once Opus 4.5 shipped",
+          "talk": "ia-aie-bhat-he-agentic-surfaces",
+          "talk_raw": "ia-aie-bhat-he-agentic-surfaces",
+          "quote": "the harness fixes were no longer needed and were actually detracting from model performance with Opus 4.5",
+          "quote_words": 17,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-bhat-he-agentic-surfaces",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The transcript explicitly says the context-reset fixes added for Sonnet 4.5's context anxiety became \"dead weight\" once Opus 4.5 came out, and that they were detracting from model performance.",
+            "judgment": "e2635e601c701035000334040cef01f4bca4671cc441fa5fe9eab483d297d934"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 1,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Amazon AGI Lab argues the harness thins as the model improves",
+          "talk": "ia-aie-mishra-rl-to-irl",
+          "talk_raw": "ia-aie-mishra-rl-to-irl",
+          "quote": "the model becomes better and better, and the harness becomes thinner and thinner",
+          "quote_words": 13,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-mishra-rl-to-irl",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker from Amazon AGI Lab says that early on the harness is strong, and that over time, as the model gets better, the harness becomes thinner, which matches the claim.",
+            "judgment": "e54e442a024b1a363d72c484d3b53d6cb29baa227a7baf9c411b52a0872445fd"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 2,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Anthropic cut Claude Code's system prompt by 80%",
+          "talk": "ia-aie-shihipar-field-guide-fable",
+          "talk_raw": "ia-aie-shihipar-field-guide-fable",
+          "quote": "we recently removed 80% of the system prompt for Claude code, right?",
+          "quote_words": 12,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-shihipar-field-guide-fable",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The Anthropic speaker says directly that they recently removed 80% of Claude Code's system prompt, which amounts to cutting it by 80%.",
+            "judgment": "a9f8447fe245926d9f84069ac51d959adfab28847f512f5f7285c18c270171d5"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 3,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "HeyGen found the thinnest wrapper (plain HTML) beat elaborate scaffolds",
+          "talk": "ia-aie-russo-html-agents-need",
+          "talk_raw": "ia-aie-russo-html-agents-need",
+          "quote": "the thinnest wrapper ultimately won, which is essentially just HTML at the end of the day",
+          "quote_words": 16,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-russo-html-agents-need",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says they tried many wrappers with extra context, bigger system prompts and skills, and that the thinnest wrapper, essentially plain HTML with a few data attributes, ultimately won.",
+            "judgment": "3a489461573d3eaaac636173e8a1900361e1dc7da620272ca60719100dc75190"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 4,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Vanilla in-context learning outperformed fancier context-management systems",
+          "talk": "ia-aie-asawa-evaluating-continual-learning",
+          "talk_raw": "ia-aie-asawa-evaluating-continual-learning",
+          "quote": "the incontext learning systems... tops the leaderboard and and it's not just on reward",
+          "quote_words": 14,
+          "flags": [],
+          "quote_check": {
+            "status": "spliced",
+            "talk": "ia-aie-asawa-evaluating-continual-learning",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says vanilla in-context learning, with no fancy context management, tops the leaderboard on reward and on the Pareto frontiers, and that the more expensive context-management systems performed much worse on these tasks.",
+            "judgment": "88d299dbbd932b55208516d312a490af011b29ee7a49a3b6c801dc6c3702b670"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 5,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Workflow graphs were a workaround for weaker models, now obsolete",
+          "talk": "ia-aie-bhatawdekar-braintrust-agent-evolved-evals",
+          "talk_raw": "ia-aie-bhatawdekar-braintrust-agent-evolved-evals",
+          "quote": "tool calling became extremely reliable... a lot of these graph-based systems were not able to take advantage of these new capabilities",
+          "quote_words": 21,
+          "flags": [],
+          "quote_check": {
+            "status": "spliced",
+            "talk": "ia-aie-bhatawdekar-braintrust-agent-evolved-evals",
+            "found_in": null,
+            "score": 95.7
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The passage says graph-based systems could not take advantage of newly reliable tool calling and that teams moved back to ReAct loops, but it never explicitly calls graphs a workaround for weaker models or declares them obsolete.",
+            "judgment": "09a88a74d4e9f8d14c5d7e79284d7cbcba203ba94e13be80935c08acab63e48d"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 6,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Fixed harnesses decay as models and the real world outrun them",
+          "talk": "ia-aie-chandegra-beyond-harness",
+          "talk_raw": "ia-aie-chandegra-beyond-harness",
+          "quote": "fixed harness starts to break down... the harness just becomes ever more complicated than the actual problem that you need to solve",
+          "quote_words": 22,
+          "flags": [],
+          "quote_check": {
+            "status": "spliced",
+            "talk": "ia-aie-chandegra-beyond-harness",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "In context the speaker says fixed harnesses break down because the messy, changing real world outpaces them and because models keep accelerating and make scaffolding irrelevant, which matches the claim of decay as models and the real world outrun them.",
+            "judgment": "731b49e8f597d63201230d4d790e7113d8b200d1612ee42f7fd9aac1d0ba0221"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 7,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "MiniMax argues agents need million-token context and native vision, implying the model still limits capability",
+          "talk": "ia-aie-wolf-song-minimax-million-token-context",
+          "talk_raw": "ia-aie-wolf-song-minimax-million-token-context",
+          "quote": "longer context actually unlocks a lot of capabilities especially when interacting with users",
+          "quote_words": 13,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-wolf-song-minimax-million-token-context",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote supports the view that longer context unlocks agent capabilities and that shorter context isn't enough for complex tasks, but it says nothing about native vision being necessary, and the inference that the model still limits capability is the writer's own gloss rather than something stated.",
+            "judgment": "9a5c32e8ff7013085673eea7874969a6e0cbacc4feede048640d4c5d8598c556"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 8,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "Cursor, an app-layer company, had to build frontier-scale model training itself",
+          "talk": "ia-aie-robinson-recursive-improvement",
+          "talk_raw": "ia-aie-robinson-recursive-improvement",
+          "quote": "we wanted to control every aspect of training, so ideally doing a full pre-train from scratch",
+          "quote_words": 16,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-robinson-recursive-improvement",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote and context show Cursor wanted to control all of training, ideally pre-training from scratch, and built a team to train state-of-the-art models, but they never say Cursor 'had to' do this or describe it as an app-layer company forced into frontier-scale training.",
+            "judgment": "7c76a39f09e2deab54aad450badd4b0cbc891ff9ce25c97cf6a6bc2a8ee77f4c"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 9,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "Box marks Opus 4.5 as the start of a new agent-model epoch, crediting the model jump itself",
+          "talk": "ia-aie-kus-box-half-life-agent-infra",
+          "talk_raw": "ia-aie-kus-box-half-life-agent-infra",
+          "quote": "The big thing that changed last year was in my mind Opus 40 to Opus 45... this is kind of to me the beginning the epic of like the new agent models",
+          "quote_words": 32,
+          "flags": [],
+          "quote_check": {
+            "status": "spliced",
+            "talk": "ia-aie-kus-box-half-life-agent-infra",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says the move from Opus 4.0 to 4.5 was the big change of last year, gave a model with strong instruction following at scale, and marks 'the beginning the epic of like the new agent models', which credits the model jump itself.",
+            "judgment": "e40c9db14a6f5392ab3d433ee9ab75fce7384fa1d329264dd14e62f702dfca17"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 10,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "Even the best model+harness combo only resolves 26% of project-scale coding tasks",
+          "talk": "ia-aie-desai-swe-marathon",
+          "talk_raw": "ia-aie-desai-swe-marathon",
+          "quote": "the best configuration here is Claude Opus 4.8 with Claude Code, and it only achieves a 26% resolution rate",
+          "quote_words": 19,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-desai-swe-marathon",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The quote says the best configuration, Claude Opus 4.8 with Claude Code, reaches only a 26% resolution rate, and the context shows these are the benchmark's project-scale tasks.",
+            "judgment": "deec7c21ef6f9aee91e7442c86c0860b7b643ec337d620d79211216cec525faa"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 11,
+          "item": "The Verification Gap",
+          "item_position": 3,
+          "claim": "Code review is shifting from line-by-line diffs to reviewing captured intent and evidence",
+          "talk": "ia-aie-jain-kill-code-review",
+          "talk_raw": "ia-aie-jain-kill-code-review",
+          "quote": "you're not reviewing code line by line, but rather you're looking at the evidence of what was the intent",
+          "quote_words": 19,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-jain-kill-code-review",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says the review surface changes: instead of reviewing code line by line, you look at evidence of the intent, whether the capability was implemented and whether behavior met the acceptance criteria captured from the session.",
+            "judgment": "131d9f7fce395c28cc977198c00dedeec40f98e83d051bb9223f04d0498a5445"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 12,
+          "item": "The Verification Gap",
+          "item_position": 3,
+          "claim": "An LLM judge for clinical hazard detection matched or beat expert clinicians",
+          "talk": "ia-aie-joselowitz-ufonia-million-patients-no-ab-test",
+          "talk_raw": "ia-aie-joselowitz-ufonia-million-patients-no-ab-test",
+          "quote": "the results showed that our judge is at least on par if not slightly better than the the real expert clinicians",
+          "quote_words": 21,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-joselowitz-ufonia-million-patients-no-ab-test",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The quote says the judge validated for hazard detection performed at least on par with, if not slightly better than, expert clinicians, and the surrounding transcript confirms it was checked against clinician labels for hazards.",
+            "judgment": "f641ab45a20b2f54695f6d67d345aa550d2dd8eb3c49042bf03dbb2d50873895"
+          },
+          "grounding": "grounded"
+        }
+      ],
+      "uncited": [
+        "Rogge (Hugging Face), the NVIDIA/Cognition/OpenRouter routing panel, Brown (Prime Intellect), Kundel (OpenAI Codex), Yan (Anthropic), Steinfurt (TNG chess channel), Batra (Yutori), and Mistele (HumanLayer) also contradict 'The Harness Over the Model', arguing model capability rather than harness engineering is doing the work.",
+        "Ufonia's LLM judge achieved an F1 score of 0.96.",
+        "'Context Graphs' is contested by Kus/Box and Bouchard et al./Towards AI.",
+        "'The AI-Native Organization' is contested by Bhardwaj/Allos AI and Moza/Varick Agents."
+      ]
+    },
+    {
+      "qid": "Q03",
+      "arm": "omnigraph",
+      "run": 2,
+      "unparseable": false,
+      "flags": [],
+      "dropped_items": 0,
+      "dropped_claims": 0,
+      "items": [
+        {
+          "position": 1,
+          "label": "The Harness Over the Model",
+          "rank": 1,
+          "talk_count": 16
+        },
+        {
+          "position": 2,
+          "label": "The Model Is Not the Bottleneck",
+          "rank": 2,
+          "talk_count": 4
+        },
+        {
+          "position": 3,
+          "label": "The Verification Gap",
+          "rank": 3,
+          "talk_count": 2
+        }
+      ],
+      "claims": [
+        {
+          "index": 0,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Anthropic's team found harness fixes for Sonnet 4.5 became dead weight once Opus 4.5 shipped",
+          "talk": "ia-aie-bhat-he-agentic-surfaces",
+          "talk_raw": "ia-aie-bhat-he-agentic-surfaces",
+          "quote": "the harness fixes were no longer needed and were actually detracting from model performance with Opus 4.5",
+          "quote_words": 17,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-bhat-he-agentic-surfaces",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The transcript says the Sonnet 4.5 context-reset fixes 'became dead weight' once Opus 4.5 came out, and the quote adds that they detracted from Opus 4.5's performance.",
+            "judgment": "2b3033a3da531bb3568f6d76aade1245bcc82b0b90854e52160ab1cb3cdfda8e"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 1,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Amazon AGI Lab argues the harness thins as models improve",
+          "talk": "ia-aie-mishra-rl-to-irl",
+          "talk_raw": "ia-aie-mishra-rl-to-irl",
+          "quote": "the model becomes better and better, and the harness becomes thinner and thinner",
+          "quote_words": 13,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-mishra-rl-to-irl",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The Amazon AGI Lab speaker says the harness starts out strong to catch model gaps and that over time, as the model improves, the harness becomes thinner, which matches the claim.",
+            "judgment": "1d7fa2645936982bc245ffa062cd847055ff1e65c369c6a4df22afcb4552591a"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 2,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "HeyGen found the thinnest wrapper won after a year of experiments",
+          "talk": "ia-aie-russo-html-agents-need",
+          "talk_raw": "ia-aie-russo-html-agents-need",
+          "quote": "to our surprise, the thinnest wrapper ultimately won, which is essentially just HTML at the end of the day",
+          "quote_words": 19,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-russo-html-agents-need",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote supports that HeyGen found the thinnest wrapper (essentially plain HTML) won after trying many wrappers, but nothing in the passage says the experiments lasted a year.",
+            "judgment": "4f1bdfada977629763e252c788cb654101c66100efa0842e7a0e7c53cdabb7d9"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 3,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Anthropic cut Claude Code's system prompt by 80% as models needed less scaffolding",
+          "talk": "ia-aie-shihipar-field-guide-fable",
+          "talk_raw": "ia-aie-shihipar-field-guide-fable",
+          "quote": "we recently removed 80% of the system prompt for Claude code, right? And this is one of the ways in which models... need... changes over time",
+          "quote_words": 26,
+          "flags": [],
+          "quote_check": {
+            "status": "spliced",
+            "talk": "ia-aie-shihipar-field-guide-fable",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says they removed 80% of Claude Code's system prompt, and explains that newer models want a smaller prompt with fewer examples and constraints, which matches the claim that models needed less scaffolding.",
+            "judgment": "a94fd54c31f2e2622db4a6b7e58711e47e41ff22a6ab2bc83c36aa5acb2ea3c6"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 4,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Anthropic's Eugene Yan says prompts shrink about 50% with each model generation",
+          "talk": "ia-aie-yan-secure-source",
+          "talk_raw": "ia-aie-yan-secure-source",
+          "quote": "with every new model version of StepJum, I actually have to cut my prompt size by maybe about 50%",
+          "quote_words": 19,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-yan-secure-source",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says that with every new model version he has to cut his prompt size by about 50%, which matches the claim (\"StepJum\" is a garbled caption).",
+            "judgment": "afb02bef40c893ab09319af174966149b16c951ba1e315c3c9896900c37b7112"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 5,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Braintrust argues workflow graphs were a workaround for weaker models, now obsolete",
+          "talk": "ia-aie-bhatawdekar-braintrust-agent-evolved-evals",
+          "talk_raw": "ia-aie-bhatawdekar-braintrust-agent-evolved-evals",
+          "quote": "a lot of these graph-based systems were not able to take advantage of these new capabilities",
+          "quote_words": 16,
+          "flags": [],
+          "quote_check": {
+            "status": "fuzzy",
+            "talk": "ia-aie-bhatawdekar-braintrust-agent-evolved-evals",
+            "found_in": null,
+            "score": 95.7
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The passage says graph-based systems could not use the new model capabilities and that teams moved to ReAct loops, but it never calls graphs a workaround for weaker models or declares them obsolete.",
+            "judgment": "fa63e206c9b595b3d9cc4ad925b0ddf7d67585146aaabe28a045b5a067171ee9"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 6,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Berkeley's continual-learning benchmark found vanilla in-context learning beat elaborate context-management systems",
+          "talk": "ia-aie-asawa-evaluating-continual-learning",
+          "talk_raw": "ia-aie-asawa-evaluating-continual-learning",
+          "quote": "the incontext learning systems... tops the leaderboard and... it's not just on reward",
+          "quote_words": 13,
+          "flags": [],
+          "quote_check": {
+            "status": "spliced",
+            "talk": "ia-aie-asawa-evaluating-continual-learning",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The transcript says vanilla in-context learning topped the leaderboard on reward and on the cost Pareto frontiers, and that the more expensive context-management systems did much worse than it.",
+            "judgment": "0b3ca6f8e60f2e9f92b79c49db1929043e4115da69ba023f4a9f0a86f6f0f259"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 7,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Yutori argues scaffolds around websites don't generalize, but raw pixels do",
+          "talk": "ia-aie-batra-agentify-web",
+          "talk_raw": "ia-aie-batra-agentify-web",
+          "quote": "the more you end up writing scaffolds around existing websites the it doesn't actually generalize to the long tail of the web",
+          "quote_words": 22,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-batra-agentify-web",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The quote says scaffolds around existing websites don't generalize to the long tail of the web, and the next sentence in context adds that the general solution is \"just pixels in.\"",
+            "judgment": "c73025f6b7b29745c9aefff52ab84cae6bdf19adcbff663862c634e7ac04dc34"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 8,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "SWE-Marathon shows the best agent configuration solves only 26% of project-scale tasks, showing model/agent limits remain",
+          "talk": "ia-aie-desai-swe-marathon",
+          "talk_raw": "ia-aie-desai-swe-marathon",
+          "quote": "it only achieves a 26% resolution rate. So, even with the strongest agent setup we evaluated, it's only solving like one in four tasks",
+          "quote_words": 24,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-desai-swe-marathon",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The quote says the strongest agent setup evaluated reaches only a 26% resolution rate, about one in four tasks, and the context says end-to-end project ownership is still far from solved, which matches the claim that model and agent limits remain.",
+            "judgment": "fb973a394068b1bca986d39d69579b15e4f57f47f8e9d6254aeb3eb94e3fbbb0"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 9,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "MiniMax argues agents specifically need million-token context and native multimodal capability",
+          "talk": "ia-aie-wolf-song-minimax-million-token-context",
+          "talk_raw": "ia-aie-wolf-song-minimax-million-token-context",
+          "quote": "longer context actually unlocks a lot of capabilities especially when interacting with users and now when... the agent is interacting with the whole environment",
+          "quote_words": 24,
+          "flags": [],
+          "quote_check": {
+            "status": "fuzzy",
+            "talk": "ia-aie-wolf-song-minimax-million-token-context",
+            "found_in": null,
+            "score": 94.3
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote says longer context unlocks capabilities for agents interacting with the environment, but it does not tie agents to a specific million-token requirement, and it says nothing about native multimodal capability being needed for agents (the transcript mentions multimodality only as generally important for future applications).",
+            "judgment": "97c38f3c8d372d6578f7eaffb38f99feae5b24fdf865cc22dd3db08793ada61e"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 10,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "Cursor built frontier-scale model training infrastructure in about a year, treating model quality as the key lever",
+          "talk": "ia-aie-robinson-recursive-improvement",
+          "talk_raw": "ia-aie-robinson-recursive-improvement",
+          "quote": "we wanted to have a much bigger and smarter model. We wanted to control every aspect of training, so ideally doing a full pre-train from scratch",
+          "quote_words": 26,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-robinson-recursive-improvement",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote shows Cursor wanted a bigger, smarter model and full control of pre-training, and the context mentions building a team over the past year with state-of-the-art ambitions, but nobody says Cursor built frontier-scale training infrastructure or called model quality the key lever.",
+            "judgment": "f9ecd1bfee7fd2371bb919a5bceb461cf5fb324ff9eaf0cae5a01bef95255dc5"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 11,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "Box credits the Opus 4.0-to-4.5 model jump itself as the start of the new agent era",
+          "talk": "ia-aie-kus-box-half-life-agent-infra",
+          "talk_raw": "ia-aie-kus-box-half-life-agent-infra",
+          "quote": "The big thing that changed last year was in my mind Opus 40 to Opus 45... this is kind of to me the beginning the epic of like the new agent models",
+          "quote_words": 32,
+          "flags": [],
+          "quote_check": {
+            "status": "spliced",
+            "talk": "ia-aie-kus-box-half-life-agent-infra",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker names the Opus 4.0 to 4.5 change as the big change of last year, one that brought strong instruction following at scale, and calls it \"the beginning\" of the new agent models, which matches the claim.",
+            "judgment": "1efa4c17cd01cfe6fcad4f3bdd50006c8d5e70ec9f4490add565fe5723d3bf8a"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 12,
+          "item": "The Verification Gap",
+          "item_position": 3,
+          "claim": "Aviator argues the review surface has shifted from code diffs to verified intent, closing the verification gap",
+          "talk": "ia-aie-jain-kill-code-review",
+          "talk_raw": "ia-aie-jain-kill-code-review",
+          "quote": "reviewers are reviewing the intent, not the diff. You're reviewing the intent decisions",
+          "quote_words": 13,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-jain-kill-code-review",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "In context, the speaker says agents now produce verification evidence (screenshots, database snapshots, deterministic checks) that gives reviewers confidence, so \"reviewers are reviewing the intent, not the diff\"; this clearly implies the shift to verified intent, though the phrase \"verification gap\" itself is never used.",
+            "judgment": "d2b9116c0ef7906581e1854fd9e650c01d68e543b15c5c7768ca13c5a01b4965"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 13,
+          "item": "The Verification Gap",
+          "item_position": 3,
+          "claim": "Ufonia validated an LLM judge against expert clinicians and found it matched or exceeded them",
+          "talk": "ia-aie-joselowitz-ufonia-million-patients-no-ab-test",
+          "talk_raw": "ia-aie-joselowitz-ufonia-million-patients-no-ab-test",
+          "quote": "the results showed that our judge is at least on par if not slightly better than the the real expert clinicians",
+          "quote_words": 21,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-joselowitz-ufonia-million-patients-no-ab-test",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The transcript says they validated the judge against 10 expert clinicians on a 240-example corpus and found it performed at least on par with, if not slightly better than, the clinicians.",
+            "judgment": "33da466f1724cefbc77768737e8990b31b1e927b741539e0d78356bba0014151"
+          },
+          "grounding": "grounded"
+        }
+      ],
+      "uncited": [
+        "Hugging Face (Rogge), HumanLayer (Mistele), the NVIDIA/Cognition/OpenRouter panel, Prime Intellect (Brown), Annicha Labs (Chandegra), OpenAI (Kundel), TNG (Steinfurt), and Anthropic (Wu & Shihipar) also push back on the idea that the harness matters more than the model.",
+        "Ufonia's LLM judge, validated against 10 clinicians, achieved an F1 score of 0.96, which Joselowitz argues is what makes the process scalable.",
+        "Box's Kus argues agents are actually way better at finding data than graphs or hybrid search.",
+        "Towards AI's Bouchard says GraphRAG was way costlier to set up and just tied on results.",
+        "Allos AI's Bhardwaj says every AI reaches production but fails to work or justify its own cost.",
+        "Varick's Moza cites the '95% of generative AI pilots fail' stat and attributes it to AI slapped on top of broken processes."
+      ]
+    },
+    {
+      "qid": "Q03",
+      "arm": "omnigraph",
+      "run": 3,
+      "unparseable": false,
+      "flags": [],
+      "dropped_items": 0,
+      "dropped_claims": 0,
+      "items": [
+        {
+          "position": 1,
+          "label": "The Harness Over the Model",
+          "rank": 1,
+          "talk_count": 15
+        },
+        {
+          "position": 2,
+          "label": "The Model Is Not the Bottleneck",
+          "rank": 2,
+          "talk_count": 4
+        },
+        {
+          "position": 3,
+          "label": "The Verification Gap",
+          "rank": 3,
+          "talk_count": 2
+        }
+      ],
+      "claims": [
+        {
+          "index": 0,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Anthropic found harness fixes became dead weight once the model improved",
+          "talk": "ia-aie-bhat-he-agentic-surfaces",
+          "talk_raw": "ia-aie-bhat-he-agentic-surfaces",
+          "quote": "we saw that the harness fixes were no longer needed and were actually detracting from model performance with Opus 4.5",
+          "quote_words": 20,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-bhat-he-agentic-surfaces",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The quote and its context say that the harness fixes added for Sonnet 4.5's context anxiety became dead weight and hurt performance once Opus 4.5 no longer needed them.",
+            "judgment": "cb80b69b4c0941cd9e27eaaa97526fe7181baba53921cf700dbc4c1ec3f70140"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 1,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Anthropic cut Claude Code's system prompt 80% as models got smarter",
+          "talk": "ia-aie-shihipar-field-guide-fable",
+          "talk_raw": "ia-aie-shihipar-field-guide-fable",
+          "quote": "we recently removed 80% of the system prompt for Claude code, right?",
+          "quote_words": 12,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-shihipar-field-guide-fable",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says they recently removed 80% of Claude Code's system prompt and explains that the newest, smarter models want a smaller prompt, which matches the claim.",
+            "judgment": "7dcd01f6c5131c2b0a9609657be713ae9e67365b3a2866928c8c943a95dcf702"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 2,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Amazon AGI Lab says the harness thins as the model improves",
+          "talk": "ia-aie-mishra-rl-to-irl",
+          "talk_raw": "ia-aie-mishra-rl-to-irl",
+          "quote": "the model becomes better and better, and the harness becomes thinner and thinner",
+          "quote_words": 13,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-mishra-rl-to-irl",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The Amazon AGI Lab speaker says that early on the harness is strong, and that over time, as the model gets better, the harness becomes thinner.",
+            "judgment": "04c850bf1babfc9d554ac93f8fa3a5c6bd05c2fcf6add3c4491c5b89b8c0363b"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 3,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "HeyGen found the thinnest wrapper won over elaborate scaffolding",
+          "talk": "ia-aie-russo-html-agents-need",
+          "talk_raw": "ia-aie-russo-html-agents-need",
+          "quote": "we tried a bunch of different wrappers around HTML, CSS, and JavaScript... but to our surprise, the thinnest wrapper ultimately won",
+          "quote_words": 21,
+          "flags": [],
+          "quote_check": {
+            "status": "spliced",
+            "talk": "ia-aie-russo-html-agents-need",
+            "found_in": null,
+            "score": 92.8
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says they tried many wrappers with more context, bigger system prompts and skills, and the thinnest wrapper, essentially plain HTML with a few data attributes, won, which matches the claim of thin over elaborate.",
+            "judgment": "f3a0fbe56488b74bdefdafb3756dbb86af8ede00e3257729819a0c171cc83a3a"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 4,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "A workshop example replaced 12,000 lines of workflow code with a 200-line skill",
+          "talk": "ia-aie-rogge-huggingface-automate-own-job",
+          "talk_raw": "ia-aie-rogge-huggingface-automate-own-job",
+          "quote": "they replaced 12,000 lines of custom code pretty sophisticated workflow with a very simple 200 lines of code skill",
+          "quote_words": 19,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-rogge-huggingface-automate-own-job",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote confirms that 12,000 lines of custom workflow code were replaced by a 200-line skill, but the context attributes this to a talk by Cursor at AI Engineer London, not a workshop (the workshop mentioned was Anthropic's, on a different point).",
+            "judgment": "be3d23929a0023efe4076929c09fb1b1945394c32962014bc83374e3b1c8fd45"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 5,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "Braintrust says workflow graphs were a workaround for weaker models",
+          "talk": "ia-aie-bhatawdekar-braintrust-agent-evolved-evals",
+          "talk_raw": "ia-aie-bhatawdekar-braintrust-agent-evolved-evals",
+          "quote": "the models were able to plan a lot more effectively accurately... so like a lot of these graph-based systems were not able to take advantage of these new capabilities",
+          "quote_words": 29,
+          "flags": [],
+          "quote_check": {
+            "status": "spliced",
+            "talk": "ia-aie-bhatawdekar-braintrust-agent-evolved-evals",
+            "found_in": null,
+            "score": 94.0
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The passage says graph-based systems could not exploit the newer models' stronger planning and tool calling, which implies graphs belong to a weaker-model era, but it never explicitly calls them a workaround for weaker models.",
+            "judgment": "886cc1cb9e825aee1bad7daad324ba50ceaa6199e324b0c2be30e521a571110a"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 6,
+          "item": "The Harness Over the Model",
+          "item_position": 1,
+          "claim": "HumanLayer argues loop-only, harness-light coding produces worse outcomes",
+          "talk": "ia-aie-mistele-loop-engineering",
+          "talk_raw": "ia-aie-mistele-loop-engineering",
+          "quote": "we're still building 40,000 line PRs that just nobody wants to read, right?",
+          "quote_words": 13,
+          "flags": [],
+          "quote_check": {
+            "status": "fuzzy",
+            "talk": "ia-aie-mistele-loop-engineering",
+            "found_in": null,
+            "score": 98.6
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The speaker does criticize the naive 'prompt in a loop' approach for producing 40,000-line PRs nobody wants to read, but he says this happens even with verifiers and several review agents, so the 'harness-light' framing and the broader 'worse outcomes' conclusion go beyond the quote.",
+            "judgment": "dab5bae8dcbbcf7e4f396cea6894d89072b9f5a4f76eea057e3a64e42283137b"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 7,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "SWE-Marathon shows even the best agent config resolves only 26% of project-scale tasks",
+          "talk": "ia-aie-desai-swe-marathon",
+          "talk_raw": "ia-aie-desai-swe-marathon",
+          "quote": "the best configuration here is Claude Opus 4.8 with Claude Code, and it only achieves a 26% resolution rate",
+          "quote_words": 19,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-desai-swe-marathon",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says the best configuration evaluated, Claude Opus 4.8 with Claude Code, reaches only a 26% resolution rate on SWE-Marathon's project-scale tasks, which matches the claim.",
+            "judgment": "6b4a79394605172f1b2359c34da03689bec8c1bc8e47e018d5a2821216d85c52"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 8,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "Cursor scaled to frontier-scale model training in about a year",
+          "talk": "ia-aie-robinson-recursive-improvement",
+          "talk_raw": "ia-aie-robinson-recursive-improvement",
+          "quote": "We have been training models for about a year at the large scale at Cursor, and I want to talk about some of our progress so far",
+          "quote_words": 27,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-robinson-recursive-improvement",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote says Cursor has trained models at large scale for about a year and describes ambitions toward state-of-the-art models, but it does not say Cursor reached frontier-scale training, and the talk positions Composer as fast and cost-effective rather than frontier.",
+            "judgment": "a9ca28419297b2f35a4d8ad3da69cdb3cfcc4757503bd28ffd91e646795b886b"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 9,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "Box frames Opus 4.0-to-4.5 as the start of a new agent-model epoch",
+          "talk": "ia-aie-kus-box-half-life-agent-infra",
+          "talk_raw": "ia-aie-kus-box-half-life-agent-infra",
+          "quote": "The big thing that changed last year was in my mind Opus 40 to Opus 45... This is kind of to me the beginning the epic of like the new agent models",
+          "quote_words": 32,
+          "flags": [],
+          "quote_check": {
+            "status": "spliced",
+            "talk": "ia-aie-kus-box-half-life-agent-infra",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The speaker says the move from Opus 4.0 to 4.5 was the big change of last year and calls it \"the beginning [of] the epoch of the new agent models,\" which matches the claim.",
+            "judgment": "0361a838a90dfda9befe0cf6b43f84ce75b30e10b5646303a453d2607371daad"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 10,
+          "item": "The Model Is Not the Bottleneck",
+          "item_position": 2,
+          "claim": "MiniMax argues agents fundamentally need million-token context and native vision",
+          "talk": "ia-aie-wolf-song-minimax-million-token-context",
+          "talk_raw": "ia-aie-wolf-song-minimax-million-token-context",
+          "quote": "longer context actually unlocks a lot of capabilities especially when interacting with users",
+          "quote_words": 13,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-wolf-song-minimax-million-token-context",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "partial",
+            "reason": "The quote and its context say longer context unlocks capabilities and that shorter context isn't enough for complex agentic tasks, but they don't argue agents fundamentally need a million tokens, and the quote says nothing about native vision.",
+            "judgment": "ded38fdb08d0950fbc9491daf428d3800f1efd244fb2cfa1b661405d7e438607"
+          },
+          "grounding": "partial"
+        },
+        {
+          "index": 11,
+          "item": "The Verification Gap",
+          "item_position": 3,
+          "claim": "Aviator's review surface shifts from diffs to captured intent",
+          "talk": "ia-aie-jain-kill-code-review",
+          "talk_raw": "ia-aie-jain-kill-code-review",
+          "quote": "now reviewers are reviewing the intent, not the diff. You're reviewing the intent decisions",
+          "quote_words": 14,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-jain-kill-code-review",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The Aviator speaker describes the approach he is pitching, in which reviewers review the intent and decisions captured from agent sessions rather than the diff, which matches the claim.",
+            "judgment": "3db225a5d0e38d2101c367c82c6dd46b86a678975da177950b118a98c3523798"
+          },
+          "grounding": "grounded"
+        },
+        {
+          "index": 12,
+          "item": "The Verification Gap",
+          "item_position": 3,
+          "claim": "Ufonia's LLM judge matched expert clinicians on hazard detection",
+          "talk": "ia-aie-joselowitz-ufonia-million-patients-no-ab-test",
+          "talk_raw": "ia-aie-joselowitz-ufonia-million-patients-no-ab-test",
+          "quote": "the results showed that our judge is at least on par if not slightly better than the the real expert clinicians",
+          "quote_words": 21,
+          "flags": [],
+          "quote_check": {
+            "status": "exact",
+            "talk": "ia-aie-joselowitz-ufonia-million-patients-no-ab-test",
+            "found_in": null,
+            "score": 100
+          },
+          "support": {
+            "verdict": "supported",
+            "reason": "The quote says their judge, validated on labelling hazards in 240 conversations against 10 expert clinicians, was at least on par with them, which is the claim.",
+            "judgment": "0fd21f3dc9e6c93e5f1b98101dd47f9d146dcad1eda0335ea64dc84062a53c9d"
+          },
+          "grounding": "grounded"
+        }
+      ],
+      "uncited": [
+        "OpenAI's Codex team, Yutori, TNG's chess project and UC Berkeley pushed back on the claim that the harness matters more than the model.",
+        "Ufonia validated its LLM judge against ten clinicians across specialties.",
+        "Ufonia's LLM judge achieved an F1 score of 0.96."
+      ]
+    }
+  ],
+  "recall": {
+    "Q03": {
+      "shape": "ranked_list",
+      "groups": [
+        {
+          "name": "Coding agents: durable productivity vs. velocity sickness/tech debt",
+          "members": [
+            "Do coding agents produce durable productivity gains, or 'velocity sickness'/tech debt?"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Harness/context matters more than the model",
+          "members": [
+            "Frontier model intelligence vs. harness/context/cost efficiency as the real driver of agent performance",
+            "Harness matters more than the model",
+            "The Harness Over the Model",
+            "The Model Is Not the Bottleneck"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Loop-driven autonomous software factories work in practice",
+          "members": [
+            "Loop-driven autonomous software factories already work in practice",
+            "Loops/software-factory hype matches reality"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "Multi-agent decomposition vs. single agent",
+          "members": [
+            "Complex agent systems should be decomposed into many specialized sub-agents rather than one consolidated agent",
+            "Multi-agent decomposition vs. single agent owning reasoning",
+            "Multi-agent orchestration vs. single-agent architecture"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "No need to read agent-written code line by line",
+          "members": [
+            "Engineers no longer need to read agent-written code line by line"
+          ],
+          "pooled": true
+        },
+        {
+          "name": "The Verification Gap",
+          "members": [
+            "The Verification Gap"
+          ],
+          "pooled": true
+        }
+      ],
+      "k": 3,
+      "consensus_top": [
+        "Harness/context matters more than the model",
+        "Multi-agent decomposition vs. single agent",
+        "The Verification Gap"
+      ],
+      "runs": [
+        {
+          "arm": "markdown",
+          "run": 1,
+          "found": [
+            "Coding agents: durable productivity vs. velocity sickness/tech debt",
+            "Harness/context matters more than the model",
+            "Multi-agent decomposition vs. single agent"
+          ],
+          "recall": 0.5,
+          "overlap": 0.6666666666666666
+        },
+        {
+          "arm": "markdown",
+          "run": 2,
+          "found": [
+            "Harness/context matters more than the model",
+            "Loop-driven autonomous software factories work in practice",
+            "Multi-agent decomposition vs. single agent"
+          ],
+          "recall": 0.5,
+          "overlap": 0.6666666666666666
+        },
+        {
+          "arm": "markdown",
+          "run": 3,
+          "found": [
+            "Loop-driven autonomous software factories work in practice",
+            "Multi-agent decomposition vs. single agent",
+            "No need to read agent-written code line by line"
+          ],
+          "recall": 0.5,
+          "overlap": 0.3333333333333333
+        },
+        {
+          "arm": "omnigraph",
+          "run": 1,
+          "found": [
+            "Harness/context matters more than the model",
+            "The Verification Gap"
+          ],
+          "recall": 0.3333333333333333,
+          "overlap": 0.6666666666666666
+        },
+        {
+          "arm": "omnigraph",
+          "run": 2,
+          "found": [
+            "Harness/context matters more than the model",
+            "The Verification Gap"
+          ],
+          "recall": 0.3333333333333333,
+          "overlap": 0.6666666666666666
+        },
+        {
+          "arm": "omnigraph",
+          "run": 3,
+          "found": [
+            "Harness/context matters more than the model",
+            "The Verification Gap"
+          ],
+          "recall": 0.3333333333333333,
+          "overlap": 0.6666666666666666
+        }
+      ],
+      "count": 3,
+      "agreement": {
+        "pairs": [
+          {
+            "run": 1,
+            "shared": 1,
+            "agreement": 0.3333333333333333
+          },
+          {
+            "run": 2,
+            "shared": 1,
+            "agreement": 0.3333333333333333
+          },
+          {
+            "run": 3,
+            "shared": 0,
+            "agreement": 0.0
+          }
+        ],
+        "mean": 0.2222222222222222
+      },
+      "consistency": {
+        "markdown": 0.39999999999999997,
+        "omnigraph": 1.0
+      }
+    }
+  },
+  "absence": {},
+  "pairwise": {
+    "Q03": [
+      {
+        "run": 1,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer A names three contested claims and gives talks on both sides of each, which is what the question asks; Answer B admits it cannot name the supporting talks, and its pushback quotes for 'Verification Gap' and 'Model Is Not the Bottleneck' only loosely contradict those theses."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "tie",
+            "correctness": "omnigraph",
+            "winner": "markdown",
+            "reason": "Answer B names talks on both sides of each of its three contested claims, which is what the question asks. Answer A lists only the pushback talks and admits it cannot name any supporters. A has a slightly better grounding rate (10 of 13 grounded versus 10 of 16), but that does not make up for missing half of the question."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 2,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "omnigraph",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "Answer A names both the supporting and the opposing talks for each of three clearly defined claims, as the question asks, and its claims are all grounded or partial. Answer B cites more speakers and numbers, but it covers only the pushback side, leaves its third claim as a muddled three-way tie, and relies on many uncited statements."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "omnigraph",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "B answers the question as asked, naming talks on both the supporting and opposing side of each of three contested claims with well-grounded quotes. A admits it cannot name any supporting talks. A's many specific names and numbers only cover the pushback side, and it leans on several uncited statements."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      },
+      {
+        "run": 3,
+        "orders": [
+          {
+            "a": "markdown",
+            "coverage": "markdown",
+            "specificity": "omnigraph",
+            "correctness": "tie",
+            "winner": "markdown",
+            "reason": "Answer A names three contested claims and, for each, identifies specific talks and speakers on both the supporting and opposing sides, which is what the question asks. Answer B cites only pushback for all three claims, names no talk that argues for them, and relies on stretched readings (e.g., Cursor and Box) to frame them as disagreement."
+          },
+          {
+            "a": "omnigraph",
+            "coverage": "markdown",
+            "specificity": "markdown",
+            "correctness": "markdown",
+            "winner": "markdown",
+            "reason": "B names talks on both sides of each of its three contested claims, with grounded or partial quotes throughout. A admits it cannot cite anyone arguing for its top claim, and its pushback examples for the second and third claims (Cursor, Box, Aviator) only loosely fit the disagreement it describes."
+          }
+        ],
+        "result": "markdown",
+        "agree": true
+      }
+    ]
+  }
+}

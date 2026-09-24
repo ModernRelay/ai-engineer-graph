@@ -101,6 +101,19 @@ def main(argv: list[str] | None = None) -> int:
         default=BENCH_DIR / "tests" / "fixtures" / "calibration_judgments.json",
     )
 
+    key = commands.add_parser("key", help="build keys/<qid>.json from the curated graph")
+    key.add_argument("--only", default="Q03", help="question id (Q03)")
+
+    key_score = commands.add_parser(
+        "key-score", help="score runs against the graph's answer key (judge maps entries)"
+    )
+    key_score.add_argument("--only", default="Q03", help="question id (Q03)")
+    key_score.add_argument("--runs-dir", type=Path, default=BENCH_DIR / "runs")
+    key_score.add_argument("--arm", default="markdown")
+    key_score.add_argument("--seed", type=Path, default=REPO_DIR / "seed")
+    key_score.add_argument("--cache", type=Path, default=BENCH_DIR / "runs" / "_judge")
+    key_score.add_argument("--out", type=Path)
+
     report = commands.add_parser(
         "report", help="E: results/results.md from scores.json and the runs"
     )
@@ -109,6 +122,10 @@ def main(argv: list[str] | None = None) -> int:
     report.add_argument("--questions", type=Path, default=BENCH_DIR / "questions.yaml")
 
     args = parser.parse_args(argv)
+    if args.command == "key":
+        return _key(parser, args)
+    if args.command == "key-score":
+        return _key_score(parser, args)
     if args.command == "corpus":
         written = build_corpus(args.seed, args.transcripts, args.out, CHUNK_TALK_OVERRIDES)
         print(f"wrote {written} talks to {args.out}")
@@ -555,3 +572,96 @@ def _probe(parser: argparse.ArgumentParser, arms: list[str]) -> int:
         print(f"  trace: {summary['out']}")
         failed += sum(not c["ok"] for c in summary["checks"])
     return 1 if failed else 0
+
+
+def _key(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
+    from bench.key import KEYS_DIR, build_q03
+
+    if args.only != "Q03":
+        parser.exit(2, f"bench key: no key builder for {args.only}\n")
+    key = build_q03(graph_head())
+    path = KEYS_DIR / f"{args.only}.json"
+    path.write_text(json.dumps(key, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    for c in key["claims"]:
+        print(
+            f"  {c['key']}. {c['thesis']}: {c['contradictions']} contradictions, "
+            f"{len(c['against_talks'])} pushback talks (+{len(c['boundary_talks'])} boundary), "
+            f"{len(c['support_talks'])} supporting talks"
+        )
+    print(f"wrote {path} (graph head {key['graph_head']})")
+    return 0
+
+
+def _graph_answer_seconds(alias: str) -> float:
+    """Wall time of the curated answer itself: one alias call through the reader shim."""
+    import time
+
+    start = time.monotonic()
+    subprocess.run(
+        [str(SHIM_BIN / "omnigraph"), "alias", alias, "--format", "jsonl"],
+        capture_output=True,
+        check=True,
+        env={"HOME": os.environ.get("HOME", ""), "PATH": "/usr/bin:/bin"},
+    )
+    return round(time.monotonic() - start, 2)
+
+
+def _key_score(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
+    from bench import judge
+    from bench.corpus import talk_labels
+    from bench.key import KEYS_DIR, key_match_request, score_q03, valid_key_match
+    from bench.score import load_runs
+
+    key_path = KEYS_DIR / f"{args.only}.json"
+    if not key_path.exists():
+        parser.exit(2, f"bench key-score: no {key_path}; run `bench key --only {args.only}`\n")
+    key = json.loads(key_path.read_text(encoding="utf-8"))
+    runs = [r for r in load_runs(args.runs_dir) if r["qid"] == args.only and r["arm"] == args.arm]
+    if not runs:
+        parser.exit(2, f"bench key-score: no {args.arm} runs for {args.only} in {args.runs_dir}\n")
+    labels = talk_labels(args.seed, CHUNK_TALK_OVERRIDES)
+    ask = None
+    scored = []
+    for run in runs:
+        request = key_match_request(run["question"], key, run)
+        if judge.lookup(request, args.cache) is None:
+            ask = ask or judge.openrouter_ask(BENCH_DIR / ".env")
+        record = judge.cached(request, ask, args.cache, valid_key_match)
+        scored.append(score_q03(key, run, record["output"], labels))
+
+    baseline = _graph_answer_seconds("contested-claims")
+    n = len(scored)
+    mean = lambda f: sum(f(s) or 0 for s in scored) / n  # noqa: E731
+    summary = {
+        "qid": args.only,
+        "arm": args.arm,
+        "runs": n,
+        "graph_head": key["graph_head"],
+        "key_claims": [c["thesis"] for c in key["claims"]],
+        "claims_recall": round(mean(lambda s: s["claims_recall"]), 3),
+        "against_recall": round(mean(lambda s: s["against_recall"]), 3),
+        "wall_s": round(mean(lambda s: s["wall_s"]), 1),
+        "cost_usd": round(mean(lambda s: s["cost_usd"]), 3),
+        "tool_calls": round(mean(lambda s: s["tool_calls"]), 1),
+        "graph_answer_s": baseline,
+        "per_run": scored,
+    }
+    print(f"{args.only} vs the graph's key ({', '.join(summary['key_claims'])})")
+    for s in scored:
+        found = [p["pattern"].removeprefix("pat-") for p in s["per_claim"] if p["found"]]
+        print(
+            f"  {s['arm']} #{s['run']}: {s['claims_found']}/{key['count']} key claims "
+            f"({', '.join(found) or 'none'}), pushback-talk recall {s['against_recall']}, "
+            f"outside the key: {s['outside_key']}"
+        )
+    print(
+        f"mean: claims {summary['claims_recall']:.0%}, "
+        f"pushback talks {summary['against_recall']:.0%}, "
+        f"{summary['wall_s']} s, ${summary['cost_usd']}, {summary['tool_calls']} tool calls; "
+        f"the graph: 1 query, {baseline} s, $0"
+    )
+    if args.out:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n")
+        print(f"wrote {args.out}")
+    return 0

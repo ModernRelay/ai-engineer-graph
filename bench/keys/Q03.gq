@@ -1,0 +1,36 @@
+// Answer key for Q03 ("where do speakers disagree most?"), read from the curated graph.
+// Run by `bench key` through the reader login; nothing here is served or shown to an agent.
+
+// Claims ranked by how many signals directly contradict them (boundary conditions left out).
+query ranking() {
+    match {
+        $p: Pattern
+        $s $e:contradictsPattern $p
+        $e.polarity = "contradiction"
+    }
+    return { $p.slug as pattern, $p.name as thesis, $p.brief as brief, count($s) as contradictions }
+    order { contradictions desc }
+}
+
+// Every counter-signal's talk, with its polarity: contradiction talks are the key's
+// pushback; boundary talks are accepted as pushback but not required.
+query pushback_talks() {
+    match {
+        $p: Pattern
+        $s $e:contradictsPattern $p
+        $s spottedInArtifact $a
+    }
+    return { $p.slug as pattern, $e.polarity as polarity, $a.slug as talk, count($s) as signals }
+    order { signals desc }
+}
+
+// Every talk that supports a pattern, by how many of its signals do.
+query support_talks() {
+    match {
+        $p: Pattern
+        $s formsPattern $p
+        $s spottedInArtifact $a
+    }
+    return { $p.slug as pattern, $a.slug as talk, count($s) as signals }
+    order { signals desc }
+}

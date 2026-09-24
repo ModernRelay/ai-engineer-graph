@@ -67,6 +67,8 @@ uv run bench score                  # D — quote checks + judge (cached), resul
 uv run bench calibrate              # D1.5 — real judge on the planted claims (~$0.06); re-run
                                     #   after any judge prompt change, it rewrites the test fixture
 uv run bench report                 # E — results/results.md (headline, per question, showcases, notes)
+uv run bench key --only Q03         # the answer key from the curated graph → keys/Q03.json
+uv run bench key-score --only Q03 --runs-dir runs-clean --out results-clean/key-Q03-markdown.json
 ```
 
 The Omnigraph arm needs the local graph server up:

@@ -1,30 +1,30 @@
 {
   "0da9097587bd72baa0571318008ffea9dac7a970c6dc7b4f871b39142f9abfd8": {
-    "reason": "The quote says outright that the most reliable browser agents seen in production are often writing code alongside using the browser, and the surrounding transcript backs this up.",
+    "reason": "Klein says the most reliable browser agents seen in production are often writing code alongside using the browser to automate tasks, which matches the claim; the claim only drops his hedge 'often'.",
     "verdict": "supported"
   },
-  "40e154758a4110816702dfed2c1afd0d13b106f69baf64ca0a5d1b002ad17ee9": {
-    "reason": "The Lyft speaker says that before launching AI agents to production they go through a rigorous offline evaluation process to ensure sufficient performance, which is exactly what the claim states.",
+  "2f802bab2146d7bbb811eebd07f5cc63537e31edb2d4239b3ddf3e120ac8092c": {
+    "reason": "The speaker says outright, as part of his car analogy, that the model gives capability and the harness gives control.",
+    "verdict": "supported"
+  },
+  "3bfa2d140d1923305ce925abd13b48a26881ca06e76849fa1953c3c79dcb83bd": {
+    "reason": "Krieger recounts scaling advice he got after Instagram's launch: pre-measure everything you might remotely need, so that during an outage you can tell whether a number is normal or high.",
     "verdict": "supported"
   },
   "4da439c98751602bfe2e3143d806989d5d1b0aaf3774bf1f9536fe75662ffb22": {
-    "reason": "Klein says the models were the bottleneck only until recently, that this has largely been solved, and that the real problem now is missing harnesses and tools, which contradicts the claim.",
+    "reason": "Klein says models were the bottleneck until recently but that this has largely been solved, and he places the main problem in missing harnesses and tools, which contradicts the claim.",
     "verdict": "unsupported"
   },
-  "88fe8ea1841266338f418ccc557def2972209203c500fd69f1ba99e5ed77a2ac": {
-    "reason": "The speaker says directly, as part of his car analogy, that the model gives capability while the harness gives control.",
+  "756d4d2fd9eab4d1647c2b0478339235e7fcba096267501e95edff28dc81c7d2": {
+    "reason": "The Lyft speaker says that before launching AI agents to production they go through a rigorous offline evaluation process, and describes a launch gate that enforces it.",
     "verdict": "supported"
   },
-  "99ec45806be7528c48111a41bae16666ec5e9cbe89276db4f0ec09be8a06bcae": {
-    "reason": "The Deno speaker says 'we' take the stance that agents must be treated as untrusted software and that you can't rely on the agent to guard what it's doing, which matches the claim directly.",
-    "verdict": "supported"
-  },
-  "ac20600720c8a21b64f5c5d7500986422f2d75f2ccc611936acd5ee573af35f1": {
-    "reason": "Krieger cites, as scaling advice he has kept since Instagram's 2010 launch, to pre-measure everything you might remotely need so that during an outage you can tell whether a number is normal or high.",
-    "verdict": "supported"
-  },
-  "b04ee8eb58b4bff9ac1913dadab89394a0bd2d94b8a97995a1020f6bec842fd0": {
-    "reason": "The speaker presents simply prompting an LLM for 50 test queries as what you should not do, and instead recommends sampling production data and mutating criteria to cover golden paths and edge cases.",
+  "d8990c8f626e3333e0c33506fd72b6e10016e01b24598217d2016cc324bcf9b1": {
+    "reason": "The speaker calls simply prompting an LLM to generate 50 test queries something you do not want to do, and instead recommends sampling real production data and mutating criteria, so the quote contradicts the claim.",
     "verdict": "unsupported"
+  },
+  "e6b84692047d0601f81fae99d69b9961a15a30f460a369d6ea7d7dd68de4fdaa": {
+    "reason": "The quote, from the Deno speaker, says they treat agents as untrusted software and can't rely on the agent to guard its own actions, which matches the claim.",
+    "verdict": "supported"
   }
 }

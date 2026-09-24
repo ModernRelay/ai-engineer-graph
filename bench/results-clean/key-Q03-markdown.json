@@ -1,0 +1,180 @@
+{
+  "qid": "Q03",
+  "arm": "markdown",
+  "runs": 3,
+  "graph_head": "01M379NRWH5G47ZVCY6EPGD315",
+  "key_claims": [
+    "The Harness Over the Model",
+    "The Model Is Not the Bottleneck",
+    "The Verification Gap"
+  ],
+  "claims_recall": 0.222,
+  "against_recall": 0.0,
+  "wall_s": 232.0,
+  "cost_usd": 0.645,
+  "tool_calls": 28.7,
+  "graph_answer_s": 0.37,
+  "per_run": [
+    {
+      "qid": "Q03",
+      "arm": "markdown",
+      "run": 1,
+      "claims_found": 1,
+      "claims_recall": 0.333,
+      "against_recall": 0.0,
+      "per_claim": [
+        {
+          "key": 1,
+          "pattern": "pat-harness-over-model",
+          "found": true,
+          "against_recall": 0.0,
+          "against_precision": 0.0,
+          "for_precision": 0.5,
+          "leading_for_hits": 1,
+          "against_named": [
+            "ia-aie-openai-golden-age"
+          ],
+          "for_named": [
+            "ia-aie-bhargava-harness-over-model",
+            "ia-aie-rizwan-open-source-dead"
+          ]
+        },
+        {
+          "key": 2,
+          "pattern": "pat-model-not-bottleneck",
+          "found": false,
+          "against_recall": 0.0,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": []
+        },
+        {
+          "key": 3,
+          "pattern": "pat-verification-gap",
+          "found": false,
+          "against_recall": 0.0,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": []
+        }
+      ],
+      "outside_key": [
+        "Multi-agent orchestration vs. single-agent architecture",
+        "Do coding agents produce durable productivity gains, or 'velocity sickness'/tech debt?"
+      ],
+      "wall_s": 293.86,
+      "cost_usd": 0.851272,
+      "tool_calls": 34
+    },
+    {
+      "qid": "Q03",
+      "arm": "markdown",
+      "run": 2,
+      "claims_found": 1,
+      "claims_recall": 0.333,
+      "against_recall": 0.0,
+      "per_claim": [
+        {
+          "key": 1,
+          "pattern": "pat-harness-over-model",
+          "found": true,
+          "against_recall": 0.0,
+          "against_precision": 0.0,
+          "for_precision": 1.0,
+          "leading_for_hits": 1,
+          "against_named": [
+            "ia-aie-horthy-loops-debate"
+          ],
+          "for_named": [
+            "ia-aie-bhargava-harness-over-model",
+            "ia-aie-horthy-loops-debate"
+          ]
+        },
+        {
+          "key": 2,
+          "pattern": "pat-model-not-bottleneck",
+          "found": false,
+          "against_recall": 0.0,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": []
+        },
+        {
+          "key": 3,
+          "pattern": "pat-verification-gap",
+          "found": false,
+          "against_recall": 0.0,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": []
+        }
+      ],
+      "outside_key": [
+        "Loops/software-factory hype matches reality",
+        "Multi-agent decomposition vs. single agent owning reasoning"
+      ],
+      "wall_s": 174.77,
+      "cost_usd": 0.393674,
+      "tool_calls": 26
+    },
+    {
+      "qid": "Q03",
+      "arm": "markdown",
+      "run": 3,
+      "claims_found": 0,
+      "claims_recall": 0.0,
+      "against_recall": 0.0,
+      "per_claim": [
+        {
+          "key": 1,
+          "pattern": "pat-harness-over-model",
+          "found": false,
+          "against_recall": 0.0,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": []
+        },
+        {
+          "key": 2,
+          "pattern": "pat-model-not-bottleneck",
+          "found": false,
+          "against_recall": 0.0,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": []
+        },
+        {
+          "key": 3,
+          "pattern": "pat-verification-gap",
+          "found": false,
+          "against_recall": 0.0,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": []
+        }
+      ],
+      "outside_key": [
+        "Loop-driven autonomous software factories already work in practice",
+        "Complex agent systems should be decomposed into many specialized sub-agents rather than one consolidated agent",
+        "Engineers no longer need to read agent-written code line by line"
+      ],
+      "wall_s": 227.24,
+      "cost_usd": 0.688756,
+      "tool_calls": 26
+    }
+  ]
+}
