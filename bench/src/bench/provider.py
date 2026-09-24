@@ -14,7 +14,8 @@ AGENT_MODEL = "anthropic/claude-sonnet-5[1m]"
 JUDGE_MODEL = "anthropic/claude-opus-5.5"
 BASE_URL = "https://openrouter.ai/api"
 
-# USD per million tokens, from https://openrouter.ai/api/v1/models on 2026-09-23.
+# USD per million tokens, from https://openrouter.ai/api/v1/models on PRICES_AS_OF.
+PRICES_AS_OF = "2026-09-23"
 # Flat across the whole 1M context (no long-context tier), 5-minute cache writes.
 PRICES = {
     "anthropic/claude-sonnet-5": {

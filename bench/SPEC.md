@@ -41,6 +41,7 @@
 | 2026-09-24 | D2.2 pairwise judge written with stubbed tests; blind redaction (#40); paid pass pending | Roman Pronskiy |
 | 2026-09-24 | D2.2 done: md 16, og 8, tie 6 (orders agree 83%); Phase D2 guardrails passed; Epic D done | Roman Pronskiy |
 | 2026-09-24 | E1.1–E1.2 done: `bench report` writes the headline and per-question tables to `results/results.md` | Roman Pronskiy |
+| 2026-09-24 | E1.3 showcases and E1.4 method notes done; Epic E guardrails passed; MVP complete | Roman Pronskiy |
 
 ### Status legend
 
@@ -48,7 +49,7 @@
 
 ### Current focus
 
-**Now on:** Epic E → Phase E1 → step E1.3, three showcase traces. Proposed: Q03 #3 (aggregate win), Q09 #3 (lookup), Q01 #1 (loss); the pick is yours. Then E1.4 footnotes.
+**Now on:** The MVP is done (Epics A–E, every guardrail passed): `results/results.md` is the report. Next is your choice of an Epic F extension, or the open follow-ups (production graph fixes, whether to commit `runs/`).
 
 ---
 
@@ -990,8 +991,8 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 |------|-------------|--------|-------|
 | E1.1 | Headline two-column table | ✅ | `report.py` + `bench report` → `results/results.md`; 5 tests, 6 mutations caught |
 | E1.2 | Per-question table | ✅ | One row per question, omnigraph / markdown in every cell; recall or cross-arm agreement per #39 |
-| E1.3 | Three side-by-side showcase traces | 🔲 | |
-| E1.4 | Method notes and footnotes | 🔲 | |
+| E1.3 | Three side-by-side showcase traces | ✅ | Q03 #3, Q09 #3, Q01 #1 (your pick); tool calls in order in collapsed blocks, answer starts, metrics, the judge's reason |
+| E1.4 | Method notes and footnotes | ✅ | Five notes (setup, relative correctness, the judge, costs, the absence question), every number from the data or code constants (`provider.PRICES_AS_OF`); 11 report tests, 9 mutations caught |
 
 **Steps (detail):**
 
@@ -1037,6 +1038,17 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 - **E1.3 — Showcase traces.** Deliverable: pick 3 questions (one aggregate win, one lookup, one
   loss or tie). Show them side by side: the tool calls in order (collapsed), an excerpt of the
   answer, and the metrics.
+  - **Picked (2026-09-24, by you):** Q03 #3, an aggregate win (the omnigraph arm wins both orders
+    on grounding, 139 s / $0.56 vs 217 s / $1.02); Q09 #3, a lookup (omnigraph wins on
+    specificity, 35 s / $0.09 vs 27 s / $0.05); Q01 #1, a loss (markdown wins; omnigraph answered
+    with pattern theses, 378 s / $1.45 vs 189 s / $0.58). `report.SHOWCASES` holds the pick.
+  - **Per showcase:** the question; the pairwise result with the judge's reason; a small metrics
+    table (time and cost, turns and tool calls, claims by D1 bucket, uncited statements); each
+    arm's tool calls in order inside a collapsed `<details>` block, with a short note on each
+    result (rows or files returned, saved output, ✗ for an error or a denial) and temp paths cut
+    to file names; then the start of each answer, cut at a paragraph break. The excerpts are the
+    real answers, not the redacted text the judge saw. The traces are read from `runs/`
+    (gitignored), and only the rendered page is committed.
 - **E1.4 — Method notes.** Deliverable: footnotes covering:
   - Sonnet 5, no subagents, 3 runs
   - the judge model and its cost, listed separately from the arms' cost
@@ -1051,8 +1063,8 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 
 | Guardrail | Criteria (pass/fail) | Status | Actual outcome |
 |-----------|----------------------|--------|----------------|
-| Reproducible | `uv run bench score && uv run bench report` rebuilds results.md byte-identical from cache | 🔄 | Holds for E1.1–E1.2: rebuilding gives the same `results.md` and `scores.json` bytes. Recheck after E1.3 and E1.4. |
-| Honest | Footnotes state n, the relative-correctness caveat and the build-cost exclusion | 🔲 | |
+| Reproducible | `uv run bench score && uv run bench report` rebuilds results.md byte-identical from cache | ✅ | With showcases and notes: `bench score && bench report` asks nothing and rewrites the same `results.md` (sha256 `79f857dd…`) and `scores.json` (`8670cd85…`). It needs the gitignored `runs/` for the traces and run metrics. |
+| Honest | Footnotes state n, the relative-correctness caveat and the build-cost exclusion | ✅ | Note 1 states n (10 × 2 × 3, 60 runs). Note 2 states that correctness is relative with no gold set. Note 4 states that building the graph is excluded. Note 3 adds the judge's blind setup, order agreement and noise; note 5 covers the absence question. |
 
 ---
 
@@ -1144,12 +1156,12 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 ## 7. Open questions
 
 - [x] ~~Billing: API key or Claude Code login?~~ OpenRouter (decision #21).
-- [ ] Final caps (`max_turns`, `max_budget_usd`, wall clock) after the pilot. Do they stay the same for both arms?
+- [x] ~~Final caps after the pilot~~: 300 turns, $10, 30 min, the same for both arms (#33).
 - [x] ~~Does the `omnigraph` CLI accept a config path or profile env var?~~ Yes: `OMNIGRAPH_HOME` and `OMNIGRAPH_PROFILE` (decision #18).
 - [x] ~~Does `HookMatcher(matcher=None)` match every tool?~~ Yes: the A2.4 probe saw our reason on every denial across Read, Grep, Glob and Bash.
 - [x] ~~Context window: 200k or 1M?~~ 1M for both arms (decision #27). Verified live: `contextWindow: 1000000`.
 - [x] ~~How does the CLI handle very large tool output?~~ It saves it to `<claude-home>/projects/<cwd>/<session>/tool-results/<id>.txt` and tells the agent to Read it (decision #32).
-- [ ] Commit `runs/` traces for the demo, or only `results/`? Currently runs are gitignored.
+- [ ] Commit `runs/` traces for the demo, or only `results/`? Currently runs are gitignored. `results.md` embeds the three showcase traces, but rebuilding it needs the local `runs/`.
 - [ ] Follow-up (graph maintainer): re-point Chatterjee's 24 chunks in the production 0.11 graph so it matches the seed (#35), and derive evidence passages for his 5 signals. Then refresh the seed from an export as usual.
 - [ ] Follow-up (graph maintainer): the production 0.11 server still serves the broken `talk_semantic`. `cluster apply` of the fixed `queries/traversals.gq` plus a server restart fixes it (#36). T26 in a later Omnigraph release will catch this shape at lint time.
 - [x] ~~Should the support judge see the talk title (`# Title (Speaker, Company — …)`)?~~ Yes (#38). Both arms know it (the md file header, the og graph), but the judge sees transcript only, so correct attributions can come back `partial` (about 14 md / 3 og in D1.3). Adding it changes every request, so all 695 would be asked again (about $7).

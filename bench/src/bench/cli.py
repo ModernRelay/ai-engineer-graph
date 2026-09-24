@@ -141,14 +141,23 @@ def main(argv: list[str] | None = None) -> int:
         return _calibrate(args)
     elif args.command == "report":
         from bench.questions import load_questions
-        from bench.report import render
+        from bench.report import SHOWCASES, render
         from bench.score import load_runs
 
         scores = json.loads((args.results / "scores.json").read_text(encoding="utf-8"))
         meta_path = args.results / "run-meta.json"
         meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
         questions = {q.id: q for q in load_questions(args.questions)}
-        page = render(scores, load_runs(args.runs_dir), questions, meta)
+        traces = {}
+        for qid, n, _ in SHOWCASES:
+            for arm in ("markdown", "omnigraph"):
+                path = args.runs_dir / qid / arm / str(n) / "trace.jsonl"
+                traces[qid, arm, n] = (
+                    [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+                    if path.exists()
+                    else None
+                )
+        page = render(scores, load_runs(args.runs_dir), questions, meta, traces)
         (args.results / "results.md").write_text(page, encoding="utf-8")
         print(f"wrote {args.results / 'results.md'}")
     return 0

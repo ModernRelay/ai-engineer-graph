@@ -4,13 +4,18 @@ The page carries no generation timestamp, so rebuilding it from the same inputs 
 """
 
 import math
+import re
+from pathlib import Path
 from statistics import mean, median
 
+from bench.parse import answer_prose
 from bench.questions import Question
 
 ARMS = ("omnigraph", "markdown")  # the page's column order
 NAMES = {"omnigraph": "Agent + Omnigraph", "markdown": "Agent + Markdown files"}
 DASH = "–"
+# E1.3, picked on 2026-09-24: (question, run, what it shows).
+SHOWCASES = [("Q03", 3, "Aggregate win"), ("Q09", 3, "Lookup"), ("Q01", 1, "Loss")]
 
 
 def p90(values: list[float]) -> float:
@@ -142,7 +147,151 @@ def _pair(values: dict, fmt) -> str:
     return " / ".join(fmt(values[arm]) for arm in ARMS)
 
 
-def render(scores: dict, results: list[dict], questions: dict[str, Question], meta: dict) -> str:
+def _call(name: str, inputs: dict) -> str:
+    """One tool call as a short command line; temp paths are cut to file names."""
+    if name == "Bash":
+        return inputs.get("command", "")
+    if name == "Read":
+        path = inputs.get("file_path", "")
+        if "/tool-results/" in path:
+            return "read saved tool output"
+        text = f"read {Path(path).name}"
+        if "offset" in inputs or "limit" in inputs:
+            start = inputs.get("offset", 1)
+            end = start + inputs["limit"] - 1 if "limit" in inputs else "end"
+            text += f" lines {start}–{end}"
+        return text
+    if name == "Grep":
+        text = f'grep "{inputs.get("pattern", "")}"'
+        if inputs.get("path"):
+            text += f" {Path(inputs['path']).name}"
+        for flag in ("-A", "-B", "-C"):
+            if flag in inputs:
+                text += f" {flag} {inputs[flag]}"
+        return text + (" -i" if inputs.get("-i") else "")
+    if name == "Glob":
+        return f"glob {inputs.get('pattern', '')}"
+    return f"{name.lower()} {inputs}"
+
+
+def _text(content) -> str:
+    if isinstance(content, list):
+        return "\n".join(str(c.get("text", "")) for c in content if isinstance(c, dict))
+    return str(content or "")
+
+
+def _note(result: dict | None) -> str:
+    """What came back, in a few words."""
+    if result is None:
+        return ""
+    text = _text(result.get("content"))
+    if result.get("is_error"):
+        first = text.strip().splitlines()[0] if text.strip() else "error"
+        first = first.split(". ")[0].rstrip(".") + "."  # the first sentence
+        first = first.replace("`", "'")
+        return "✗ " + (first if len(first) <= 80 else first[:79] + "…")
+    if text.startswith("<persisted-output>"):
+        return "output saved to a file"
+    if m := re.match(r"(\d+) rows? from", text):
+        return f"{m.group(1)} row{'' if m.group(1) == '1' else 's'}"
+    if m := re.match(r"Found (\d+) files?", text):
+        return f"{m.group(1)} file{'' if m.group(1) == '1' else 's'}"
+    return ""
+
+
+def tool_lines(trace: list[dict]) -> list[str]:
+    """Every tool call of a run, in order, with a note on its result."""
+    calls, results = [], {}
+    for message in trace:
+        for block in message.get("content") or []:
+            if not isinstance(block, dict):
+                continue
+            if "name" in block and "input" in block:
+                calls.append(block)
+            elif "tool_use_id" in block:
+                results[block["tool_use_id"]] = block
+    lines = []
+    for call in calls:
+        text = _call(call["name"], call["input"]).replace("`", "'").replace("\n", " ↵ ")
+        text = text if len(text) <= 140 else text[:139] + "…"
+        note = _note(results.get(call["id"]))
+        lines.append(f"`{text}`" + (f" → {note}" if note else ""))
+    return lines
+
+
+def excerpt(text: str, limit: int = 900) -> str:
+    """The start of an answer, cut at the last paragraph break before `limit`."""
+    text = text.strip()
+    if len(text) <= limit:
+        return text
+    cut = text.rfind("\n\n", 0, limit)
+    if cut > 0:
+        return text[:cut] + "\n\n…"
+    cut = text.rfind(". ", 0, limit)
+    return (text[: cut + 1] if cut > 0 else text[:limit]) + " …"
+
+
+def _quote(text: str) -> str:
+    return "\n".join(f"> {line}" if line else ">" for line in text.splitlines())
+
+
+def showcase(
+    key: tuple[str, int, str],
+    scores: dict,
+    results: list[dict],
+    questions: dict[str, Question],
+    traces: dict[tuple[str, str, int], list[dict] | None],
+) -> str:
+    qid, n, label = key
+    lines = [f"### {label}: {qid}, run {n}", "", f"> {questions[qid].text}", ""]
+    pairing = next((p for p in scores["pairwise"].get(qid) or [] if p["run"] == n), None)
+    if pairing:
+        outcome = pairing["result"]
+        said = f"the {outcome} answer wins both orders." if outcome in ARMS else "a tie."
+        reason = pairing["orders"][0]["reason"] if pairing.get("orders") else ""
+        lines += [f'**Pairwise:** {said} The judge: "{reason}"', ""]
+    runs = {r["arm"]: r for r in scores["runs"] if (r["qid"], r["run"]) == (qid, n)}
+    done = {r["arm"]: r for r in results if (r["qid"], r["run"]) == (qid, n)}
+
+    def buckets(arm: str) -> str:
+        claims = runs[arm]["claims"] if arm in runs else []
+        return " / ".join(
+            str(sum(c["grounding"] == b for c in claims))
+            for b in ("grounded", "partial", "hallucinated")
+        )
+
+    rows = [
+        ("Time / cost", lambda a: f"{done[a]['wall_s']:.0f} s / ${done[a]['cost_usd']:.2f}"),
+        ("Turns / tool calls", lambda a: f"{done[a]['num_turns']} / {done[a]['tool_calls']}"),
+        ("Claims: grounded / partial / hallucinated", buckets),
+        ("Uncited statements", lambda a: str(len(runs[a]["uncited"] or []))),
+    ]
+    lines += [f"| | {NAMES['omnigraph']} | {NAMES['markdown']} |", "|---|---|---|"]
+    lines += [f"| {name} | {cell('omnigraph')} | {cell('markdown')} |" for name, cell in rows]
+    lines.append("")
+    for arm in ARMS:
+        trace = traces.get((qid, arm, n))
+        if trace is None:
+            lines += [f"{NAMES[arm]}: trace not available", ""]
+            continue
+        calls = tool_lines(trace)
+        plural = "" if len(calls) == 1 else "s"
+        lines += [f"<details><summary>{NAMES[arm]}: {len(calls)} tool call{plural}</summary>", ""]
+        lines += [f"{i}. {call}" for i, call in enumerate(calls, 1)]
+        lines += ["", "</details>", ""]
+    for arm in ARMS:
+        text = excerpt(answer_prose(done[arm].get("answer_text", "")))
+        lines += [f"**{NAMES[arm]}**, start of the answer:", "", _quote(text), ""]
+    return "\n".join(lines)
+
+
+def render(
+    scores: dict,
+    results: list[dict],
+    questions: dict[str, Question],
+    meta: dict,
+    traces: dict[tuple[str, str, int], list[dict] | None] | None = None,
+) -> str:
     m = {arm: arm_metrics(scores, results, arm) for arm in ARMS}
     pairings = sum(len(rows or []) for rows in scores["pairwise"].values())
     open_ids = ", ".join(sorted(_open_sections(scores)))
@@ -233,10 +382,62 @@ def render(scores: dict, results: list[dict], questions: dict[str, Question], me
             f"{_pair(row['time_median'], lambda t: num(t, '.0f') + ' s')} | "
             f"{_pair(row['cost_mean'], lambda c: '$' + num(c, '.2f'))} |"
         )
-    lines += [
-        "",
-        f"Graph `{meta.get('graph_head', DASH)}`, "
-        f"corpus `{str(meta.get('corpus_sha', DASH))[:12]}`.",
-        "",
-    ]
+    if traces is not None:
+        shown = [
+            key
+            for key in SHOWCASES
+            if key[0] in questions
+            and sum((r["qid"], r["run"]) == key[:2] for r in results) == len(ARMS)
+        ]
+        if shown:
+            lines += ["", "## Showcases", ""]
+            for key in shown:
+                lines.append(showcase(key, scores, results, questions, traces))
+    lines += ["", "## Method notes", "", *method_notes(scores, results, meta), ""]
     return "\n".join(lines)
+
+
+def method_notes(scores: dict, results: list[dict], meta: dict) -> list[str]:
+    """E1.4: the setup and the caveats, with every number taken from the data or the code."""
+    from bench.arms import EFFORT, MAX_BUDGET_USD, MAX_TURNS
+    from bench.provider import PRICES_AS_OF
+    from bench.run import WALL_TIMEOUT_S
+
+    questions = len({r["qid"] for r in results})
+    runs = max((r["run"] for r in results), default=0)
+    pairings = [row for rows in scores["pairwise"].values() for row in rows or []]
+    agree = sum(bool(row.get("agree")) for row in pairings)
+    judge = scores.get("judge", {})
+    absence = [
+        f"{sum(row['result'] == 'tie' for row in scores['pairwise'].get(qid) or [])} of "
+        f"{len(scores['pairwise'].get(qid) or [])} {qid} pairings are ties"
+        for qid in sorted(scores.get("absence", {}))
+    ]
+    return [
+        f"1. **Setup.** {questions} questions × 2 arms × {runs} run{'' if runs == 1 else 's'} "
+        f"({len(results)} agent runs), run on {str(meta.get('started_first', DASH))[:10]}. Both "
+        f"arms use `{meta.get('model', DASH)}` at effort `{EFFORT}`, no subagents, capped at "
+        f"{MAX_TURNS} turns, ${MAX_BUDGET_USD:.0f} and {WALL_TIMEOUT_S // 60} min per run (Claude "
+        f"Code {meta.get('cli_version', DASH)}, Agent SDK {meta.get('sdk_version', DASH)}). The "
+        f"Omnigraph arm reads a local copy of the graph (commit `{meta.get('graph_head', DASH)}`) "
+        "through stored read queries only. The markdown arm reads the talk transcripts as files "
+        f"(corpus `{str(meta.get('corpus_sha', DASH))[:12]}`).",
+        "2. **Correctness is relative.** There is no gold answer set. A claim is grounded when its "
+        "quote is in the cited transcript and a judge finds that it supports the claim. Recall is "
+        "measured against the pool of everything either arm found and grounded, so entries neither "
+        "arm found don't count. On fixed-length lists every run's recall is N ÷ pool, so those "
+        "show the arms' agreement instead.",
+        f"3. **The judge** is `{judge.get('model', DASH)}` and never told which arm wrote what. "
+        "Before the pairwise comparison, both answers go through the same redaction of tool and "
+        "source mentions, though differences of style remain. Each pairing is judged in both "
+        f"orders, and an arm wins only if it wins both; the two orders agreed in {agree} of "
+        f"{len(pairings)} pairings. Its support verdicts vary by a few percent between passes, so "
+        "small differences between the arms are within noise. Judge cost for these results: "
+        f"${judge.get('cost_usd', 0):.2f}, kept apart from the arms' costs.",
+        f"4. **Costs** are token usage × OpenRouter prices as of {PRICES_AS_OF} (the Agent SDK's "
+        "own figure matched). They cover answering the questions; building the graph (extraction, "
+        "embeddings) is excluded.",
+        "5. **The absence question** has no talk to find, and both arms can be right by finding "
+        "nothing. A pairwise win there reflects extra context, not accuracy"
+        + (f" ({'; '.join(absence)})." if absence else "."),
+    ]

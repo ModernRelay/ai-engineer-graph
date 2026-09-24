@@ -9,8 +9,9 @@ subagents) on a 10-question shortlist about the AI Engineer World's Fair 2026
 talks. It runs twice: once with only Omnigraph read queries, once with only the
 raw transcripts as markdown files. It measures quality, time, cost and
 grounding/hallucination, and produces a two-column table in
-`results/results.md`. Epic A is done: the corpus, both sandboxed arms, the prompts,
-a local 0.11 graph and a passing live isolation probe. Epic B (the question file) is next.
+`results/results.md`. The MVP is done (Epics A–E): 60 runs, a calibrated and
+deterministic scorer, and a report that `bench score && bench report` rebuilds
+byte-identically from the judge cache.
 
 **`SPEC.md` is the task list and source of truth.** Start at the **Current focus** pointer near the top of the spec; it names the next actionable step so you don't have to scan the whole file. Work the spec: implement that step's deliverable, update its status (🔲 → 🔄 → ✅) in the phase tracker, and advance the Current focus pointer. Don't skip ahead past a phase's exit guardrails. When you reach a phase boundary, verify the guardrail criteria, fill in the **Actual outcome** column, and only then move on.
 
@@ -32,7 +33,8 @@ reads the seed and the running server; it never writes data to either.
   ├── bin/omnigraph         # reader-only shim put first on the Omnigraph arm's PATH
   ├── scripts/local-graph.sh  # the local file-backed 0.11 graph + server
   ├── src/bench/            # cli, corpus, arms, omnigraph, prompts, provider, agent, trace,
-  │                         #   probe, questions, run, parse (next: verify, judge, score, report)
+  │                         #   probe, questions, run, parse, verify, judge, blind, score,
+  │                         #   calibration, report
   ├── tests/
   ├── corpus/               # generated talk markdown — gitignored
   ├── runs/                 # per-run traces and result.json — gitignored
@@ -64,7 +66,7 @@ uv run bench score --limit 10       # D — judge 10 claims (pilot); scores.json
 uv run bench score                  # D — quote checks + judge (cached), results/scores.json
 uv run bench calibrate              # D1.5 — real judge on the planted claims (~$0.06); re-run
                                     #   after any judge prompt change, it rewrites the test fixture
-uv run bench report                 # E — results/results.md
+uv run bench report                 # E — results/results.md (headline, per question, showcases, notes)
 ```
 
 The Omnigraph arm needs the local graph server up:
@@ -114,6 +116,6 @@ redacts it.
 
 ## Goals
 
-Get Epics A–C through the pilot (C1.3): 20 clean runs with no sandbox escapes.
-The caps and prompts can then be fixed before the full 60-run benchmark and
-the scoring pass.
+The MVP report is in `results/results.md`. Extensions (Epic F) add columns or rows
+to the same report without changing the MVP numbers; any new paid run, prompt change
+or re-judging needs a Decision Log row and the user's go-ahead.
