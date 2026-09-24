@@ -1,7 +1,7 @@
 version: 1
 metadata:
   name: spike-intel
-storage: s3://intel-graph/clusters/spike-intel
+storage: s3://intel-graph/clusters/spike-intel-011
 state:
   backend: cluster
   lock: true
