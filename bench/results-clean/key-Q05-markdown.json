@@ -1,0 +1,403 @@
+{
+  "qid": "Q05",
+  "arm": "markdown",
+  "runs": 3,
+  "graph_head": "01M3A3P1QWSDXJFFQDTP7026M2",
+  "wall_s": 223.4,
+  "cost_usd": 0.478,
+  "tool_calls": 33.7,
+  "graph_answer_s": 0.29,
+  "per_run": [
+    {
+      "qid": "Q05",
+      "arm": "markdown",
+      "run": 1,
+      "claims_found": 4,
+      "claims_recall": 0.8,
+      "against_recall": null,
+      "for_precision": 1.0,
+      "count_error": 0.2,
+      "per_claim": [
+        {
+          "key": 1,
+          "pattern": "co-anthropic",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 8,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-bai-fde-101",
+            "ia-aie-bhat-he-agentic-surfaces",
+            "ia-aie-krieger-anthropic-how-anthropic-builds",
+            "ia-aie-lovejoy-howard-enterprise-stack-not-ready",
+            "ia-aie-malhotra-anthropic-budget-not-token",
+            "ia-aie-shihipar-field-guide-fable",
+            "ia-aie-wu-shihipar-anthropic-culture",
+            "ia-aie-yan-secure-source"
+          ],
+          "count_error": 0
+        },
+        {
+          "key": 2,
+          "pattern": "co-aws",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 8,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-aws-voice-interrupts",
+            "ia-aie-fuentes-agent-hallucinations",
+            "ia-aie-hanchett-agent-wasting-tokens",
+            "ia-aie-hanchett-spec-driven",
+            "ia-aie-liguori-aws-ai-native-frontier-dev-team",
+            "ia-aie-nadiminti-aws-x402-apps",
+            "ia-aie-pant-aws-lean4-formal-verification",
+            "ia-aie-subramani-aws-tell-the-robot-what-you-want"
+          ],
+          "count_error": 0
+        },
+        {
+          "key": 3,
+          "pattern": "co-microsoft",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 6,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-castro-ai-and-knowledge",
+            "ia-aie-chawla-koul-agent-failed-prod",
+            "ia-aie-chawla-koul-microsoft-finops-agents",
+            "ia-aie-msft-dont-let-llm-drive",
+            "ia-aie-msft-voice-no-frontier",
+            "ia-aie-noring-code-to-systems"
+          ],
+          "count_error": 0
+        },
+        {
+          "key": 4,
+          "pattern": "co-openai",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 5,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-bhardwaj-agent-sandbox-cloud",
+            "ia-aie-govindarajan-harness-failed",
+            "ia-aie-kundel-codex-behind-harness",
+            "ia-aie-liu-codex-workshop",
+            "ia-aie-openai-golden-age"
+          ],
+          "count_error": 1
+        },
+        {
+          "key": 5,
+          "pattern": "co-amazon",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        },
+        {
+          "key": 6,
+          "pattern": "co-google-deepmind",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        },
+        {
+          "key": 7,
+          "pattern": "co-nvidia",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        }
+      ],
+      "outside_key": [
+        "Together AI"
+      ],
+      "wall_s": 228.94,
+      "cost_usd": 0.517645,
+      "tool_calls": 41
+    },
+    {
+      "qid": "Q05",
+      "arm": "markdown",
+      "run": 2,
+      "claims_found": 5,
+      "claims_recall": 1.0,
+      "against_recall": null,
+      "for_precision": 0.846,
+      "count_error": 1.8,
+      "per_claim": [
+        {
+          "key": 1,
+          "pattern": "co-anthropic",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 2,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-krieger-anthropic-how-anthropic-builds",
+            "ia-aie-wu-shihipar-anthropic-culture"
+          ],
+          "count_error": 0
+        },
+        {
+          "key": 2,
+          "pattern": "co-aws",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        },
+        {
+          "key": 3,
+          "pattern": "co-microsoft",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 2,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-chawla-koul-microsoft-finops-agents",
+            "ia-aie-msft-voice-no-frontier"
+          ],
+          "count_error": 0
+        },
+        {
+          "key": 4,
+          "pattern": "co-openai",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 2,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-bhardwaj-agent-sandbox-cloud",
+            "ia-aie-kundel-codex-behind-harness"
+          ],
+          "count_error": 1
+        },
+        {
+          "key": 5,
+          "pattern": "co-amazon",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 0.6,
+          "leading_for_hits": 3,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-barth-perception-agents",
+            "ia-aie-mishra-rl-to-irl",
+            "ia-aie-nadiminti-aws-x402-apps",
+            "ia-aie-ramdoss-rendering-layer",
+            "ia-aie-subramani-aws-tell-the-robot-what-you-want"
+          ],
+          "count_error": 8
+        },
+        {
+          "key": 6,
+          "pattern": "co-google-deepmind",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 2,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-schillings-beyond-code",
+            "ia-aie-schmid-skills-evals"
+          ],
+          "count_error": 0
+        },
+        {
+          "key": 7,
+          "pattern": "co-nvidia",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        }
+      ],
+      "outside_key": [],
+      "wall_s": 167.56,
+      "cost_usd": 0.350708,
+      "tool_calls": 24
+    },
+    {
+      "qid": "Q05",
+      "arm": "markdown",
+      "run": 3,
+      "claims_found": 5,
+      "claims_recall": 1.0,
+      "against_recall": null,
+      "for_precision": 1.0,
+      "count_error": 0.4,
+      "per_claim": [
+        {
+          "key": 1,
+          "pattern": "co-anthropic",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 4,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-bhat-he-agentic-surfaces",
+            "ia-aie-krieger-anthropic-how-anthropic-builds",
+            "ia-aie-malhotra-anthropic-budget-not-token",
+            "ia-aie-yan-secure-source"
+          ],
+          "count_error": 0
+        },
+        {
+          "key": 2,
+          "pattern": "co-aws",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 4,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-fuentes-agent-hallucinations",
+            "ia-aie-hanchett-agent-wasting-tokens",
+            "ia-aie-nadiminti-aws-x402-apps",
+            "ia-aie-subramani-aws-tell-the-robot-what-you-want"
+          ],
+          "count_error": 0
+        },
+        {
+          "key": 3,
+          "pattern": "co-microsoft",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 4,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-castro-ai-and-knowledge",
+            "ia-aie-chawla-koul-agent-failed-prod",
+            "ia-aie-chawla-koul-microsoft-finops-agents",
+            "ia-aie-msft-voice-no-frontier"
+          ],
+          "count_error": 0
+        },
+        {
+          "key": 4,
+          "pattern": "co-openai",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 4,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-bhardwaj-agent-sandbox-cloud",
+            "ia-aie-govindarajan-harness-failed",
+            "ia-aie-kundel-codex-behind-harness",
+            "ia-aie-openai-golden-age"
+          ],
+          "count_error": 1
+        },
+        {
+          "key": 5,
+          "pattern": "co-amazon",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        },
+        {
+          "key": 6,
+          "pattern": "co-google-deepmind",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 4,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-erhan-gu-brichtova-deepmind-generative-media-panel",
+            "ia-aie-schillings-beyond-code",
+            "ia-aie-schmid-skills-evals",
+            "ia-aie-vyas-deepmind-multimodal-commerce-agents"
+          ],
+          "count_error": 1
+        },
+        {
+          "key": 7,
+          "pattern": "co-nvidia",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        }
+      ],
+      "outside_key": [
+        "Together AI"
+      ],
+      "wall_s": 273.78,
+      "cost_usd": 0.566569,
+      "tool_calls": 36
+    }
+  ],
+  "key_entries": [
+    "Anthropic",
+    "Amazon Web Services (AWS)",
+    "Microsoft",
+    "OpenAI",
+    "Amazon",
+    "Google DeepMind",
+    "NVIDIA"
+  ],
+  "claims_recall": 0.933,
+  "against_recall": null,
+  "for_precision": 0.949,
+  "count_error": 0.8
+}

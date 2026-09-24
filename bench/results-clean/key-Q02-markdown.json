@@ -1,0 +1,244 @@
+{
+  "qid": "Q02",
+  "arm": "markdown",
+  "runs": 3,
+  "graph_head": "01M3A3P1QWSDXJFFQDTP7026M2",
+  "wall_s": 122.3,
+  "cost_usd": 0.267,
+  "tool_calls": 15.3,
+  "graph_answer_s": 0.27,
+  "per_run": [
+    {
+      "qid": "Q02",
+      "arm": "markdown",
+      "run": 1,
+      "claims_found": 1,
+      "claims_recall": 0.25,
+      "against_recall": null,
+      "for_precision": 1.0,
+      "count_error": 181.0,
+      "per_claim": [
+        {
+          "key": 1,
+          "pattern": "pat-verification-gap",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-ganesh-verifiable-finance",
+            "ia-aie-garg-rethinking-environments",
+            "ia-aie-yaron-state-of-ai-eng"
+          ],
+          "count_error": 181
+        },
+        {
+          "key": 2,
+          "pattern": "pat-new-cyber-threats",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        },
+        {
+          "key": 3,
+          "pattern": "pat-agent-supply-chain",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        },
+        {
+          "key": 4,
+          "pattern": "pat-benchmark-trust-crisis",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        }
+      ],
+      "outside_key": [
+        "Memory and persistent context",
+        "Agent identity, authorization & control",
+        "Multi-agent coordination and orchestration at scale",
+        "Continual / on-the-job learning"
+      ],
+      "wall_s": 111.23,
+      "cost_usd": 0.217799,
+      "tool_calls": 18
+    },
+    {
+      "qid": "Q02",
+      "arm": "markdown",
+      "run": 2,
+      "claims_found": 1,
+      "claims_recall": 0.25,
+      "against_recall": null,
+      "for_precision": 1.0,
+      "count_error": 182.0,
+      "per_claim": [
+        {
+          "key": 1,
+          "pattern": "pat-verification-gap",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-dhinakaran-agent-as-judge",
+            "ia-aie-emani-agent-bottleneck",
+            "ia-aie-litt-understanding-bottleneck",
+            "ia-aie-yaron-state-of-ai-eng"
+          ],
+          "count_error": 182
+        },
+        {
+          "key": 2,
+          "pattern": "pat-new-cyber-threats",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        },
+        {
+          "key": 3,
+          "pattern": "pat-agent-supply-chain",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        },
+        {
+          "key": 4,
+          "pattern": "pat-benchmark-trust-crisis",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        }
+      ],
+      "outside_key": [
+        "Memory & context management (staleness, context rot, shared-state consistency)",
+        "Reliability / reproducing agent failures in production (non-determinism)",
+        "Enterprise trust & integration (audit, permissions, compliance, messy workflows)"
+      ],
+      "wall_s": 107.18,
+      "cost_usd": 0.235599,
+      "tool_calls": 16
+    },
+    {
+      "qid": "Q02",
+      "arm": "markdown",
+      "run": 3,
+      "claims_found": 2,
+      "claims_recall": 0.5,
+      "against_recall": null,
+      "for_precision": 0.833,
+      "count_error": 114.0,
+      "per_claim": [
+        {
+          "key": 1,
+          "pattern": "pat-verification-gap",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 1.0,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-desai-swe-marathon",
+            "ia-aie-horthy-loops-debate",
+            "ia-aie-yaron-state-of-ai-eng"
+          ],
+          "count_error": 181
+        },
+        {
+          "key": 2,
+          "pattern": "pat-new-cyber-threats",
+          "found": true,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": 0.667,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [
+            "ia-aie-dahl-security-firewall-agents",
+            "ia-aie-horthy-loops-debate",
+            "ia-aie-yaron-state-of-ai-eng"
+          ],
+          "count_error": 47
+        },
+        {
+          "key": 3,
+          "pattern": "pat-agent-supply-chain",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        },
+        {
+          "key": 4,
+          "pattern": "pat-benchmark-trust-crisis",
+          "found": false,
+          "against_recall": null,
+          "against_precision": null,
+          "for_precision": null,
+          "leading_for_hits": 0,
+          "against_named": [],
+          "for_named": [],
+          "count_error": null
+        }
+      ],
+      "outside_key": [
+        "Long-horizon coherence / context rot",
+        "Memory (persistence & shared access control)",
+        "Reliability/reproducibility of failures & accountability"
+      ],
+      "wall_s": 148.46,
+      "cost_usd": 0.34823,
+      "tool_calls": 12
+    }
+  ],
+  "key_entries": [
+    "The Verification Gap",
+    "New Cyber Threats",
+    "The Agent Supply Chain",
+    "The Benchmark Trust Crisis"
+  ],
+  "claims_recall": 0.333,
+  "against_recall": null,
+  "for_precision": 0.944,
+  "count_error": 159.0
+}

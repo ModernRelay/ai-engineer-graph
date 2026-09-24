@@ -1,4 +1,4 @@
-from bench.key import assemble_q03, key_match_request, score_q03, top_claims
+from bench.key import assemble_q03, key_match_request, score_claims, top_claims
 
 RANKING = [
     {"pattern": "pat-a", "thesis": "A", "brief": "a", "contradictions": 5},
@@ -79,7 +79,7 @@ def test_score_counts_key_claims_and_pushback_talks_by_side():
         ],
     }
 
-    s = score_q03(key, run, match, labels={"x-label": "ia-aie-s1"})
+    s = score_claims(key, run, match, labels={"x-label": "ia-aie-s1"})
     a = s["per_claim"][0]
 
     assert s["claims_found"] == 1 and s["claims_recall"] == round(1 / 3, 3)
@@ -97,3 +97,58 @@ def test_match_request_shows_the_key_and_the_answer_but_no_arm():
 
     assert "1. A: a" in content and "1. E" in content and "(talk ia-aie-x)" in content
     assert "markdown" not in content and "omnigraph" not in content
+
+
+# ── Q02 / Q05 ranked keys and Q04 talk sets ──────────────────────────────────
+
+
+def test_ranked_key_counts_distinct_talks_and_keeps_ties():
+    from bench.key import assemble_q05
+
+    rows = [
+        {"company": "co-a", "name": "A", "talk": "t1", "speakers": 2},
+        {"company": "co-a", "name": "A", "talk": "t2", "speakers": 1},
+        {"company": "co-b", "name": "B", "talk": "t3", "speakers": 1},
+        {"company": "co-c", "name": "C", "talk": "t4", "speakers": 1},
+    ]
+
+    key = assemble_q05(rows, count=2)
+
+    assert [(c["pattern"], c["talk_count"]) for c in key["claims"]] == [
+        ("co-a", 2),
+        ("co-b", 1),
+        ("co-c", 1),
+    ]
+    assert key["claims"][0]["leading_support_talks"] == ["t1", "t2"]
+
+
+def test_claims_recall_is_out_of_the_smaller_of_count_and_key_size():
+    from bench.key import assemble_q02
+
+    rows = [{"pattern": "pat-a", "thesis": "A", "brief": "a", "talk": "t1", "signals": 1}]
+    key = assemble_q02(rows, count=5)
+    run = run_with([{"label": "A", "talk_count": 4}], [claim("A", "t1")])
+    match = {"items": [{"position": 1, "key": 1}], "claims": [{"index": 0, "stance": "for"}]}
+
+    s = score_claims(key, run, match, labels={})
+
+    assert s["claims_recall"] == 1.0
+    assert s["for_precision"] == 1.0
+    assert s["count_error"] == 3
+
+
+def test_talk_set_resolves_entries_through_their_cited_talks():
+    from bench.key import assemble_q04, score_talk_set
+
+    key = assemble_q04([{"talk": "ia-aie-a", "signals": 3}, {"talk": "ia-aie-b", "signals": 1}])
+    run = run_with(
+        [{"label": "Ann Lee (Acme)"}, {"label": "ia-aie-c"}, {"label": "No quote"}],
+        [claim("Ann Lee (Acme)", "a-label")],
+    )
+
+    s = score_talk_set(key, run, labels={"a-label": "ia-aie-a"})
+
+    assert s["recall"] == 0.5 and s["core_recall"] == 1.0
+    assert s["precision"] == 0.5
+    assert s["outside_key"] == ["ia-aie-c"]
+    assert s["unresolved_entries"] == ["No quote"]
