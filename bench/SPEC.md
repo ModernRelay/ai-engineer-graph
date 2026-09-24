@@ -42,6 +42,7 @@
 | 2026-09-24 | D2.2 done: md 16, og 8, tie 6 (orders agree 83%); Phase D2 guardrails passed; Epic D done | Roman Pronskiy |
 | 2026-09-24 | E1.1–E1.2 done: `bench report` writes the headline and per-question tables to `results/results.md` | Roman Pronskiy |
 | 2026-09-24 | E1.3 showcases and E1.4 method notes done; Epic E guardrails passed; MVP complete | Roman Pronskiy |
+| 2026-09-24 | F1.6 started: the report published as a private page (by hand) | Roman Pronskiy |
 
 ### Status legend
 
@@ -49,7 +50,7 @@
 
 ### Current focus
 
-**Now on:** The MVP is done (Epics A–E, every guardrail passed): `results/results.md` is the report. Next is your choice of an Epic F extension, or the open follow-ups (production graph fixes, whether to commit `runs/`).
+**Now on:** The MVP is done (Epics A–E, every guardrail passed): `results/results.md` is the report, also published as a private page (F1.6, by hand so far). Next is your choice of an Epic F extension, or the open follow-ups (production graph fixes, whether to commit `runs/`).
 
 ---
 
@@ -1082,7 +1083,7 @@ the two-column table for the 10-question shortlist at 3 runs per arm.
 | F1.3 | Subagent variant of the markdown arm (fan-out map-reduce) | 🔲 | Strongest raw baseline for aggregation |
 | F1.4 | "No tools" floor, to measure what the model already knows | 🔲 | |
 | F1.5 | Long-context arm on a subset of talks that fits in 1M tokens | 🔲 | |
-| F1.6 | Publish the report as a shareable page | 🔲 | |
+| F1.6 | Publish the report as a shareable page | 🔄 | Published once, by hand, on 2026-09-24 as a private page: https://claude.ai/artifact/6RVH1uEbBkWtjU3CViMUwd (share it from the page's Share menu). It is `results.md` rendered unchanged (CommonMark) with a stylesheet, by a one-off script outside the repo. To finish: fold the HTML output into `bench report` so a rebuild can be republished to the same link |
 | F1.7 | Judge through the Batches API to halve scoring cost | 🔲 | |
 
 ---
