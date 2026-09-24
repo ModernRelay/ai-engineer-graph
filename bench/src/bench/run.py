@@ -18,7 +18,13 @@ from pathlib import Path
 import claude_agent_sdk
 
 from bench.agent import run_agent
-from bench.arms import markdown_gate, markdown_options, omnigraph_gate, omnigraph_options
+from bench.arms import (
+    markdown_gate,
+    markdown_options,
+    omnigraph_gate,
+    omnigraph_options,
+    single_alias_gate,
+)
 from bench.parse import answer_block
 from bench.prompts import system_prompt
 from bench.provider import cost_usd, session_cost
@@ -114,8 +120,15 @@ def _run_dir(out_root: Path, planned: Planned) -> Path:
     return out_root / planned.question.id / planned.arm / str(planned.run)
 
 
-def _sandbox(planned: Planned, bench_dir: Path, work: Path, provider_env: dict[str, str]):
-    """A fresh workdir and Claude home for one attempt: (options, gate)."""
+def _sandbox(
+    planned: Planned,
+    bench_dir: Path,
+    work: Path,
+    provider_env: dict[str, str],
+    og_alias: str | None = None,
+):
+    """A fresh workdir and Claude home for one attempt: (options, gate). With `og_alias`, the
+    Omnigraph arm may run only that one alias (and gets a brief for it, not the catalog)."""
     shutil.rmtree(work, ignore_errors=True)
     home = work / "claude-home"
     home.mkdir(parents=True)
@@ -127,9 +140,14 @@ def _sandbox(planned: Planned, bench_dir: Path, work: Path, provider_env: dict[s
         return markdown_options(workdir, prompt, provider_env, home), gate
     workdir = work / "scratch"
     workdir.mkdir()
-    prompt = system_prompt("omnigraph", workdir)
-    options = omnigraph_options(workdir, prompt, bench_dir / "bin", provider_env, home)
-    return options, omnigraph_gate(workdir, spill_root=home)
+    if og_alias:
+        prompt = system_prompt("omnigraph_single", workdir, alias=og_alias)
+        gate = single_alias_gate(workdir, og_alias, spill_root=home)
+    else:
+        prompt = system_prompt("omnigraph", workdir)
+        gate = omnigraph_gate(workdir, spill_root=home)
+    options = omnigraph_options(workdir, prompt, bench_dir / "bin", provider_env, home, gate)
+    return options, gate
 
 
 async def run_one(
@@ -143,6 +161,7 @@ async def run_one(
     agent=run_agent,
     wall_timeout: float = WALL_TIMEOUT_S,
     retry_delays: tuple[float, ...] = RETRY_DELAYS_S,
+    og_alias: str | None = None,
 ) -> dict:
     q = planned.question
     work = work_root / q.id / planned.arm / str(planned.run)
@@ -152,7 +171,7 @@ async def run_one(
     attempts = len(retry_delays) + 1
 
     for attempt in range(1, attempts + 1):
-        options, gate = _sandbox(planned, bench_dir, work, provider_env)
+        options, gate = _sandbox(planned, bench_dir, work, provider_env, og_alias)
         trace: list[dict] = []
         try:
             _, wall_s = await asyncio.wait_for(agent(q.text, options, trace), timeout=wall_timeout)

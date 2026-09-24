@@ -9,6 +9,7 @@ from bench.arms import (
     markdown_options,
     omnigraph_gate,
     omnigraph_options,
+    single_alias_gate,
 )
 
 
@@ -319,3 +320,57 @@ def test_the_live_hook_uses_the_runs_claude_home(talks, tmp_path, home):
     out = run_hook(md.hooks["PreToolUse"][0], "Read", {"file_path": spill_file(home)})
 
     assert out["hookSpecificOutput"]["permissionDecision"] == "allow"
+
+
+# ── Omnigraph arm held to a single alias (--og-alias) ───────────────────────
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        "omnigraph alias contested-claims",
+        "omnigraph alias contested-claims --format jsonl",
+        "omnigraph alias contested-claims --format=table",
+    ],
+)
+def test_single_alias_gate_allows_only_its_alias(scratch, command):
+    gate = single_alias_gate(scratch, "contested-claims")
+
+    assert gate("Bash", {"command": command}) is None
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        "omnigraph alias contested",
+        "omnigraph alias pattern-support pat-x",
+        "omnigraph query contested_claims",
+        "omnigraph alias contested-claims extra",
+        "omnigraph alias contested-claims --params '{}'",
+        "omnigraph alias contested-claims | head",
+        "omnigraph alias contested-claims; omnigraph alias contested",
+        "cat /etc/passwd",
+    ],
+)
+def test_single_alias_gate_denies_everything_else(scratch, command):
+    gate = single_alias_gate(scratch, "contested-claims")
+
+    assert "Only `omnigraph alias contested-claims`" in (
+        gate("Bash", {"command": command}) or ""
+    ) or "No shell operators" in (gate("Bash", {"command": command}) or "")
+
+
+def test_single_alias_gate_denies_other_tools_and_background(scratch):
+    gate = single_alias_gate(scratch, "contested-claims")
+
+    assert gate("Grep", {"pattern": "x"}) is not None
+    assert gate("Bash", {"command": "omnigraph alias contested-claims", "run_in_background": True})
+
+
+def test_single_alias_gate_reads_saved_output_only(scratch, tmp_path):
+    home = tmp_path / "home"
+    saved = home / "projects" / "p" / "tool-results" / "out.txt"
+    gate = single_alias_gate(scratch, "contested-claims", spill_root=home)
+
+    assert gate("Read", {"file_path": str(saved)}) is None
+    assert gate("Read", {"file_path": str(tmp_path / "secret.md")}) is not None

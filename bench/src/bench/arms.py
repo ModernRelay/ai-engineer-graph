@@ -116,6 +116,43 @@ def omnigraph_gate(scratch: Path, spill_root: Path | None = None) -> Gate:
     return gate
 
 
+def single_alias_gate(scratch: Path, alias: str, spill_root: Path | None = None) -> Gate:
+    """The Omnigraph arm held to one stored query: `omnigraph alias <alias>` (with --format),
+    plus Read of the output the CLI saved. Every other command is denied."""
+    usage = f"Only `omnigraph alias {alias}` is allowed, optionally with --format"
+
+    def gate(tool: str, tool_input: dict) -> str | None:
+        if tool == "Read":
+            path = tool_input.get("file_path", "")
+            if not _inside(scratch, path) and not _saved_output(spill_root, path):
+                return f"Read is limited to tool output the CLI saved for you; {path} is not one"
+            return None
+        if tool != "Bash":
+            return f"{tool} is not available here. {usage}"
+        if tool_input.get("run_in_background"):
+            return "Background commands are not available here"
+        command = tool_input.get("command", "")
+        if SHELL_CONTROL.search(command):
+            return f"No shell operators, substitutions or redirects. {usage}"
+        try:
+            tokens = shlex.split(command)
+        except ValueError:
+            return f"Could not parse the command (unbalanced quotes?). {usage}"
+        if tokens[:3] != ["omnigraph", "alias", alias]:
+            return usage
+        rest = tokens[3:]
+        if (
+            len(rest) == 2
+            and rest[0] == "--format"
+            or len(rest) == 1
+            and rest[0].startswith("--format=")
+        ):
+            return None
+        return None if not rest else usage
+
+    return gate
+
+
 def gate_hook(gate: Gate) -> HookMatcher:
     async def pre_tool_use(hook_input, tool_use_id, context):
         reason = gate(hook_input["tool_name"], hook_input["tool_input"])
@@ -172,8 +209,9 @@ def omnigraph_options(
     shim_bin: Path,
     provider_env: dict[str, str],
     claude_home: Path,
+    gate: Gate | None = None,
 ) -> ClaudeAgentOptions:
-    gate = omnigraph_gate(scratch_dir, spill_root=claude_home)
+    gate = gate or omnigraph_gate(scratch_dir, spill_root=claude_home)
     env = _env(provider_env, claude_home)
     env["PATH"] = os.pathsep.join([str(shim_bin), os.environ.get("PATH", "")])
     return _options(["Bash", "Read"], scratch_dir, system_prompt, gate, env)

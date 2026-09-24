@@ -125,6 +125,41 @@ query pattern_counters_by_polarity($slug: String, $polarity: String)
     return { $s.slug, $s.name, $s.brief, $e.polarity }
 }
 
+// Contested claims in one read: every refuting counter-signal (polarity contradiction,
+// not a boundary condition) with the pattern it refutes, its talk, the transcript passages
+// it was extracted from, and how many signals support the pattern. Counting distinct
+// signals per pattern gives the ranking; `quote` is verbatim chunk text.
+
+query contested_claims()
+@description("Every claim that is directly contradicted: the pattern (thesis) and its supporting-signal count, each contradicting signal with its talk and the verbatim transcript passage behind it; most-supported patterns first")
+{
+    match {
+        $p: Pattern
+        $s $e:contradictsPattern $p
+        $e.polarity = "contradiction"
+        $s spottedInArtifact $a
+        $s $v:evidencedByChunk $c
+        $f formsPattern $p
+    }
+    return { $p.slug as pattern, $p.name as thesis, $s.slug as signal, $s.name as pushback, $a.slug as talk, $a.name as title, $v.score as score, $c.text as quote, count($f) as support }
+    order { support desc, pattern, signal, score desc }
+}
+
+// The talks behind a pattern, by how many of their signals support it.
+
+query pattern_support_talks($slug: String)
+@description("The 10 talks with the most signals supporting a pattern, with the signal count")
+{
+    match {
+        $p: Pattern { slug: $slug }
+        $s formsPattern $p
+        $s spottedInArtifact $a
+    }
+    return { $a.slug as talk, $a.name as title, count($s) as signals }
+    order { signals desc }
+    limit 10
+}
+
 // The pattern layer: every pattern-to-pattern edge, one query per edge type.
 
 query pattern_layer_relies()

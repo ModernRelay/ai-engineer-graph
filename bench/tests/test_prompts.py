@@ -96,7 +96,7 @@ def test_catalog_covers_every_stored_read_query_and_no_mutation(catalog):
     reads = real_query_names(r"(?!mutations\.gq).*")
     mutations = real_query_names(r"mutations\.gq")
 
-    assert len(reads) == 89
+    assert len(reads) == 91
     assert [
         q for q in sorted(reads) if f"`{q}`" not in catalog and f"query {q}" not in catalog
     ] == []
@@ -108,7 +108,7 @@ def test_catalog_offers_every_alias_in_the_pack(catalog):
         r"^  ([\w-]+):\s*\{", (REPO / "omnigraph-config.example.yaml").read_text(), re.M
     )
 
-    assert len(aliases) == 65
+    assert len(aliases) == 67
     assert [a for a in aliases if f"`omnigraph alias {a}" not in catalog] == []
 
 
@@ -168,3 +168,12 @@ def test_the_brief_says_where_verbatim_transcript_text_comes_from(prompts):
     _, _, og = prompts
 
     assert "signal-evidence" in og.split("### Stored queries")[0]
+
+
+def test_single_alias_brief_names_the_alias_and_carries_no_catalog(tmp_path):
+    prompt = system_prompt("omnigraph_single", tmp_path, alias="contested-claims")
+
+    assert "omnigraph alias contested-claims" in prompt
+    assert "{alias}" not in prompt and "{workdir}" not in prompt
+    assert "Stored queries" not in prompt
+    assert "pat-" not in prompt

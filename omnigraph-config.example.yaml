@@ -63,6 +63,8 @@ aliases:
   momentum:         { server: intel-local, graph: spike, query: pattern_momentum, args: [since] }
   stale:            { server: intel-local, graph: spike, query: stale_patterns, args: [since] }
   contested:        { server: intel-local, graph: spike, query: contested_patterns }
+  contested-claims: { server: intel-local, graph: spike, query: contested_claims }
+  pattern-support:  { server: intel-local, graph: spike, query: pattern_support_talks, args: [slug] }
   unsourced:        { server: intel-local, graph: spike, query: unsourced_signals }
 
   # ── Semantic / hybrid retrieval over transcript chunks (hybrid.gq, traversals.gq) ──

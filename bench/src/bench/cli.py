@@ -70,6 +70,10 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--arm", choices=["markdown", "omnigraph", "both"], default="both")
     run.add_argument("--concurrency", type=int, default=4)
     run.add_argument("--max-spend", type=float, help="USD; no new run starts once this is spent")
+    run.add_argument(
+        "--og-alias", help="hold the Omnigraph arm to this one alias (e.g. contested-claims)"
+    )
+    run.add_argument("--runs-dir", type=Path, default=BENCH_DIR / "runs")
 
     score = commands.add_parser(
         "score", help="quote checks + support judge (asking the judge spends money; cached)"
@@ -175,15 +179,24 @@ def corpus_sha(talks_dir: Path) -> str:
 
 
 def graph_head() -> str:
-    """The local graph's head commit on main, read straight from the store (not via the agent)."""
+    """The graph's head commit on main, read straight from the store (not via the agent): the
+    local file-backed graph when there is one, else the served graph through the reader login."""
     binary = _real_omnigraph()
-    store = BENCH_DIR / ".graph" / "graphs" / "spike.omni"
-    if binary is None or not store.exists():
+    if binary is None:
         return "unknown"
+    store = BENCH_DIR / ".graph" / "graphs" / "spike.omni"
+    if store.exists():
+        target, env = [str(store)], None
+    else:
+        home = BENCH_DIR / ".omnigraph-home"
+        target = ["--server", "intel-local", "--graph", "spike"]
+        env = {"HOME": os.environ.get("HOME", ""), "PATH": "/usr/bin:/bin"}
+        env["OMNIGRAPH_HOME"] = str(home)
     out = subprocess.run(
-        [str(binary), "commit", "list", "--branch", "main", str(store)],
+        [str(binary), "commit", "list", "--branch", "main", *target],
         capture_output=True,
         text=True,
+        env=env,
     )
     return (out.stdout.split("\n", 1)[0].split() or ["unknown"])[0]
 
@@ -223,6 +236,8 @@ def _run(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
     runs = args.runs or (1 if args.pilot else 3)
     plan = plan_runs(questions, arms, runs)
     meta = {"graph_head": graph_head(), "corpus_sha": corpus_sha(BENCH_DIR / "corpus" / "talks")}
+    if args.og_alias:
+        meta["og_alias"] = args.og_alias
     print(f"{len(plan)} runs planned ({len(questions)} questions × {len(arms)} arms × {runs})")
 
     def report(r: dict) -> None:
@@ -242,13 +257,14 @@ def _run(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
             on_done=report,
             max_spend=args.max_spend,
             bench_dir=BENCH_DIR,
-            out_root=BENCH_DIR / "runs",
+            out_root=args.runs_dir,
             work_root=Path(tempfile.gettempdir()).resolve() / "aie-bench" / "runs",
             provider_env=provider_env,
             meta=meta,
+            og_alias=args.og_alias,
         )
     )
-    already = sum((BENCH_DIR / "runs" / p.question.id / p.arm / str(p.run)).exists() for p in plan)
+    already = sum((args.runs_dir / p.question.id / p.arm / str(p.run)).exists() for p in plan)
     spent = sum((r.get("cost_usd") or 0) + r.get("retry_cost_usd", 0) for r in results)
     errors = sum(r["status"] == "error" for r in results)
     print(f"done: {len(results)} ran, {errors} errors, ${spent:.2f} spent")
