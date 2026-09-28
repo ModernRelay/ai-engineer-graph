@@ -1,0 +1,14 @@
+// Answer key for Q04 ("which talks argue the engineering around the model matters more than
+// the model?"), read from the curated graph: every talk with a signal forming
+// pat-harness-over-model, and how many.
+// Run by `bench key` through the reader login; nothing here is served or shown to an agent.
+
+query harness_talks() {
+    match {
+        $p: Pattern { slug: "pat-harness-over-model" }
+        $s formsPattern $p
+        $s spottedInArtifact $a
+    }
+    return { $a.slug as talk, $a.name as title, count($s) as signals }
+    order { signals desc }
+}

@@ -12,14 +12,14 @@ This repository is the complete, loadable definition of the graph:
 | `cluster.yaml`, `policies/` | Omnigraph cluster config and the two Cedar policy bundles |
 | `queries/*.gq` | 120 stored queries the server serves (89 reads, 31 mutations) |
 | `seed/01-sources.jsonl` … `09-knowhow.jsonl` | every node, one file per type in load order (5,034 nodes) |
-| `seed/10-edges.jsonl` | all 17,942 edges between those nodes |
+| `seed/10-edges.jsonl` | all 17,803 edges between those nodes |
 | `seed/chunks/part-01.jsonl` … `part-14.jsonl` | 5,339 transcript chunks + their `PartOfArtifact` edges, ≤400 chunks per part, embeddings added at load time |
 | `seed/11-evidence.jsonl` | 2,619 `EvidencedByChunk` edges (Signal → Chunk, with a similarity score); load last, after the chunks |
 | `seed/embed-spec.json` | the embedding spec for the chunks (`gemini-embedding-2-preview`, 3072-d) |
 | `omnigraph-config.example.yaml` | client profile and alias pack for the CLI |
 
 The seed files are an exact export of the served graph (last refreshed
-2026-09-23, Omnigraph 0.11 envelope: identity is the top-level `id` on every
+2026-09-24, after the Q3 curation audit of the harness and contested-claim links; Omnigraph 0.11 envelope: identity is the top-level `id` on every
 line). Nothing else is needed to stand the graph up.
 
 One known exception, until the served graph catches up: in
@@ -44,7 +44,7 @@ then refresh the seed from an export as usual.
 | InformationArtifact | 357 | 338 talks (`youtube`, with video links) + 19 articles |
 | SourceEntity | 17 | publishers; the talks publish via `source-aie-yt` |
 | Chunk | 5,339 | ~220-word transcript passages over 337 talks, 3072-d embeddings |
-| edges | 25,900 | 17,942 between entities + 5,339 chunk → talk + 2,619 signal → chunk evidence |
+| edges | 25,761 | 17,803 between entities + 5,339 chunk → talk + 2,619 signal → chunk evidence |
 
 ### The 18 patterns
 
@@ -52,8 +52,8 @@ Support and counter are `FormsPattern` / `ContradictsPattern` signal counts; a c
 
 | pattern | kind | support / counter | thesis |
 |---|---|---|---|
-| `pat-verification-gap` | challenge | 375 / 5 | generation has industrialized, verification has not |
-| `pat-harness-over-model` | dynamic | 295 / 22 | the load-bearing engineering sits around the model, and thins as models improve |
+| `pat-verification-gap` | challenge | 375 / 3 | generation has industrialized, verification has not |
+| `pat-harness-over-model` | dynamic | 159 / 21 | the load-bearing engineering sits around the model, and thins as models improve |
 | `pat-model-not-bottleneck` | dynamic | 201 / 13 | models are good enough; value and failure moved to the layers around them |
 | `pat-context-graphs` | dynamic | 111 / 4 | decision traces, ontology and time as an infrastructure layer above databases |
 | `pat-value-of-judgement` | dynamic | 89 / 5 | as execution industrializes, the durable human edge is judgement |

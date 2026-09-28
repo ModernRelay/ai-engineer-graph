@@ -33,8 +33,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="bench")
     commands = parser.add_subparsers(dest="command", required=True)
 
-    corpus = commands.add_parser("corpus", help="build corpus/talks/*.md from the seed's chunks")
+    corpus = commands.add_parser(
+        "corpus", help="build corpus/talks/*.md from the source transcripts"
+    )
     corpus.add_argument("--seed", type=Path, default=REPO_DIR / "seed")
+    corpus.add_argument("--transcripts", type=Path, default=REPO_DIR / "transcripts")
     corpus.add_argument("--out", type=Path, default=BENCH_DIR / "corpus" / "talks")
 
     relink = commands.add_parser(
@@ -67,6 +70,10 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--arm", choices=["markdown", "omnigraph", "both"], default="both")
     run.add_argument("--concurrency", type=int, default=4)
     run.add_argument("--max-spend", type=float, help="USD; no new run starts once this is spent")
+    run.add_argument(
+        "--og-alias", help="hold the Omnigraph arm to this one alias (e.g. contested-claims)"
+    )
+    run.add_argument("--runs-dir", type=Path, default=BENCH_DIR / "runs")
 
     score = commands.add_parser(
         "score", help="quote checks + support judge (asking the judge spends money; cached)"
@@ -94,6 +101,19 @@ def main(argv: list[str] | None = None) -> int:
         default=BENCH_DIR / "tests" / "fixtures" / "calibration_judgments.json",
     )
 
+    key = commands.add_parser("key", help="build keys/<qid>.json from the curated graph")
+    key.add_argument("--only", default="Q02,Q03,Q04,Q05", help="question ids with a key")
+
+    key_score = commands.add_parser(
+        "key-score", help="score runs against the graph's answer key (judge maps entries)"
+    )
+    key_score.add_argument("--only", default="Q02,Q03,Q04,Q05", help="question ids with a key")
+    key_score.add_argument("--runs-dir", type=Path, default=BENCH_DIR / "runs")
+    key_score.add_argument("--arm", default="markdown")
+    key_score.add_argument("--seed", type=Path, default=REPO_DIR / "seed")
+    key_score.add_argument("--cache", type=Path, default=BENCH_DIR / "runs" / "_judge")
+    key_score.add_argument("--out-dir", type=Path, default=BENCH_DIR / "results-clean")
+
     report = commands.add_parser(
         "report", help="E: results/results.md from scores.json and the runs"
     )
@@ -102,8 +122,12 @@ def main(argv: list[str] | None = None) -> int:
     report.add_argument("--questions", type=Path, default=BENCH_DIR / "questions.yaml")
 
     args = parser.parse_args(argv)
+    if args.command == "key":
+        return _key(parser, args)
+    if args.command == "key-score":
+        return _key_score(parser, args)
     if args.command == "corpus":
-        written = build_corpus(args.seed, args.out, CHUNK_TALK_OVERRIDES)
+        written = build_corpus(args.seed, args.transcripts, args.out, CHUNK_TALK_OVERRIDES)
         print(f"wrote {written} talks to {args.out}")
     elif args.command == "relink-chunks":
         moved = sum(
@@ -172,15 +196,24 @@ def corpus_sha(talks_dir: Path) -> str:
 
 
 def graph_head() -> str:
-    """The local graph's head commit on main, read straight from the store (not via the agent)."""
+    """The graph's head commit on main, read straight from the store (not via the agent): the
+    local file-backed graph when there is one, else the served graph through the reader login."""
     binary = _real_omnigraph()
-    store = BENCH_DIR / ".graph" / "graphs" / "spike.omni"
-    if binary is None or not store.exists():
+    if binary is None:
         return "unknown"
+    store = BENCH_DIR / ".graph" / "graphs" / "spike.omni"
+    if store.exists():
+        target, env = [str(store)], None
+    else:
+        home = BENCH_DIR / ".omnigraph-home"
+        target = ["--server", "intel-local", "--graph", "spike"]
+        env = {"HOME": os.environ.get("HOME", ""), "PATH": "/usr/bin:/bin"}
+        env["OMNIGRAPH_HOME"] = str(home)
     out = subprocess.run(
-        [str(binary), "commit", "list", "--branch", "main", str(store)],
+        [str(binary), "commit", "list", "--branch", "main", *target],
         capture_output=True,
         text=True,
+        env=env,
     )
     return (out.stdout.split("\n", 1)[0].split() or ["unknown"])[0]
 
@@ -220,6 +253,8 @@ def _run(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
     runs = args.runs or (1 if args.pilot else 3)
     plan = plan_runs(questions, arms, runs)
     meta = {"graph_head": graph_head(), "corpus_sha": corpus_sha(BENCH_DIR / "corpus" / "talks")}
+    if args.og_alias:
+        meta["og_alias"] = args.og_alias
     print(f"{len(plan)} runs planned ({len(questions)} questions × {len(arms)} arms × {runs})")
 
     def report(r: dict) -> None:
@@ -239,13 +274,14 @@ def _run(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
             on_done=report,
             max_spend=args.max_spend,
             bench_dir=BENCH_DIR,
-            out_root=BENCH_DIR / "runs",
+            out_root=args.runs_dir,
             work_root=Path(tempfile.gettempdir()).resolve() / "aie-bench" / "runs",
             provider_env=provider_env,
             meta=meta,
+            og_alias=args.og_alias,
         )
     )
-    already = sum((BENCH_DIR / "runs" / p.question.id / p.arm / str(p.run)).exists() for p in plan)
+    already = sum((args.runs_dir / p.question.id / p.arm / str(p.run)).exists() for p in plan)
     spent = sum((r.get("cost_usd") or 0) + r.get("retry_cost_usd", 0) for r in results)
     errors = sum(r["status"] == "error" for r in results)
     print(f"done: {len(results)} ran, {errors} errors, ${spent:.2f} spent")
@@ -536,3 +572,134 @@ def _probe(parser: argparse.ArgumentParser, arms: list[str]) -> int:
         print(f"  trace: {summary['out']}")
         failed += sum(not c["ok"] for c in summary["checks"])
     return 1 if failed else 0
+
+
+def _qids(parser: argparse.ArgumentParser, only: str) -> list[str]:
+    from bench.key import KEY_QUERIES
+
+    qids = [q.strip() for q in only.split(",") if q.strip()]
+    if unknown := [q for q in qids if q not in KEY_QUERIES]:
+        parser.exit(2, f"bench: no answer key for {', '.join(unknown)}\n")
+    return qids
+
+
+def _key(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
+    from bench.key import KEYS_DIR, build
+
+    head = graph_head()
+    for qid in _qids(parser, args.only):
+        key = build(qid, head)
+        path = KEYS_DIR / f"{qid}.json"
+        path.write_text(json.dumps(key, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        print(f"{qid} (graph head {head}) -> {path.name}")
+        if key["shape"] == "talk_set":
+            print(f"  {len(key['talks'])} talks, {len(key['core_talks'])} with 2+ signals")
+            continue
+        for c in key["claims"]:
+            extra = (
+                f"{c['contradictions']} contradictions, {len(c['against_talks'])} pushback talks"
+                if "contradictions" in c
+                else f"{c['talk_count']} talks"
+            )
+            print(f"  {c['key']}. {c['thesis']}: {extra}")
+    return 0
+
+
+def _pct(value) -> str:
+    return "-" if value is None else f"{value:.0%}"
+
+
+def _key_score(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
+    from bench import judge
+    from bench.corpus import talk_labels
+    from bench.key import (
+        KEYS_DIR,
+        graph_answer_seconds,
+        key_match_request,
+        score_claims,
+        score_talk_set,
+        valid_key_match,
+    )
+    from bench.score import load_runs
+
+    labels = talk_labels(args.seed, CHUNK_TALK_OVERRIDES)
+    ask = None
+    for qid in _qids(parser, args.only):
+        key_path = KEYS_DIR / f"{qid}.json"
+        if not key_path.exists():
+            parser.exit(2, f"bench key-score: no {key_path}; run `bench key --only {qid}`\n")
+        key = json.loads(key_path.read_text(encoding="utf-8"))
+        runs = [r for r in load_runs(args.runs_dir) if r["qid"] == qid and r["arm"] == args.arm]
+        if not runs:
+            print(f"{qid}: no {args.arm} runs in {args.runs_dir}")
+            continue
+        scored = []
+        for run in runs:
+            if key["shape"] == "talk_set":
+                scored.append(score_talk_set(key, run, labels))
+                continue
+            request = key_match_request(run["question"], key, run)
+            if judge.lookup(request, args.cache) is None:
+                ask = ask or judge.openrouter_ask(BENCH_DIR / ".env")
+            record = judge.cached(request, ask, args.cache, valid_key_match)
+            scored.append(score_claims(key, run, record["output"], labels))
+
+        n = len(scored)
+
+        def mean(field: str, rows=scored, n=n):
+            values = [r[field] for r in rows if r.get(field) is not None]
+            return round(sum(values) / len(values), 3) if values else None
+
+        summary = {
+            "qid": qid,
+            "arm": args.arm,
+            "runs": n,
+            "graph_head": key["graph_head"],
+            "wall_s": round(mean("wall_s"), 1),
+            "cost_usd": round(mean("cost_usd"), 3),
+            "tool_calls": round(mean("tool_calls"), 1),
+            "graph_answer_s": graph_answer_seconds(qid),
+            "per_run": scored,
+        }
+        if key["shape"] == "talk_set":
+            summary.update(
+                key_talks=len(key["talks"]),
+                recall=mean("recall"),
+                core_recall=mean("core_recall"),
+                precision=mean("precision"),
+            )
+            print(f"{qid}: key = {len(key['talks'])} talks ({len(key['core_talks'])} core)")
+            for s in scored:
+                print(
+                    f"  #{s['run']}: named {s['talks_named']}, recall {_pct(s['recall'])}, "
+                    f"core recall {_pct(s['core_recall'])}, precision {_pct(s['precision'])}, "
+                    f"outside the key {len(s['outside_key'])}"
+                )
+            head = f"recall {_pct(summary['recall'])}, core {_pct(summary['core_recall'])}"
+        else:
+            summary.update(
+                key_entries=[c["thesis"] for c in key["claims"]],
+                claims_recall=mean("claims_recall"),
+                against_recall=mean("against_recall"),
+                for_precision=mean("for_precision"),
+                count_error=mean("count_error"),
+            )
+            print(f"{qid}: key = {', '.join(summary['key_entries'])}")
+            for s in scored:
+                found = [p["pattern"] for p in s["per_claim"] if p["found"]]
+                print(
+                    f"  #{s['run']}: {s['claims_found']} key entries "
+                    f"({', '.join(found) or 'none'}); "
+                    f"pushback {_pct(s['against_recall'])}, supporting talks in key "
+                    f"{_pct(s['for_precision'])}, count error {s['count_error']}; "
+                    f"outside: {s['outside_key']}"
+                )
+            head = f"key entries {_pct(summary['claims_recall'])}"
+        print(
+            f"  mean: {head}; {summary['wall_s']} s, ${summary['cost_usd']}, "
+            f"{summary['tool_calls']} tool calls | graph: {summary['graph_answer_s']} s, $0"
+        )
+        out = args.out_dir / f"key-{qid}-{args.arm}.json"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n")
+    return 0

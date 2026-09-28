@@ -1,0 +1,13 @@
+// Answer key for Q05 ("which five companies gave the most talks?"), read from the curated
+// graph: every talk's speakers and the companies they are affiliated with.
+// Run by `bench key` through the reader login; nothing here is served or shown to an agent.
+
+query company_talks() {
+    match {
+        $a: InformationArtifact
+        $a contributedByExpert $x
+        $x affiliatedWithCompany $c
+    }
+    return { $c.slug as company, $c.name as name, $a.slug as talk, count($x) as speakers }
+    order { speakers desc }
+}

@@ -30,3 +30,4 @@ __pycache__/
 
 # bench: local file-backed graph (config copy, cluster state, tokens, embedded chunks)
 bench/.graph/
+bench/runs-clean/

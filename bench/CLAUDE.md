@@ -54,7 +54,7 @@ reads the seed and the running server; it never writes data to either.
 ```bash
 cd bench
 uv sync
-uv run bench corpus                 # A1 — build corpus/talks/*.md from ../seed
+uv run bench corpus                 # A1 — build corpus/talks/*.md from ../transcripts (+ ../seed for talk ids)
 printf %s "$TOKEN_ACT_READER" | uv run bench shim   # A2.2 — once; reader-only omnigraph config
 uv run bench probe                  # A2.4 — live isolation probe, both arms (~$0.09; needs the
                                     #   local server: scripts/local-graph.sh serve)
@@ -67,6 +67,8 @@ uv run bench score                  # D — quote checks + judge (cached), resul
 uv run bench calibrate              # D1.5 — real judge on the planted claims (~$0.06); re-run
                                     #   after any judge prompt change, it rewrites the test fixture
 uv run bench report                 # E — results/results.md (headline, per question, showcases, notes)
+uv run bench key                    # answer keys from the curated graph → keys/Q0{2,3,4,5}.json
+uv run bench key-score --runs-dir runs-clean   # an arm against the keys → results-clean/key-*.json
 ```
 
 The Omnigraph arm needs the local graph server up:

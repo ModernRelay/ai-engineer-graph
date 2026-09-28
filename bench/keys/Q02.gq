@@ -1,0 +1,13 @@
+// Answer key for Q02 ("biggest unsolved problems in building and shipping agents"), read
+// from the curated graph: the challenge patterns and the talks whose signals support them.
+// Run by `bench key` through the reader login; nothing here is served or shown to an agent.
+
+query challenge_support() {
+    match {
+        $p: Pattern { kind: "challenge" }
+        $s formsPattern $p
+        $s spottedInArtifact $a
+    }
+    return { $p.slug as pattern, $p.name as thesis, $p.brief as brief, $a.slug as talk, count($s) as signals }
+    order { signals desc }
+}

@@ -1,0 +1,171 @@
+{
+  "qid": "Q05",
+  "shape": "ranked_list",
+  "count": 5,
+  "claims": [
+    {
+      "key": 1,
+      "pattern": "co-anthropic",
+      "thesis": "Anthropic",
+      "brief": "a company",
+      "talk_count": 8,
+      "support_talks": {
+        "ia-aie-bhat-he-agentic-surfaces": 2,
+        "ia-aie-wu-shihipar-anthropic-culture": 2,
+        "ia-aie-bai-fde-101": 1,
+        "ia-aie-krieger-anthropic-how-anthropic-builds": 1,
+        "ia-aie-lovejoy-howard-enterprise-stack-not-ready": 1,
+        "ia-aie-malhotra-anthropic-budget-not-token": 1,
+        "ia-aie-shihipar-field-guide-fable": 1,
+        "ia-aie-yan-secure-source": 1
+      },
+      "leading_support_talks": [
+        "ia-aie-bhat-he-agentic-surfaces",
+        "ia-aie-wu-shihipar-anthropic-culture",
+        "ia-aie-bai-fde-101",
+        "ia-aie-krieger-anthropic-how-anthropic-builds",
+        "ia-aie-lovejoy-howard-enterprise-stack-not-ready",
+        "ia-aie-malhotra-anthropic-budget-not-token",
+        "ia-aie-shihipar-field-guide-fable",
+        "ia-aie-yan-secure-source"
+      ]
+    },
+    {
+      "key": 2,
+      "pattern": "co-aws",
+      "thesis": "Amazon Web Services (AWS)",
+      "brief": "a company",
+      "talk_count": 8,
+      "support_talks": {
+        "ia-aie-aws-voice-interrupts": 2,
+        "ia-aie-fuentes-agent-hallucinations": 1,
+        "ia-aie-hanchett-agent-wasting-tokens": 1,
+        "ia-aie-hanchett-spec-driven": 1,
+        "ia-aie-liguori-aws-ai-native-frontier-dev-team": 1,
+        "ia-aie-nadiminti-aws-x402-apps": 1,
+        "ia-aie-pant-aws-lean4-formal-verification": 1,
+        "ia-aie-subramani-aws-tell-the-robot-what-you-want": 1
+      },
+      "leading_support_talks": [
+        "ia-aie-aws-voice-interrupts",
+        "ia-aie-fuentes-agent-hallucinations",
+        "ia-aie-hanchett-agent-wasting-tokens",
+        "ia-aie-hanchett-spec-driven",
+        "ia-aie-liguori-aws-ai-native-frontier-dev-team",
+        "ia-aie-nadiminti-aws-x402-apps",
+        "ia-aie-pant-aws-lean4-formal-verification",
+        "ia-aie-subramani-aws-tell-the-robot-what-you-want"
+      ]
+    },
+    {
+      "key": 3,
+      "pattern": "co-microsoft",
+      "thesis": "Microsoft",
+      "brief": "a company",
+      "talk_count": 6,
+      "support_talks": {
+        "ia-aie-chawla-koul-agent-failed-prod": 2,
+        "ia-aie-chawla-koul-microsoft-finops-agents": 2,
+        "ia-aie-msft-dont-let-llm-drive": 2,
+        "ia-aie-msft-voice-no-frontier": 2,
+        "ia-aie-castro-ai-and-knowledge": 1,
+        "ia-aie-noring-code-to-systems": 1
+      },
+      "leading_support_talks": [
+        "ia-aie-chawla-koul-agent-failed-prod",
+        "ia-aie-chawla-koul-microsoft-finops-agents",
+        "ia-aie-msft-dont-let-llm-drive",
+        "ia-aie-msft-voice-no-frontier",
+        "ia-aie-castro-ai-and-knowledge",
+        "ia-aie-noring-code-to-systems"
+      ]
+    },
+    {
+      "key": 4,
+      "pattern": "co-openai",
+      "thesis": "OpenAI",
+      "brief": "a company",
+      "talk_count": 6,
+      "support_talks": {
+        "ia-aie-openai-golden-age": 3,
+        "ia-aie-bhardwaj-agent-sandbox-cloud": 1,
+        "ia-aie-govindarajan-harness-failed": 1,
+        "ia-aie-kundel-codex-behind-harness": 1,
+        "ia-aie-liu-codex-workshop": 1,
+        "ia-aie-rosenthal-acrew-reverse-engineering-ai-buyer": 1
+      },
+      "leading_support_talks": [
+        "ia-aie-openai-golden-age",
+        "ia-aie-bhardwaj-agent-sandbox-cloud",
+        "ia-aie-govindarajan-harness-failed",
+        "ia-aie-kundel-codex-behind-harness",
+        "ia-aie-liu-codex-workshop",
+        "ia-aie-rosenthal-acrew-reverse-engineering-ai-buyer"
+      ]
+    },
+    {
+      "key": 5,
+      "pattern": "co-amazon",
+      "thesis": "Amazon",
+      "brief": "a company",
+      "talk_count": 5,
+      "support_talks": {
+        "ia-aie-barth-perception-agents": 1,
+        "ia-aie-khandelwal-agents-codebases-teams": 1,
+        "ia-aie-korshakov-privacy": 1,
+        "ia-aie-mishra-rl-to-irl": 1,
+        "ia-aie-ramdoss-rendering-layer": 1
+      },
+      "leading_support_talks": [
+        "ia-aie-barth-perception-agents",
+        "ia-aie-khandelwal-agents-codebases-teams",
+        "ia-aie-korshakov-privacy",
+        "ia-aie-mishra-rl-to-irl",
+        "ia-aie-ramdoss-rendering-layer"
+      ]
+    },
+    {
+      "key": 6,
+      "pattern": "co-google-deepmind",
+      "thesis": "Google DeepMind",
+      "brief": "a company",
+      "talk_count": 5,
+      "support_talks": {
+        "ia-aie-erhan-gu-brichtova-deepmind-generative-media-panel": 3,
+        "ia-aie-hooker-gradient-free-continual-learning": 1,
+        "ia-aie-schillings-beyond-code": 1,
+        "ia-aie-schmid-skills-evals": 1,
+        "ia-aie-vyas-deepmind-multimodal-commerce-agents": 1
+      },
+      "leading_support_talks": [
+        "ia-aie-erhan-gu-brichtova-deepmind-generative-media-panel",
+        "ia-aie-hooker-gradient-free-continual-learning",
+        "ia-aie-schillings-beyond-code",
+        "ia-aie-schmid-skills-evals",
+        "ia-aie-vyas-deepmind-multimodal-commerce-agents"
+      ]
+    },
+    {
+      "key": 7,
+      "pattern": "co-nvidia",
+      "thesis": "NVIDIA",
+      "brief": "a company",
+      "talk_count": 5,
+      "support_talks": {
+        "ia-aie-abdallah-local-models": 2,
+        "ia-aie-dmello-llm-stack": 1,
+        "ia-aie-local-ai-panel-state-of-union": 1,
+        "ia-aie-panel-compression-at-the-edge": 1,
+        "ia-aie-panel-state-of-model-routing": 1
+      },
+      "leading_support_talks": [
+        "ia-aie-abdallah-local-models",
+        "ia-aie-dmello-llm-stack",
+        "ia-aie-local-ai-panel-state-of-union",
+        "ia-aie-panel-compression-at-the-edge",
+        "ia-aie-panel-state-of-model-routing"
+      ]
+    }
+  ],
+  "graph_head": "01M3A3P1QWSDXJFFQDTP7026M2"
+}

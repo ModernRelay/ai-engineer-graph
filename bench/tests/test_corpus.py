@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 from bench.cli import main
-from bench.corpus import build_corpus, talk_labels
+from bench.corpus import build_corpus, passages, talk_labels, transcript_body
 
 
 def artifact(slug, name, link, published, artifact_type="youtube"):
@@ -86,10 +86,22 @@ def seed(tmp_path):
     return seed
 
 
-def test_writes_one_file_per_talk_that_has_chunks(seed, tmp_path):
+@pytest.fixture
+def transcripts(tmp_path):
+    transcripts = tmp_path / "transcripts"
+    transcripts.mkdir()
+    (transcripts / "alpha-talk.txt").write_text(
+        ">> [Music] Welcome. Hello there, this\nsentence wraps. >> Two? >> Ten\n"
+    )
+    (transcripts / "beta-talk.txt").write_text("beta zero\n")
+    (transcripts / "gamma-talk.txt").write_text("gamma zero. gamma one\n")
+    return transcripts
+
+
+def test_writes_one_file_per_talk_that_has_chunks(seed, transcripts, tmp_path):
     out = tmp_path / "talks"
 
-    written = build_corpus(seed, out, overrides={})
+    written = build_corpus(seed, transcripts, out, overrides={})
 
     assert written == 2
     assert sorted(p.name for p in out.iterdir()) == [
@@ -98,10 +110,10 @@ def test_writes_one_file_per_talk_that_has_chunks(seed, tmp_path):
     ]
 
 
-def test_talk_file_is_header_then_transcript_in_chunk_order(seed, tmp_path):
+def test_talk_file_is_header_then_the_transcript_by_turn_and_sentence(seed, transcripts, tmp_path):
     out = tmp_path / "talks"
 
-    build_corpus(seed, out, overrides={})
+    build_corpus(seed, transcripts, out, overrides={})
 
     assert (out / "ia-aie-alpha-talk.md").read_text() == (
         "# Alpha Talk (Ann Lee, Acme — AI Engineer World's Fair)\n"
@@ -109,15 +121,16 @@ def test_talk_file_is_header_then_transcript_in_chunk_order(seed, tmp_path):
         "- video: https://youtu.be/AAA\n"
         "- published: 2026-08-22\n"
         "\n"
-        "[Music] zero\n"
+        "[Music] Welcome.\n"
+        "Hello there, this sentence wraps.\n"
         "\n"
-        "two\n"
+        "Two?\n"
         "\n"
-        "ten\n"
+        "Ten\n"
     )
 
 
-def test_override_moves_mislinked_chunks_to_their_own_talk(seed, tmp_path):
+def test_override_moves_mislinked_chunks_to_their_own_talk(seed, transcripts, tmp_path):
     # the graph attaches gamma's chunks to beta's talk; the override puts them back
     write_jsonl(
         seed / "chunks" / "part-03.jsonl",
@@ -138,7 +151,7 @@ def test_override_moves_mislinked_chunks_to_their_own_talk(seed, tmp_path):
         )
     out = tmp_path / "talks"
 
-    build_corpus(seed, out, overrides={"gamma-talk": "ia-aie-gamma-talk"})
+    build_corpus(seed, transcripts, out, overrides={"gamma-talk": "ia-aie-gamma-talk"})
 
     assert (out / "ia-aie-beta-talk.md").read_text().endswith("\n\nbeta zero\n")
     assert (out / "ia-aie-gamma-talk.md").read_text() == (
@@ -147,39 +160,59 @@ def test_override_moves_mislinked_chunks_to_their_own_talk(seed, tmp_path):
         "- video: https://youtu.be/CCC\n"
         "- published: 2026-08-09\n"
         "\n"
-        "gamma zero\n"
-        "\n"
+        "gamma zero.\n"
         "gamma one\n"
     )
 
 
-def test_two_transcripts_on_one_talk_without_override_is_an_error(seed, tmp_path):
+def test_two_transcripts_on_one_talk_without_override_is_an_error(seed, transcripts, tmp_path):
     write_jsonl(
         seed / "chunks" / "part-03.jsonl",
         chunk("gamma-talk", 0, "gamma zero", "ia-aie-beta-talk"),
     )
 
     with pytest.raises(ValueError, match=r"ia-aie-beta-talk.*beta-talk.*gamma-talk"):
-        build_corpus(seed, tmp_path / "talks", overrides={})
+        build_corpus(seed, transcripts, tmp_path / "talks", overrides={})
 
 
-def test_rebuild_removes_files_for_talks_no_longer_in_the_seed(seed, tmp_path):
+def test_a_talk_without_its_transcript_is_an_error(seed, transcripts, tmp_path):
+    (transcripts / "beta-talk.txt").unlink()
+
+    with pytest.raises(FileNotFoundError, match="beta-talk"):
+        build_corpus(seed, transcripts, tmp_path / "talks", overrides={})
+
+
+def test_rebuild_removes_files_for_talks_no_longer_in_the_seed(seed, transcripts, tmp_path):
     out = tmp_path / "talks"
     out.mkdir()
     (out / "ia-aie-gone.md").write_text("stale")
 
-    build_corpus(seed, out, overrides={})
+    build_corpus(seed, transcripts, out, overrides={})
 
     assert not (out / "ia-aie-gone.md").exists()
 
 
-def test_corpus_command_builds_into_the_given_directory(seed, tmp_path):
+def test_corpus_command_builds_into_the_given_directory(seed, transcripts, tmp_path):
     out = tmp_path / "talks"
 
-    code = main(["corpus", "--seed", str(seed), "--out", str(out)])
+    code = main(
+        ["corpus", "--seed", str(seed), "--transcripts", str(transcripts), "--out", str(out)]
+    )
 
     assert code == 0
     assert (out / "ia-aie-alpha-talk.md").exists()
+
+
+def test_transcript_body_drops_turn_markers_and_keeps_every_word():
+    raw = ">> So. Um,\nwhat now? >> >> Yes! Right\n"
+
+    assert transcript_body(raw) == "So.\nUm, what now?\n\nYes!\nRight"
+
+
+def test_passages_pack_whole_sentences_up_to_the_word_budget():
+    text = "One two three. Four five.\n\nSix seven eight nine. Ten."
+
+    assert passages(text, words=5) == ["One two three. Four five.", "Six seven eight nine. Ten."]
 
 
 # ── re-pointing mis-linked chunk edges in the local graph build ─────────────

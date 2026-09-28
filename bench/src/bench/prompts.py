@@ -86,10 +86,12 @@ def query_catalog(queries_dir: Path, alias_pack: Path) -> str:
     return "\n".join(lines)
 
 
-def system_prompt(arm: str, workdir: Path) -> str:
+def system_prompt(arm: str, workdir: Path, alias: str | None = None) -> str:
     contract = (PROMPTS_DIR / "answer_contract.md").read_text(encoding="utf-8")
     brief = (PROMPTS_DIR / f"{arm}_arm.md").read_text(encoding="utf-8")
     brief = brief.replace("{workdir}", str(workdir))
+    if alias:
+        brief = brief.replace("{alias}", alias)
     if arm == "omnigraph":
         brief = brief.replace("{catalog}", query_catalog(QUERIES_DIR, ALIAS_PACK))
     return contract + "\n" + brief
